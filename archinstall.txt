@@ -542,19 +542,6 @@ clear
 sudo reboot
 
 
-
-
-#################XXXXXXXXXX Ukui XXXXXXXXXXXXX#######################
-
-
-
-
-sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
-clear
-sudo reboot
-
-
-
 ###################### BUDGIE ###########################
 
 
@@ -571,19 +558,6 @@ cp -arf /etc/skel/. ~
 clear
 sudo reboot
 
-
-
-
-
-################### Pantheon #############################
-
-
-
-sudo pacman -Sy pantheon plank pantheon-print ttf-droid ttf-opensans ttf-roboto simple-scan  --needed --noconfirm
-sudo pacman -Sy lightdm lightdm-pantheon-greeter --needed --noconfirm
-sudo sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-pantheon-greeter'/g /etc/lightdm/lightdm.conf
-sudo systemctl enable lightdm.service
-clear
 
 
 ################ Активация конфигурации ArcoLinux ######################
