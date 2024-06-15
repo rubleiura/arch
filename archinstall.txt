@@ -44,7 +44,9 @@ lsblk
 
 Диски  			sda sda1 sda2 sda3
 -------------------------------------------------------
-Имя пользователя 	ivanov   Станислав Иванов
+Имя пользователя 	administrator   
+
+Имя менедж.входа    Administrator
 -----------------------------------------------------------
 Hostname 		     Sony
 ---------------------------------------------------------
@@ -278,10 +280,10 @@ clear
 
 
 
-useradd ivanov -m -c "Станислав Иванов" -s /bin/bash
-usermod -aG wheel,users ivanov
+useradd administrator -m -c "Administrator" -s /bin/bash
+usermod -aG wheel,users administrator
 sed -i s/'# %wheel ALL=(ALL:ALL) ALL'/'%wheel ALL=(ALL:ALL) ALL'/g /etc/sudoers
-passwd ivanov
+passwd administrator
 clear
 exit
 
