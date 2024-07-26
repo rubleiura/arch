@@ -383,6 +383,7 @@ sudo reboot
 
 
 sudo pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
+sudo pacman -Sy mugshot pavucontrol blueman --needed --noconfirm
 sudo sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
 sudo systemctl enable lightdm.service
 clear
