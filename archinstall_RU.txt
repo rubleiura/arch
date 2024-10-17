@@ -1,4 +1,3 @@
-
 ########### Макет установки Arch Linux (BTRFS SNAPPER) ###########################
 
 
@@ -252,7 +251,7 @@ clear
 
 pacman -Syy
 clear
-pacman -Sy  linux-lts linux-lts-headers linux-firmware grub grub-btrfs networkmanager openssh plymouth --needed --noconfirm
+pacman -Sy  linux-lts linux-lts-headers linux-firmware grub grub-btrfs plymouth --needed --noconfirm
 clear
 grub-install /dev/sda
 grub-install --target=x86_64-efi --removable
@@ -274,6 +273,43 @@ clear
 mkinitcpio -P
 clear
 
+
+
+################## ARCOLINUX-SPICES #########################
+
+
+pacman -Syy
+pacman -S git --needed --noconfirm
+git clone https://github.com/arcolinux/arcolinux-spices
+cd arcolinux-spices/usr/share/arcolinux-spices/scripts
+./get-the-keys-and-repos.sh
+cd
+pacman -Syy
+clear
+rm -r arcolinux-spices/
+pacman -Syy
+pacman -S hw-probe smartmontools lsb-release mkinitcpio-firmware grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant --needed  --noconfirm
+clear
+
+
+
+
+
+################## Chaotic-AUR #########################
+
+
+pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
+pacman-key --lsign-key 3056513887B78AEB
+pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --needed  --noconfirm
+pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --needed  --noconfirm
+echo "#" >> /etc/pacman.conf
+echo "#" >> /etc/pacman.conf
+echo "### Chaotic-AUR #####" >> /etc/pacman.conf
+echo "[chaotic-aur]" >> /etc/pacman.conf
+echo "Include = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
+echo "GTK_THEME=Adwaita:dark" >> /etc/environment
+pacman -Syy
+clear
 
 
 ########################  HOST, ПАРОЛЬ ROOT ##############################
@@ -298,6 +334,22 @@ usermod -aG wheel,users administrator
 sed -i s/'# %wheel ALL=(ALL:ALL) ALL'/'%wheel ALL=(ALL:ALL) ALL'/g /etc/sudoers
 passwd administrator
 clear
+
+################# Установка графической оболочки #######################
+
+
+######################### ARCHDI ######################
+
+# Данный установщик заимствован от bash-скрипта archdi
+# интегрированного в скрипт установки Arch Linux archfi
+# https://github.com/MatMoul/archfi
+
+
+curl -LO matmoul.github.io/archdi
+chmod +x archdi
+./archdi
+rm -r archdi
+clear
 exit
 
 
@@ -308,69 +360,6 @@ reboot
 
 rm -r .ssh/
 
-
-
-
-
-
-########### БАЗОВАЯ УСТАНОВКА ЗАВЕРШЕНА ##################################
-
-
-
-
-################## ARCOLINUX-SPICES #########################
-
-
-sudo pacman -Syy
-sudo pacman -Syu
-sudo pacman -S git --needed --noconfirm
-git clone https://github.com/arcolinux/arcolinux-spices
-cd arcolinux-spices/usr/share/arcolinux-spices/scripts
-sudo ./get-the-keys-and-repos.sh
-cd
-sudo pacman -Syy
-sudo pacman -Syu
-clear
-sudo rm -r arcolinux-spices/
-sudo pacman -Syy
-sudo pacman -Syu
-sudo pacman -S arcolinux-welcome-app-git archlinux-tweak-tool-git sofirem-git hw-probe smartmontools lsb-release alacritty mkinitcpio-firmware grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant --needed  --noconfirm
-echo snap >> $HOME/.hidden
-echo bin >> $HOME/.hidden
-clear
-
-
-
-
-
-######################### ARCHDI ######################
-
-
-curl -LO matmoul.github.io/archdi
-sudo chmod +x archdi
-sudo ./archdi
-sudo rm -r archdi
-clear
-
-
-
-
-############# МЕНЕДЖЕР ВХОДА lightdm-slick-greeter #######################
-
-
-
-sudo pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
-sudo sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
-sudo systemctl enable lightdm.service
-clear
-cp -Rf ~/.config ~/.config-backup-$(date +%Y.%m.%d-%H.%M.%S)
-cp -arf /etc/skel/. ~
-sudo reboot
-
-
-
-
-################# Установка графической оболочки #######################
 
 
 
@@ -395,6 +384,7 @@ sudo reboot
 ##################### КОНФИГУРАЦИЯ XFCE4 ##################
 
 
+
 sudo pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
 sudo pacman -Sy mugshot pavucontrol blueman --needed --noconfirm
 sudo sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
@@ -406,13 +396,7 @@ sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
 cp -Rf ~/.config ~/.config-backup-$(date +%Y.%m.%d-%H.%M.%S)
 cp -arf /etc/skel/. ~
-sudo reboot
-
-
-
-
 #-------- Флаги ---------------
-
 mkdir -p ~/.local/share/xfce4/xkb/flags/
 cd ~/.local/share/xfce4/xkb/flags/
 wget https://upload.wikimedia.org/wikipedia/commons/5/53/Nuvola_USA_flag.svg
@@ -421,6 +405,11 @@ mv -i Nuvola_USA_flag.svg us.svg
 mv -i Nuvola_Russian_flag.svg ru.svg
 cd
 clear
+sudo reboot
+
+
+
+
 
 #-------------------- Отключить сохранение сеансов
 
@@ -576,7 +565,99 @@ sudo reboot
 
 
 
-################ Активация конфигурации ArcoLinux ######################
+################ ZSH ######################
+
+
+
+## 1 Часть. Установка  Zsh, Oh-My-Zsh, Fastfetch, Lolcat, Git ####
+
+sudo pacman -Syy
+sudo pacman -Syu --noconfirm
+sudo pacman -Sy zsh fastfetch lolcat git  --noconfirm
+curl -L http://install.ohmyz.sh | sh
+chsh -s /bin/zsh
+clear
+zsh
+
+
+
+
+
+## 2 Часть. Настройка Oh-My-Zsh и Fastfetch ####
+
+
+
+clear
+sed -i s/'ZSH_THEME="robbyrussell"'/'ZSH_THEME="agnoster"'/g ~/.zshrc
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
+mv zsh-syntax-highlighting ~/.oh-my-zsh/plugins
+echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
+git clone https://github.com/zsh-users/zsh-autosuggestions
+mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
+sed -i s/'plugins=(git)'/'plugins=(git archlinux extract sudo themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
+clear
+source ~/.zshrc
+mkdir -p ~/.config/fastfetch/
+cp /usr/share/fastfetch/presets/all.jsonc ~/.config/fastfetch/config.jsonc
+sed -i 's/"board"/\/\/ "board"/g' ~/.config/fastfetch/config.jsonc
+#sed -i 's/"uptime"/\/\/ "uptime"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"loadavg"/\/\/ "loadavg"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"processes"/\/\/ "processes"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"brightness"/\/\/ "brightness"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"monitor"/\/\/ "monitor"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"wmtheme"/\/\/ "wmtheme"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"theme"/\/\/ "theme"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"icons"/\/\/ "icons"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"font"/\/\/ "font"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"cursor"/\/\/ "cursor"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"wallpaper"/\/\/ "wallpaper"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"terminalfont"/\/\/ "terminalfont"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"terminalsize"/\/\/ "terminalsize"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"terminaltheme"/\/\/ "terminaltheme"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"cpucache"/\/\/ "cpucache"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"cpuusage"/\/\/ "cpuusage"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"\"type\"\: \"battery\""/\/\/ "\"type\"\: \"battery\""/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"player"/\/\/ "player"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"media"/\/\/ "media"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"showIpv6"/\/\/ "showIpv6"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"showMac"/\/\/ "showMac"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"dns"/\/\/ "dns"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"vulkan"/\/\/ "vulkan"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"opengl"/\/\/ "opengl"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"opencl"/\/\/ "opencl"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"users"/\/\/ "users"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"bluetooth"/\/\/ "bluetooth"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"bluetoothradio"/\/\/ "bluetoothradio"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"sound"/\/\/ "sound"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"camera"/\/\/ "camera"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"gamepad"/\/\/ "gamepad"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"netio"/\/\/ "netio"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"diskio"/\/\/ "diskio"/g' ~/.config/fastfetch/config.jsonc
+sed -i 's/"version"/\/\/ "version"/g' ~/.config/fastfetch/config.jsonc
+echo "fastfetch | lolcat" >> ~/.zshrc
+clear
+source ~/.zshrc
+
+
+
+
+
+
+########## Необходимое ПО ###################
+
+
+sudo pacman -Syy
+sudo pacman -Syu --needed --noconfirm
+sudo pacman -S ventoy-bin qbittorrent btop cpu-x grub-customizer hardinfo2 stacer htop system-monitoring-center --needed --noconfirm
+clear
+sudo pacman -S firewalld python-capng python-pyqt5 --needed --noconfirm
+sudo systemctl enable firewalld.service
+clear
+sudo pacman -S pamac-flatpak --needed --noconfirm
+clear
+
+
+################ СБРОС ######################
 
 
 clear
