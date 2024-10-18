@@ -251,7 +251,7 @@ clear
 
 pacman -Syy
 clear
-pacman -Sy  linux-lts linux-lts-headers linux-firmware grub grub-btrfs plymouth --needed --noconfirm
+pacman -Sy  linux-lts linux-lts-headers linux-firmware grub grub-btrfs networkmanager openssh plymouth --needed --noconfirm
 clear
 grub-install /dev/sda
 grub-install --target=x86_64-efi --removable
