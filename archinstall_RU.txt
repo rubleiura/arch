@@ -63,12 +63,17 @@ Hostname 		        Sony
 ------------------------------------------------------------------
 размер SWAP		      sgdisk -n 2::-4G
 ---------------------------------------------------------
-Если система ставится на HDD, необходимо изменить параметры btrfs
-c
-SSD
+
+
+
+Если система ставится на HDD, необходимо
+
+изменить параметры btrfs c SSD :
+
 ssd,noatime,space_cache=v2,compress=zstd:2,discard=async
-на
-HDD
+
+на HDD :
+
 noatime,space_cache=v2,compress=zstd:2,autodefrag
 
 
