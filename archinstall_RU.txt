@@ -674,8 +674,10 @@ sudo reboot
 ############
 
 
-sudo pacman -S lightdm 	lightdm-gtk-greeter budgie-desktop gnome gnome-control-center --needed --noconfirm
-sudo pacman -S materia-gtk-theme papirus-icon-theme i3lock --needed --noconfirm
+
+sudo pacman -S lightdm 	lightdm-gtk-greeter budgie-desktop --noconfirm
+sudo pacman -S gnome gnome-control-center --noconfirm
+sudo pacman -S materia-gtk-theme papirus-icon-theme i3lock --noconfirm
 sudo sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
 sudo systemctl enable lightdm.service
 clear
@@ -685,6 +687,7 @@ sudo cp ~/.xinitrc /root/.xinitrc
 sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
 sudo reboot
+
 
 
 
