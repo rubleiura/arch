@@ -678,11 +678,13 @@ sudo reboot
 
 
 
-sudo pacman -S lightdm 	lightdm-gtk-greeter budgie-desktop --noconfirm
+sudo pacman -Syy
+sudo pacman -S budgie-desktop --noconfirm
 sudo pacman -S gnome gnome-control-center --noconfirm
 sudo pacman -S materia-gtk-theme papirus-icon-theme i3lock --noconfirm
+sudo pacman -S lightdm lightdm-gtk-greeter --noconfirm
 sudo sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
-sudo systemctl enable lightdm.service
+sudo systemctl enable lightdm
 clear
 echo "export XDG_CURRENT_DESKTOP=Budgie:GNOME" > ~/.xinitrc
 echo "exec budgie-desktop" >> ~/.xinitrc
