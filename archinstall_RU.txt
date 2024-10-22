@@ -117,6 +117,8 @@ fdisk -l /dev/sda
 ## БАЗОВЫХ ПАКЕТОВ, ВХОД в СИСТЕМУ CHROOT  ##
 #############################################
 
+
+
 clear
 mkfs.fat -F32 /dev/sda1
 mkswap /dev/sda3
