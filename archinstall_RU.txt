@@ -348,19 +348,31 @@ clear
 
 
 
-####### Wireplumber ##########
+#################
+## Wireplumber ##
+#################
+
+
 
 pacman -S wireplumber pipewire-alsa pipewire-jack pipewire-pulse pipewire-v4l2 pipewire-zeroconf gst-plugin-pipewire --noconfirm
 clear
 
 
-###### Pipewire-media-session ########
+############################
+## Pipewire-media-session ##
+############################
+
+
 
 pacman -S pipewire-media-session pipewire-alsa pipewire-jack pipewire-pulse pipewire-v4l2 pipewire-zeroconf gst-plugin-pipewire --noconfirm
 clear
 
 
-####### Pulseaudio ######
+################
+## Pulseaudio ##
+################
+
+
 
 pacman -S alsa-utils alsa-plugins pulseaudio pulseaudio-alsa pulseaudio-bluetooth pulseaudio-equalizer --noconfirm
 clear
