@@ -180,6 +180,9 @@ fdisk -l /dev/sda
 ## БАЗОВЫХ ПАКЕТОВ, ВХОД в СИСТЕМУ CHROOT  ##
 #############################################
 
+
+
+
 clear
 mkswap /dev/sda3
 swapon /dev/sda3
