@@ -669,8 +669,8 @@ sudo reboot
 ############
 
 
-sudo pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
-sudo sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
+sudo pacman -S lightdm 	lightdm-gtk-greeter budgie-desktop gnome gnome-control-center --needed --noconfirm
+sudo pacman -S materia-gtk-theme papirus-icon-theme i3lock --needed --noconfirm
 sudo systemctl enable lightdm.service
 clear
 echo "export XDG_CURRENT_DESKTOP=Budgie:GNOME" > ~/.xinitrc
@@ -679,6 +679,7 @@ sudo cp ~/.xinitrc /root/.xinitrc
 sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
 sudo reboot
+
 
 
 ###########################################
