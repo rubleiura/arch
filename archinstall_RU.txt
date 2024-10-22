@@ -567,14 +567,6 @@ tile windows ( ShellTitle)
 ########## Установка Cinnamon ##########################
 ########################################################
 
-###########################################33
-#sudo pacman -R xf86-video-intel
-#sudo systemcl disable bluetooth
-#sudo pacman -R bluez bluez-utils pulseaudio-bluetooth
-#reboot
-###########################################
-
-
 
 
 sudo pacman -S lightdm lightdm-webkit2-greeter lightdm-webkit-theme-aether cinnamon cinnamon-translations metacity  gnome-terminal blueberry gnome-screenshot gnome-keyring system-config-printer arc-gtk-theme papirus-icon-theme archlinux-wallpaper tela-icon-theme iso-flag-png --noconfirm
