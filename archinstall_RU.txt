@@ -522,6 +522,16 @@ echo "exec startxfce4" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
 sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
+########## Флаги ##############
+mkdir -p ~/.local/share/xfce4/xkb/flags/
+cd ~/.local/share/xfce4/xkb/flags/
+wget https://upload.wikimedia.org/wikipedia/commons/5/53/Nuvola_USA_flag.svg
+wget https://upload.wikimedia.org/wikipedia/commons/a/ac/Nuvola_Russian_flag.svg
+mv -i Nuvola_USA_flag.svg us.svg
+mv -i Nuvola_Russian_flag.svg ru.svg
+cd
+clear
+
 sudo reboot
 
 
