@@ -669,6 +669,9 @@ sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
 sudo reboot
 
+
+
+
 ############
 ## BUDGIE ##
 ############
