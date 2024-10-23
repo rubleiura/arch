@@ -334,7 +334,10 @@ clear
 pacman -Syy
 clear
 # Services
-pacman -S cronie xdg-user-dirs haveged networkmanager bluez bluez-utils openssh cups cups-pdf ghostscript --noconfirm
+pacman -S cronie haveged networkmanager bluez bluez-utils openssh cups cups-pdf ghostscript --noconfirm
+clear
+# XDG
+pacman -S xdg-utils xdg-user-dirs --noconfirm
 clear
 systemctl enable grub-btrfsd.service sshd.service NetworkManager.service cups.service  cronie.service bluetooth.service haveged.service
 clear
