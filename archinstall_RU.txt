@@ -613,25 +613,6 @@ sudo reboot
 
 
 
-########################
-## КОНФИГУРАЦИЯ DEPIN ##
-########################
-
-
-
-
-sudo pacman -Sy deepin-kwin lightdm lightdm-deepin-greeter  --needed --noconfirm
-sudo sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-deepin-greeter'/g /etc/lightdm/lightdm.conf
-sudo systemctl enable lightdm.service
-echo "exec startdde" > ~/.xinitrc
-sudo cp ~/.xinitrc /root/.xinitrc
-sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
-clear
-sudo reboot
-
-
-
-
 ######################
 ## Установка BUDGIE ##
 ######################
