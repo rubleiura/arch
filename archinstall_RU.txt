@@ -384,7 +384,7 @@ pacman -Syy
 clear
 rm -r arcolinux-spices/
 pacman -Syy
-pacman -S hw-probe smartmontools lsb-release mkinitcpio-firmware grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant --needed  --noconfirm
+pacman -S hw-probe smartmontools lsb-release grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant --needed  --noconfirm
 pacman -S mkinitcpio-firmware --needed  --noconfirm
 clear
 
