@@ -305,7 +305,7 @@ pacman -Syy
 clear
 pacman -Sy reflector  --noconfirm
 clear
-reflector --verbose -l 5 -p https --sort rate --save /etc/pacman.d/mirrorlist
+reflector --verbose -l 10 -p https --sort rate --save /etc/pacman.d/mirrorlist
 clear
 pacman -Syy
 clear
