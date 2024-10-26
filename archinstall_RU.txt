@@ -293,13 +293,20 @@ clear
 
 
 
-######################################
-### УСТ.ЯДРА, GRUB и MKINITCPIO. #####
-######################################
+##############################################
+### УСТ.ЯДРА, GRUB и MKINITCPIO. ЗЕРКАЛА #####
+##############################################
 
 
 
 
+
+pacman -Syy
+clear
+pacman -Sy reflector  --noconfirm
+clear
+reflector --verbose -l 5 -p https --sort rate --save /etc/pacman.d/mirrorlist
+clear
 pacman -Syy
 clear
 pacman -Sy  linux-lts linux-lts-headers linux-firmware grub grub-btrfs plymouth --needed --noconfirm
@@ -358,6 +365,10 @@ clear
 pacman -S dosfstools ntfs-3g btrfs-progs exfat-utils gptfdisk fuse2 fuse3 fuseiso gvfs gvfs-smb smbclient cifs-utils --noconfirm
 clear
 # ЗВУК
+# Alsa
+pacman -S alsa-firmware alsa-plugins alsa-utils --noconfirm
+clear
+# Wireplumber Pipewire
 pacman -S wireplumber pipewire-alsa pipewire-jack pipewire-pulse pipewire-v4l2 pipewire-zeroconf gst-plugin-pipewire --noconfirm
 clear
 # XORG
@@ -367,9 +378,9 @@ clear
 
 
 
-########################################################
-###### ARCOLINUX-SPICES, Btrfs-Assistant ###############
-########################################################
+######################
+## ARCOLINUX-SPICES ##
+######################
 
 
 
@@ -384,16 +395,14 @@ pacman -Syy
 clear
 rm -r arcolinux-spices/
 pacman -Syy
-pacman -S hw-probe smartmontools lsb-release grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant --needed  --noconfirm
-pacman -S mkinitcpio-firmware --needed  --noconfirm
 clear
 
 
 
 
-########################################################
-################ Chaotic-AUR ###########################
-########################################################
+#################
+## Chaotic-AUR ##
+#################
 
 
 
@@ -409,6 +418,41 @@ echo "Include = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
 echo "GTK_THEME=Adwaita:dark" >> /etc/environment
 pacman -Syy
 clear
+
+
+
+
+########################################################
+########## ПРОГРАММЫ РЕЗЕРВНОГО КОПИРОВАНИЯ ############
+########################################################
+
+
+
+
+######################
+##  BTRFS ASSISTANT ##
+######################
+
+
+
+
+pacman -Syy
+pacman -S hw-probe smartmontools lsb-release grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant --needed  --noconfirm
+clear
+
+
+
+
+################
+##  TIMESHIFT ##
+################
+
+
+
+pacman -Syy
+pacman -S timeshift  --noconfirm
+clear
+
 
 
 
@@ -508,7 +552,6 @@ mv -i Nuvola_USA_flag.svg us.svg
 mv -i Nuvola_Russian_flag.svg ru.svg
 cd
 clear
-
 sudo reboot
 
 
