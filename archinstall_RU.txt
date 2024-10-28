@@ -66,8 +66,6 @@ lsblk
 #############################################
 #   Hostname 	    #    Sony               #
 #############################################
-#   микрокод	    #    intel-ucode        #
-#############################################
 #   Ядро			# 	 linux-lts          #
 #############################################
 #   размер SWAP		#	 sgdisk -n 2::-4G   #
@@ -144,7 +142,7 @@ mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@log /d
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@tmp /dev/sda2 /mnt/var/tmp
 mount /dev/sda1 /mnt/boot/efi
 clear
-pacstrap /mnt base base-devel  btrfs-progs bash-completion archlinux-keyring nano intel-ucode efibootmgr  inxi neofetch
+pacstrap /mnt base base-devel  btrfs-progs bash-completion archlinux-keyring nano intel-ucode amd-ucode efibootmgr  inxi neofetch
 clear
 genfstab -U -p /mnt >> /mnt/etc/fstab
 clear
@@ -206,7 +204,7 @@ mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@cache 
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@log /dev/sda2 /mnt/var/log
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@tmp /dev/sda2 /mnt/var/tmp
 clear
-pacstrap /mnt base base-devel  btrfs-progs bash-completion archlinux-keyring nano intel-ucode  inxi neofetch
+pacstrap /mnt base base-devel  btrfs-progs bash-completion archlinux-keyring nano intel-ucode amd-ucode  inxi neofetch
 clear
 genfstab -U -p /mnt >> /mnt/etc/fstab
 clear
