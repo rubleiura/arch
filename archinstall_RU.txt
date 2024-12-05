@@ -16,10 +16,12 @@ clear
 loadkeys ru
 setfont cyr-sun16
 sed -i "s/#\(en_US\.UTF-8\)/\1/" /etc/locale.gen
+sed -i "s/#\(en_US\ ISO-8859-1\)/\1/" /etc/locale.gen
 sed -i "s/#\(ru_RU\.UTF-8\)/\1/" /etc/locale.gen
+sed -i "s/#\(ru_RU\ ISO-8859-5\)/\1/" /etc/locale.gen
 locale-gen
 export LANG=ru_RU.UTF-8
-sed -i s/'#ParallelDownloads = 5'/'ParallelDownloads = 10'/g /etc/pacman.conf
+sed -i s/'#ParallelDownloads = 5'/'ParallelDownloads = 15'/g /etc/pacman.conf
 sed -i s/'#Color'/'Color'/g /etc/pacman.conf
 echo "[options]" >> /etc/pacman.conf
 echo "ILoveCandy" >> /etc/pacman.conf
@@ -60,15 +62,15 @@ lsblk
 #############################################
 #  Диски            #   sda sda1 sda2 sda3  #
 #############################################
-#  Имя пользователя	#	administrator       #
+#  Имя пользователя #   administrator       #
 #############################################
-#  Имя менедж.входа #  	Administrator       #
+#  Имя менедж.входа #  	User Name           #
 #############################################
-#   Hostname 	    #    Sony               #
+#   Hostname 	    #    Acer               #
 #############################################
-#   Ядро			# 	 linux-lts          #
+#   Ядро	    #    linux-lts          #
 #############################################
-#   размер SWAP		#	 sgdisk -n 2::-4G   #
+#   размер SWAP	    #	 sgdisk -n 2::-4G   #
 #############################################
 
 
@@ -142,7 +144,7 @@ mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@log /d
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@tmp /dev/sda2 /mnt/var/tmp
 mount /dev/sda1 /mnt/boot/efi
 clear
-pacstrap /mnt base base-devel  btrfs-progs bash-completion archlinux-keyring nano intel-ucode amd-ucode efibootmgr  inxi neofetch
+pacstrap /mnt base base-devel  btrfs-progs bash-completion archlinux-keyring nano intel-ucode amd-ucode inxi neofetch efibootmgr
 clear
 genfstab -U -p /mnt >> /mnt/etc/fstab
 clear
@@ -227,16 +229,29 @@ arch-chroot /mnt
 
 sed -i 's/\S*subvol=\(\S*\)/subvol=\1,ssd,noatime,space_cache=v2,compress=zstd:2,discard=async/g'  /etc/fstab
 sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
-sed -i s/'#ParallelDownloads = 5'/'ParallelDownloads = 10'/g /etc/pacman.conf
+sed -i s/'#ParallelDownloads = 5'/'ParallelDownloads = 15'/g /etc/pacman.conf
 sed -i s/'#Color'/'Color'/g /etc/pacman.conf
 echo "[options]" >> /etc/pacman.conf
 echo "ILoveCandy" >> /etc/pacman.conf
-echo "KEYMAP=ru" >> /etc/vconsole.conf
+echo "KEYMAP=ruwin_alt_sh-UTF-8" >> /etc/vconsole.conf
 echo "FONT=cyr-sun16" >> /etc/vconsole.conf
 echo "LANG=ru_RU.UTF-8" > /etc/locale.conf
-echo "LC_COLLATE=C" >> /etc/locale.conf
+echo "LC_CTYPE=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_NUMERIC=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_TIME=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_COLLATE=C.UTF-8" >> /etc/locale.conf
+echo "LC_MONETARY=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_MESSAGES=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_PAPER=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_NAME=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_ADDRESS=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_TELEPHONE=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_MEASUREMENT=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_IDENTIFICATION=ru_RU.UTF-8" >> /etc/locale.conf
 sed -i "s/#\(en_US\.UTF-8\)/\1/" /etc/locale.gen
+sed -i "s/#\(en_US\ ISO-8859-1\)/\1/" /etc/locale.gen
 sed -i "s/#\(ru_RU\.UTF-8\)/\1/" /etc/locale.gen
+sed -i "s/#\(ru_RU\ ISO-8859-5\)/\1/" /etc/locale.gen
 sed -i 's/\(\/boot\/efi\s\+vfat\s\+\)\S\+\(.*\)/\1umask=0077    0 2/' /etc/fstab
 locale-gen
 time_zone=$(curl -s https://ipinfo.io/timezone)
@@ -289,8 +304,6 @@ clear
 
 
 
-
-
 ##############################################
 ### УСТ.ЯДРА, GRUB и MKINITCPIO. ЗЕРКАЛА #####
 ##############################################
@@ -326,54 +339,6 @@ grub-mkconfig -o /boot/grub/grub.cfg
 clear
 mkinitcpio -P
 clear
-
-
-
-#######################
-## СИСТЕМНЫЕ УТИЛИТЫ ##
-#######################
-
-
-
-
-pacman -Syy
-clear
-# Services
-pacman -S cronie haveged networkmanager bluez bluez-utils openssh cups cups-pdf ghostscript --noconfirm
-clear
-# XDG
-pacman -S xdg-utils xdg-user-dirs --noconfirm
-clear
-systemctl enable grub-btrfsd.service sshd.service NetworkManager.service cups.service  cronie.service bluetooth.service haveged.service
-clear
-# Pacman-contrib
-pacman -Syy --noconfirm
-pacman -S pacman-contrib --noconfirm
-clear
-# Generic
-pacman -S vim wget usbutils lsof dmidecode dialog --noconfirm
-clear
-# Compression
-pacman -S zip unzip unrar p7zip lzop --noconfirm
-clear
-# Network Tools
-pacman -S rsync traceroute bind-tools --noconfirm
-clear
-# File System
-pacman -S dosfstools ntfs-3g btrfs-progs exfat-utils gptfdisk fuse2 fuse3 fuseiso gvfs gvfs-smb smbclient cifs-utils --noconfirm
-clear
-# ЗВУК
-# Alsa
-pacman -S alsa-firmware alsa-plugins alsa-utils --noconfirm
-clear
-# Wireplumber Pipewire
-pacman -S wireplumber pipewire-alsa pipewire-jack pipewire-pulse pipewire-v4l2 pipewire-zeroconf gst-plugin-pipewire --noconfirm
-clear
-# XORG
-pacman -S xorg --noconfirm
-clear
-
-
 
 
 ######################
@@ -420,6 +385,70 @@ clear
 
 
 
+
+#######################
+## СИСТЕМНЫЕ УТИЛИТЫ ##
+#######################
+
+
+
+
+pacman -Syy
+clear
+# Services
+pacman -S networkmanager nm-connection-editor network-manager-applet modemmanager usb_modeswitch rp-pppoe --noconfirm
+clear
+pacman -S bluez bluez-utils --noconfirm
+clear
+pacman -S cups cups-pdf ghostscript gsfonts --noconfirm
+pacman -S cronie haveged openssh --noconfirm
+clear
+pacman -S mlocate chrony --noconfirm
+systemctl enable chrony-wait.service chronyd.service
+clear
+# XDG
+pacman -S xdg-utils xdg-user-dirs --noconfirm
+clear
+systemctl enable grub-btrfsd.service sshd.service NetworkManager.service ModemManager.service cups.service  cronie.service bluetooth.service haveged.service
+clear
+# Pacman-contrib
+pacman -Syy --noconfirm
+pacman -S pacman-contrib --noconfirm
+clear
+# Generic
+pacman -S vim wget usbutils lsof dmidecode dialog --noconfirm
+clear
+# Compression
+pacman -S zip unzip unrar p7zip lzop --noconfirm
+clear
+# Network Tools
+pacman -S rsync traceroute bind-tools --noconfirm
+clear
+# File System
+pacman -S dosfstools ntfs-3g btrfs-progs exfat-utils gptfdisk fuse2 fuse3 fuseiso samba gvfs gvfs-smb smbclient cifs-utils nmap --noconfirm
+clear
+# ЗВУК
+# Alsa
+pacman -S alsa-firmware alsa-plugins alsa-utils sof-firmware --noconfirm
+clear
+# Wireplumber Pipewire
+pacman -S wireplumber pipewire-alsa pipewire-jack pipewire-pulse pipewire-v4l2 pipewire-zeroconf gst-plugin-pipewire --noconfirm
+systemctl --user disable pulseaudio.service pulseaudio.socket
+systemctl --user enable pipewire.socket pipewire-pulse.socket
+systemctl --user disable pipewire-media-session.service
+systemctl --user --force enable wireplumber.service
+systemctl --global enable pipewire.socket
+systemctl --global --force enable wireplumber.service
+clear
+# XORG
+pacman -S xorg xorg-server xorg-apps xorg-drivers --noconfirm
+clear
+
+
+
+
+
+
 ########################################################
 ########## ПРОГРАММЫ РЕЗЕРВНОГО КОПИРОВАНИЯ ############
 ########################################################
@@ -435,7 +464,7 @@ clear
 
 
 pacman -Syy
-pacman -S hw-probe smartmontools lsb-release grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant --needed  --noconfirm
+pacman -S hw-probe smartmontools lsb-release grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant hyfetch fastfetch --needed  --noconfirm
 clear
 
 
@@ -461,10 +490,10 @@ clear
 
 
 
-echo "Sony" > /etc/hostname
+echo "Acer" > /etc/hostname
 echo "127.0.0.1   localhost" > /etc/hosts
 echo ": :1        localhost" >> /etc/hosts
-echo "127.0.1.1   Sony.localdomain   Sony" >> /etc/hosts
+echo "127.0.1.1   Acer.localdomain   Acer" >> /etc/hosts
 passwd
 clear
 
@@ -477,9 +506,10 @@ clear
 
 
 
-useradd administrator -m -c "Administrator" -s /bin/bash
+useradd administrator -m -c "User Name" -s /bin/bash
 usermod -aG wheel,users administrator
 sed -i s/'# %wheel ALL=(ALL:ALL) ALL'/'%wheel ALL=(ALL:ALL) ALL'/g /etc/sudoers
+#smbpasswd -a rublev_samba
 passwd administrator
 clear
 exit
@@ -492,6 +522,49 @@ reboot
 
 rm -r .ssh/
 
+
+
+
+
+
+
+
+#####################################
+## НАССТРОЙКА ПРОФИЛЯ ПОЛЬЗОВАТЕЛЯ ##
+#####################################
+
+
+
+
+echo "LANG=ru_RU.UTF-8" >> ~/.bashrc
+echo "LC_CTYPE=ru_RU.UTF-8" >> ~/.bashrc
+echo "LC_NUMERIC=ru_RU.UTF-8" >> ~/.bashrc
+echo "LC_TIME=ru_RU.UTF-8" >> ~/.bashrc
+echo "LC_COLLATE=C.UTF-8" >> ~/.bashrc
+echo "LC_MONETARY=ru_RU.UTF-8" >> ~/.bashrc
+echo "LC_MESSAGES=ru_RU.UTF-8" >> ~/.bashrc
+echo "LC_PAPER=ru_RU.UTF-8" >> ~/.bashrc
+echo "LC_NAME=ru_RU.UTF-8" >> ~/.bashrc
+echo "LC_ADDRESS=ru_RU.UTF-8" >> ~/.bashrc
+echo "LC_TELEPHONE=ru_RU.UTF-8" >> ~/.bashrc
+echo "LC_MEASUREMENT=ru_RU.UTF-8" >> ~/.bashrc
+echo "LC_IDENTIFICATION=ru_RU.UTF-8" >> ~/.bashrc
+echo "hyfetch" >> ~/.bashrc
+echo "LANG=ru_RU.UTF-8" >> ~/.bash_profile
+echo "LC_CTYPE=ru_RU.UTF-8" >> ~/.bash_profile
+echo "LC_NUMERIC=ru_RU.UTF-8" >> ~/.bash_profile
+echo "LC_TIME=ru_RU.UTF-8" >> ~/.bash_profile
+echo "LC_COLLATE=C.UTF-8" >> ~/.bash_profile
+echo "LC_MONETARY=ru_RU.UTF-8" >> ~/.bash_profile
+echo "LC_MESSAGES=ru_RU.UTF-8" >> ~/.bash_profile
+echo "LC_PAPER=ru_RU.UTF-8" >> ~/.bash_profile
+echo "LC_NAME=ru_RU.UTF-8" >> ~/.bash_profile
+echo "LC_ADDRESS=ru_RU.UTF-8" >> ~/.bash_profile
+echo "LC_TELEPHONE=ru_RU.UTF-8" >> ~/.bash_profile
+echo "LC_MEASUREMENT=ru_RU.UTF-8" >> ~/.bash_profile
+echo "LC_IDENTIFICATION=ru_RU.UTF-8" >> ~/.bash_profile
+clear
+source ~/.bashrc
 
 
 
@@ -526,11 +599,15 @@ sudo reboot
 ## Установка XFCE4 ##
 #####################
 
+/etc/update-menus.conf
 
 
-
-sudo pacman -S xfce4 xfce4-goodies
-sudo pacman -S arc-gtk-theme arc-icon-theme mugshot gnome-system-tools numix-gtk-theme numix-icon-theme materia-gtk-theme papirus-icon-theme archlinux-wallpaper ocs-url --noconfirm
+sudo pacman -S xfce4 xfce4-goodies archlinux-xdg-menu ttf-droid ttf-dejavu ocs-url alacarte --noconfirm
+sudo pacman -S file-roller gvfs gvfs-smb sshfs thunar-archive-plugin  thunar-media-tags-plugin thunar-shares-plugin ffmpegthumbnailer libgsf udiskie  --noconfirm
+update-menus
+sudo pacman -S yay --noconfirm
+yay -S tango-icon-theme gnome-themes-standard light-themes --noconfirm
+sudo pacman -S arc-gtk-theme arc-icon-theme mugshot gnome-system-tools numix-gtk-theme numix-icon-theme materia-gtk-theme papirus-icon-theme archlinux-wallpaper --noconfirm
 sudo pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
 sudo pacman -Sy mugshot pavucontrol blueman --needed --noconfirm
 sudo sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
