@@ -62,11 +62,11 @@ lsblk
 #############################################
 #  Диски            #   sda sda1 sda2 sda3  #
 #############################################
-#  Имя пользователя #   administrator       #
+#  Имя пользователя #   rublev       #
 #############################################
-#  Имя менедж.входа #  	User Name           #
+#  Имя менедж.входа #  	Юрий Рублёв           #
 #############################################
-#   Hostname 	    #    Acer               #
+#   Hostname 	    #    PackardBell               #
 #############################################
 #   Ядро	    #    linux-lts          #
 #############################################
@@ -320,7 +320,7 @@ reflector --verbose -l 10 -p https --sort rate --save /etc/pacman.d/mirrorlist
 clear
 pacman -Syy
 clear
-pacman -Sy  linux-lts linux-lts-headers linux-firmware grub grub-btrfs plymouth --needed --noconfirm
+pacman -Sy  linux-lts linux-lts-headers linux-firmware networkmanager grub grub-btrfs plymouth --needed --noconfirm
 clear
 grub-install /dev/sda
 grub-install --target=x86_64-efi --removable
@@ -341,50 +341,6 @@ mkinitcpio -P
 clear
 
 
-######################
-## ARCOLINUX-SPICES ##
-######################
-
-
-
-
-pacman -Syy
-pacman -S git --needed --noconfirm
-git clone https://github.com/arcolinux/arcolinux-spices
-cd arcolinux-spices/usr/share/arcolinux-spices/scripts
-./get-the-keys-and-repos.sh
-cd
-pacman -Syy
-clear
-rm -r arcolinux-spices/
-pacman -Syy
-clear
-
-
-
-
-#################
-## Chaotic-AUR ##
-#################
-
-
-
-pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
-pacman-key --lsign-key 3056513887B78AEB
-pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --noconfirm
-pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
-echo "#" >> /etc/pacman.conf
-echo "#" >> /etc/pacman.conf
-echo "### Chaotic-AUR #####" >> /etc/pacman.conf
-echo "[chaotic-aur]" >> /etc/pacman.conf
-echo "Include = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
-echo "GTK_THEME=Adwaita:dark" >> /etc/environment
-pacman -Syy
-clear
-
-
-
-
 
 #######################
 ## СИСТЕМНЫЕ УТИЛИТЫ ##
@@ -396,11 +352,12 @@ clear
 pacman -Syy
 clear
 # Services
-pacman -S networkmanager nm-connection-editor network-manager-applet modemmanager usb_modeswitch rp-pppoe --noconfirm
+pacman -S nm-connection-editor network-manager-applet modemmanager usb_modeswitch rp-pppoe --noconfirm
 clear
 pacman -S bluez bluez-utils --noconfirm
 clear
 pacman -S cups cups-pdf ghostscript gsfonts --noconfirm
+clear
 pacman -S cronie haveged openssh --noconfirm
 clear
 pacman -S mlocate chrony --noconfirm
@@ -425,25 +382,70 @@ clear
 pacman -S rsync traceroute bind-tools --noconfirm
 clear
 # File System
-pacman -S dosfstools ntfs-3g btrfs-progs exfat-utils gptfdisk fuse2 fuse3 fuseiso samba gvfs gvfs-smb smbclient cifs-utils nmap --noconfirm
+pacman -S dosfstools ntfs-3g btrfs-progs exfat-utils gptfdisk fuse2 fuse3 fuseiso --noconfirm
 clear
+# SAMBA
+pacman -S samba gvfs gvfs-smb smbclient cifs-utils gvfs-afc gvfs-mtp gvfs-nfs gvfs-dnssd gvfs-goa gvfs-google gvfs-gphoto2 gvfs-onedrive gvfs-wsdd  --noconfirm
 # ЗВУК
+# Wireplumber Pipewire
+pacman -S wireplumber pipewire-alsa pipewire-jack pipewire-pulse pipewire-v4l2 pipewire-zeroconf gst-plugin-pipewire --noconfirm
+systemctl --user enable pipewire.socket pipewire-pulse.socket
+systemctl --user --force enable wireplumber.service
+systemctl --global enable pipewire.socket
+systemctl --global --force enable wireplumber.service
+clear
 # Alsa
 pacman -S alsa-firmware alsa-plugins alsa-utils sof-firmware --noconfirm
 clear
 # GStreamer
 pacman -S gst-libav gst-plugins-bad gst-plugins-base gst-plugins-ugly gst-plugin-pipewire gst-plugin-va  --noconfirm
-# Wireplumber Pipewire
-pacman -S wireplumber pipewire-alsa pipewire-jack pipewire-pulse pipewire-v4l2 pipewire-zeroconf gst-plugin-pipewire --noconfirm
-systemctl --user disable pulseaudio.service pulseaudio.socket
-systemctl --user enable pipewire.socket pipewire-pulse.socket
-systemctl --user disable pipewire-media-session.service
-systemctl --user --force enable wireplumber.service
-systemctl --global enable pipewire.socket
-systemctl --global --force enable wireplumber.service
 clear
 # XORG
 pacman -S xorg xorg-server xorg-apps xorg-drivers --noconfirm
+clear
+
+
+
+
+######################
+## ARCOLINUX-SPICES ##
+######################
+
+
+
+clear
+pacman -Syy
+pacman -S git --needed --noconfirm
+git clone https://github.com/arcolinux/arcolinux-spices
+cd arcolinux-spices/usr/share/arcolinux-spices/scripts
+./get-the-keys-and-repos.sh
+cd
+pacman -Syy
+clear
+rm -r arcolinux-spices/
+pacman -Syy
+clear
+
+
+
+
+#################
+## Chaotic-AUR ##
+#################
+
+
+clear
+pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
+pacman-key --lsign-key 3056513887B78AEB
+pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --noconfirm
+pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
+echo "#" >> /etc/pacman.conf
+echo "#" >> /etc/pacman.conf
+echo "### Chaotic-AUR #####" >> /etc/pacman.conf
+echo "[chaotic-aur]" >> /etc/pacman.conf
+echo "Include = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
+echo "GTK_THEME=Adwaita:dark" >> /etc/environment
+pacman -Syy
 clear
 
 
@@ -464,7 +466,7 @@ clear
 
 
 
-
+clear
 pacman -Syy
 pacman -S hw-probe smartmontools lsb-release grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant hyfetch fastfetch --needed  --noconfirm
 clear
@@ -477,7 +479,7 @@ clear
 ################
 
 
-
+clear
 pacman -Syy
 pacman -S timeshift  --noconfirm
 clear
@@ -492,10 +494,10 @@ clear
 
 
 
-echo "Acer" > /etc/hostname
+echo "PackardBell" > /etc/hostname
 echo "127.0.0.1   localhost" > /etc/hosts
 echo ": :1        localhost" >> /etc/hosts
-echo "127.0.1.1   Acer.localdomain   Acer" >> /etc/hosts
+echo "127.0.1.1   PackardBell.localdomain   PackardBell" >> /etc/hosts
 passwd
 clear
 
@@ -508,11 +510,11 @@ clear
 
 
 
-useradd administrator -m -c "User Name" -s /bin/bash
-usermod -aG wheel,users administrator
+useradd rublev -m -c "Юрий Рублёв" -s /bin/bash
+usermod -aG wheel,users rublev
 sed -i s/'# %wheel ALL=(ALL:ALL) ALL'/'%wheel ALL=(ALL:ALL) ALL'/g /etc/sudoers
 #smbpasswd -a rublev_samba
-passwd administrator
+passwd rublev
 clear
 exit
 
@@ -601,17 +603,24 @@ sudo reboot
 ## Установка XFCE4 ##
 #####################
 
-/etc/update-menus.conf
+
 
 
 sudo pacman -S xfce4 xfce4-goodies archlinux-xdg-menu ttf-droid ttf-dejavu ocs-url alacarte --noconfirm
-sudo pacman -S file-roller gvfs gvfs-smb sshfs thunar-archive-plugin  thunar-media-tags-plugin thunar-shares-plugin ffmpegthumbnailer libgsf udiskie  --noconfirm
+clear
+sudo pacman -S file-roller  -smb sshfs thunar-archive-plugin  thunar-media-tags-plugin thunar-shares-plugin ffmpegthumbnailer libgsf udiskie  --noconfirm
 update-menus
+clear
 sudo pacman -S yay --noconfirm
+clear
 yay -S tango-icon-theme gnome-themes-standard light-themes --noconfirm
+clear
 sudo pacman -S arc-gtk-theme arc-icon-theme mugshot gnome-system-tools numix-gtk-theme numix-icon-theme materia-gtk-theme papirus-icon-theme archlinux-wallpaper --noconfirm
+clear
 sudo pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
+clear
 sudo pacman -Sy mugshot pavucontrol blueman --needed --noconfirm
+clear
 sudo sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
 sudo sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
 sudo systemctl enable lightdm.service
@@ -620,7 +629,13 @@ echo "exec startxfce4" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
 sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
+sudo reboot
+
+
 ########## Флаги ##############
+
+
+clear
 mkdir -p ~/.local/share/xfce4/xkb/flags/
 cd ~/.local/share/xfce4/xkb/flags/
 wget https://upload.wikimedia.org/wikipedia/commons/5/53/Nuvola_USA_flag.svg
