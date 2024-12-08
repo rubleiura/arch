@@ -608,7 +608,7 @@ sudo reboot
 
 sudo pacman -S xfce4 xfce4-goodies archlinux-xdg-menu ttf-droid ttf-dejavu ocs-url alacarte --noconfirm
 clear
-sudo pacman -S file-roller  -smb sshfs thunar-archive-plugin  thunar-media-tags-plugin thunar-shares-plugin ffmpegthumbnailer libgsf udiskie  --noconfirm
+sudo pacman -S thunar-archive-plugin  thunar-media-tags-plugin thunar-shares-plugin ffmpegthumbnailer libgsf udiskie  --noconfirm
 update-menus
 clear
 sudo pacman -S yay --noconfirm
