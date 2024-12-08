@@ -62,11 +62,11 @@ lsblk
 #############################################
 #  Диски            #   sda sda1 sda2 sda3  #
 #############################################
-#  Имя пользователя #   rublev       #
+#  Имя пользователя #   login	            #
 #############################################
-#  Имя менедж.входа #  	Юрий Рублёв           #
+#  Имя менедж.входа #  	User Name           #
 #############################################
-#   Hostname 	    #    PackardBell               #
+#   Hostname 	    #    Sony               #
 #############################################
 #   Ядро	    #    linux-lts          #
 #############################################
@@ -144,7 +144,7 @@ mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@log /d
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@tmp /dev/sda2 /mnt/var/tmp
 mount /dev/sda1 /mnt/boot/efi
 clear
-pacstrap /mnt base base-devel  btrfs-progs bash-completion archlinux-keyring nano intel-ucode amd-ucode inxi neofetch efibootmgr
+pacstrap /mnt base base-devel  btrfs-progs bash-completion archlinux-keyring nano intel-ucode amd-ucode inxi efibootmgr
 clear
 genfstab -U -p /mnt >> /mnt/etc/fstab
 clear
@@ -206,7 +206,7 @@ mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@cache 
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@log /dev/sda2 /mnt/var/log
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@tmp /dev/sda2 /mnt/var/tmp
 clear
-pacstrap /mnt base base-devel  btrfs-progs bash-completion archlinux-keyring nano intel-ucode amd-ucode  inxi neofetch
+pacstrap /mnt base base-devel  btrfs-progs bash-completion archlinux-keyring nano intel-ucode amd-ucode  inxi
 clear
 genfstab -U -p /mnt >> /mnt/etc/fstab
 clear
@@ -259,7 +259,6 @@ ln -sf /usr/share/zoneinfo/$time_zone /etc/localtime
 hwclock --systohc
 pacman -Syy
 clear
-neofetch
 date
 lsblk
 
@@ -444,7 +443,7 @@ echo "#" >> /etc/pacman.conf
 echo "### Chaotic-AUR #####" >> /etc/pacman.conf
 echo "[chaotic-aur]" >> /etc/pacman.conf
 echo "Include = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
-echo "GTK_THEME=Adwaita:dark" >> /etc/environment
+#echo "GTK_THEME=Adwaita:dark" >> /etc/environment
 pacman -Syy
 clear
 
@@ -468,7 +467,7 @@ clear
 
 clear
 pacman -Syy
-pacman -S hw-probe smartmontools lsb-release grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant hyfetch fastfetch --needed  --noconfirm
+pacman -S hw-probe smartmontools lsb-release grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant --needed  --noconfirm
 clear
 
 
@@ -494,10 +493,10 @@ clear
 
 
 
-echo "PackardBell" > /etc/hostname
+echo "Sony" > /etc/hostname
 echo "127.0.0.1   localhost" > /etc/hosts
 echo ": :1        localhost" >> /etc/hosts
-echo "127.0.1.1   PackardBell.localdomain   PackardBell" >> /etc/hosts
+echo "127.0.1.1   Sony.localdomain   Sony" >> /etc/hosts
 passwd
 clear
 
@@ -510,11 +509,10 @@ clear
 
 
 
-useradd rublev -m -c "Юрий Рублёв" -s /bin/bash
-usermod -aG wheel,users rublev
+useradd login -m -c "User Name" -s /bin/bash
+usermod -aG wheel,users login
 sed -i s/'# %wheel ALL=(ALL:ALL) ALL'/'%wheel ALL=(ALL:ALL) ALL'/g /etc/sudoers
-#smbpasswd -a rublev_samba
-passwd rublev
+passwd login
 clear
 exit
 
@@ -528,47 +526,6 @@ rm -r .ssh/
 
 
 
-
-
-
-
-
-#####################################
-## НАССТРОЙКА ПРОФИЛЯ ПОЛЬЗОВАТЕЛЯ ##
-#####################################
-
-
-
-
-echo "LANG=ru_RU.UTF-8" >> ~/.bashrc
-echo "LC_CTYPE=ru_RU.UTF-8" >> ~/.bashrc
-echo "LC_NUMERIC=ru_RU.UTF-8" >> ~/.bashrc
-echo "LC_TIME=ru_RU.UTF-8" >> ~/.bashrc
-echo "LC_COLLATE=C.UTF-8" >> ~/.bashrc
-echo "LC_MONETARY=ru_RU.UTF-8" >> ~/.bashrc
-echo "LC_MESSAGES=ru_RU.UTF-8" >> ~/.bashrc
-echo "LC_PAPER=ru_RU.UTF-8" >> ~/.bashrc
-echo "LC_NAME=ru_RU.UTF-8" >> ~/.bashrc
-echo "LC_ADDRESS=ru_RU.UTF-8" >> ~/.bashrc
-echo "LC_TELEPHONE=ru_RU.UTF-8" >> ~/.bashrc
-echo "LC_MEASUREMENT=ru_RU.UTF-8" >> ~/.bashrc
-echo "LC_IDENTIFICATION=ru_RU.UTF-8" >> ~/.bashrc
-echo "hyfetch" >> ~/.bashrc
-echo "LANG=ru_RU.UTF-8" >> ~/.bash_profile
-echo "LC_CTYPE=ru_RU.UTF-8" >> ~/.bash_profile
-echo "LC_NUMERIC=ru_RU.UTF-8" >> ~/.bash_profile
-echo "LC_TIME=ru_RU.UTF-8" >> ~/.bash_profile
-echo "LC_COLLATE=C.UTF-8" >> ~/.bash_profile
-echo "LC_MONETARY=ru_RU.UTF-8" >> ~/.bash_profile
-echo "LC_MESSAGES=ru_RU.UTF-8" >> ~/.bash_profile
-echo "LC_PAPER=ru_RU.UTF-8" >> ~/.bash_profile
-echo "LC_NAME=ru_RU.UTF-8" >> ~/.bash_profile
-echo "LC_ADDRESS=ru_RU.UTF-8" >> ~/.bash_profile
-echo "LC_TELEPHONE=ru_RU.UTF-8" >> ~/.bash_profile
-echo "LC_MEASUREMENT=ru_RU.UTF-8" >> ~/.bash_profile
-echo "LC_IDENTIFICATION=ru_RU.UTF-8" >> ~/.bash_profile
-clear
-source ~/.bashrc
 
 
 
@@ -592,8 +549,6 @@ echo "exec startplasma-x11" >> ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
 sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
-cp -Rf ~/.config ~/.config-backup-$(date +%Y.%m.%d-%H.%M.%S)
-cp -arf /etc/skel/. ~
 sudo reboot
 
 
@@ -707,8 +662,6 @@ echo "exec cinnamon-session" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
 sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
-cp -Rf ~/.config ~/.config-backup-$(date +%Y.%m.%d-%H.%M.%S)
-cp -arf /etc/skel/. ~
 sudo reboot
 
 
@@ -790,7 +743,7 @@ sudo reboot
 
 sudo pacman -Syy
 sudo pacman -Syu --noconfirm
-sudo pacman -Sy zsh fastfetch lolcat git  --noconfirm
+sudo pacman -Sy zsh git hyfetch --noconfirm
 curl -L http://install.ohmyz.sh | sh
 chsh -s /bin/zsh
 clear
@@ -814,45 +767,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions
 mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
 sed -i s/'plugins=(git)'/'plugins=(git archlinux extract sudo themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
 clear
-source ~/.zshrc
-mkdir -p ~/.config/fastfetch/
-cp /usr/share/fastfetch/presets/all.jsonc ~/.config/fastfetch/config.jsonc
-sed -i 's/"board"/\/\/ "board"/g' ~/.config/fastfetch/config.jsonc
-#sed -i 's/"uptime"/\/\/ "uptime"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"loadavg"/\/\/ "loadavg"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"processes"/\/\/ "processes"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"brightness"/\/\/ "brightness"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"monitor"/\/\/ "monitor"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"wmtheme"/\/\/ "wmtheme"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"theme"/\/\/ "theme"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"icons"/\/\/ "icons"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"font"/\/\/ "font"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"cursor"/\/\/ "cursor"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"wallpaper"/\/\/ "wallpaper"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"terminalfont"/\/\/ "terminalfont"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"terminalsize"/\/\/ "terminalsize"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"terminaltheme"/\/\/ "terminaltheme"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"cpucache"/\/\/ "cpucache"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"cpuusage"/\/\/ "cpuusage"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"\"type\"\: \"battery\""/\/\/ "\"type\"\: \"battery\""/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"player"/\/\/ "player"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"media"/\/\/ "media"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"showIpv6"/\/\/ "showIpv6"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"showMac"/\/\/ "showMac"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"dns"/\/\/ "dns"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"vulkan"/\/\/ "vulkan"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"opengl"/\/\/ "opengl"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"opencl"/\/\/ "opencl"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"users"/\/\/ "users"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"bluetooth"/\/\/ "bluetooth"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"bluetoothradio"/\/\/ "bluetoothradio"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"sound"/\/\/ "sound"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"camera"/\/\/ "camera"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"gamepad"/\/\/ "gamepad"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"netio"/\/\/ "netio"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"diskio"/\/\/ "diskio"/g' ~/.config/fastfetch/config.jsonc
-sed -i 's/"version"/\/\/ "version"/g' ~/.config/fastfetch/config.jsonc
-echo "fastfetch | lolcat" >> ~/.zshrc
+echo "hyfetch" >> ~/.zshrc
 clear
 source ~/.zshrc
 sudo reboot
