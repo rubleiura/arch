@@ -743,7 +743,7 @@ sudo reboot
 
 sudo pacman -Syy
 sudo pacman -Syu --noconfirm
-sudo pacman -Sy zsh git hyfetch --noconfirm
+sudo pacman -Sy zsh git hyfetch fastfetch --noconfirm
 curl -L http://install.ohmyz.sh | sh
 chsh -s /bin/zsh
 clear
