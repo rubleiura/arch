@@ -574,7 +574,7 @@ sudo pacman -S arc-gtk-theme arc-icon-theme mugshot gnome-system-tools numix-gtk
 clear
 sudo pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
 clear
-sudo pacman -Sy mugshot pavucontrol blueman lxqt-archiver ffmpegthumbnailer --needed --noconfirm
+sudo pacman -Sy mugshot pavucontrol blueman lxqt-archiver ffmpegthumbnailer exaile --needed --noconfirm
 clear
 sudo sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
 sudo sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
