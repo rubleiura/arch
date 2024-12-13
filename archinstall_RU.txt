@@ -854,25 +854,6 @@ sudo reboot
 
 
 
-
-#############################################
-########## Необходимое ПО ###################
-#############################################
-
-
-
-sudo pacman -Syy
-sudo pacman -Syu --needed --noconfirm
-sudo pacman -S ventoy-bin btop cpu-x grub-customizer hardinfo2 stacer htop system-monitoring-center --needed --noconfirm
-clear
-sudo pacman -S firewalld python-capng python-pyqt5 --needed --noconfirm
-sudo systemctl enable firewalld.service
-clear
-sudo reboot
-
-
-
-
 ############################################################
 ################# FINISH ###################################
 ############################################################
