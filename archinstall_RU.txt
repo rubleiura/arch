@@ -704,6 +704,53 @@ sudo reboot
 
 
 
+####################
+## Установка LXDE ##
+####################
+
+
+
+
+sudo  pacman -Syy
+clear
+sudo  pacman -Syu --noconfirm
+clear
+sudo  pacman -S lxde leafpad openbox ttf-dejavu ttf-liberation obconf pavucontrol alsa-utils xfce4-notifyd --noconfirm
+clear
+sudo pacman -S xscreensaver picom libstatgrab libsysstat arc-gtk-theme papirus-icon-theme mugshot archlinux-wallpaper unzip nm-tray dunst --noconfirm
+clear
+sudo pacman -Sy lxqt-archiver ffmpegthumbnailer exaile --noconfirm
+clear
+sudo pacman -S thunar-archive-plugin  thunar-media-tags-plugin thunar-shares-plugin ffmpegthumbnailer libgsf udiskie  --noconfirm
+update-menus
+sudo pacman -S yay --noconfirm
+clear
+yay -S tango-icon-theme gnome-themes-standard light-themes grub2-theme-arch-leap --noconfirm
+clear
+sudo pacman -S arc-gtk-theme arc-icon-theme mugshot gnome-system-tools numix-gtk-theme numix-icon-theme materia-gtk-theme papirus-icon-theme archlinux-wallpaper --noconfirm
+clear
+sudo pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
+clear
+sudo pacman -Sy blueman lxqt-archiver ffmpegthumbnailer exaile --needed --noconfirm
+clear
+sudo pacman -Syy
+sudo pacman -Syu --needed --noconfirm
+sudo pacman -S ventoy-bin gparted google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 stacer htop system-monitoring-center octopi parole --needed --noconfirm
+clear
+sudo pacman -S firewalld python-capng python-pyqt5 --needed --noconfirm
+sudo systemctl enable firewalld.service
+clear
+sudo sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
+sudo sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
+sudo systemctl enable lightdm.service
+echo "exec startlxde" > ~/.xinitrc
+sudo cp ~/.xinitrc /root/.xinitrc
+sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
+clear
+sudo reboot
+
+
+
 ######################
 ## Установка BUDGIE ##
 ######################
