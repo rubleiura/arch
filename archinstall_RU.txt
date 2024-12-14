@@ -716,15 +716,14 @@ sudo reboot
 
 
 sudo pacman -S lxqt lxqt-themes xscreensaver picom libstatgrab libsysstat arc-gtk-theme breeze-icons kvantum-qt5 papirus-icon-theme mugshot archlinux-wallpaper unzip lxqt-arc-dark-theme-git nm-tray --needed --noconfirm
-sudo pacman -Sy lightdm lightdm-webkit2-greeter lightdm-webkit-theme-litarvan --needed --noconfirm
+sudo pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
 clear
-sudo pacman -S ventoy-bin gparted google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 stacer htop system-monitoring-center octopi parole --needed --noconfirm
+sudo pacman -S ventoy-bin gparted google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 stacer htop system-monitoring-center octopi parole exaile --needed --noconfirm
 clear
 sudo pacman -S firewalld python-capng python-pyqt5 --needed --noconfirm
 sudo systemctl enable firewalld.service
-sudo sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-webkit2-greeter'/g /etc/lightdm/lightdm.conf
+sudo sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
 sudo sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
-sudo sed -i s/'webkit_theme        = antergos'/'webkit_theme        = litarvan'/g /etc/lightdm/lightdm-webkit2-greeter.conf
 sudo systemctl enable lightdm.service cronie.service
 echo "exec startlxqt" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
