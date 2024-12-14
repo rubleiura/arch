@@ -732,6 +732,22 @@ clear
 sudo reboot
 
 
+########## Флаги ##############
+
+mkdir -p .local/share/flags
+cd .local/share/flags
+wget https://upload.wikimedia.org/wikipedia/commons/5/53/Nuvola_USA_flag.svg
+wget https://upload.wikimedia.org/wikipedia/commons/a/ac/Nuvola_Russian_flag.svg
+mv -i Nuvola_USA_flag.svg us.svg
+mv -i Nuvola_Russian_flag.svg ru.svg
+
+
+В нстройках клавиатуры указываем
+
+путь к флагам:
+
+/home/login/.local/share/flags/%1.svg
+
 
 ####################
 ## Установка LXDE ##
