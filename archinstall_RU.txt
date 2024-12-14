@@ -351,7 +351,7 @@ clear
 pacman -Syy
 clear
 # Services
-pacman -S nm-connection-editor network-manager-applet modemmanager usb_modeswitch rp-pppoe --noconfirm
+pacman -S nm-connection-editor modemmanager usb_modeswitch rp-pppoe --noconfirm
 clear
 pacman -S bluez bluez-utils --noconfirm
 clear
@@ -566,7 +566,7 @@ sudo reboot
 
 
 
-sudo pacman -S xfce4 xfce4-goodies archlinux-xdg-menu ttf-droid ttf-dejavu ocs-url alacarte --noconfirm
+sudo pacman -S xfce4 xfce4-goodies archlinux-xdg-menu ttf-droid ttf-dejavu ocs-url alacarte network-manager-applet --noconfirm
 clear
 sudo pacman -S thunar-archive-plugin  thunar-media-tags-plugin thunar-shares-plugin ffmpegthumbnailer libgsf udiskie  --noconfirm
 update-menus
