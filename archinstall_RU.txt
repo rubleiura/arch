@@ -400,8 +400,11 @@ clear
 pacman -S gst-libav gst-plugins-bad gst-plugins-base gst-plugins-ugly gst-plugin-pipewire gst-plugin-va  --noconfirm
 clear
 # XORG
-pacman -S xorg xorg-server xorg-apps xorg-drivers --noconfirm
+pacman -S xorg
 clear
+pacman -S xorg-drivers
+clear
+pacman -S xorg-apps
 
 
 
@@ -545,7 +548,7 @@ rm -r .ssh/
 sudo pacman -S sddm plasma kde-applications packagekit-qt5
 sudo systemctl enable sddm
 clear
-sudo pacman -S ventoy-bin gparted google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 stacer htop system-monitoring-center octopi parole --needed --noconfirm
+sudo pacman -S ventoy-bin gparted google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 stacer htop system-monitoring-center octopi --needed --noconfirm
 clear
 sudo pacman -S firewalld python-capng python-pyqt5 --needed --noconfirm
 sudo systemctl enable firewalld.service
