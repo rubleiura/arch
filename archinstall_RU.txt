@@ -533,6 +533,52 @@ rm -r .ssh/
 
 
 
+###########################################
+################ ZSH ######################
+###########################################
+
+
+
+################################
+##         1 Часть.           ##
+## Установка  Zsh, Oh-My-Zsh, ##
+## Fastfetch, Lolcat, Git     ##
+################################
+
+
+
+sudo pacman -Syy
+sudo pacman -Syu --noconfirm
+sudo pacman -Sy zsh git hyfetch fastfetch --noconfirm
+curl -L http://install.ohmyz.sh | sh
+chsh -s /bin/zsh
+clear
+zsh
+
+
+
+
+#####################################
+##          2 Часть.               ##
+## Настройка Oh-My-Zsh и Fastfetch ##
+#####################################
+
+
+clear
+sed -i s/'ZSH_THEME="robbyrussell"'/'ZSH_THEME="agnoster"'/g ~/.zshrc
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
+mv zsh-syntax-highlighting ~/.oh-my-zsh/plugins
+echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
+git clone https://github.com/zsh-users/zsh-autosuggestions
+mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
+sed -i s/'plugins=(git)'/'plugins=(git archlinux extract sudo themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
+clear
+echo "hyfetch" >> ~/.zshrc
+clear
+source ~/.zshrc
+clear
+
+
 
 ########################################################
 ############### Установка графической оболочки #########
@@ -822,53 +868,6 @@ sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
 sudo reboot
 
-
-
-
-###########################################
-################ ZSH ######################
-###########################################
-
-
-
-################################
-##         1 Часть.           ##
-## Установка  Zsh, Oh-My-Zsh, ##
-## Fastfetch, Lolcat, Git     ##
-################################
-
-
-
-sudo pacman -Syy
-sudo pacman -Syu --noconfirm
-sudo pacman -Sy zsh git hyfetch fastfetch --noconfirm
-curl -L http://install.ohmyz.sh | sh
-chsh -s /bin/zsh
-clear
-zsh
-
-
-
-
-#####################################
-##          2 Часть.               ##
-## Настройка Oh-My-Zsh и Fastfetch ##
-#####################################
-
-
-clear
-sed -i s/'ZSH_THEME="robbyrussell"'/'ZSH_THEME="agnoster"'/g ~/.zshrc
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
-mv zsh-syntax-highlighting ~/.oh-my-zsh/plugins
-echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
-git clone https://github.com/zsh-users/zsh-autosuggestions
-mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
-sed -i s/'plugins=(git)'/'plugins=(git archlinux extract sudo themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
-clear
-echo "hyfetch" >> ~/.zshrc
-clear
-source ~/.zshrc
-sudo reboot
 
 
 
