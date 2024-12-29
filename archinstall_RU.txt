@@ -404,7 +404,7 @@ pacman -S xorg
 clear
 pacman -S xorg-drivers
 clear
-pacman -S xorg-apps
+pacman -S xorg-apps --noconfirm
 clear
 pacman -S xorg-xinit --noconfirm 
 clear
