@@ -593,7 +593,7 @@ clear
 
 
 
-sudo pacman -S sddm plasma kde-applications packagekit-qt5
+sudo pacman -S sddm plasma-meta kde-applications-meta --needed --noconfirm
 sudo systemctl enable sddm
 clear
 sudo pacman -S ventoy-bin gparted google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 stacer htop system-monitoring-center octopi --needed --noconfirm
