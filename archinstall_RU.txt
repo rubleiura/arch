@@ -622,7 +622,7 @@ update-menus
 clear
 sudo pacman -S yay --noconfirm
 clear
-yay -S tango-icon-theme gnome-themes-standard light-themes --noconfirm
+yay -S tango-icon-theme gnome-themes-standard light-themes grub2-theme-arch-leap --noconfirm
 clear
 sudo pacman -S arc-gtk-theme arc-icon-theme mugshot gnome-system-tools numix-gtk-theme numix-icon-theme materia-gtk-theme papirus-icon-theme archlinux-wallpaper --noconfirm
 clear
