@@ -1,5 +1,3 @@
-
-
 ########################################################
 #### Макет установки Arch Linux (BTRFS SNAPPER) ########
 ########################################################
@@ -125,13 +123,13 @@ swapon /dev/sda3
 mkfs.btrfs -f /dev/sda2
 clear
 mount /dev/sda2 /mnt
-btrfs su cr /mnt/@
-btrfs su cr /mnt/@home
-btrfs su cr /mnt/@root
-btrfs su cr /mnt/@srv
-btrfs su cr /mnt/@cache
-btrfs su cr /mnt/@log
-btrfs su cr /mnt/@tmp
+btrfs subvolume create /mnt/@
+btrfs subvolume create /mnt/@home
+btrfs subvolume create /mnt/@root
+btrfs subvolume create /mnt/@srv
+btrfs subvolume create /mnt/@cache
+btrfs subvolume create /mnt/@log
+btrfs subvolume create /mnt/@tmp
 umount /mnt
 clear
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@ /dev/sda2 /mnt
@@ -188,13 +186,13 @@ swapon /dev/sda3
 mkfs.btrfs -f /dev/sda2
 clear
 mount /dev/sda2 /mnt
-btrfs su cr /mnt/@
-btrfs su cr /mnt/@home
-btrfs su cr /mnt/@root
-btrfs su cr /mnt/@srv
-btrfs su cr /mnt/@cache
-btrfs su cr /mnt/@log
-btrfs su cr /mnt/@tmp
+btrfs subvolume create /mnt/@
+btrfs subvolume create /mnt/@home
+btrfs subvolume create /mnt/@root
+btrfs subvolume create /mnt/@srv
+btrfs subvolume create /mnt/@cache
+btrfs subvolume create /mnt/@log
+btrfs subvolume create /mnt/@tmp
 umount /mnt
 clear
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@ /dev/sda2 /mnt
@@ -387,7 +385,7 @@ clear
 pacman -S samba gvfs gvfs-smb smbclient cifs-utils gvfs-afc gvfs-mtp gvfs-nfs gvfs-dnssd gvfs-goa gvfs-google gvfs-gphoto2 gvfs-onedrive gvfs-wsdd  --noconfirm
 # ЗВУК
 # Wireplumber Pipewire
-pacman -S wireplumber pipewire-alsa pipewire-jack pipewire-pulse pipewire-v4l2 pipewire-zeroconf gst-plugin-pipewire --noconfirm
+pacman -S wireplumber pipewire-alsa pipewire-jack pipewire-pulse pipewire-v4l2 pipewire-zeroconf gst-plugin-pipewire helvum --noconfirm
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 systemctl --global enable pipewire.socket
@@ -472,7 +470,8 @@ clear
 
 clear
 pacman -Syy
-pacman -S hw-probe smartmontools lsb-release grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant archlinux-kernel-manager --needed  --noconfirm
+clear
+pacman -S grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant --needed  --noconfirm
 clear
 
 
@@ -485,7 +484,8 @@ clear
 
 clear
 pacman -Syy
-pacman -S timeshift archlinux-kernel-manager  --noconfirm
+clear
+pacman -S timeshift  --noconfirm
 clear
 
 
@@ -576,7 +576,7 @@ clear
 echo "hyfetch" >> ~/.zshrc
 clear
 source ~/.zshrc
-clear
+
 
 
 
@@ -628,9 +628,15 @@ sudo pacman -S arc-gtk-theme arc-icon-theme mugshot gnome-system-tools numix-gtk
 clear
 sudo pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
 clear
-sudo pacman -Sy mugshot pavucontrol blueman xarchiver ffmpegthumbnailer libgsf udiskie smplayer strawberry --needed --noconfirm
+sudo pacman -Sy mugshot pavucontrol blueman xarchiver ffmpegthumbnailer libgsf udiskie --needed --noconfirm
 clear
-sudo pacman -S ventoy-bin gparted google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 stacer htop system-monitoring-center octopi --needed --noconfirm
+sudo pacman -S ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru atril btop cpu-x grub-customizer hardinfo2 stacer cherrytree htop seahorse system-monitoring-center octopi smplayer strawberry doublecmd-qt6 nomacs --needed --noconfirm
+clear
+sudo pacman -S archlinux-kernel-manager --noconfirm
+clear
+sudo pacman -S mkinitcpio-firmware --needed --noconfirm
+clear
+sudo pacman -S update-grub --noconfirm
 clear
 sudo pacman -S firewalld python-capng python-pyqt5 --needed --noconfirm
 sudo systemctl enable firewalld.service
@@ -726,7 +732,7 @@ sudo sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Vir
 #sudo sed -i s/'webkit_theme        = antergos'/'webkit_theme        = litarvan'/g /etc/lightdm/lightdm-webkit2-greeter.conf
 sudo systemctl enable lightdm.service
 clear
-sudo pacman -S ventoy-bin gparted google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 stacer htop system-monitoring-center octopi parole --needed --noconfirm
+sudo pacman -S ventoy-bin gparted google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 stacer htop system-monitoring-center octopi  --needed --noconfirm
 clear
 sudo pacman -S firewalld python-capng python-pyqt5 --needed --noconfirm
 sudo systemctl enable firewalld.service
