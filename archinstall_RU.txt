@@ -472,7 +472,7 @@ clear
 
 clear
 pacman -Syy
-pacman -S hw-probe smartmontools lsb-release grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant --needed  --noconfirm
+pacman -S hw-probe smartmontools lsb-release grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant archlinux-kernel-manager --needed  --noconfirm
 clear
 
 
@@ -485,7 +485,7 @@ clear
 
 clear
 pacman -Syy
-pacman -S timeshift  --noconfirm
+pacman -S timeshift archlinux-kernel-manager  --noconfirm
 clear
 
 
