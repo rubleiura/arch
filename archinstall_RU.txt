@@ -1,3 +1,5 @@
+
+
 ########################################################
 #### Макет установки Arch Linux (BTRFS SNAPPER) ########
 ########################################################
@@ -64,11 +66,13 @@ lsblk
 #############################################
 #  Имя менедж.входа #  	User Name           #
 #############################################
-#   Hostname 	    #    Sony               #
+#   Hostname 	    #   Sony                #
 #############################################
-#   Ядро	    #    linux-lts          #
+#   Microcode	    #   intel-ucode         #
 #############################################
-#   размер SWAP	    #	 sgdisk -n 2::-4G   #
+#   Ядро	        #   linux-lts           #
+#############################################
+#   размер SWAP	    #	sgdisk -n 2::-4G    #
 #############################################
 
 
@@ -142,7 +146,7 @@ mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@log /d
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@tmp /dev/sda2 /mnt/var/tmp
 mount /dev/sda1 /mnt/boot/efi
 clear
-pacstrap /mnt base base-devel  btrfs-progs bash-completion archlinux-keyring nano intel-ucode amd-ucode inxi efibootmgr
+pacstrap /mnt base base-devel  btrfs-progs bash-completion archlinux-keyring nano intel-ucode inxi efibootmgr
 clear
 genfstab -U -p /mnt >> /mnt/etc/fstab
 clear
@@ -204,7 +208,7 @@ mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@cache 
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@log /dev/sda2 /mnt/var/log
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@tmp /dev/sda2 /mnt/var/tmp
 clear
-pacstrap /mnt base base-devel  btrfs-progs bash-completion archlinux-keyring nano intel-ucode amd-ucode  inxi
+pacstrap /mnt base base-devel  btrfs-progs bash-completion archlinux-keyring nano intel-ucode inxi
 clear
 genfstab -U -p /mnt >> /mnt/etc/fstab
 clear
@@ -596,14 +600,33 @@ source ~/.zshrc
 sudo pacman -S sddm plasma-meta kde-applications-meta --needed --noconfirm
 sudo systemctl enable sddm
 clear
-sudo pacman -S ventoy-bin gparted google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 stacer htop system-monitoring-center octopi --needed --noconfirm
-clear
-sudo pacman -S firewalld python-capng python-pyqt5 --needed --noconfirm
-sudo systemctl enable firewalld.service
 echo "export DESKTOP_SESSION=plasma" > ~/.xinitrc
 echo "exec startplasma-x11" >> ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
 sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
+clear
+##################
+# User programs
+##################
+clear
+sudo pacman -S yay --noconfirm
+clear
+yay -S tango-icon-theme gnome-themes-standard light-themes grub2-theme-arch-leap --noconfirm
+clear
+sudo pacman -S arc-gtk-theme arc-icon-theme gnome-system-tools numix-gtk-theme numix-icon-theme materia-gtk-theme papirus-icon-theme archlinux-wallpaper --noconfirm
+clear
+sudo pacman -S ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru atril btop cpu-x grub-customizer hardinfo2 stacer cherrytree htop seahorse system-monitoring-center octopi smplayer strawberry doublecmd-qt6 nomacs ocs-url --needed --noconfirm
+clear
+sudo pacman -S archlinux-kernel-manager --noconfirm
+clear
+sudo pacman -S mkinitcpio-firmware --needed --noconfirm
+clear
+sudo pacman -S update-grub --noconfirm
+clear
+sudo pacman -S arch-update --noconfirm
+clear
+sudo pacman -S firewalld python-capng python-pyqt5 --needed --noconfirm
+sudo systemctl enable firewalld.service
 clear
 sudo reboot
 
@@ -617,29 +640,11 @@ sudo reboot
 
 
 
-sudo pacman -S xfce4 xfce4-goodies archlinux-xdg-menu ttf-droid ttf-dejavu ocs-url alacarte network-manager-applet --noconfirm
+sudo pacman -S xfce4 xfce4-goodies mugshot pavucontrol archlinux-xdg-menu ttf-droid ttf-dejavu alacarte network-manager-applet --noconfirm
 update-menus
-clear
-sudo pacman -S yay --noconfirm
-clear
-yay -S tango-icon-theme gnome-themes-standard light-themes grub2-theme-arch-leap --noconfirm
-clear
-sudo pacman -S arc-gtk-theme arc-icon-theme mugshot gnome-system-tools numix-gtk-theme numix-icon-theme materia-gtk-theme papirus-icon-theme archlinux-wallpaper --noconfirm
-clear
 sudo pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
 clear
-sudo pacman -Sy mugshot pavucontrol blueman xarchiver ffmpegthumbnailer libgsf udiskie --needed --noconfirm
-clear
-sudo pacman -S ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru atril btop cpu-x grub-customizer hardinfo2 stacer cherrytree htop seahorse system-monitoring-center octopi smplayer strawberry doublecmd-qt6 nomacs --needed --noconfirm
-clear
-sudo pacman -S archlinux-kernel-manager --noconfirm
-clear
-sudo pacman -S mkinitcpio-firmware --needed --noconfirm
-clear
-sudo pacman -S update-grub --noconfirm
-clear
-sudo pacman -S firewalld python-capng python-pyqt5 --needed --noconfirm
-sudo systemctl enable firewalld.service
+sudo pacman -Sy blueman xarchiver ffmpegthumbnailer libgsf udiskie --needed --noconfirm
 clear
 sudo sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
 sudo sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
@@ -649,7 +654,31 @@ echo "exec startxfce4" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
 sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
+##################
+# User programs
+##################
+clear
+sudo pacman -S yay --noconfirm
+clear
+yay -S tango-icon-theme gnome-themes-standard light-themes grub2-theme-arch-leap --noconfirm
+clear
+sudo pacman -S arc-gtk-theme arc-icon-theme gnome-system-tools numix-gtk-theme numix-icon-theme materia-gtk-theme papirus-icon-theme archlinux-wallpaper --noconfirm
+clear
+sudo pacman -S ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru atril btop cpu-x grub-customizer hardinfo2 stacer cherrytree htop seahorse system-monitoring-center octopi smplayer strawberry doublecmd-qt6 nomacs ocs-url --needed --noconfirm
+clear
+sudo pacman -S archlinux-kernel-manager --noconfirm
+clear
+sudo pacman -S mkinitcpio-firmware --needed --noconfirm
+clear
+sudo pacman -S update-grub --noconfirm
+clear
+sudo pacman -S arch-update --noconfirm
+clear
+sudo pacman -S firewalld python-capng python-pyqt5 --needed --noconfirm
+sudo systemctl enable firewalld.service
+clear
 sudo reboot
+
 
 
 ########## Флаги ##############
@@ -689,18 +718,7 @@ xfconf-query -c xfce4-session -p /general/SaveOnExit -s false
 sudo pacman -S gnome gnome-extra gnome-tweaks
 sudo systemctl enable gdm
 clear
-sudo pacman -S arc-gtk-theme arc-icon-theme chrome-gnome-shell  ttf-roboto ttf-ubuntu-font-family ocs-url papirus-icon-theme --noconfirm
-clear
 sudo pacman -S  gnome-terminal-transparency
-clear
-sudo pacman -S ventoy-bin gparted google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 stacer htop system-monitoring-center octopi parole --needed --noconfirm
-clear
-sudo pacman -S yay --noconfirm
-yay -S actions-for-nautilus-git folder-color-nautilus vibrancy-colors nautilus-annotations nautilus-checksums nautilus-hide nautilus-launch nautilus-metadata-editor nautilus-admin-gtk4 nautilus-bluetooth --noconfirm
-sudo pacman -S numix-icon-theme-git humanity-icon-theme mint-x-icons nautilus-image-converter nautilus-open-any-terminal nautilus-share seahorse-nautilus sushi nautilus-python  --noconfirm
-clear
-sudo pacman -S firewalld python-capng python-pyqt5 --needed --noconfirm
-sudo systemctl enable firewalld.service
 clear
 echo "export XDG_SESSION_TYPE=x11" > ~/.xinitrc
 echo "export GDK_BACKEND=x11" >> ~/.xinitrc
@@ -708,7 +726,32 @@ echo "exec gnome-session" >> ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
 sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
+##################
+# User programs
+##################
+clear
+sudo pacman -S yay --noconfirm
+clear
+yay -S tango-icon-theme gnome-themes-standard light-themes grub2-theme-arch-leap --noconfirm
+clear
+sudo pacman -S arc-gtk-theme arc-icon-theme gnome-system-tools numix-gtk-theme numix-icon-theme materia-gtk-theme papirus-icon-theme archlinux-wallpaper --noconfirm
+clear
+sudo pacman -S ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru atril btop cpu-x grub-customizer hardinfo2 stacer cherrytree htop seahorse system-monitoring-center octopi smplayer strawberry doublecmd-qt6 nomacs ocs-url --needed --noconfirm
+clear
+sudo pacman -S archlinux-kernel-manager --noconfirm
+clear
+sudo pacman -S mkinitcpio-firmware --needed --noconfirm
+clear
+sudo pacman -S update-grub --noconfirm
+clear
+sudo pacman -S arch-update --noconfirm
+clear
+sudo pacman -S firewalld python-capng python-pyqt5 --needed --noconfirm
+sudo systemctl enable firewalld.service
+clear
 sudo reboot
+
+
 
 
 
@@ -726,22 +769,41 @@ tile windows ( ShellTitle)
 
 
 
-sudo pacman -S lightdm lightdm-webkit2-greeter lightdm-webkit-theme-aether cinnamon cinnamon-translations metacity  gnome-terminal blueberry gnome-screenshot gnome-keyring system-config-printer arc-gtk-theme papirus-icon-theme archlinux-wallpaper tela-icon-theme iso-flag-png --noconfirm
+sudo pacman -S lightdm lightdm-webkit2-greeter lightdm-webkit-theme-aether cinnamon cinnamon-translations metacity  gnome-terminal blueberry gnome-screenshot gnome-keyring system-config-printer iso-flag-png --noconfirm
 sudo sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-webkit2-greeter'/g /etc/lightdm/lightdm.conf
 sudo sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
 #sudo sed -i s/'webkit_theme        = antergos'/'webkit_theme        = litarvan'/g /etc/lightdm/lightdm-webkit2-greeter.conf
 sudo systemctl enable lightdm.service
 clear
-sudo pacman -S ventoy-bin gparted google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 stacer htop system-monitoring-center octopi  --needed --noconfirm
-clear
-sudo pacman -S firewalld python-capng python-pyqt5 --needed --noconfirm
-sudo systemctl enable firewalld.service
-clear
 echo "exec cinnamon-session" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
 sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
+##################
+# User programs
+##################
+clear
+sudo pacman -S yay --noconfirm
+clear
+yay -S tango-icon-theme gnome-themes-standard light-themes grub2-theme-arch-leap --noconfirm
+clear
+sudo pacman -S arc-gtk-theme arc-icon-theme gnome-system-tools numix-gtk-theme numix-icon-theme materia-gtk-theme papirus-icon-theme archlinux-wallpaper --noconfirm
+clear
+sudo pacman -S ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru atril btop cpu-x grub-customizer hardinfo2 stacer cherrytree htop seahorse system-monitoring-center octopi smplayer strawberry doublecmd-qt6 nomacs ocs-url --needed --noconfirm
+clear
+sudo pacman -S archlinux-kernel-manager --noconfirm
+clear
+sudo pacman -S mkinitcpio-firmware --needed --noconfirm
+clear
+sudo pacman -S update-grub --noconfirm
+clear
+sudo pacman -S arch-update --noconfirm
+clear
+sudo pacman -S firewalld python-capng python-pyqt5 --needed --noconfirm
+sudo systemctl enable firewalld.service
+clear
 sudo reboot
+
 
 
 ####################
@@ -750,21 +812,39 @@ sudo reboot
 
 
 sudo pacman -S mate mate-extra
-sudo pacman -S mate-themes mate-tweak adapta-gtk-theme arc-gtk-theme arc-icon-theme papirus-icon-theme brisk-menu gnome-system-tools chromemateria-gtk-theme archlinux-wallpaper --noconfirm
+sudo pacman -S mate-themes mate-tweak brisk-menu gnome-system-tools --noconfirm
 sudo pacman -S plank plank-themes --noconfirm
 sudo pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
 sudo sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
 sudo sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
 sudo systemctl enable lightdm.service
 clear
-sudo pacman -S ventoy-bin gparted google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 stacer htop system-monitoring-center octopi parole --needed --noconfirm
-clear
-sudo pacman -S firewalld python-capng python-pyqt5 --needed --noconfirm
-sudo systemctl enable firewalld.service
-clear
 echo "exec mate-session" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
 sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
+clear
+##################
+# User programs
+##################
+clear
+sudo pacman -S yay --noconfirm
+clear
+yay -S tango-icon-theme gnome-themes-standard light-themes grub2-theme-arch-leap --noconfirm
+clear
+sudo pacman -S arc-gtk-theme arc-icon-theme gnome-system-tools numix-gtk-theme numix-icon-theme materia-gtk-theme papirus-icon-theme archlinux-wallpaper --noconfirm
+clear
+sudo pacman -S ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru atril btop cpu-x grub-customizer hardinfo2 stacer cherrytree htop seahorse system-monitoring-center octopi smplayer strawberry doublecmd-qt6 nomacs ocs-url --needed --noconfirm
+clear
+sudo pacman -S archlinux-kernel-manager --noconfirm
+clear
+sudo pacman -S mkinitcpio-firmware --needed --noconfirm
+clear
+sudo pacman -S update-grub --noconfirm
+clear
+sudo pacman -S arch-update --noconfirm
+clear
+sudo pacman -S firewalld python-capng python-pyqt5 --needed --noconfirm
+sudo systemctl enable firewalld.service
 clear
 sudo reboot
 
@@ -774,19 +854,38 @@ sudo reboot
 ####################
 
 
-sudo pacman -S lxqt lxqt-themes xscreensaver picom libstatgrab libsysstat arc-gtk-theme breeze-icons kvantum-qt5 papirus-icon-theme mugshot archlinux-wallpaper unzip lxqt-arc-dark-theme-git nm-tray --needed --noconfirm
+sudo pacman -S lxqt lxqt-themes xscreensaver picom libstatgrab libsysstat breeze-icons kvantum-qt5 mugshot nm-tray --needed --noconfirm
 sudo pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
 clear
-sudo pacman -S ventoy-bin gparted google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 stacer htop system-monitoring-center octopi smplayer exaile --needed --noconfirm
-clear
-sudo pacman -S firewalld python-capng python-pyqt5 --needed --noconfirm
-sudo systemctl enable firewalld.service
 sudo sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
 sudo sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
 sudo systemctl enable lightdm.service cronie.service
 echo "exec startlxqt" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
 sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
+clear
+##################
+# User programs
+##################
+clear
+sudo pacman -S yay --noconfirm
+clear
+yay -S tango-icon-theme gnome-themes-standard light-themes grub2-theme-arch-leap --noconfirm
+clear
+sudo pacman -S arc-gtk-theme arc-icon-theme gnome-system-tools numix-gtk-theme numix-icon-theme materia-gtk-theme papirus-icon-theme archlinux-wallpaper --noconfirm
+clear
+sudo pacman -S ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru atril btop cpu-x grub-customizer hardinfo2 stacer cherrytree htop seahorse system-monitoring-center octopi smplayer strawberry doublecmd-qt6 nomacs ocs-url --needed --noconfirm
+clear
+sudo pacman -S archlinux-kernel-manager --noconfirm
+clear
+sudo pacman -S mkinitcpio-firmware --needed --noconfirm
+clear
+sudo pacman -S update-grub --noconfirm
+clear
+sudo pacman -S arch-update --noconfirm
+clear
+sudo pacman -S firewalld python-capng python-pyqt5 --needed --noconfirm
+sudo systemctl enable firewalld.service
 clear
 sudo reboot
 
@@ -821,26 +920,16 @@ sudo  pacman -Syu --noconfirm
 clear
 sudo  pacman -S lxde leafpad openbox ttf-dejavu ttf-liberation obconf pavucontrol alsa-utils xfce4-notifyd --noconfirm
 clear
-sudo pacman -S xscreensaver picom libstatgrab libsysstat arc-gtk-theme papirus-icon-theme mugshot archlinux-wallpaper unzip nm-tray dunst --noconfirm
+sudo pacman -S xscreensaver picom libstatgrab libsysstat arc-gtk-theme mugshot nm-tray dunst --noconfirm
 clear
 sudo pacman -Sy lxqt-archiver ffmpegthumbnailer exaile --noconfirm
 clear
 sudo pacman -S thunar-archive-plugin  thunar-media-tags-plugin thunar-shares-plugin ffmpegthumbnailer libgsf udiskie  --noconfirm
 update-menus
-sudo pacman -S yay --noconfirm
-clear
-yay -S tango-icon-theme gnome-themes-standard light-themes grub2-theme-arch-leap --noconfirm
-clear
-sudo pacman -S arc-gtk-theme arc-icon-theme mugshot gnome-system-tools numix-gtk-theme numix-icon-theme materia-gtk-theme papirus-icon-theme archlinux-wallpaper --noconfirm
 clear
 sudo pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
 clear
 sudo pacman -Sy blueman lxqt-archiver ffmpegthumbnailer exaile --needed --noconfirm
-clear
-sudo pacman -S ventoy-bin gparted google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 stacer htop system-monitoring-center octopi parole --needed --noconfirm
-clear
-sudo pacman -S firewalld python-capng python-pyqt5 --needed --noconfirm
-sudo systemctl enable firewalld.service
 clear
 sudo sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
 sudo sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
@@ -848,6 +937,29 @@ sudo systemctl enable lightdm.service
 echo "exec startlxde" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
 sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
+clear
+##################
+# User programs
+##################
+clear
+sudo pacman -S yay --noconfirm
+clear
+yay -S tango-icon-theme gnome-themes-standard light-themes grub2-theme-arch-leap --noconfirm
+clear
+sudo pacman -S arc-gtk-theme arc-icon-theme gnome-system-tools numix-gtk-theme numix-icon-theme materia-gtk-theme papirus-icon-theme archlinux-wallpaper --noconfirm
+clear
+sudo pacman -S ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru atril btop cpu-x grub-customizer hardinfo2 stacer cherrytree htop seahorse system-monitoring-center octopi smplayer strawberry doublecmd-qt6 nomacs ocs-url --needed --noconfirm
+clear
+sudo pacman -S archlinux-kernel-manager --noconfirm
+clear
+sudo pacman -S mkinitcpio-firmware --needed --noconfirm
+clear
+sudo pacman -S update-grub --noconfirm
+clear
+sudo pacman -S arch-update --noconfirm
+clear
+sudo pacman -S firewalld python-capng python-pyqt5 --needed --noconfirm
+sudo systemctl enable firewalld.service
 clear
 sudo reboot
 
@@ -866,15 +978,33 @@ sudo pacman -S lightdm lightdm-gtk-greeter --noconfirm
 sudo sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
 sudo systemctl enable lightdm
 clear
-sudo pacman -S ventoy-bin gparted google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 stacer htop system-monitoring-center octopi parole --needed --noconfirm
-clear
-sudo pacman -S firewalld python-capng python-pyqt5 --needed --noconfirm
-sudo systemctl enable firewalld.service
-clear
 echo "export XDG_CURRENT_DESKTOP=Budgie:GNOME" > ~/.xinitrc
 echo "exec budgie-desktop" >> ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
 sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
+clear
+##################
+# User programs
+##################
+clear
+sudo pacman -S yay --noconfirm
+clear
+yay -S tango-icon-theme gnome-themes-standard light-themes grub2-theme-arch-leap --noconfirm
+clear
+sudo pacman -S arc-gtk-theme arc-icon-theme gnome-system-tools numix-gtk-theme numix-icon-theme materia-gtk-theme papirus-icon-theme archlinux-wallpaper --noconfirm
+clear
+sudo pacman -S ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru atril btop cpu-x grub-customizer hardinfo2 stacer cherrytree htop seahorse system-monitoring-center octopi smplayer strawberry doublecmd-qt6 nomacs ocs-url --needed --noconfirm
+clear
+sudo pacman -S archlinux-kernel-manager --noconfirm
+clear
+sudo pacman -S mkinitcpio-firmware --needed --noconfirm
+clear
+sudo pacman -S update-grub --noconfirm
+clear
+sudo pacman -S arch-update --noconfirm
+clear
+sudo pacman -S firewalld python-capng python-pyqt5 --needed --noconfirm
+sudo systemctl enable firewalld.service
 clear
 sudo reboot
 
