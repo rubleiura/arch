@@ -399,8 +399,10 @@ clear
 pacman -S alsa-firmware alsa-plugins alsa-utils sof-firmware --noconfirm
 clear
 # GStreamer
-pacman -S gst-libav gst-plugins-bad gst-plugins-base gst-plugins-ugly gst-plugin-pipewire gst-plugin-va  --noconfirm
+pacman -S gst-libav gst-plugins-bad gst-plugins-base gst-plugins-ugly gst-plugin-pipewire gst-plugin-va --noconfirm
 clear
+# MAN
+pacman -S man-db most man-pages man-pages-ru yelp xorg-xman --noconfirm
 # XORG
 pacman -S xorg
 clear
