@@ -618,7 +618,9 @@ clear
 
 
 
-sudo pacman -S xfce4 xfce4-goodies mugshot pavucontrol archlinux-xdg-menu ttf-droid ttf-dejavu alacarte network-manager-applet --noconfirm
+sudo pacman -S xfce4 xfce4-goodies --noconfirm
+clear
+sudo pacman -S mugshot pavucontrol archlinux-xdg-menu ttf-droid ttf-dejavu alacarte network-manager-applet --noconfirm
 update-menus
 sudo pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
 clear
