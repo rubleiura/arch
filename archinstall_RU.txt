@@ -607,6 +607,7 @@ echo "exec startplasma-x11" >> ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
 sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
+sudo reboot
 
 
 
@@ -634,6 +635,7 @@ echo "exec startxfce4" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
 sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
+sudo reboot
 
 
 
@@ -682,7 +684,7 @@ echo "exec gnome-session" >> ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
 sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
-
+sudo reboot
 
 
 
@@ -711,6 +713,8 @@ echo "exec cinnamon-session" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
 sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
+sudo reboot
+
 
 
 
@@ -731,6 +735,8 @@ echo "exec mate-session" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
 sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
+sudo reboot
+
 
 
 
@@ -749,6 +755,7 @@ echo "exec startlxqt" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
 sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
+sudo reboot
 
 
 
@@ -800,6 +807,7 @@ echo "exec startlxde" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
 sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
+sudo reboot
 
 
 
@@ -821,7 +829,7 @@ echo "exec budgie-desktop" >> ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
 sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
-
+sudo reboot
 
 
 
@@ -835,7 +843,7 @@ clear
 
 
 clear
-sudo pacman -S ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru atril btop cpu-x grub-customizer hardinfo2 stacer cherrytree htop seahorse system-monitoring-center octopi smplayer strawberry doublecmd-qt6 nomacs ocs-url archlinux-wallpaper --needed --noconfirm
+sudo pacman -S ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru atril btop cpu-x grub-customizer hardinfo2 stacer cherrytree htop seahorse system-monitoring-center octopi smplayer strawberry doublecmd-qt6 nomacs ocs-url archlinux-wallpaper octopi --needed --noconfirm
 clear
 sudo pacman -S arcolinux-meta-apps --noconfirm
 clear
@@ -845,6 +853,7 @@ sudo pacman -S update-grub --noconfirm
 clear
 sudo pacman -S arch-update --noconfirm
 clear
+systemctl --user enable --now arch-update-tray.service
 systemctl --user enable --now arch-update.timer
 clear
 sudo pacman -S firewalld python-capng python-pyqt5 --needed --noconfirm
@@ -854,7 +863,7 @@ sudo pacman -S yay --noconfirm
 clear
 yay -S radiotray-ng --noconfirm
 clear
-
+sudo reboot
 
 
 
