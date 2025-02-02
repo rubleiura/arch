@@ -401,6 +401,10 @@ clear
 # GStreamer
 pacman -S gst-libav gst-plugins-bad gst-plugins-base gst-plugins-ugly gst-plugin-pipewire gst-plugin-va --noconfirm
 clear
+# Firewalld
+pacman -S firewalld python-capng python-pyqt5 --needed --noconfirm
+systemctl enable firewalld.service
+clear
 # MAN
 pacman -S man-db most man-pages man-pages-ru yelp xorg-xman --noconfirm
 # XORG
@@ -414,6 +418,11 @@ pacman -S xorg-xinit --noconfirm
 clear
 
 
+
+
+################################
+## ДОПОЛНИТЕЛЬНЫЕ РЕПОЗИТОРИИ ##
+################################
 
 ######################
 ## ARCOLINUX-SPICES ##
@@ -497,6 +506,22 @@ clear
 
 
 
+###########################################
+## СИСТЕМНЫЕ УТИЛИТЫ ARCOLINUX И CHAOTIC ##
+###########################################
+
+
+
+pacman -S arcolinux-meta-apps --noconfirm
+clear
+pacman -S mkinitcpio-firmware --noconfirm
+clear
+pacman -S update-grub --noconfirm
+clear
+pacman -S arch-update --noconfirm
+clear
+
+
 
 ########################
 ##  HOST, ПАРОЛЬ ROOT ##
@@ -525,6 +550,30 @@ usermod -aG wheel,users login
 sed -i s/'# %wheel ALL=(ALL:ALL) ALL'/'%wheel ALL=(ALL:ALL) ALL'/g /etc/sudoers
 passwd login
 clear
+
+
+
+
+
+########################################################
+############### Установка графической оболочки #########
+########################################################
+
+
+
+
+###################
+## Установка KDE ##
+###################
+
+
+
+
+pacman -S sddm plasma-meta kde-applications-meta --needed --noconfirm
+systemctl enable sddm
+clear
+sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
+clear
 exit
 
 
@@ -534,6 +583,354 @@ reboot
 
 
 rm -r .ssh/
+
+
+###############################
+## КОНФИГУРАЦИЯ ПОЛЬЗОВАТЕЛЯ ##
+###############################
+
+
+echo "export DESKTOP_SESSION=plasma" > ~/.xinitrc
+echo "exec startplasma-x11" >> ~/.xinitrc
+sudo cp ~/.xinitrc /root/.xinitrc
+clear
+systemctl --user enable --now arch-update-tray.service
+systemctl --user enable --now arch-update.timer
+clear
+
+
+#####################
+## Установка XFCE4 ##
+#####################
+
+
+
+
+pacman -S xfce4 xfce4-goodies --noconfirm
+clear
+pacman -S mugshot pavucontrol archlinux-xdg-menu ttf-droid ttf-dejavu alacarte network-manager-applet --noconfirm
+update-menus
+pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
+clear
+pacman -Sy blueman xarchiver ffmpegthumbnailer libgsf udiskie --needed --noconfirm
+clear
+sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
+sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
+systemctl enable lightdm.service
+clear
+sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
+clear
+exit
+
+
+
+reboot
+
+
+
+rm -r .ssh/
+
+
+###############################
+## КОНФИГУРАЦИЯ ПОЛЬЗОВАТЕЛЯ ##
+###############################
+
+
+
+echo "exec startxfce4" > ~/.xinitrc
+sudo cp ~/.xinitrc /root/.xinitrc
+systemctl --user enable --now arch-update-tray.service
+systemctl --user enable --now arch-update.timer
+clear
+
+
+
+########## Флаги ##############
+
+
+clear
+mkdir -p ~/.local/share/xfce4/xkb/flags/
+cd ~/.local/share/xfce4/xkb/flags/
+wget https://upload.wikimedia.org/wikipedia/commons/5/53/Nuvola_USA_flag.svg
+wget https://upload.wikimedia.org/wikipedia/commons/a/ac/Nuvola_Russian_flag.svg
+mv -i Nuvola_USA_flag.svg us.svg
+mv -i Nuvola_Russian_flag.svg ru.svg
+cd
+clear
+sudo reboot
+
+
+
+
+#####################
+## Установка Gnome ##
+#####################
+
+
+pacman -S gnome gnome-extra gnome-tweaks
+systemctl enable gdm
+clear
+pacman -S  gnome-terminal-transparency
+clear
+sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
+clear
+exit
+
+
+
+reboot
+
+
+
+rm -r .ssh/
+
+
+
+
+###############################
+## КОНФИГУРАЦИЯ ПОЛЬЗОВАТЕЛЯ ##
+###############################
+
+
+
+
+echo "export XDG_SESSION_TYPE=x11" > ~/.xinitrc
+echo "export GDK_BACKEND=x11" >> ~/.xinitrc
+echo "exec gnome-session" >> ~/.xinitrc
+sudo cp ~/.xinitrc /root/.xinitrc
+clear
+systemctl --user enable --now arch-update-tray.service
+systemctl --user enable --now arch-update.timer
+clear
+
+
+
+########################
+## Установка Cinnamon ##
+########################
+
+
+
+pacman -S lightdm lightdm-webkit2-greeter lightdm-webkit-theme-aether cinnamon cinnamon-translations metacity  gnome-terminal blueberry gnome-screenshot gnome-keyring system-config-printer iso-flag-png --noconfirm
+sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-webkit2-greeter'/g /etc/lightdm/lightdm.conf
+sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
+#sed -i s/'webkit_theme        = antergos'/'webkit_theme        = litarvan'/g /etc/lightdm/lightdm-webkit2-greeter.conf
+systemctl enable lightdm.service
+clear
+sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
+clear
+exit
+
+
+
+reboot
+
+
+
+rm -r .ssh/
+
+
+###############################
+## КОНФИГУРАЦИЯ ПОЛЬЗОВАТЕЛЯ ##
+###############################
+
+
+
+echo "exec cinnamon-session" > ~/.xinitrc
+sudo cp ~/.xinitrc /root/.xinitrc
+systemctl --user enable --now arch-update-tray.service
+systemctl --user enable --now arch-update.timer
+clear
+
+
+
+####################
+## Установка Mate ##
+####################
+
+
+pacman -S mate mate-extra
+pacman -S mate-themes mate-tweak brisk-menu gnome-system-tools --noconfirm
+pacman -S plank plank-themes --noconfirm
+pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
+sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
+sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
+systemctl enable lightdm.service
+clear
+sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
+clear
+exit
+
+
+
+reboot
+
+
+
+rm -r .ssh/
+
+
+###############################
+## КОНФИГУРАЦИЯ ПОЛЬЗОВАТЕЛЯ ##
+###############################
+
+
+
+echo "exec mate-session" > ~/.xinitrc
+sudo cp ~/.xinitrc /root/.xinitrc
+systemctl --user enable --now arch-update-tray.service
+systemctl --user enable --now arch-update.timer
+clear
+
+
+
+####################
+## Установка LXQT ##
+####################
+
+
+
+pacman -S lxqt lxqt-themes xscreensaver picom libstatgrab libsysstat breeze-icons kvantum-qt5 mugshot nm-tray --needed --noconfirm
+pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
+clear
+sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
+sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
+systemctl enable lightdm.service cronie.service
+sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
+clear
+exit
+
+
+
+reboot
+
+
+
+rm -r .ssh/
+
+
+
+
+###############################
+## КОНФИГУРАЦИЯ ПОЛЬЗОВАТЕЛЯ ##
+###############################
+
+
+echo "exec startlxqt" > ~/.xinitrc
+sudo cp ~/.xinitrc /root/.xinitrc
+systemctl --user enable --now arch-update-tray.service
+systemctl --user enable --now arch-update.timer
+clear
+
+
+########## Флаги ##############
+
+mkdir -p .local/share/flags
+cd .local/share/flags
+wget https://upload.wikimedia.org/wikipedia/commons/5/53/Nuvola_USA_flag.svg
+wget https://upload.wikimedia.org/wikipedia/commons/a/ac/Nuvola_Russian_flag.svg
+mv -i Nuvola_USA_flag.svg us.svg
+mv -i Nuvola_Russian_flag.svg ru.svg
+
+
+В нстройках клавиатуры указываем
+
+путь к флагам:
+
+/home/login/.local/share/flags/%1.svg
+
+
+
+####################
+## Установка LXDE ##
+####################
+
+
+
+
+pacman -Syy
+clear
+pacman -Syu --noconfirm
+clear
+pacman -S lxde leafpad openbox ttf-dejavu ttf-liberation obconf pavucontrol alsa-utils xfce4-notifyd --noconfirm
+clear
+pacman -S xscreensaver picom libstatgrab libsysstat arc-gtk-theme mugshot nm-tray dunst --noconfirm
+clear
+pacman -Sy lxqt-archiver ffmpegthumbnailer exaile --noconfirm
+clear
+pacman -S thunar-archive-plugin  thunar-media-tags-plugin thunar-shares-plugin ffmpegthumbnailer libgsf udiskie  --noconfirm
+update-menus
+clear
+pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
+clear
+pacman -Sy blueman lxqt-archiver ffmpegthumbnailer exaile --needed --noconfirm
+clear
+sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
+sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
+systemctl enable lightdm.service
+sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
+clear
+exit
+
+
+
+reboot
+
+
+
+rm -r .ssh/
+
+
+###############################
+## КОНФИГУРАЦИЯ ПОЛЬЗОВАТЕЛЯ ##
+###############################
+
+
+
+echo "exec startlxde" > ~/.xinitrc
+sudo cp ~/.xinitrc /root/.xinitrc
+systemctl --user enable --now arch-update-tray.service
+systemctl --user enable --now arch-update.timer
+clear
+
+
+######################
+## Установка BUDGIE ##
+######################
+
+
+pacman -Syy
+pacman -S budgie-desktop --noconfirm
+pacman -S gnome gnome-control-center --noconfirm
+pacman -S materia-gtk-theme papirus-icon-theme i3lock --noconfirm
+pacman -S lightdm lightdm-gtk-greeter --noconfirm
+sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
+systemctl enable lightdm
+clear
+sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
+clear
+exit
+
+
+
+reboot
+
+
+
+rm -r .ssh/
+
+
+###############################
+## КОНФИГУРАЦИЯ ПОЛЬЗОВАТЕЛЯ ##
+###############################
+
+
+echo "export XDG_CURRENT_DESKTOP=Budgie:GNOME" > ~/.xinitrc
+echo "exec budgie-desktop" >> ~/.xinitrc
+sudo cp ~/.xinitrc /root/.xinitrc
+systemctl --user enable --now arch-update-tray.service
+systemctl --user enable --now arch-update.timer
+clear
 
 
 
@@ -586,255 +983,6 @@ source ~/.zshrc
 
 
 
-########################################################
-############### Установка графической оболочки #########
-########################################################
-
-
-
-###################
-## Установка KDE ##
-###################
-
-
-
-
-sudo pacman -S sddm plasma-meta kde-applications-meta --needed --noconfirm
-sudo systemctl enable sddm
-clear
-echo "export DESKTOP_SESSION=plasma" > ~/.xinitrc
-echo "exec startplasma-x11" >> ~/.xinitrc
-sudo cp ~/.xinitrc /root/.xinitrc
-sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
-clear
-sudo reboot
-
-
-
-
-#####################
-## Установка XFCE4 ##
-#####################
-
-
-
-
-sudo pacman -S xfce4 xfce4-goodies --noconfirm
-clear
-sudo pacman -S mugshot pavucontrol archlinux-xdg-menu ttf-droid ttf-dejavu alacarte network-manager-applet --noconfirm
-update-menus
-sudo pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
-clear
-sudo pacman -Sy blueman xarchiver ffmpegthumbnailer libgsf udiskie --needed --noconfirm
-clear
-sudo sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
-sudo sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
-sudo systemctl enable lightdm.service
-clear
-echo "exec startxfce4" > ~/.xinitrc
-sudo cp ~/.xinitrc /root/.xinitrc
-sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
-clear
-sudo reboot
-
-
-
-########## Флаги ##############
-
-
-clear
-mkdir -p ~/.local/share/xfce4/xkb/flags/
-cd ~/.local/share/xfce4/xkb/flags/
-wget https://upload.wikimedia.org/wikipedia/commons/5/53/Nuvola_USA_flag.svg
-wget https://upload.wikimedia.org/wikipedia/commons/a/ac/Nuvola_Russian_flag.svg
-mv -i Nuvola_USA_flag.svg us.svg
-mv -i Nuvola_Russian_flag.svg ru.svg
-cd
-clear
-sudo reboot
-
-
-
-###########################################
-## Отключение сохранения сеансов в XFCE4 ##
-###########################################
-
-
-xfconf-query -c xfce4-session -p /general/SaveOnExit -s false
-
-Затем пройдите в Настройки > Сеансы и запуск > Сохраненные сеансы и нажмите кнопку Очистить
-
-сохраненные сеансы для удаления имеющихся сохраненных сеансов
-
-
-
-#####################
-## Установка Gnome ##
-#####################
-
-
-sudo pacman -S gnome gnome-extra gnome-tweaks
-sudo systemctl enable gdm
-clear
-sudo pacman -S  gnome-terminal-transparency
-clear
-echo "export XDG_SESSION_TYPE=x11" > ~/.xinitrc
-echo "export GDK_BACKEND=x11" >> ~/.xinitrc
-echo "exec gnome-session" >> ~/.xinitrc
-sudo cp ~/.xinitrc /root/.xinitrc
-sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
-clear
-sudo reboot
-
-
-
-
-############################
-
-Расширения из Browser
-
-User Themes
-Dash to Dock
-tile windows ( ShellTitle)
-
-########################
-## Установка Cinnamon ##
-########################
-
-
-
-sudo pacman -S lightdm lightdm-webkit2-greeter lightdm-webkit-theme-aether cinnamon cinnamon-translations metacity  gnome-terminal blueberry gnome-screenshot gnome-keyring system-config-printer iso-flag-png --noconfirm
-sudo sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-webkit2-greeter'/g /etc/lightdm/lightdm.conf
-sudo sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
-#sudo sed -i s/'webkit_theme        = antergos'/'webkit_theme        = litarvan'/g /etc/lightdm/lightdm-webkit2-greeter.conf
-sudo systemctl enable lightdm.service
-clear
-echo "exec cinnamon-session" > ~/.xinitrc
-sudo cp ~/.xinitrc /root/.xinitrc
-sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
-clear
-sudo reboot
-
-
-
-
-####################
-## Установка Mate ##
-####################
-
-
-sudo pacman -S mate mate-extra
-sudo pacman -S mate-themes mate-tweak brisk-menu gnome-system-tools --noconfirm
-sudo pacman -S plank plank-themes --noconfirm
-sudo pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
-sudo sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
-sudo sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
-sudo systemctl enable lightdm.service
-clear
-echo "exec mate-session" > ~/.xinitrc
-sudo cp ~/.xinitrc /root/.xinitrc
-sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
-clear
-sudo reboot
-
-
-
-
-####################
-## Установка LXQT ##
-####################
-
-
-sudo pacman -S lxqt lxqt-themes xscreensaver picom libstatgrab libsysstat breeze-icons kvantum-qt5 mugshot nm-tray --needed --noconfirm
-sudo pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
-clear
-sudo sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
-sudo sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
-sudo systemctl enable lightdm.service cronie.service
-echo "exec startlxqt" > ~/.xinitrc
-sudo cp ~/.xinitrc /root/.xinitrc
-sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
-clear
-sudo reboot
-
-
-
-########## Флаги ##############
-
-mkdir -p .local/share/flags
-cd .local/share/flags
-wget https://upload.wikimedia.org/wikipedia/commons/5/53/Nuvola_USA_flag.svg
-wget https://upload.wikimedia.org/wikipedia/commons/a/ac/Nuvola_Russian_flag.svg
-mv -i Nuvola_USA_flag.svg us.svg
-mv -i Nuvola_Russian_flag.svg ru.svg
-
-
-В нстройках клавиатуры указываем
-
-путь к флагам:
-
-/home/login/.local/share/flags/%1.svg
-
-
-####################
-## Установка LXDE ##
-####################
-
-
-
-
-sudo  pacman -Syy
-clear
-sudo  pacman -Syu --noconfirm
-clear
-sudo  pacman -S lxde leafpad openbox ttf-dejavu ttf-liberation obconf pavucontrol alsa-utils xfce4-notifyd --noconfirm
-clear
-sudo pacman -S xscreensaver picom libstatgrab libsysstat arc-gtk-theme mugshot nm-tray dunst --noconfirm
-clear
-sudo pacman -Sy lxqt-archiver ffmpegthumbnailer exaile --noconfirm
-clear
-sudo pacman -S thunar-archive-plugin  thunar-media-tags-plugin thunar-shares-plugin ffmpegthumbnailer libgsf udiskie  --noconfirm
-update-menus
-clear
-sudo pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
-clear
-sudo pacman -Sy blueman lxqt-archiver ffmpegthumbnailer exaile --needed --noconfirm
-clear
-sudo sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
-sudo sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
-sudo systemctl enable lightdm.service
-echo "exec startlxde" > ~/.xinitrc
-sudo cp ~/.xinitrc /root/.xinitrc
-sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
-clear
-sudo reboot
-
-
-
-######################
-## Установка BUDGIE ##
-######################
-
-
-sudo pacman -Syy
-sudo pacman -S budgie-desktop --noconfirm
-sudo pacman -S gnome gnome-control-center --noconfirm
-sudo pacman -S materia-gtk-theme papirus-icon-theme i3lock --noconfirm
-sudo pacman -S lightdm lightdm-gtk-greeter --noconfirm
-sudo sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
-sudo systemctl enable lightdm
-clear
-echo "export XDG_CURRENT_DESKTOP=Budgie:GNOME" > ~/.xinitrc
-echo "exec budgie-desktop" >> ~/.xinitrc
-sudo cp ~/.xinitrc /root/.xinitrc
-sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
-clear
-sudo reboot
-
-
-
-
-
 ###############
 ## Программы ##
 ###############
@@ -844,20 +992,6 @@ sudo reboot
 
 clear
 sudo pacman -S ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru atril btop cpu-x grub-customizer hardinfo2 stacer cherrytree htop seahorse system-monitoring-center octopi smplayer strawberry doublecmd-qt6 nomacs ocs-url archlinux-wallpaper octopi --needed --noconfirm
-clear
-sudo pacman -S arcolinux-meta-apps --noconfirm
-clear
-sudo pacman -S mkinitcpio-firmware --needed --noconfirm
-clear
-sudo pacman -S update-grub --noconfirm
-clear
-sudo pacman -S arch-update --noconfirm
-clear
-systemctl --user enable --now arch-update-tray.service
-systemctl --user enable --now arch-update.timer
-clear
-sudo pacman -S firewalld python-capng python-pyqt5 --needed --noconfirm
-sudo systemctl enable firewalld.service
 clear
 sudo pacman -S yay --noconfirm
 clear
