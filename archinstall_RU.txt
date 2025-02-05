@@ -569,7 +569,7 @@ clear
 
 
 
-pacman -S sddm plasma-meta kde-applications-meta --needed --noconfirm
+pacman -S sddm plasma-meta kde-applications-meta flatpak --needed --noconfirm
 systemctl enable sddm
 clear
 sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
@@ -590,12 +590,26 @@ rm -r .ssh/
 ###############################
 
 
+clear
+# xinitrc
 echo "export DESKTOP_SESSION=plasma" > ~/.xinitrc
 echo "exec startplasma-x11" >> ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
-clear
+# arch-update
 systemctl --user enable --now arch-update-tray.service
 systemctl --user enable --now arch-update.timer
+mkdir -p .config/autostart/
+touch .config/autostart/arch-update.desktop
+chmod +rw .config/autostart/arch-update.desktop
+echo "[Desktop Entry]" > .config/autostart/arch-update.desktop
+echo "Encoding=UTF-8" >> .config/autostart/arch-update.desktop
+echo "Type=Application" >> .config/autostart/arch-update.desktop
+echo "Name=arch-update" >> .config/autostart/arch-update.desktop
+echo "Exec=arch-update --tray" >> .config/autostart/arch-update.desktop
+echo "RunHook=0" >> .config/autostart/arch-update.desktop
+echo "StartupNotify=false" >> .config/autostart/arch-update.desktop
+echo "Terminal=false" >> .config/autostart/arch-update.desktop
+echo "Hidden=false" >> .config/autostart/arch-update.desktop
 clear
 
 
@@ -637,10 +651,25 @@ rm -r .ssh/
 
 
 
+clear
+# xinitrc
 echo "exec startxfce4" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
+# arch-update
 systemctl --user enable --now arch-update-tray.service
 systemctl --user enable --now arch-update.timer
+mkdir -p .config/autostart/
+touch .config/autostart/arch-update.desktop
+chmod +rw .config/autostart/arch-update.desktop
+echo "[Desktop Entry]" > .config/autostart/arch-update.desktop
+echo "Encoding=UTF-8" >> .config/autostart/arch-update.desktop
+echo "Type=Application" >> .config/autostart/arch-update.desktop
+echo "Name=arch-update" >> .config/autostart/arch-update.desktop
+echo "Exec=arch-update --tray" >> .config/autostart/arch-update.desktop
+echo "RunHook=0" >> .config/autostart/arch-update.desktop
+echo "StartupNotify=false" >> .config/autostart/arch-update.desktop
+echo "Terminal=false" >> .config/autostart/arch-update.desktop
+echo "Hidden=false" >> .config/autostart/arch-update.desktop
 clear
 
 
@@ -694,13 +723,27 @@ rm -r .ssh/
 
 
 
+clear
+# xinitrc
 echo "export XDG_SESSION_TYPE=x11" > ~/.xinitrc
 echo "export GDK_BACKEND=x11" >> ~/.xinitrc
 echo "exec gnome-session" >> ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
-clear
+# arch-update
 systemctl --user enable --now arch-update-tray.service
 systemctl --user enable --now arch-update.timer
+mkdir -p .config/autostart/
+touch .config/autostart/arch-update.desktop
+chmod +rw .config/autostart/arch-update.desktop
+echo "[Desktop Entry]" > .config/autostart/arch-update.desktop
+echo "Encoding=UTF-8" >> .config/autostart/arch-update.desktop
+echo "Type=Application" >> .config/autostart/arch-update.desktop
+echo "Name=arch-update" >> .config/autostart/arch-update.desktop
+echo "Exec=arch-update --tray" >> .config/autostart/arch-update.desktop
+echo "RunHook=0" >> .config/autostart/arch-update.desktop
+echo "StartupNotify=false" >> .config/autostart/arch-update.desktop
+echo "Terminal=false" >> .config/autostart/arch-update.desktop
+echo "Hidden=false" >> .config/autostart/arch-update.desktop
 clear
 
 
@@ -736,10 +779,25 @@ rm -r .ssh/
 
 
 
+clear
+# xinitrc
 echo "exec cinnamon-session" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
+# arch-update
 systemctl --user enable --now arch-update-tray.service
 systemctl --user enable --now arch-update.timer
+mkdir -p .config/autostart/
+touch .config/autostart/arch-update.desktop
+chmod +rw .config/autostart/arch-update.desktop
+echo "[Desktop Entry]" > .config/autostart/arch-update.desktop
+echo "Encoding=UTF-8" >> .config/autostart/arch-update.desktop
+echo "Type=Application" >> .config/autostart/arch-update.desktop
+echo "Name=arch-update" >> .config/autostart/arch-update.desktop
+echo "Exec=arch-update --tray" >> .config/autostart/arch-update.desktop
+echo "RunHook=0" >> .config/autostart/arch-update.desktop
+echo "StartupNotify=false" >> .config/autostart/arch-update.desktop
+echo "Terminal=false" >> .config/autostart/arch-update.desktop
+echo "Hidden=false" >> .config/autostart/arch-update.desktop
 clear
 
 
@@ -776,10 +834,25 @@ rm -r .ssh/
 
 
 
+clear
+# xinitrc
 echo "exec mate-session" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
+# arch-update
 systemctl --user enable --now arch-update-tray.service
 systemctl --user enable --now arch-update.timer
+mkdir -p .config/autostart/
+touch .config/autostart/arch-update.desktop
+chmod +rw .config/autostart/arch-update.desktop
+echo "[Desktop Entry]" > .config/autostart/arch-update.desktop
+echo "Encoding=UTF-8" >> .config/autostart/arch-update.desktop
+echo "Type=Application" >> .config/autostart/arch-update.desktop
+echo "Name=arch-update" >> .config/autostart/arch-update.desktop
+echo "Exec=arch-update --tray" >> .config/autostart/arch-update.desktop
+echo "RunHook=0" >> .config/autostart/arch-update.desktop
+echo "StartupNotify=false" >> .config/autostart/arch-update.desktop
+echo "Terminal=false" >> .config/autostart/arch-update.desktop
+echo "Hidden=false" >> .config/autostart/arch-update.desktop
 clear
 
 
@@ -816,10 +889,25 @@ rm -r .ssh/
 ###############################
 
 
+clear
+# xinitrc
 echo "exec startlxqt" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
+# arch-update
 systemctl --user enable --now arch-update-tray.service
 systemctl --user enable --now arch-update.timer
+mkdir -p .config/autostart/
+touch .config/autostart/arch-update.desktop
+chmod +rw .config/autostart/arch-update.desktop
+echo "[Desktop Entry]" > .config/autostart/arch-update.desktop
+echo "Encoding=UTF-8" >> .config/autostart/arch-update.desktop
+echo "Type=Application" >> .config/autostart/arch-update.desktop
+echo "Name=arch-update" >> .config/autostart/arch-update.desktop
+echo "Exec=arch-update --tray" >> .config/autostart/arch-update.desktop
+echo "RunHook=0" >> .config/autostart/arch-update.desktop
+echo "StartupNotify=false" >> .config/autostart/arch-update.desktop
+echo "Terminal=false" >> .config/autostart/arch-update.desktop
+echo "Hidden=false" >> .config/autostart/arch-update.desktop
 clear
 
 
@@ -887,10 +975,25 @@ rm -r .ssh/
 
 
 
+clear
+# xinitrc
 echo "exec startlxde" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
+# arch-update
 systemctl --user enable --now arch-update-tray.service
 systemctl --user enable --now arch-update.timer
+mkdir -p .config/autostart/
+touch .config/autostart/arch-update.desktop
+chmod +rw .config/autostart/arch-update.desktop
+echo "[Desktop Entry]" > .config/autostart/arch-update.desktop
+echo "Encoding=UTF-8" >> .config/autostart/arch-update.desktop
+echo "Type=Application" >> .config/autostart/arch-update.desktop
+echo "Name=arch-update" >> .config/autostart/arch-update.desktop
+echo "Exec=arch-update --tray" >> .config/autostart/arch-update.desktop
+echo "RunHook=0" >> .config/autostart/arch-update.desktop
+echo "StartupNotify=false" >> .config/autostart/arch-update.desktop
+echo "Terminal=false" >> .config/autostart/arch-update.desktop
+echo "Hidden=false" >> .config/autostart/arch-update.desktop
 clear
 
 
@@ -925,11 +1028,26 @@ rm -r .ssh/
 ###############################
 
 
+clear
+# xinitrc
 echo "export XDG_CURRENT_DESKTOP=Budgie:GNOME" > ~/.xinitrc
 echo "exec budgie-desktop" >> ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
+# arch-update
 systemctl --user enable --now arch-update-tray.service
 systemctl --user enable --now arch-update.timer
+mkdir -p .config/autostart/
+touch .config/autostart/arch-update.desktop
+chmod +rw .config/autostart/arch-update.desktop
+echo "[Desktop Entry]" > .config/autostart/arch-update.desktop
+echo "Encoding=UTF-8" >> .config/autostart/arch-update.desktop
+echo "Type=Application" >> .config/autostart/arch-update.desktop
+echo "Name=arch-update" >> .config/autostart/arch-update.desktop
+echo "Exec=arch-update --tray" >> .config/autostart/arch-update.desktop
+echo "RunHook=0" >> .config/autostart/arch-update.desktop
+echo "StartupNotify=false" >> .config/autostart/arch-update.desktop
+echo "Terminal=false" >> .config/autostart/arch-update.desktop
+echo "Hidden=false" >> .config/autostart/arch-update.desktop
 clear
 
 
