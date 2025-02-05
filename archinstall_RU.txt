@@ -696,10 +696,10 @@ sudo reboot
 #####################
 
 
-pacman -S gnome gnome-extra gnome-tweaks
+pacman -S gnome gnome-extra --noconfirm
 systemctl enable gdm
 clear
-pacman -S  gnome-terminal-transparency
+pacman -S gnome-terminal-transparency gnome-shell-extensions chrome-gnome-shell --noconfirm
 clear
 sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
