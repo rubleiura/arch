@@ -389,8 +389,6 @@ pacman -S samba gvfs gvfs-smb smbclient cifs-utils gvfs-afc gvfs-mtp gvfs-nfs gv
 # ЗВУК
 # Wireplumber Pipewire
 pacman -S wireplumber pipewire-alsa pipewire-jack pipewire-pulse pipewire-v4l2 pipewire-zeroconf gst-plugin-pipewire helvum --noconfirm
-#systemctl --global enable pipewire.socket
-#systemctl --global --force enable wireplumber.service
 clear
 # Alsa
 pacman -S alsa-firmware alsa-plugins alsa-utils sof-firmware --noconfirm
@@ -875,7 +873,7 @@ pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
 clear
 sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
 sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
-systemctl enable lightdm.service cronie.service
+systemctl enable lightdm.service
 sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
 exit
