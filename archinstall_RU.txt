@@ -331,7 +331,6 @@ sed -i "s/udev.log_priority=3/resume=UUID=$(blkid -o value  /dev/sda3|head -n 1|
 sed -i s/'#GRUB_BTRFS_SUBMENUNAME="Arch Linux snapshots"'/'GRUB_BTRFS_SUBMENUNAME="Arch Linux snapshots"'/g /etc/default/grub-btrfs/config
 sed -i s/'#GRUB_BTRFS_TITLE_FORMAT=("date" "snapshot" "type" "description")'/'GRUB_BTRFS_TITLE_FORMAT=("description" "date")'/g /etc/default/grub-btrfs/config
 sed -i 's/ProtectSystem=strict/ProtectSystem=full/' /usr/lib/systemd/system/mkinitcpio-generate-shutdown-ramfs.service
-#sed -i 's/MODULES=()/MODULES=\(btrfs\)/' /etc/mkinitcpio.conf
 sed -i 's/filesystems/plymouth resume btrfs filesystems/' /etc/mkinitcpio.conf
 sed -i 's/fsck/grub-btrfs-overlayfs/' /etc/mkinitcpio.conf
 sed -i 's/ consolefont//' /etc/mkinitcpio.conf
@@ -390,10 +389,8 @@ pacman -S samba gvfs gvfs-smb smbclient cifs-utils gvfs-afc gvfs-mtp gvfs-nfs gv
 # ЗВУК
 # Wireplumber Pipewire
 pacman -S wireplumber pipewire-alsa pipewire-jack pipewire-pulse pipewire-v4l2 pipewire-zeroconf gst-plugin-pipewire helvum --noconfirm
-systemctl --user enable pipewire.socket pipewire-pulse.socket
-systemctl --user --force enable wireplumber.service
-systemctl --global enable pipewire.socket
-systemctl --global --force enable wireplumber.service
+#systemctl --global enable pipewire.socket
+#systemctl --global --force enable wireplumber.service
 clear
 # Alsa
 pacman -S alsa-firmware alsa-plugins alsa-utils sof-firmware --noconfirm
@@ -439,7 +436,7 @@ cd arcolinux-spices/usr/share/arcolinux-spices/scripts
 cd
 pacman -Syy
 clear
-rm -r arcolinux-spices/
+rm -r /arcolinux-spices
 pacman -Syy
 clear
 
@@ -598,6 +595,8 @@ sudo cp ~/.xinitrc /root/.xinitrc
 # arch-update
 systemctl --user enable --now arch-update-tray.service
 systemctl --user enable --now arch-update.timer
+systemctl --user enable pipewire.socket pipewire-pulse.socket
+systemctl --user --force enable wireplumber.service
 mkdir -p .config/autostart/
 touch .config/autostart/arch-update.desktop
 chmod +rw .config/autostart/arch-update.desktop
@@ -658,6 +657,8 @@ sudo cp ~/.xinitrc /root/.xinitrc
 # arch-update
 systemctl --user enable --now arch-update-tray.service
 systemctl --user enable --now arch-update.timer
+systemctl --user enable pipewire.socket pipewire-pulse.socket
+systemctl --user --force enable wireplumber.service
 mkdir -p .config/autostart/
 touch .config/autostart/arch-update.desktop
 chmod +rw .config/autostart/arch-update.desktop
@@ -732,6 +733,8 @@ sudo cp ~/.xinitrc /root/.xinitrc
 # arch-update
 systemctl --user enable --now arch-update-tray.service
 systemctl --user enable --now arch-update.timer
+systemctl --user enable pipewire.socket pipewire-pulse.socket
+systemctl --user --force enable wireplumber.service
 mkdir -p .config/autostart/
 touch .config/autostart/arch-update.desktop
 chmod +rw .config/autostart/arch-update.desktop
@@ -786,6 +789,8 @@ sudo cp ~/.xinitrc /root/.xinitrc
 # arch-update
 systemctl --user enable --now arch-update-tray.service
 systemctl --user enable --now arch-update.timer
+systemctl --user enable pipewire.socket pipewire-pulse.socket
+systemctl --user --force enable wireplumber.service
 mkdir -p .config/autostart/
 touch .config/autostart/arch-update.desktop
 chmod +rw .config/autostart/arch-update.desktop
@@ -807,7 +812,7 @@ clear
 ####################
 
 
-pacman -S mate mate-extra
+pacman -S mate mate-extra --noconfirm
 pacman -S mate-themes mate-tweak brisk-menu gnome-system-tools --noconfirm
 pacman -S plank plank-themes --noconfirm
 pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
@@ -841,6 +846,8 @@ sudo cp ~/.xinitrc /root/.xinitrc
 # arch-update
 systemctl --user enable --now arch-update-tray.service
 systemctl --user enable --now arch-update.timer
+systemctl --user enable pipewire.socket pipewire-pulse.socket
+systemctl --user --force enable wireplumber.service
 mkdir -p .config/autostart/
 touch .config/autostart/arch-update.desktop
 chmod +rw .config/autostart/arch-update.desktop
@@ -896,6 +903,8 @@ sudo cp ~/.xinitrc /root/.xinitrc
 # arch-update
 systemctl --user enable --now arch-update-tray.service
 systemctl --user enable --now arch-update.timer
+systemctl --user enable pipewire.socket pipewire-pulse.socket
+systemctl --user --force enable wireplumber.service
 mkdir -p .config/autostart/
 touch .config/autostart/arch-update.desktop
 chmod +rw .config/autostart/arch-update.desktop
@@ -982,6 +991,8 @@ sudo cp ~/.xinitrc /root/.xinitrc
 # arch-update
 systemctl --user enable --now arch-update-tray.service
 systemctl --user enable --now arch-update.timer
+systemctl --user enable pipewire.socket pipewire-pulse.socket
+systemctl --user --force enable wireplumber.service
 mkdir -p .config/autostart/
 touch .config/autostart/arch-update.desktop
 chmod +rw .config/autostart/arch-update.desktop
@@ -1036,6 +1047,8 @@ sudo cp ~/.xinitrc /root/.xinitrc
 # arch-update
 systemctl --user enable --now arch-update-tray.service
 systemctl --user enable --now arch-update.timer
+systemctl --user enable pipewire.socket pipewire-pulse.socket
+systemctl --user --force enable wireplumber.service
 mkdir -p .config/autostart/
 touch .config/autostart/arch-update.desktop
 chmod +rw .config/autostart/arch-update.desktop
