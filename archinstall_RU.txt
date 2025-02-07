@@ -315,7 +315,7 @@ clear
 
 pacman -Syy
 clear
-pacman -Sy reflector  --noconfirm
+pacman -Sy reflector --needed --noconfirm
 clear
 reflector --verbose -l 10 -p https --sort rate --save /etc/pacman.d/mirrorlist
 clear
@@ -352,64 +352,64 @@ clear
 pacman -Syy
 clear
 # Services
-pacman -S nm-connection-editor modemmanager usb_modeswitch rp-pppoe --noconfirm
+pacman -S nm-connection-editor modemmanager usb_modeswitch rp-pppoe --needed --noconfirm
 clear
-pacman -S bluez bluez-utils --noconfirm
+pacman -S bluez bluez-utils --needed --noconfirm
 clear
-pacman -S cups cups-pdf ghostscript gsfonts --noconfirm
+pacman -S cups cups-pdf ghostscript gsfonts --needed --noconfirm
 clear
-pacman -S cronie haveged openssh --noconfirm
+pacman -S cronie haveged openssh --needed --noconfirm
 clear
-pacman -S mlocate chrony --noconfirm
+pacman -S mlocate chrony --needed --noconfirm
 systemctl enable chrony-wait.service chronyd.service
 clear
 # XDG
-pacman -S xdg-utils xdg-user-dirs --noconfirm
+pacman -S xdg-utils xdg-user-dirs --needed --noconfirm
 clear
 systemctl enable grub-btrfsd.service sshd.service NetworkManager.service ModemManager.service cups.service  cronie.service bluetooth.service haveged.service
 clear
 # Pacman-contrib
-pacman -Syy --noconfirm
-pacman -S pacman-contrib --noconfirm
+pacman -Syy
+pacman -S pacman-contrib --needed --noconfirm
 clear
 # Generic
-pacman -S vim wget usbutils lsof dmidecode dialog --noconfirm
+pacman -S vim wget usbutils lsof dmidecode dialog --needed --noconfirm
 clear
 # Compression
-pacman -S zip unzip unrar p7zip lzop --noconfirm
+pacman -S zip unzip unrar p7zip lzop --needed --noconfirm
 clear
 # Network Tools
-pacman -S rsync traceroute bind-tools --noconfirm
+pacman -S rsync traceroute bind-tools --needed --noconfirm
 clear
 # File System
-pacman -S dosfstools ntfs-3g btrfs-progs exfat-utils gptfdisk fuse2 fuse3 fuseiso --noconfirm
+pacman -S dosfstools ntfs-3g btrfs-progs exfat-utils gptfdisk fuse2 fuse3 fuseiso --needed --noconfirm
 clear
 # SAMBA
-pacman -S samba gvfs gvfs-smb smbclient cifs-utils gvfs-afc gvfs-mtp gvfs-nfs gvfs-dnssd gvfs-goa gvfs-google gvfs-gphoto2 gvfs-onedrive gvfs-wsdd  --noconfirm
+pacman -S samba gvfs gvfs-smb smbclient cifs-utils gvfs-afc gvfs-mtp gvfs-nfs gvfs-dnssd gvfs-goa gvfs-google gvfs-gphoto2 gvfs-onedrive gvfs-wsdd --needed --noconfirm
 # ЗВУК
 # Wireplumber Pipewire
-pacman -S wireplumber pipewire-alsa pipewire-jack pipewire-pulse pipewire-v4l2 pipewire-zeroconf gst-plugin-pipewire helvum --noconfirm
+pacman -S wireplumber pipewire-alsa pipewire-jack pipewire-pulse pipewire-v4l2 pipewire-zeroconf gst-plugin-pipewire helvum --needed --noconfirm
 clear
 # Alsa
-pacman -S alsa-firmware alsa-plugins alsa-utils sof-firmware --noconfirm
+pacman -S alsa-firmware alsa-plugins alsa-utils sof-firmware --needed --noconfirm
 clear
 # GStreamer
-pacman -S gst-libav gst-plugins-bad gst-plugins-base gst-plugins-ugly gst-plugin-pipewire gst-plugin-va --noconfirm
+pacman -S gst-libav gst-plugins-bad gst-plugins-base gst-plugins-ugly gst-plugin-pipewire gst-plugin-va --needed --noconfirm
 clear
 # Firewalld
 pacman -S firewalld python-capng python-pyqt5 --needed --noconfirm
 systemctl enable firewalld.service
 clear
 # MAN
-pacman -S man-db most man-pages man-pages-ru yelp xorg-xman --noconfirm
+pacman -S man-db most man-pages man-pages-ru yelp xorg-xman --needed --noconfirm
 # XORG
 pacman -S xorg
 clear
 pacman -S xorg-drivers
 clear
-pacman -S xorg-apps --noconfirm
+pacman -S xorg-apps --needed --noconfirm
 clear
-pacman -S xorg-xinit --noconfirm 
+pacman -S xorg-xinit --needed --noconfirm 
 clear
 
 
@@ -481,7 +481,7 @@ clear
 clear
 pacman -Syy
 clear
-pacman -S arcolinux-meta-btrfs-snapper snapper-tools btrfsmaintenance  --needed  --noconfirm
+pacman -S arcolinux-meta-btrfs-snapper snapper-tools btrfsmaintenance --needed --noconfirm
 clear
 
 
@@ -495,7 +495,7 @@ clear
 clear
 pacman -Syy
 clear
-pacman -S arcolinux-meta-btrfs-timeshift  --noconfirm
+pacman -S arcolinux-meta-btrfs-timeshift --needed --noconfirm
 clear
 
 
@@ -507,13 +507,13 @@ clear
 
 
 
-pacman -S arcolinux-meta-apps --noconfirm
+pacman -S arcolinux-meta-apps --needed --noconfirm
 clear
-pacman -S mkinitcpio-firmware --noconfirm
+pacman -S mkinitcpio-firmware --needed --noconfirm
 clear
-pacman -S update-grub --noconfirm
+pacman -S update-grub --needed --noconfirm
 clear
-pacman -S arch-update --noconfirm
+pacman -S arch-update --needed --noconfirm
 clear
 
 
@@ -619,7 +619,7 @@ clear
 
 pacman -S xfce4 xfce4-goodies --noconfirm
 clear
-pacman -S mugshot pavucontrol archlinux-xdg-menu ttf-droid ttf-dejavu alacarte network-manager-applet --noconfirm
+pacman -S mugshot pavucontrol archlinux-xdg-menu ttf-droid ttf-dejavu alacarte network-manager-applet --needed --noconfirm
 update-menus
 pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
 clear
@@ -695,10 +695,10 @@ sudo reboot
 #####################
 
 
-pacman -S gnome gnome-extra --noconfirm
+pacman -S gnome gnome-extra --needed --noconfirm
 systemctl enable gdm
 clear
-pacman -S gnome-terminal-transparency gnome-shell-extensions chrome-gnome-shell --noconfirm
+pacman -S gnome-terminal-transparency gnome-shell-extensions chrome-gnome-shell --needed --noconfirm
 clear
 sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
@@ -755,7 +755,7 @@ clear
 
 
 
-pacman -S lightdm lightdm-webkit2-greeter lightdm-webkit-theme-aether cinnamon cinnamon-translations metacity  gnome-terminal blueberry gnome-screenshot gnome-keyring system-config-printer iso-flag-png --noconfirm
+pacman -S lightdm lightdm-webkit2-greeter lightdm-webkit-theme-aether cinnamon cinnamon-translations metacity  gnome-terminal blueberry gnome-screenshot gnome-keyring system-config-printer iso-flag-png --needed --noconfirm
 sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-webkit2-greeter'/g /etc/lightdm/lightdm.conf
 sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
 #sed -i s/'webkit_theme        = antergos'/'webkit_theme        = litarvan'/g /etc/lightdm/lightdm-webkit2-greeter.conf
@@ -810,9 +810,9 @@ clear
 ####################
 
 
-pacman -S mate mate-extra --noconfirm
-pacman -S mate-themes mate-tweak brisk-menu gnome-system-tools --noconfirm
-pacman -S plank plank-themes --noconfirm
+pacman -S mate mate-extra --needed --noconfirm
+pacman -S mate-themes mate-tweak brisk-menu gnome-system-tools --needed --noconfirm
+pacman -S plank plank-themes --needed --noconfirm
 pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
 sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
 sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
@@ -945,15 +945,13 @@ mv -i Nuvola_Russian_flag.svg ru.svg
 
 pacman -Syy
 clear
-pacman -Syu --noconfirm
+pacman -S lxde leafpad openbox ttf-dejavu ttf-liberation obconf pavucontrol alsa-utils xfce4-notifyd --needed --noconfirm
 clear
-pacman -S lxde leafpad openbox ttf-dejavu ttf-liberation obconf pavucontrol alsa-utils xfce4-notifyd --noconfirm
+pacman -S xscreensaver picom libstatgrab libsysstat arc-gtk-theme mugshot nm-tray dunst --needed --noconfirm
 clear
-pacman -S xscreensaver picom libstatgrab libsysstat arc-gtk-theme mugshot nm-tray dunst --noconfirm
+pacman -Sy lxqt-archiver ffmpegthumbnailer exaile --needed --noconfirm
 clear
-pacman -Sy lxqt-archiver ffmpegthumbnailer exaile --noconfirm
-clear
-pacman -S thunar-archive-plugin  thunar-media-tags-plugin thunar-shares-plugin ffmpegthumbnailer libgsf udiskie  --noconfirm
+pacman -S thunar-archive-plugin  thunar-media-tags-plugin thunar-shares-plugin ffmpegthumbnailer libgsf udiskie --needed --noconfirm
 update-menus
 clear
 pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
@@ -1012,10 +1010,10 @@ clear
 
 
 pacman -Syy
-pacman -S budgie-desktop --noconfirm
-pacman -S gnome gnome-control-center --noconfirm
-pacman -S materia-gtk-theme papirus-icon-theme i3lock --noconfirm
-pacman -S lightdm lightdm-gtk-greeter --noconfirm
+pacman -S budgie-desktop --needed --noconfirm
+pacman -S gnome gnome-control-center --needed --noconfirm
+pacman -S materia-gtk-theme papirus-icon-theme i3lock --needed --noconfirm
+pacman -S lightdm lightdm-gtk-greeter --needed --noconfirm
 sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
 systemctl enable lightdm
 clear
@@ -1081,7 +1079,7 @@ clear
 
 sudo pacman -Syy
 sudo pacman -Syu --noconfirm
-sudo pacman -Sy zsh git hyfetch fastfetch --noconfirm
+sudo pacman -Sy zsh git hyfetch fastfetch --needed --noconfirm
 curl -L http://install.ohmyz.sh | sh
 chsh -s /bin/zsh
 clear
@@ -1122,9 +1120,9 @@ source ~/.zshrc
 clear
 sudo pacman -S ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru atril btop cpu-x grub-customizer hardinfo2 stacer cherrytree htop seahorse system-monitoring-center octopi smplayer strawberry doublecmd-qt6 nomacs ocs-url archlinux-wallpaper octopi --needed --noconfirm
 clear
-sudo pacman -S yay --noconfirm
+sudo pacman -S yay --needed --noconfirm
 clear
-yay -S radiotray-ng --noconfirm
+yay -S radiotray-ng --needed --noconfirm
 clear
 sudo reboot
 
@@ -1135,9 +1133,9 @@ sudo reboot
 ##########
 
 
-sudo pacman -S arc-gtk-theme arc-icon-theme gnome-system-tools numix-gtk-theme numix-icon-theme materia-gtk-theme papirus-icon-theme --noconfirm
+sudo pacman -S arc-gtk-theme arc-icon-theme gnome-system-tools numix-gtk-theme numix-icon-theme materia-gtk-theme papirus-icon-theme --needed --noconfirm
 clear
-yay -S tango-icon-theme gnome-themes-standard light-themes grub2-theme-arch-leap --noconfirm
+yay -S tango-icon-theme gnome-themes-standard light-themes grub2-theme-arch-leap --needed --noconfirm
 clear
 sudo reboot
 
