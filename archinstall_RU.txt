@@ -28,9 +28,9 @@ echo "ILoveCandy" >> /etc/pacman.conf
 time_zone=$(curl -s https://ipinfo.io/timezone)
 timedatectl set-timezone $time_zone
 pacman -Syy
-pacman -Sy archlinux-keyring neofetch inxi --noconfirm
+pacman -Sy archlinux-keyring fastfetch inxi --noconfirm
 clear
-neofetch
+fastfetch
 date
 sudo inxi -M
 sudo inxi -I
@@ -402,6 +402,9 @@ systemctl enable firewalld.service
 clear
 # MAN
 pacman -S man-db most man-pages man-pages-ru yelp xorg-xman --needed --noconfirm
+clear
+# Утилиты вывода системной информации
+pacman -S hyfetch fastfetch --needed --noconfirm
 # XORG
 pacman -S xorg
 clear
@@ -1079,7 +1082,7 @@ clear
 
 sudo pacman -Syy
 sudo pacman -Syu --noconfirm
-sudo pacman -Sy zsh git hyfetch fastfetch --needed --noconfirm
+sudo pacman -Sy zsh git --needed --noconfirm
 curl -L http://install.ohmyz.sh | sh
 chsh -s /bin/zsh
 clear
