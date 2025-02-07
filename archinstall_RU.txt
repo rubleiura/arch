@@ -481,7 +481,7 @@ clear
 clear
 pacman -Syy
 clear
-pacman -S arcolinux-meta-btrfs-snapper snapper-tools btrfsmaintenance smartmontools lsb-release  --needed  --noconfirm
+pacman -S arcolinux-meta-btrfs-snapper snapper-tools btrfsmaintenance  --needed  --noconfirm
 clear
 
 
