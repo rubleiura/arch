@@ -622,7 +622,7 @@ clear
 
 pacman -S xfce4 xfce4-goodies --needed --noconfirm
 clear
-pacman -S mugshot pavucontrol archlinux-xdg-menu ttf-droid ttf-dejavu alacarte network-manager-applet --needed --noconfirm
+pacman -S mugshot pavucontrol archlinux-xdg-menu xdg-desktop-portal-gtk ttf-droid ttf-dejavu alacarte network-manager-applet --needed --noconfirm
 update-menus
 pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
 clear
