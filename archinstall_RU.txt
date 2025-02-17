@@ -382,7 +382,7 @@ clear
 pacman -S rsync traceroute bind-tools --needed --noconfirm
 clear
 # File System
-pacman -S dosfstools ntfs-3g btrfs-progs exfat-utils gptfdisk fuse2 fuse3 fuseiso --needed --noconfirm
+pacman -S dosfstools ntfs-3g btrfs-progs exfatprogs gptfdisk fuse2 fuse3 fuseiso --needed --noconfirm
 clear
 # SAMBA
 pacman -S samba gvfs gvfs-smb smbclient cifs-utils gvfs-afc gvfs-mtp gvfs-nfs gvfs-dnssd gvfs-goa gvfs-google gvfs-gphoto2 gvfs-onedrive gvfs-wsdd --needed --noconfirm
