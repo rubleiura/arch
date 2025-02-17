@@ -570,6 +570,8 @@ clear
 pacman -S sddm plasma-meta kde-applications-meta flatpak --needed --noconfirm
 systemctl enable sddm
 clear
+pacman -S xdg-desktop-portal-kde --needed --noconfirm
+clear
 sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
 exit
