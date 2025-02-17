@@ -628,7 +628,7 @@ pacman -S mugshot pavucontrol archlinux-xdg-menu xdg-desktop-portal-gtk ttf-droi
 update-menus
 pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
 clear
-pacman -Sy blueman engrampa ffmpegthumbnailer libgsf udiskie --needed --noconfirm
+pacman -Sy blueman engrampa ffmpegthumbnailer libgsf udiskie evince --needed --noconfirm
 clear
 sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
 sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
@@ -703,7 +703,7 @@ sudo reboot
 pacman -S gnome gnome-extra --needed --noconfirm
 systemctl enable gdm
 clear
-pacman -S gnome-terminal-transparency gnome-shell-extensions chrome-gnome-shell --needed --noconfirm
+pacman -S gnome-terminal-transparency gnome-shell-extensions chrome-gnome-shell evince --needed --noconfirm
 clear
 sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
@@ -1123,7 +1123,7 @@ source ~/.zshrc
 
 
 clear
-sudo pacman -S ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru atril btop cpu-x grub-customizer hardinfo2 stacer cherrytree htop seahorse system-monitoring-center octopi smplayer strawberry doublecmd-qt6 nomacs ocs-url archlinux-wallpaper octopi --needed --noconfirm
+sudo pacman -S ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 stacer cherrytree htop seahorse system-monitoring-center octopi smplayer strawberry doublecmd-qt6 nomacs ocs-url archlinux-wallpaper octopi --needed --noconfirm
 clear
 sudo pacman -S yay --needed --noconfirm
 clear
