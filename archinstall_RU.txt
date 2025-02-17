@@ -628,7 +628,7 @@ pacman -S mugshot pavucontrol archlinux-xdg-menu xdg-desktop-portal-gtk ttf-droi
 update-menus
 pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
 clear
-pacman -Sy blueman xarchiver ffmpegthumbnailer libgsf udiskie --needed --noconfirm
+pacman -Sy blueman engrampa ffmpegthumbnailer libgsf udiskie --needed --noconfirm
 clear
 sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
 sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
