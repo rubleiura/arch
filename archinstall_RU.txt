@@ -323,7 +323,7 @@ reflector --verbose -l 10 -p https --sort rate --save /etc/pacman.d/mirrorlist
 clear
 pacman -Syy
 clear
-pacman -Sy  linux-lts linux-lts-headers linux-firmware networkmanager networkmanager-openconnect networkmanager-openvpn networkmanager-pptp networkmanager-vpnc networkmanager-l2tp networkmanager-strongswan network-manager-sstp grub grub-btrfs plymouth --needed --noconfirm
+pacman -Sy  linux-lts linux-lts-headers linux-firmware networkmanager networkmanager-openconnect networkmanager-openvpn networkmanager-pptp networkmanager-vpnc networkmanager-l2tp networkmanager-strongswan network-manager-sstp wpa_supplicant grub grub-btrfs os-prober plymouth --needed --noconfirm
 clear
 grub-install /dev/sda
 grub-install --target=x86_64-efi --removable
@@ -448,6 +448,9 @@ pacman -S man-db most man-pages man-pages-ru yelp xorg-xman --needed --noconfirm
 clear
 # Утилиты вывода системной информации
 pacman -S hyfetch fastfetch --needed --noconfirm
+clear
+# Прочие
+pacman -S acpi acpid b43-fwcutter cpupower dmraid dnsmasq ecryptfs-utils f2fs-tools glibc-locales inetutils jfsutils libdvdcss logrotate lvm2 memtest86+ memtest86+-efi mkinitcpio-openswap nfs-utils nss-mdns open-vm-tools sysfsutils vi wireless-regdb xfsprogs  --needed --noconfirm
 clear
 # XORG
 pacman -S xorg
@@ -623,11 +626,15 @@ clear
 
 pacman -S xfce4 xfce4-goodies --needed --noconfirm
 clear
-pacman -S mugshot pavucontrol archlinux-xdg-menu xdg-desktop-portal-gtk ttf-droid ttf-dejavu menulibre network-manager-applet --needed --noconfirm
+pacman -S mugshot pavucontrol archlinux-xdg-menu xdg-desktop-portal-gtk menulibre network-manager-applet --needed --noconfirm
 update-menus
 pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
 clear
 pacman -Sy blueman engrampa ffmpegthumbnailer libgsf udiskie evince --needed --noconfirm
+clear
+pacman -S apparmor catfish galculator gimp libopenraw mtpfs ntp numlockx perl-file-mimeinfo pidgin powertop unace xcursor-simpleandsoft xcursor-vanilla-dmz-aa gcolor3 xiccd  --needed --noconfirm
+clear
+pacman -S adobe-source-sans-fonts noto-fonts noto-fonts-cjk terminus-font ttf-inconsolata ttf-indic-otf --needed --noconfirm
 clear
 sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
 sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
