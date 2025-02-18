@@ -263,6 +263,8 @@ pacman -Syy
 clear
 date
 lsblk
+btrfs subvolume list /
+
 
 
 
@@ -446,6 +448,7 @@ pacman -S man-db most man-pages man-pages-ru yelp xorg-xman --needed --noconfirm
 clear
 # Утилиты вывода системной информации
 pacman -S hyfetch fastfetch --needed --noconfirm
+clear
 # XORG
 pacman -S xorg
 clear
@@ -984,18 +987,6 @@ yay -S radiotray-ng --needed --noconfirm
 clear
 sudo reboot
 
-
-
-##########
-## Темы ##
-##########
-
-
-sudo pacman -S arc-gtk-theme arc-icon-theme gnome-system-tools numix-gtk-theme numix-icon-theme materia-gtk-theme papirus-icon-theme --needed --noconfirm
-clear
-yay -S tango-icon-theme gnome-themes-standard light-themes grub2-theme-arch-leap --needed --noconfirm
-clear
-sudo reboot
 
 
 
