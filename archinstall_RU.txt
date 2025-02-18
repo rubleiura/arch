@@ -342,6 +342,47 @@ clear
 
 
 
+
+########################
+##  HOST, ПАРОЛЬ ROOT ##
+########################
+
+
+
+echo "Sony" > /etc/hostname
+echo "127.0.0.1   localhost" > /etc/hosts
+echo ": :1        localhost" >> /etc/hosts
+echo "127.0.1.1   Sony.localdomain   Sony" >> /etc/hosts
+passwd
+clear
+
+
+
+
+###############################
+## ПОЛЬЗОВАТЕЛЬ И ЕГО ПАРОЛЬ ##
+###############################
+
+
+
+useradd login -m -c "User Name" -s /bin/bash
+usermod -aG wheel,users login
+sed -i s/'# %wheel ALL=(ALL:ALL) ALL'/'%wheel ALL=(ALL:ALL) ALL'/g /etc/sudoers
+passwd login
+clear
+
+
+
+
+
+
+#############################################
+### УСТАНОВКА БАЗОВОЙ СИСТЕМЫ ЗАВЕРШЕНА #####
+#############################################
+
+
+
+
 #######################
 ## СИСТЕМНЫЕ УТИЛИТЫ ##
 #######################
@@ -516,40 +557,8 @@ pacman -S mkinitcpio-firmware --needed --noconfirm
 clear
 pacman -S update-grub --needed --noconfirm
 clear
-pacman -S arch-update --needed --noconfirm
+pacman -S pamac --needed --noconfirm
 clear
-
-
-
-########################
-##  HOST, ПАРОЛЬ ROOT ##
-########################
-
-
-
-echo "Sony" > /etc/hostname
-echo "127.0.0.1   localhost" > /etc/hosts
-echo ": :1        localhost" >> /etc/hosts
-echo "127.0.1.1   Sony.localdomain   Sony" >> /etc/hosts
-passwd
-clear
-
-
-
-
-###############################
-## ПОЛЬЗОВАТЕЛЬ И ЕГО ПАРОЛЬ ##
-###############################
-
-
-
-useradd login -m -c "User Name" -s /bin/bash
-usermod -aG wheel,users login
-sed -i s/'# %wheel ALL=(ALL:ALL) ALL'/'%wheel ALL=(ALL:ALL) ALL'/g /etc/sudoers
-passwd login
-clear
-
-
 
 
 
@@ -595,24 +604,11 @@ clear
 echo "export DESKTOP_SESSION=plasma" > ~/.xinitrc
 echo "exec startplasma-x11" >> ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
-# arch-update
-systemctl --user enable --now arch-update-tray.service
-systemctl --user enable --now arch-update.timer
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
-mkdir -p .config/autostart/
-touch .config/autostart/arch-update.desktop
-chmod +rw .config/autostart/arch-update.desktop
-echo "[Desktop Entry]" > .config/autostart/arch-update.desktop
-echo "Encoding=UTF-8" >> .config/autostart/arch-update.desktop
-echo "Type=Application" >> .config/autostart/arch-update.desktop
-echo "Name=arch-update" >> .config/autostart/arch-update.desktop
-echo "Exec=arch-update --tray" >> .config/autostart/arch-update.desktop
-echo "RunHook=0" >> .config/autostart/arch-update.desktop
-echo "StartupNotify=false" >> .config/autostart/arch-update.desktop
-echo "Terminal=false" >> .config/autostart/arch-update.desktop
-echo "Hidden=false" >> .config/autostart/arch-update.desktop
 clear
+
+
 
 
 #####################
@@ -657,24 +653,10 @@ clear
 # xinitrc
 echo "exec startxfce4" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
-# arch-update
-systemctl --user enable --now arch-update-tray.service
-systemctl --user enable --now arch-update.timer
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
-mkdir -p .config/autostart/
-touch .config/autostart/arch-update.desktop
-chmod +rw .config/autostart/arch-update.desktop
-echo "[Desktop Entry]" > .config/autostart/arch-update.desktop
-echo "Encoding=UTF-8" >> .config/autostart/arch-update.desktop
-echo "Type=Application" >> .config/autostart/arch-update.desktop
-echo "Name=arch-update" >> .config/autostart/arch-update.desktop
-echo "Exec=arch-update --tray" >> .config/autostart/arch-update.desktop
-echo "RunHook=0" >> .config/autostart/arch-update.desktop
-echo "StartupNotify=false" >> .config/autostart/arch-update.desktop
-echo "Terminal=false" >> .config/autostart/arch-update.desktop
-echo "Hidden=false" >> .config/autostart/arch-update.desktop
 clear
+
 
 
 
@@ -733,24 +715,10 @@ echo "export XDG_SESSION_TYPE=x11" > ~/.xinitrc
 echo "export GDK_BACKEND=x11" >> ~/.xinitrc
 echo "exec gnome-session" >> ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
-# arch-update
-systemctl --user enable --now arch-update-tray.service
-systemctl --user enable --now arch-update.timer
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
-mkdir -p .config/autostart/
-touch .config/autostart/arch-update.desktop
-chmod +rw .config/autostart/arch-update.desktop
-echo "[Desktop Entry]" > .config/autostart/arch-update.desktop
-echo "Encoding=UTF-8" >> .config/autostart/arch-update.desktop
-echo "Type=Application" >> .config/autostart/arch-update.desktop
-echo "Name=arch-update" >> .config/autostart/arch-update.desktop
-echo "Exec=arch-update --tray" >> .config/autostart/arch-update.desktop
-echo "RunHook=0" >> .config/autostart/arch-update.desktop
-echo "StartupNotify=false" >> .config/autostart/arch-update.desktop
-echo "Terminal=false" >> .config/autostart/arch-update.desktop
-echo "Hidden=false" >> .config/autostart/arch-update.desktop
 clear
+
 
 
 
@@ -789,24 +757,10 @@ clear
 # xinitrc
 echo "exec cinnamon-session" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
-# arch-update
-systemctl --user enable --now arch-update-tray.service
-systemctl --user enable --now arch-update.timer
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
-mkdir -p .config/autostart/
-touch .config/autostart/arch-update.desktop
-chmod +rw .config/autostart/arch-update.desktop
-echo "[Desktop Entry]" > .config/autostart/arch-update.desktop
-echo "Encoding=UTF-8" >> .config/autostart/arch-update.desktop
-echo "Type=Application" >> .config/autostart/arch-update.desktop
-echo "Name=arch-update" >> .config/autostart/arch-update.desktop
-echo "Exec=arch-update --tray" >> .config/autostart/arch-update.desktop
-echo "RunHook=0" >> .config/autostart/arch-update.desktop
-echo "StartupNotify=false" >> .config/autostart/arch-update.desktop
-echo "Terminal=false" >> .config/autostart/arch-update.desktop
-echo "Hidden=false" >> .config/autostart/arch-update.desktop
 clear
+
 
 
 
@@ -846,24 +800,10 @@ clear
 # xinitrc
 echo "exec mate-session" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
-# arch-update
-systemctl --user enable --now arch-update-tray.service
-systemctl --user enable --now arch-update.timer
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
-mkdir -p .config/autostart/
-touch .config/autostart/arch-update.desktop
-chmod +rw .config/autostart/arch-update.desktop
-echo "[Desktop Entry]" > .config/autostart/arch-update.desktop
-echo "Encoding=UTF-8" >> .config/autostart/arch-update.desktop
-echo "Type=Application" >> .config/autostart/arch-update.desktop
-echo "Name=arch-update" >> .config/autostart/arch-update.desktop
-echo "Exec=arch-update --tray" >> .config/autostart/arch-update.desktop
-echo "RunHook=0" >> .config/autostart/arch-update.desktop
-echo "StartupNotify=false" >> .config/autostart/arch-update.desktop
-echo "Terminal=false" >> .config/autostart/arch-update.desktop
-echo "Hidden=false" >> .config/autostart/arch-update.desktop
 clear
+
 
 
 
@@ -903,24 +843,11 @@ clear
 # xinitrc
 echo "exec startlxqt" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
-# arch-update
-systemctl --user enable --now arch-update-tray.service
-systemctl --user enable --now arch-update.timer
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
-mkdir -p .config/autostart/
-touch .config/autostart/arch-update.desktop
-chmod +rw .config/autostart/arch-update.desktop
-echo "[Desktop Entry]" > .config/autostart/arch-update.desktop
-echo "Encoding=UTF-8" >> .config/autostart/arch-update.desktop
-echo "Type=Application" >> .config/autostart/arch-update.desktop
-echo "Name=arch-update" >> .config/autostart/arch-update.desktop
-echo "Exec=arch-update --tray" >> .config/autostart/arch-update.desktop
-echo "RunHook=0" >> .config/autostart/arch-update.desktop
-echo "StartupNotify=false" >> .config/autostart/arch-update.desktop
-echo "Terminal=false" >> .config/autostart/arch-update.desktop
-echo "Hidden=false" >> .config/autostart/arch-update.desktop
 clear
+
+
 
 
 ########## Флаги ##############
@@ -989,24 +916,11 @@ clear
 # xinitrc
 echo "exec startlxde" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
-# arch-update
-systemctl --user enable --now arch-update-tray.service
-systemctl --user enable --now arch-update.timer
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
-mkdir -p .config/autostart/
-touch .config/autostart/arch-update.desktop
-chmod +rw .config/autostart/arch-update.desktop
-echo "[Desktop Entry]" > .config/autostart/arch-update.desktop
-echo "Encoding=UTF-8" >> .config/autostart/arch-update.desktop
-echo "Type=Application" >> .config/autostart/arch-update.desktop
-echo "Name=arch-update" >> .config/autostart/arch-update.desktop
-echo "Exec=arch-update --tray" >> .config/autostart/arch-update.desktop
-echo "RunHook=0" >> .config/autostart/arch-update.desktop
-echo "StartupNotify=false" >> .config/autostart/arch-update.desktop
-echo "Terminal=false" >> .config/autostart/arch-update.desktop
-echo "Hidden=false" >> .config/autostart/arch-update.desktop
 clear
+
+
 
 
 ######################
@@ -1045,72 +959,11 @@ clear
 echo "export XDG_CURRENT_DESKTOP=Budgie:GNOME" > ~/.xinitrc
 echo "exec budgie-desktop" >> ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
-# arch-update
-systemctl --user enable --now arch-update-tray.service
-systemctl --user enable --now arch-update.timer
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
-mkdir -p .config/autostart/
-touch .config/autostart/arch-update.desktop
-chmod +rw .config/autostart/arch-update.desktop
-echo "[Desktop Entry]" > .config/autostart/arch-update.desktop
-echo "Encoding=UTF-8" >> .config/autostart/arch-update.desktop
-echo "Type=Application" >> .config/autostart/arch-update.desktop
-echo "Name=arch-update" >> .config/autostart/arch-update.desktop
-echo "Exec=arch-update --tray" >> .config/autostart/arch-update.desktop
-echo "RunHook=0" >> .config/autostart/arch-update.desktop
-echo "StartupNotify=false" >> .config/autostart/arch-update.desktop
-echo "Terminal=false" >> .config/autostart/arch-update.desktop
-echo "Hidden=false" >> .config/autostart/arch-update.desktop
 clear
 
 
-
-
-
-###########################################
-################ ZSH ######################
-###########################################
-
-
-
-################################
-##         1 Часть.           ##
-## Установка  Zsh, Oh-My-Zsh, ##
-## Fastfetch, Lolcat, Git     ##
-################################
-
-
-
-sudo pacman -Syy
-sudo pacman -Syu --noconfirm
-sudo pacman -Sy zsh git --needed --noconfirm
-curl -L http://install.ohmyz.sh | sh
-chsh -s /bin/zsh
-clear
-zsh
-
-
-
-
-#####################################
-##          2 Часть.               ##
-## Настройка Oh-My-Zsh и Fastfetch ##
-#####################################
-
-
-clear
-sed -i s/'ZSH_THEME="robbyrussell"'/'ZSH_THEME="agnoster"'/g ~/.zshrc
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
-mv zsh-syntax-highlighting ~/.oh-my-zsh/plugins
-echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
-git clone https://github.com/zsh-users/zsh-autosuggestions
-mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
-sed -i s/'plugins=(git)'/'plugins=(git archlinux extract sudo themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
-clear
-echo "hyfetch" >> ~/.zshrc
-clear
-source ~/.zshrc
 
 
 
@@ -1123,7 +976,7 @@ source ~/.zshrc
 
 
 clear
-sudo pacman -S ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 stacer cherrytree htop seahorse system-monitoring-center octopi smplayer strawberry doublecmd-qt6 nomacs ocs-url archlinux-wallpaper octopi --needed --noconfirm
+sudo pacman -S ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 stacer cherrytree htop seahorse system-monitoring-center  smplayer strawberry doublecmd-qt6 nomacs ocs-url archlinux-wallpaper  --needed --noconfirm
 clear
 sudo pacman -S yay --needed --noconfirm
 clear
@@ -1149,6 +1002,9 @@ sudo reboot
 ############################################################
 ################# FINISH ###################################
 ############################################################
+
+
+
 
 
 
