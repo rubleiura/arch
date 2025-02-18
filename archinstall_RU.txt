@@ -437,7 +437,7 @@ clear
 pacman -S alsa-firmware alsa-plugins alsa-utils sof-firmware --needed --noconfirm
 clear
 # GStreamer
-pacman -S gst-libav gst-plugins-bad gst-plugins-base gst-plugins-ugly gst-plugin-pipewire gst-plugin-va --needed --noconfirm
+pacman -S gst-libav gst-plugins-bad gst-plugins-base gst-plugins-ugly gst-plugin-pipewire gst-plugin-va gstreamer --needed --noconfirm
 clear
 # Firewalld
 pacman -S firewalld python-capng python-pyqt5 --needed --noconfirm
@@ -582,7 +582,7 @@ clear
 
 
 
-pacman -S sddm plasma-meta kde-applications-meta flatpak --needed --noconfirm
+pacman -S sddm plasma-meta kde-applications-meta flatpak pamac-tray-icon-plasma --needed --noconfirm
 systemctl enable sddm
 clear
 pacman -S xdg-desktop-portal-kde --needed --noconfirm
