@@ -315,6 +315,8 @@ clear
 
 
 
+
+clear
 pacman -Syy
 clear
 pacman -Sy reflector --needed --noconfirm
@@ -341,6 +343,8 @@ grub-mkconfig -o /boot/grub/grub.cfg
 clear
 mkinitcpio -P
 clear
+
+
 
 
 
@@ -448,9 +452,6 @@ pacman -S man-db most man-pages man-pages-ru yelp xorg-xman --needed --noconfirm
 clear
 # Утилиты вывода системной информации
 pacman -S hyfetch fastfetch --needed --noconfirm
-clear
-# Прочие
-pacman -S acpi acpid b43-fwcutter cpupower dmraid dnsmasq ecryptfs-utils f2fs-tools glibc-locales inetutils jfsutils libdvdcss logrotate lvm2 memtest86+ memtest86+-efi mkinitcpio-openswap nfs-utils nss-mdns open-vm-tools sysfsutils vi wireless-regdb xfsprogs  --needed --noconfirm
 clear
 # XORG
 pacman -S xorg
@@ -565,6 +566,9 @@ pacman -S update-grub --needed --noconfirm
 clear
 pacman -S pamac --needed --noconfirm
 clear
+# Прочие
+pacman -S acpi acpid b43-fwcutter cpupower dmraid dnsmasq ecryptfs-utils f2fs-tools glibc-locales inetutils jfsutils libdvdcss logrotate lvm2 memtest86+ memtest86+-efi mkinitcpio-openswap nfs-utils nss-mdns open-vm-tools sysfsutils vi wireless-regdb xfsprogs  --needed --noconfirm
+clear
 
 
 
@@ -666,14 +670,7 @@ sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clear
-
-
-
-
-########## Флаги ##############
-
-
-clear
+## Флаги ##
 mkdir -p ~/.local/share/xfce4/xkb/flags/
 cd ~/.local/share/xfce4/xkb/flags/
 wget https://upload.wikimedia.org/wikipedia/commons/5/53/Nuvola_USA_flag.svg
@@ -682,7 +679,7 @@ mv -i Nuvola_USA_flag.svg us.svg
 mv -i Nuvola_Russian_flag.svg ru.svg
 cd
 clear
-sudo reboot
+
 
 
 
