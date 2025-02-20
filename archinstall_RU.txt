@@ -388,6 +388,52 @@ clear
 
 
 
+################################
+## ДОПОЛНИТЕЛЬНЫЕ РЕПОЗИТОРИИ ##
+################################
+
+######################
+## ARCOLINUX-SPICES ##
+######################
+
+
+
+clear
+pacman -Syy
+pacman -S git --needed --noconfirm
+git clone https://github.com/arcolinux/arcolinux-spices
+cd arcolinux-spices/usr/share/arcolinux-spices/scripts
+./get-the-keys-and-repos.sh
+cd
+pacman -Syy
+clear
+rm -r /arcolinux-spices
+pacman -Syy
+clear
+
+
+
+
+#################
+## Chaotic-AUR ##
+#################
+
+
+clear
+pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
+pacman-key --lsign-key 3056513887B78AEB
+pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --noconfirm
+pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
+echo "#" >> /etc/pacman.conf
+echo "#" >> /etc/pacman.conf
+echo "### Chaotic-AUR #####" >> /etc/pacman.conf
+echo "[chaotic-aur]" >> /etc/pacman.conf
+echo "Include = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
+#echo "GTK_THEME=Adwaita:dark" >> /etc/environment
+pacman -Syy
+clear
+
+
 
 #######################
 ## СИСТЕМНЫЕ УТИЛИТЫ ##
@@ -466,56 +512,6 @@ clear
 
 
 
-################################
-## ДОПОЛНИТЕЛЬНЫЕ РЕПОЗИТОРИИ ##
-################################
-
-######################
-## ARCOLINUX-SPICES ##
-######################
-
-
-
-clear
-pacman -Syy
-pacman -S git --needed --noconfirm
-git clone https://github.com/arcolinux/arcolinux-spices
-cd arcolinux-spices/usr/share/arcolinux-spices/scripts
-./get-the-keys-and-repos.sh
-cd
-pacman -Syy
-clear
-rm -r /arcolinux-spices
-pacman -Syy
-clear
-
-
-
-
-#################
-## Chaotic-AUR ##
-#################
-
-
-clear
-pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
-pacman-key --lsign-key 3056513887B78AEB
-pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --noconfirm
-pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
-echo "#" >> /etc/pacman.conf
-echo "#" >> /etc/pacman.conf
-echo "### Chaotic-AUR #####" >> /etc/pacman.conf
-echo "[chaotic-aur]" >> /etc/pacman.conf
-echo "Include = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
-#echo "GTK_THEME=Adwaita:dark" >> /etc/environment
-pacman -Syy
-clear
-
-
-
-
-
-
 ########################################################
 ########## ПРОГРАММЫ РЕЗЕРВНОГО КОПИРОВАНИЯ ############
 ########################################################
@@ -565,6 +561,10 @@ clear
 pacman -S update-grub --needed --noconfirm
 clear
 pacman -S pamac --needed --noconfirm
+clear
+pacman -S rate-mirrors --needed --noconfirm
+clear
+pacman -S yay --needed --noconfirm
 clear
 # Прочие
 pacman -S acpi acpid b43-fwcutter cpupower dmraid dnsmasq ecryptfs-utils f2fs-tools glibc-locales inetutils jfsutils libdvdcss logrotate lvm2 memtest86+ memtest86+-efi mkinitcpio-openswap nfs-utils nss-mdns open-vm-tools sysfsutils vi wireless-regdb xfsprogs  --needed --noconfirm
@@ -982,10 +982,9 @@ clear
 
 
 
+sudo pacman -Syy
 clear
 sudo pacman -S ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 stacer cherrytree htop seahorse system-monitoring-center  smplayer strawberry doublecmd-qt6 nomacs ocs-url archlinux-wallpaper  --needed --noconfirm
-clear
-sudo pacman -S yay --needed --noconfirm
 clear
 yay -S radiotray-ng --needed --noconfirm
 clear
