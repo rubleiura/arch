@@ -586,10 +586,30 @@ clear
 
 
 
-pacman -S sddm plasma-meta kde-applications-meta flatpak pamac-tray-icon-plasma --needed --noconfirm
+pacman -S sddm plasma --needed --noconfirm
 systemctl enable sddm
 clear
-pacman -S xdg-desktop-portal-kde --needed --noconfirm
+# kde-system
+pacman -S dolphin khelpcenter ksystemlog --needed --noconfirm
+clear
+# kde-utilities
+pacman -S ark kate kcalc keditbookmarks kfind konsole kwalletmanager yakuake --needed --noconfirm
+clear
+# kde-multimedia
+pacman -S audiocd-kio elisa ffmpegthumbs --needed --noconfirm
+clear
+# kde-graphics
+pacman -S gwenview kamera kdegraphics-thumbnailers okular skanlite --needed --noconfirm
+clear
+# kde-network
+pacman -S kdeconnect kdenetwork-filesharing kio-extras --needed --noconfirm
+clear
+pacman -S breeze5 dolphin-plugins filelight fwupd gtkmm3 kaccounts-providers kimageformats kwayland-integration lib32-libcanberra mtpfs noto-fonts-cjk ntp numlockx perl-file-mimeinfo power-profiles-daemon powertop python-pillow python-pip python-pysmbc python-reportlab qemu-guest-agent s-nail spice-vdagent sshfs system-config-printer udiskie unarchiver --needed --noconfirm
+clear
+pacman -S gnome-themes-extra --needed --noconfirm
+clear
+# fonts
+pacman -S adobe-source-sans-fonts terminus-font ttf-dejavu ttf-droid ttf-inconsolata ttf-indic-otf ttf-liberation --needed --noconfirm
 clear
 sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
@@ -616,6 +636,10 @@ echo "exec startplasma-x11" >> ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
+clear
+yay -Syy
+clear
+yay -S pamac-tray-icon-plasma --needed --noconfirm
 clear
 
 
