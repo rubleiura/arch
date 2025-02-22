@@ -758,13 +758,25 @@ clear
 ########################
 
 
-
-pacman -S lightdm lightdm-webkit2-greeter lightdm-webkit-theme-aether cinnamon cinnamon-translations metacity  gnome-terminal blueberry gnome-screenshot gnome-keyring system-config-printer iso-flag-png --needed --noconfirm
-sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-webkit2-greeter'/g /etc/lightdm/lightdm.conf
-sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
-#sed -i s/'webkit_theme        = antergos'/'webkit_theme        = litarvan'/g /etc/lightdm/lightdm-webkit2-greeter.conf
+clear
+pacman -Syy
+clear
+pacman -S cinnamon --needed --noconfirm
+clear
+pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
+clear
 systemctl enable lightdm.service
 clear
+pacman -S cinnamon-translations iso-flag-png blueman dconf-editor ffmpegthumbnailer galculator gnome-disk-utility gnome-keyring gnome-online-accounts gnome-screenshot gnome-system-monitor gnome-terminal nemo-fileroller nemo-preview nemo-python nemo-share numlockx onboard pavucontrol pix redshift system-config-printer webapp-manager ffmpegthumbnailer xed xreader xviewer-plugins --needed --noconfirm
+clear
+pacman -S bibata-cursor-theme gnome-themes-extra icon-naming-utils mint-l-theme mint-themes --needed --noconfirm
+clear
+pacman -S terminus-font ttf-dejavu ttf-droid ttf-inconsolata ttf-indic-otf ttf-liberation  --needed --noconfirm
+clear
+pacman -S apparmor baobab bulky deluge gcolor3 gimp gtkmm3 libgsf lrzip mintstick mousetweaks netctl ntp openresolv powertop python-pyxdg qemu-guest-agent qt5ct s-nail spice-vdagent squashfs-tools touchegg tree udiskie unace  --needed --noconfirm
+clear
+sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
+sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
 sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
 exit
@@ -776,6 +788,9 @@ reboot
 
 
 rm -r .ssh/
+
+
+ 
 
 
 ###############################
@@ -991,7 +1006,13 @@ echo "export XDG_CURRENT_DESKTOP=Budgie:GNOME" > ~/.xinitrc
 echo "exec budgie-desktop" >> ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
+systemctl --user --force clear
+# xinitrc
+echo "exec cinnamon-session" > ~/.xinitrc
+sudo cp ~/.xinitrc /root/.xinitrc
+systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
+clearenable wireplumber.service
 clear
 
 
