@@ -146,7 +146,7 @@ mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@log /d
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@tmp /dev/sda2 /mnt/var/tmp
 mount /dev/sda1 /mnt/boot/efi
 clear
-pacstrap /mnt base base-devel btrfs-progs bash-completion archlinux-keyring nano nano-syntax-highlighting intel-ucode inxi efibootmgr
+pacstrap /mnt base base-devel btrfs-progs bash-completion archlinux-keyring nano nano-syntax-highlighting intel-ucode inxi efibootmgr memtest86+-efi
 clear
 genfstab -U -p /mnt >> /mnt/etc/fstab
 clear
@@ -208,7 +208,7 @@ mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@cache 
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@log /dev/sda2 /mnt/var/log
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@tmp /dev/sda2 /mnt/var/tmp
 clear
-pacstrap /mnt base base-devel btrfs-progs bash-completion archlinux-keyring nano nano-syntax-highlighting intel-ucode inxi
+pacstrap /mnt base base-devel btrfs-progs bash-completion archlinux-keyring nano nano-syntax-highlighting intel-ucode inxi memtest86+
 clear
 genfstab -U -p /mnt >> /mnt/etc/fstab
 clear
@@ -567,7 +567,7 @@ clear
 pacman -S yay --needed --noconfirm
 clear
 # Прочие
-pacman -S acpi acpid b43-fwcutter cpupower dmraid dnsmasq ecryptfs-utils f2fs-tools glibc-locales inetutils jfsutils libdvdcss logrotate lvm2 memtest86+ memtest86+-efi mkinitcpio-openswap nfs-utils nss-mdns open-vm-tools sysfsutils vi wireless-regdb xfsprogs  --needed --noconfirm
+pacman -S acpi acpid b43-fwcutter cpupower dmraid dnsmasq ecryptfs-utils f2fs-tools glibc-locales inetutils jfsutils libdvdcss logrotate lvm2 mkinitcpio-openswap nfs-utils nss-mdns open-vm-tools sysfsutils vi wireless-regdb xfsprogs  --needed --noconfirm
 clear
 
 
@@ -761,7 +761,7 @@ clear
 clear
 pacman -Syy
 clear
-pacman -S cinnamon cinnamon-translations blueman dconf-editor ffmpegthumbnailer gcolor3 gimp gnome-disk-utility gnome-keyring gnome-online-accounts gnome-screenshot gnome-system-monitor gnome-terminal gnome-themes-extra mousetweaks onboard pavucontrol powertop system-config-printer webapp-manager xreader xviewer-plugins iso-flag-png --needed --noconfirm
+pacman -S cinnamon cinnamon-translations blueman dconf-editor ffmpegthumbnailer gcolor3 gimp gnome-disk-utility gnome-keyring gnome-online-accounts gnome-screenshot gnome-system-monitor gnome-terminal gnome-themes-extra mousetweaks onboard pavucontrol powertop system-config-printer webapp-manager xreader xviewer-plugins iso-flag-png xdg-desktop-portal-gnome evince --needed --noconfirm
  clear
 pacman -S nemo-fileroller nemo-preview nemo-python nemo-share --needed --noconfirm
 clear
