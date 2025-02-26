@@ -567,7 +567,13 @@ clear
 pacman -S yay --needed --noconfirm
 clear
 # Прочие
-pacman -S acpi acpid b43-fwcutter cpupower dmraid dnsmasq ecryptfs-utils f2fs-tools glibc-locales inetutils jfsutils libdvdcss logrotate lvm2 mkinitcpio-openswap nfs-utils nss-mdns open-vm-tools sysfsutils vi wireless-regdb xfsprogs  --needed --noconfirm
+pacman -S acpi acpid  --needed --noconfirm
+systemctl enable acpid
+clear
+pacman -S dnsmasq --needed --noconfirm
+sudo systemctl enable dnsmasq
+clear
+pacman -S b43-fwcutter cpupower dmraid ecryptfs-utils ecryptfs-utils glibc-locales inetutils jfsutils libdvdcss logrotate lvm2 mkinitcpio-openswap nfs-utils nss-mdns open-vm-tools sysfsutils vi wireless-regdb xfsprogs  --needed --noconfirm
 clear
 
 
