@@ -456,6 +456,12 @@ clear
 pacman -S mlocate chrony --needed --noconfirm
 systemctl enable chrony-wait.service chronyd.service
 clear
+# Advanced Configuration and Power Interface
+pacman -S acpi acpid  --needed --noconfirm
+systemctl enable acpid
+clear
+pacman -S cpupower sysfsutils wireless-regdb  --needed --noconfirm
+clear
 # XDG
 pacman -S xdg-utils xdg-user-dirs --needed --noconfirm
 clear
@@ -566,12 +572,11 @@ pacman -S rate-mirrors --needed --noconfirm
 clear
 pacman -S yay --needed --noconfirm
 clear
-# Advanced Configuration and Power Interface
-pacman -S acpi acpid  --needed --noconfirm
-systemctl enable acpid
+pacman -S logrotates --needed --noconfirm
 clear
-pacman -S cpupower logrotates sysfsutils wireless-regdb  --needed --noconfirm
+pacman -S  archlinux-wallpaper --needed --noconfirm
 clear
+
 
 
 
@@ -774,7 +779,7 @@ pacman -S icon-naming-utils mint-l-theme mint-themes  --needed --noconfirm
 clear
 pacman -S terminus-font ttf-dejavu ttf-droid ttf-inconsolata ttf-indic-otf ttf-liberation  --needed --noconfirm
 clear
-pacman -S apparmor baobab bulky deluge galculator gtkmm3 libgsf lrzip mintstick netctl ntp numlockx openresolv pix python-pyxdg qemu-guest-agent qt5ct redshift s-nail spice-vdagent squashfs-tools touchegg tree udiskie unace vi xed  --needed --noconfirm
+pacman -S baobab bulky galculator lrzip mintstick netctl numlockx pix python-pyxdg qt5ct redshift squashfs-tools touchegg tree udiskie xed  --needed --noconfirm
 clear
 pacman -S lightdm lightdm-slick-greeter lightdm-settings  --needed --noconfirm
 clear
@@ -1033,7 +1038,7 @@ clear
 
 sudo pacman -Syy
 clear
-sudo pacman -S ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 stacer cherrytree htop seahorse system-monitoring-center  smplayer strawberry doublecmd-qt6 nomacs ocs-url archlinux-wallpaper  --needed --noconfirm
+sudo pacman -S ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 stacer cherrytree htop seahorse system-monitoring-center  smplayer strawberry doublecmd-qt6 nomacs ocs-url  --needed --noconfirm
 clear
 yay -S radiotray-ng --needed --noconfirm
 clear
