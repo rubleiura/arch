@@ -565,6 +565,10 @@ clear
 
 pacman -S arcolinux-meta-apps --needed --noconfirm
 clear
+pacman -Rdd v4l-utils --noconfirm
+clear
+pacman -S hw-probe hdparm smartmontools pnputils --needed --noconfirm
+clear
 pacman -S mkinitcpio-firmware --needed --noconfirm
 clear
 pacman -S update-grub --needed --noconfirm
@@ -727,21 +731,21 @@ clear
 
 
 #  Gnome
-pacman -S baobab evince gnome-backgrounds gnome-calculator gnome-calendar gnome-characters gnome-clocks gnome-connections gnome-contacts gnome-control-center gnome-disk-utility gnome-font-viewer gnome-logs gnome-maps gnome-remote-desktop gnome-shell gnome-shell-extensions gnome-system-monitor gnome-text-editor gnome-tour gnome-user-docs gnome-user-share gnome-weather grilo-plugins malcontent nautilus rygel simple-scan snapshot sushi totem gdm
+pacman -S baobab evince gnome-backgrounds gnome-calculator gnome-calendar gnome-characters gnome-clocks gnome-connections gnome-contacts gnome-control-center gnome-disk-utility gnome-font-viewer gnome-logs gnome-maps gnome-remote-desktop gnome-shell gnome-shell-extensions gnome-system-monitor gnome-text-editor gnome-tour gnome-user-docs gnome-user-share gnome-weather grilo-plugins malcontent nautilus rygel simple-scan snapshot sushi totem gdm --needed --noconfirm
 systemctl enable gdm
 clear
 #  Gnome-extra
-pacman -S endeavour file-roller gnome-boxes gnome-chess gnome-mines gnome-terminal-transparency gnome-tweaks iagno quadrapassel
+pacman -S endeavour file-roller gnome-boxes gnome-chess gnome-mines gnome-terminal-transparency gnome-tweaks iagno quadrapassel --needed --noconfirm
 clear
-pacman -S gnome-browser-connector gnome-firmware gnome-shell-extension-appindicator gnome-shell-extension-arc-menu gnome-shell-extension-dash-to-dock gnome-shell-extension-dash-to-panel gnome-shell-extension-forge-git gnome-shell-extension-gnome-ui-tune-git gnome-shell-extension-gsconnect gnome-shell-extension-space-bar-git gnome-shell-extension-x11gestures gnuchess power-profiles-daemon squashfs-tools
+pacman -S gnome-browser-connector gnome-firmware gnome-shell-extension-appindicator gnome-shell-extension-arc-menu gnome-shell-extension-dash-to-dock gnome-shell-extension-dash-to-panel gnome-shell-extension-forge-git gnome-shell-extension-gnome-ui-tune-git gnome-shell-extension-gsconnect gnome-shell-extension-space-bar-git gnome-shell-extension-x11gestures gnuchess power-profiles-daemon squashfs-tools --needed --noconfirm
 clear
-pacman -S gthumb gtkmm3 qt5ct qt6ct system-config-printer deja-dup touche webapp-manager
+pacman -S gthumb gtkmm3 qt5ct qt6ct system-config-printer deja-dup touche webapp-manager --needed --noconfirm
 clear
-pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra  ttf-hack ttf-indic-otf
+pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra  ttf-hack ttf-indic-otf --needed --noconfirm
 clear
-pacman -S adw-gtk-theme bibata-cursor-theme gnome-themes-extra 
+pacman -S adw-gtk-theme bibata-cursor-theme gnome-themes-extra  --needed --noconfirm
 clear
-pacman -S ffmpegthumbnailer ffmpeg-audio-thumbnailer 
+pacman -S ffmpegthumbnailer ffmpeg-audio-thumbnailer  --needed --noconfirm
 clear
 sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
