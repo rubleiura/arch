@@ -724,10 +724,24 @@ clear
 #####################
 
 
-pacman -S gnome gnome-extra --needed --noconfirm
+
+
+#  Gnome
+pacman -S baobab evince gnome-backgrounds gnome-calculator gnome-calendar gnome-characters gnome-clocks gnome-connections gnome-contacts gnome-control-center gnome-disk-utility gnome-font-viewer gnome-logs gnome-maps gnome-remote-desktop gnome-shell gnome-shell-extensions gnome-system-monitor gnome-text-editor gnome-tour gnome-user-docs gnome-user-share gnome-weather grilo-plugins malcontent nautilus rygel simple-scan snapshot sushi totem gdm
 systemctl enable gdm
 clear
-pacman -S gnome-terminal-transparency gnome-shell-extensions chrome-gnome-shell evince --needed --noconfirm
+#  Gnome-extra
+pacman -S endeavour file-roller gnome-boxes gnome-chess gnome-mines gnome-terminal-transparency gnome-tweaks iagno quadrapassel
+clear
+pacman -S gnome-browser-connector gnome-firmware gnome-shell-extension-appindicator gnome-shell-extension-arc-menu gnome-shell-extension-dash-to-dock gnome-shell-extension-dash-to-panel gnome-shell-extension-forge-git gnome-shell-extension-gnome-ui-tune-git gnome-shell-extension-gsconnect gnome-shell-extension-space-bar-git gnome-shell-extension-x11gestures gnuchess power-profiles-daemon squashfs-tools
+clear
+pacman -S gthumb gtkmm3 qt5ct qt6ct system-config-printer deja-dup touche webapp-manager
+clear
+pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra  ttf-hack ttf-indic-otf
+clear
+pacman -S adw-gtk-theme bibata-cursor-theme gnome-themes-extra 
+clear
+pacman -S ffmpegthumbnailer ffmpeg-audio-thumbnailer 
 clear
 sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
