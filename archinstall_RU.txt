@@ -325,16 +325,13 @@ reflector --verbose -l 10 -p https --sort rate --save /etc/pacman.d/mirrorlist
 clear
 pacman -Syy
 clear
-pacman -Sy  linux-lts linux-lts-headers linux-firmware networkmanager networkmanager-openconnect networkmanager-openvpn networkmanager-pptp networkmanager-vpnc networkmanager-l2tp networkmanager-strongswan network-manager-sstp wpa_supplicant apparmor grub grub-btrfs os-prober plymouth --needed --noconfirm
-clear
-echo "apparmor" | tee /etc/modules-load.d/apparmor.conf
+pacman -Sy  linux-lts linux-lts-headers linux-firmware networkmanager wpa_supplicant grub grub-btrfs os-prober plymouth --needed --noconfirm
 clear
 grub-install /dev/sda
 grub-install --target=x86_64-efi --removable
 clear
 sed -i "s/loglevel=3 quiet/quiet splash udev.log_priority=3/" /etc/default/grub
 sed -i "s/udev.log_priority=3/resume=UUID=$(blkid -o value  /dev/sda3|head -n 1|tail -n 2) udev.log_priority=3/" /etc/default/grub
-sed -i "s/quiet/quiet apparmor=1 security=apparmor/" /etc/default/grub
 sed -i s/'#GRUB_BTRFS_SUBMENUNAME="Arch Linux snapshots"'/'GRUB_BTRFS_SUBMENUNAME="Arch Linux snapshots"'/g /etc/default/grub-btrfs/config
 sed -i s/'#GRUB_BTRFS_TITLE_FORMAT=("date" "snapshot" "type" "description")'/'GRUB_BTRFS_TITLE_FORMAT=("description" "date")'/g /etc/default/grub-btrfs/config
 sed -i 's/ProtectSystem=strict/ProtectSystem=full/' /usr/lib/systemd/system/mkinitcpio-generate-shutdown-ramfs.service
@@ -468,7 +465,7 @@ clear
 # XDG
 pacman -S xdg-utils xdg-user-dirs --needed --noconfirm
 clear
-systemctl enable grub-btrfsd.service sshd.service NetworkManager.service ModemManager.service cups.service  cronie.service bluetooth.service haveged.service apparmor.service
+systemctl enable grub-btrfsd.service sshd.service NetworkManager.service ModemManager.service cups.service  cronie.service bluetooth.service haveged.service
 clear
 # Pacman-contrib
 pacman -Syy
@@ -497,10 +494,6 @@ pacman -S alsa-firmware alsa-plugins alsa-utils sof-firmware --needed --noconfir
 clear
 # GStreamer
 pacman -S gst-libav gst-plugins-bad gst-plugins-base gst-plugins-ugly gst-plugin-pipewire gst-plugin-va gstreamer --needed --noconfirm
-clear
-# Firewalld
-pacman -S firewalld python-capng python-pyqt5 --needed --noconfirm
-systemctl enable firewalld.service
 clear
 # MAN
 pacman -S man-db most man-pages man-pages-ru yelp xorg-xman --needed --noconfirm
@@ -578,8 +571,6 @@ clear
 pacman -S rate-mirrors --needed --noconfirm
 clear
 pacman -S yay --needed --noconfirm
-clear
-pacman -S logrotates --needed --noconfirm
 clear
 pacman -S  archlinux-wallpaper --needed --noconfirm
 clear
@@ -667,7 +658,10 @@ clear
 
 
 
-pacman -S xfce4 xfce4-goodies --needed --noconfirm
+clear
+pacman -S xfce4 --needed --noconfirm
+clear
+pacman -S mousepad thunar-archive-plugin thunar-media-tags-plugin xfburn xfce4-artwork xfce4-battery-plugin xfce4-clipman-plugin xfce4-cpufreq-plugin xfce4-cpugraph-plugin xfce4-dict xfce4-diskperf-plugin xfce4-eyes-plugin xfce4-fsguard-plugin xfce4-genmon-plugin xfce4-mailwatch-plugin xfce4-mount-plugin xfce4-mpc-plugin xfce4-netload-plugin xfce4-notes-plugin xfce4-notifyd xfce4-places-plugin xfce4-pulseaudio-plugin xfce4-screensaver  xfce4-screenshooter xfce4-sensors-plugin xfce4-smartbookmark-plugin xfce4-systemload-plugin  xfce4-taskmanager xfce4-time-out-plugin xfce4-timer-plugin xfce4-verve-plugin xfce4-wavelan-plugin xfce4-weather-plugin xfce4-whiskermenu-plugin xfce4-xkb-plugin --needed --noconfirm
 clear
 pacman -S mugshot pavucontrol archlinux-xdg-menu xdg-desktop-portal-gtk menulibre network-manager-applet --needed --noconfirm
 update-menus
@@ -675,7 +669,7 @@ pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
 clear
 pacman -Sy blueman engrampa ffmpegthumbnailer libgsf udiskie evince --needed --noconfirm
 clear
-pacman -S catfish galculator gimp libopenraw mtpfs ntp numlockx perl-file-mimeinfo pidgin powertop unace xcursor-simpleandsoft xcursor-vanilla-dmz-aa gcolor3 xiccd  --needed --noconfirm
+pacman -S catfish galculator libopenraw mtpfs ntp numlockx perl-file-mimeinfo pidgin powertop unace xcursor-simpleandsoft xcursor-vanilla-dmz-aa gcolor3 xiccd  --needed --noconfirm
 clear
 pacman -S adobe-source-sans-fonts noto-fonts noto-fonts-cjk terminus-font ttf-inconsolata ttf-indic-otf --needed --noconfirm
 clear
@@ -790,7 +784,7 @@ clear
 clear
 pacman -Syy
 clear
-pacman -S cinnamon cinnamon-translations blueman dconf-editor ffmpegthumbnailer gcolor3 gimp gnome-disk-utility gnome-keyring gnome-online-accounts gnome-screenshot gnome-system-monitor gnome-terminal gnome-themes-extra mousetweaks onboard pavucontrol powertop system-config-printer webapp-manager xreader xviewer-plugins iso-flag-png xdg-desktop-portal-gnome evince --needed --noconfirm
+pacman -S cinnamon cinnamon-translations blueman dconf-editor ffmpegthumbnailer gcolor3 gnome-disk-utility gnome-keyring gnome-online-accounts gnome-screenshot gnome-system-monitor gnome-terminal gnome-themes-extra mousetweaks onboard pavucontrol powertop system-config-printer webapp-manager xreader xviewer-plugins iso-flag-png xdg-desktop-portal-gnome evince --needed --noconfirm
  clear
 pacman -S nemo-fileroller nemo-preview nemo-python nemo-share --needed --noconfirm
 clear
