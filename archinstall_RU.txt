@@ -322,6 +322,7 @@ clear
 pacman -S reflector --noconfirm
 clear
 reflector --latest 20 --fastest 5 --connection-timeout 1 --save /etc/pacman.d/mirrorlist
+systemctl enable --now reflector.timer
 clear
 pacman -Syy
 clear
