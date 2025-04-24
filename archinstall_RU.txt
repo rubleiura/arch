@@ -64,7 +64,7 @@ lsblk
 #############################################
 #  Имя пользователя #   login	            #
 #############################################
-#  Имя менедж.входа #  	User Name           #
+#  Имя менедж.входа #  	Юрий РублёВ          #
 #############################################
 #   Hostname 	    #   Sony                #
 #############################################
@@ -120,7 +120,7 @@ fdisk -l /dev/sda
 
 
 
-clear
+
 mkfs.fat -F32 /dev/sda1
 mkswap /dev/sda3
 swapon /dev/sda3
@@ -138,7 +138,7 @@ umount /mnt
 clear
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@ /dev/sda2 /mnt
 mkdir -p /mnt/{boot/efi,home,root,srv,/var/cache,/var/log,/var/tmp,var/lib/machines,var/lib/portables}
-mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@home /dev/sda2 /mnt/home
+mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@home /dev/sda2 /mncleart/home
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@root /dev/sda2 /mnt/root
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@srv /dev/sda2 /mnt/srv
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@cache /dev/sda2 /mnt/var/cache
@@ -393,28 +393,6 @@ clear
 ## ДОПОЛНИТЕЛЬНЫЕ РЕПОЗИТОРИИ ##
 ################################
 
-######################
-## ARCOLINUX-SPICES ##
-######################
-
-
-
-clear
-pacman -Syy
-pacman -S git --needed --noconfirm
-git clone https://github.com/arcolinux/arcolinux-spices
-cd arcolinux-spices/usr/share/arcolinux-spices/scripts
-./get-the-keys-and-repos.sh
-cd
-pacman -Syy
-clear
-rm -r /arcolinux-spices
-pacman -Syy
-clear
-
-
-
-
 #################
 ## Chaotic-AUR ##
 #################
@@ -525,9 +503,8 @@ clear
 clear
 pacman -Syy
 clear
-pacman -S arcolinux-meta-btrfs-snapper snapper-tools btrfsmaintenance --needed --noconfirm
+pacman -S mkinitcpio-firmware grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant --needed --noconfirm
 clear
-
 
 
 
@@ -539,7 +516,7 @@ clear
 clear
 pacman -Syy
 clear
-pacman -S arcolinux-meta-btrfs-timeshift --needed --noconfirm
+pacman -S timeshift timeshift-autosnap  --needed --noconfirm
 clear
 
 
@@ -551,19 +528,12 @@ clear
 
 
 
-pacman -S arcolinux-meta-apps --needed --noconfirm
-clear
-pacman -Rdd v4l-utils --noconfirm
-clear
-pacman -S hw-probe hdparm smartmontools pnputils --needed --noconfirm
 clear
 pacman -S mkinitcpio-firmware --needed --noconfirm
 clear
 pacman -S update-grub --needed --noconfirm
 clear
 pacman -S pamac --needed --noconfirm
-clear
-pacman -S rate-mirrors --needed --noconfirm
 clear
 pacman -S yay --needed --noconfirm
 clear
@@ -1060,7 +1030,6 @@ sudo reboot
 ############################################################
 ################# FINISH ###################################
 ############################################################
-
 
 
 
