@@ -138,7 +138,7 @@ umount /mnt
 clear
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@ /dev/sda2 /mnt
 mkdir -p /mnt/{boot/efi,home,root,srv,/var/cache,/var/log,/var/tmp,var/lib/machines,var/lib/portables}
-mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@home /dev/sda2 /mncleart/home
+mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@home /dev/sda2 /mnt/home
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@root /dev/sda2 /mnt/root
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@srv /dev/sda2 /mnt/srv
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@cache /dev/sda2 /mnt/var/cache
@@ -222,6 +222,47 @@ arch-chroot /mnt
 ########################################################
 
 
+################################
+## ДОПОЛНИТЕЛЬНЫЕ РЕПОЗИТОРИИ ##
+################################
+
+#################
+## Chaotic-AUR ##
+#################
+
+
+clear
+pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
+pacman-key --lsign-key 3056513887B78AEB
+pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --noconfirm
+pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
+echo "#" >> /etc/pacman.conf
+echo "#" >> /etc/pacman.conf
+echo "### Chaotic-AUR #####" >> /etc/pacman.conf
+echo "[chaotic-aur]" >> /etc/pacman.conf
+echo "Include = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
+#echo "GTK_THEME=Adwaita:dark" >> /etc/environment
+pacman -Syy
+clear
+
+
+
+
+
+###########
+## PAMAC ##
+###########
+
+
+pacman -S pamac --noconfirm
+clear
+sed -i s/'MaxParallelDownloads = 4'/'MaxParallelDownloads = 10'/g /etc/pamac.conf
+clear
+pamac update --dry-run
+clear
+
+
+
 ##############################################
 ## НАСТРОЙКИ PACMAN,FSTAB,ЯЗЫК,ЧАСОВОЙ ПОЯС ##
 ##############################################
@@ -259,7 +300,7 @@ locale-gen
 time_zone=$(curl -s https://ipinfo.io/timezone)
 ln -sf /usr/share/zoneinfo/$time_zone /etc/localtime
 hwclock --systohc
-pacman -Syy
+pamac update --dry-run
 clear
 date
 lsblk
@@ -317,16 +358,16 @@ clear
 
 
 clear
-pacman -Syy
+pamac update --dry-run
 clear
-pacman -S reflector --noconfirm
+pamac install --no-confirm reflector
 clear
 reflector --latest 20 --fastest 5 --connection-timeout 1 --save /etc/pacman.d/mirrorlist
 systemctl enable --now reflector.timer
 clear
-pacman -Syy
+pamac update --dry-run
 clear
-pacman -Sy  linux-lts linux-lts-headers linux-firmware networkmanager wpa_supplicant grub grub-btrfs os-prober plymouth --needed --noconfirm
+pamac install --no-confirm linux-lts linux-lts-headers linux-firmware networkmanager wpa_supplicant grub grub-btrfs os-prober plymouth
 clear
 grub-install /dev/sda
 grub-install --target=x86_64-efi --removable
@@ -389,31 +430,6 @@ clear
 
 
 
-################################
-## ДОПОЛНИТЕЛЬНЫЕ РЕПОЗИТОРИИ ##
-################################
-
-#################
-## Chaotic-AUR ##
-#################
-
-
-clear
-pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
-pacman-key --lsign-key 3056513887B78AEB
-pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --noconfirm
-pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
-echo "#" >> /etc/pacman.conf
-echo "#" >> /etc/pacman.conf
-echo "### Chaotic-AUR #####" >> /etc/pacman.conf
-echo "[chaotic-aur]" >> /etc/pacman.conf
-echo "Include = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
-#echo "GTK_THEME=Adwaita:dark" >> /etc/environment
-pacman -Syy
-clear
-
-
-
 #######################
 ## СИСТЕМНЫЕ УТИЛИТЫ ##
 #######################
@@ -421,67 +437,67 @@ clear
 
 
 
-pacman -Syy
+pamac update --dry-run
 clear
 # Services
-pacman -S nm-connection-editor modemmanager usb_modeswitch rp-pppoe --needed --noconfirm
+pamac install --no-confirm nm-connection-editor modemmanager usb_modeswitch rp-pppoe
 clear
-pacman -S bluez bluez-utils --needed --noconfirm
+pamac install --no-confirm bluez bluez-utils
 clear
-pacman -S cups cups-pdf ghostscript gsfonts --needed --noconfirm
+pamac install --no-confirm cups cups-pdf ghostscript gsfonts
 clear
-pacman -S cronie haveged openssh --needed --noconfirm
+pamac install --no-confirm cronie haveged openssh
 clear
-pacman -S mlocate chrony --needed --noconfirm
+pamac install --no-confirm mlocate chrony
 systemctl enable chrony-wait.service chronyd.service
 clear
 # Advanced Configuration and Power Interface
-pacman -S acpi acpid  --needed --noconfirm
+pamac install --no-confirm acpi acpid 
 systemctl enable acpid.service
 clear
-pacman -S cpupower sysfsutils wireless-regdb  --needed --noconfirm
+pamac install --no-confirm cpupower sysfsutils wireless-regdb 
 clear
 # XDG
-pacman -S xdg-utils xdg-user-dirs --needed --noconfirm
+pamac install --no-confirm xdg-utils xdg-user-dirs
 clear
 systemctl enable grub-btrfsd.service sshd.service NetworkManager.service ModemManager.service cups.service  cronie.service bluetooth.service haveged.service systemd-timesyncd
 clear
 # Pacman-contrib
-pacman -Syy
-pacman -S pacman-contrib --needed --noconfirm
+pamac update --dry-run
+pamac install --no-confirm pacman-contrib
 clear
 # Generic
-pacman -S vim wget usbutils lsof dmidecode dialog --needed --noconfirm
+pamac install --no-confirm vim wget usbutils lsof dmidecode dialog
 clear
 # Compression
-pacman -S zip unzip unrar p7zip lzop lrzip --needed --noconfirm
+pamac install --no-confirm zip unzip unrar p7zip lzop lrzip
 clear
 # Network Tools
-pacman -S rsync traceroute bind-tools --needed --noconfirm
+pamac install --no-confirm rsync traceroute bind-tools
 clear
 # File System
-pacman -S dosfstools ntfs-3g btrfs-progs exfatprogs gptfdisk fuse2 fuse3 fuseiso --needed --noconfirm
+pamac install --no-confirm dosfstools ntfs-3g btrfs-progs exfatprogs gptfdisk fuse2 fuse3 fuseiso
 clear
 # SAMBA
-pacman -S samba gvfs gvfs-smb smbclient cifs-utils gvfs-afc gvfs-mtp gvfs-nfs gvfs-dnssd gvfs-goa gvfs-google gvfs-gphoto2 gvfs-onedrive gvfs-wsdd --needed --noconfirm
+pamac install --no-confirm samba gvfs gvfs-smb smbclient cifs-utils gvfs-afc gvfs-mtp gvfs-nfs gvfs-dnssd gvfs-goa gvfs-google gvfs-gphoto2 gvfs-onedrive gvfs-wsdd
 # ЗВУК
 # Wireplumber Pipewire
-pacman -S wireplumber pipewire-alsa pipewire-jack pipewire-pulse pipewire-v4l2 pipewire-zeroconf gst-plugin-pipewire helvum --needed --noconfirm
+pamac install --no-confirm wireplumber pipewire-alsa pipewire-jack pipewire-pulse pipewire-v4l2 pipewire-zeroconf gst-plugin-pipewire helvum
 clear
 # Alsa
-pacman -S alsa-firmware alsa-plugins alsa-utils sof-firmware --needed --noconfirm
+pamac install --no-confirm alsa-firmware alsa-plugins alsa-utils sof-firmware
 clear
 # GStreamer
-pacman -S gst-libav gst-plugins-bad gst-plugins-base gst-plugins-ugly gst-plugin-pipewire gst-plugin-va gstreamer --needed --noconfirm
+pamac install --no-confirm gst-libav gst-plugins-bad gst-plugins-base gst-plugins-ugly gst-plugin-pipewire gst-plugin-va gstreamer
 clear
 # MAN
-pacman -S man-db most man-pages man-pages-ru yelp xorg-xman --needed --noconfirm
+pamac install --no-confirm man-db most man-pages man-pages-ru yelp xorg-xman
 clear
 # Утилиты вывода системной информации
-pacman -S hyfetch fastfetch --needed --noconfirm
+pamac install --no-confirm hyfetch fastfetch
 clear
 # XORG
-pacman -S xorg-server xorg-apps xorg-xinit --needed --noconfirm
+pamac install --no-confirm xorg-server xorg-apps xorg-xinit
 clear
 
 
@@ -501,9 +517,9 @@ clear
 
 
 clear
-pacman -Syy
+pamac update --dry-run
 clear
-pacman -S mkinitcpio-firmware grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant --needed --noconfirm
+pamac install --no-confirm grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant
 clear
 
 
@@ -514,35 +530,41 @@ clear
 
 
 clear
-pacman -Syy
+pamac update --dry-run
 clear
-pacman -S timeshift timeshift-autosnap  --needed --noconfirm
-clear
-
-
-
-
-###########################################
-## СИСТЕМНЫЕ УТИЛИТЫ ARCOLINUX И CHAOTIC ##
-###########################################
-
-
-
-clear
-pacman -S mkinitcpio-firmware --needed --noconfirm
-clear
-pacman -S update-grub --needed --noconfirm
-clear
-pacman -S pamac --needed --noconfirm
-clear
-pacman -S yay --needed --noconfirm
-clear
-pacman -S  archlinux-wallpaper --needed --noconfirm
+pamac install --no-confirm timeshift timeshift-autosnap 
 clear
 
 
 
 
+###############################
+## СИСТЕМНЫЕ УТИЛИТЫ CHAOTIC ##
+###############################
+
+
+clear
+pamac update --dry-run
+clear
+pamac install --no-confirm mkinitcpio-firmware update-grub yay archlinux-wallpaper
+clear
+
+
+###############
+## Программы ##
+###############
+
+
+
+
+clear
+pamac update --dry-run
+clear
+pamac install --no-confirm ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 cherrytree htop seahorse system-monitoring-center  smplayer strawberry doublecmd-qt6 nomacs ocs-url
+clear
+
+
+ 
 ########################################################
 ############### Установка графической оболочки #########
 ########################################################
@@ -556,33 +578,35 @@ clear
 
 
 
-
-pacman -S sddm plasma --needed --noconfirm
-systemctl enable sddm
+clear
+sudo pamac update --dry-run
+clear
+sudo pamac install --no-confirm sddm plasma
+sudo systemctl enable sddm
 clear
 # kde-system
-pacman -S dolphin khelpcenter ksystemlog --needed --noconfirm
+sudo pamac install --no-confirm dolphin khelpcenter ksystemlog
 clear
 # kde-utilities
-pacman -S ark kate kcalc keditbookmarks kfind konsole kwalletmanager yakuake --needed --noconfirm
+sudo pamac install --no-confirm ark kate kcalc keditbookmarks kfind konsole kwalletmanager yakuake
 clear
 # kde-multimedia
-pacman -S audiocd-kio elisa ffmpegthumbs --needed --noconfirm
+sudo pamac install --no-confirm audiocd-kio elisa ffmpegthumbs
 clear
 # kde-graphics
-pacman -S gwenview kamera kdegraphics-thumbnailers okular skanlite --needed --noconfirm
+sudo pamac install --no-confirm gwenview kamera kdegraphics-thumbnailers okular skanlite
 clear
 # kde-network
-pacman -S kdeconnect kdenetwork-filesharing kio-extras --needed --noconfirm
+sudo pamac install --no-confirm kdeconnect kdenetwork-filesharing kio-extras
 clear
-pacman -S breeze5 dolphin-plugins filelight fwupd gtkmm3 kaccounts-providers kimageformats kwayland-integration lib32-libcanberra mtpfs noto-fonts-cjk ntp numlockx perl-file-mimeinfo power-profiles-daemon powertop python-pillow python-pip python-pysmbc python-reportlab qemu-guest-agent s-nail spice-vdagent sshfs system-config-printer udiskie unarchiver --needed --noconfirm
+sudo pamac install --no-confirm breeze5 dolphin-plugins filelight fwupd gtkmm3 kaccounts-providers kimageformats kwayland-integration lib32-libcanberra mtpfs noto-fonts-cjk ntp numlockx perl-file-mimeinfo power-profiles-daemon powertop python-pillow python-pip python-pysmbc python-reportlab qemu-guest-agent s-nail spice-vdagent sshfs system-config-printer udiskie unarchiver
 clear
-pacman -S gnome-themes-extra --needed --noconfirm
+sudo pamac install --no-confirm gnome-themes-extra
 clear
 # fonts
-pacman -S adobe-source-sans-fonts terminus-font ttf-dejavu ttf-droid ttf-inconsolata ttf-indic-otf ttf-liberation --needed --noconfirm
+sudo pamac install --no-confirm adobe-source-sans-fonts terminus-font ttf-dejavu ttf-droid ttf-inconsolata ttf-indic-otf ttf-liberation
 clear
-sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
+sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
 exit
 
@@ -608,11 +632,36 @@ sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clear
-yay -Syy
+sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
+sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
-yay -S pamac-tray-icon-plasma --needed --noconfirm
+sudo pamac update
+sudo pamac upgrade --no-confirm
+sudo pamac install --no-confirm pamac-tray-plasma-git radiotray-ng 
 clear
 
+stacer-bin
+
+
+
+# zsh
+pamac install --no-confirm zsh
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+clear
+
+
+
+# ohmyzsh-congig
+chsh -s $(which zsh)
+sed -i s/'ZSH_THEME=\"robbyrussell\"'/'ZSH_THEME=\"agnoster\"'/g ~/.zshrc
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
+mv zsh-syntax-highlighting ~/.oh-my-zsh/plugins
+echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
+git clone https://github.com/zsh-users/zsh-autosuggestions
+mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
+sed -i s/'plugins=(git)'/'plugins=(git archlinux extract sudo themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
+echo "hyfetch" >> ~/.zshrc
+sudo reboot
 
 
 
@@ -624,19 +673,19 @@ clear
 
 
 clear
-pacman -S xfce4 --needed --noconfirm
+pacman -S xfce4
 clear
-pacman -S mousepad thunar-archive-plugin thunar-media-tags-plugin xfburn xfce4-artwork xfce4-battery-plugin xfce4-clipman-plugin xfce4-cpufreq-plugin xfce4-cpugraph-plugin xfce4-dict xfce4-diskperf-plugin xfce4-eyes-plugin xfce4-fsguard-plugin xfce4-genmon-plugin xfce4-mailwatch-plugin xfce4-mount-plugin xfce4-mpc-plugin xfce4-netload-plugin xfce4-notes-plugin xfce4-notifyd xfce4-places-plugin xfce4-pulseaudio-plugin xfce4-screensaver  xfce4-screenshooter xfce4-sensors-plugin xfce4-smartbookmark-plugin xfce4-systemload-plugin  xfce4-taskmanager xfce4-time-out-plugin xfce4-timer-plugin xfce4-verve-plugin xfce4-wavelan-plugin xfce4-weather-plugin xfce4-whiskermenu-plugin xfce4-xkb-plugin --needed --noconfirm
+pacman -S mousepad thunar-archive-plugin thunar-media-tags-plugin xfburn xfce4-artwork xfce4-battery-plugin xfce4-clipman-plugin xfce4-cpufreq-plugin xfce4-cpugraph-plugin xfce4-dict xfce4-diskperf-plugin xfce4-eyes-plugin xfce4-fsguard-plugin xfce4-genmon-plugin xfce4-mailwatch-plugin xfce4-mount-plugin xfce4-mpc-plugin xfce4-netload-plugin xfce4-notes-plugin xfce4-notifyd xfce4-places-plugin xfce4-pulseaudio-plugin xfce4-screensaver  xfce4-screenshooter xfce4-sensors-plugin xfce4-smartbookmark-plugin xfce4-systemload-plugin  xfce4-taskmanager xfce4-time-out-plugin xfce4-timer-plugin xfce4-verve-plugin xfce4-wavelan-plugin xfce4-weather-plugin xfce4-whiskermenu-plugin xfce4-xkb-plugin
 clear
-pacman -S mugshot pavucontrol archlinux-xdg-menu xdg-desktop-portal-gtk menulibre network-manager-applet --needed --noconfirm
+pacman -S mugshot pavucontrol archlinux-xdg-menu xdg-desktop-portal-gtk menulibre network-manager-applet
 update-menus
-pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
+pacman -Sy lightdm lightdm-slick-greeter lightdm-settings
 clear
-pacman -Sy blueman engrampa ffmpegthumbnailer libgsf udiskie evince --needed --noconfirm
+pacman -Sy blueman engrampa ffmpegthumbnailer libgsf udiskie evince
 clear
-pacman -S catfish galculator libopenraw mtpfs ntp numlockx perl-file-mimeinfo pidgin powertop unace xcursor-simpleandsoft xcursor-vanilla-dmz-aa gcolor3 xiccd  --needed --noconfirm
+pacman -S catfish galculator libopenraw mtpfs ntp numlockx perl-file-mimeinfo pidgin powertop unace xcursor-simpleandsoft xcursor-vanilla-dmz-aa gcolor3 xiccd 
 clear
-pacman -S adobe-source-sans-fonts noto-fonts noto-fonts-cjk terminus-font ttf-inconsolata ttf-indic-otf --needed --noconfirm
+pacman -S adobe-source-sans-fonts noto-fonts noto-fonts-cjk terminus-font ttf-inconsolata ttf-indic-otf
 clear
 sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
 sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
@@ -680,6 +729,25 @@ clear
 
 
 
+# zsh
+sudo pacman -S zsh
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+clear
+
+
+
+# ohmyzsh-congig
+chsh -s $(which zsh)
+sed -i s/'ZSH_THEME=\"robbyrussell\"'/'ZSH_THEME=\"agnoster\"'/g ~/.zshrc
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
+mv zsh-syntax-highlighting ~/.oh-my-zsh/plugins
+echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
+git clone https://github.com/zsh-users/zsh-autosuggestions
+mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
+sed -i s/'plugins=(git)'/'plugins=(git archlinux extract sudo themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
+echo "hyfetch" >> ~/.zshrc
+sudo reboot
+
 
 
 #####################
@@ -690,21 +758,21 @@ clear
 
 
 #  Gnome
-pacman -S baobab evince gnome-backgrounds gnome-calculator gnome-calendar gnome-characters gnome-clocks gnome-connections gnome-contacts gnome-control-center gnome-disk-utility gnome-font-viewer gnome-logs gnome-maps gnome-remote-desktop gnome-shell gnome-shell-extensions gnome-system-monitor gnome-text-editor gnome-tour gnome-user-docs gnome-user-share gnome-weather grilo-plugins malcontent nautilus rygel simple-scan snapshot sushi totem gdm --needed --noconfirm
+pacman -S baobab evince gnome-backgrounds gnome-calculator gnome-calendar gnome-characters gnome-clocks gnome-connections gnome-contacts gnome-control-center gnome-disk-utility gnome-font-viewer gnome-logs gnome-maps gnome-remote-desktop gnome-shell gnome-shell-extensions gnome-system-monitor gnome-text-editor gnome-tour gnome-user-docs gnome-user-share gnome-weather grilo-plugins malcontent nautilus rygel simple-scan snapshot sushi totem gdm
 systemctl enable gdm
 clear
 #  Gnome-extra
-pacman -S endeavour file-roller gnome-boxes gnome-chess gnome-mines gnome-terminal-transparency gnome-tweaks iagno quadrapassel --needed --noconfirm
+pacman -S endeavour file-roller gnome-boxes gnome-chess gnome-mines gnome-terminal-transparency gnome-tweaks iagno quadrapassel
 clear
-pacman -S gnome-browser-connector gnome-firmware gnome-shell-extension-appindicator gnome-shell-extension-arc-menu gnome-shell-extension-dash-to-dock gnome-shell-extension-dash-to-panel gnome-shell-extension-forge-git gnome-shell-extension-gnome-ui-tune-git gnome-shell-extension-gsconnect gnome-shell-extension-space-bar-git gnome-shell-extension-x11gestures gnuchess power-profiles-daemon squashfs-tools --needed --noconfirm
+pacman -S gnome-browser-connector gnome-firmware gnome-shell-extension-appindicator gnome-shell-extension-arc-menu gnome-shell-extension-dash-to-dock gnome-shell-extension-dash-to-panel gnome-shell-extension-forge-git gnome-shell-extension-gnome-ui-tune-git gnome-shell-extension-gsconnect gnome-shell-extension-space-bar-git gnome-shell-extension-x11gestures gnuchess power-profiles-daemon squashfs-tools
 clear
-pacman -S gthumb gtkmm3 qt5ct qt6ct system-config-printer deja-dup touche webapp-manager --needed --noconfirm
+pacman -S gthumb gtkmm3 qt5ct qt6ct system-config-printer deja-dup touche webapp-manager
 clear
-pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra  ttf-hack ttf-indic-otf --needed --noconfirm
+pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra  ttf-hack ttf-indic-otf
 clear
-pacman -S adw-gtk-theme bibata-cursor-theme gnome-themes-extra  --needed --noconfirm
+pacman -S adw-gtk-theme bibata-cursor-theme gnome-themes-extra 
 clear
-pacman -S ffmpegthumbnailer ffmpeg-audio-thumbnailer  --needed --noconfirm
+pacman -S ffmpegthumbnailer ffmpeg-audio-thumbnailer 
 clear
 sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
@@ -739,6 +807,25 @@ systemctl --user --force enable wireplumber.service
 clear
 
 
+# zsh
+sudo pacman -S zsh
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+clear
+
+
+
+# ohmyzsh-congig
+chsh -s $(which zsh)
+sed -i s/'ZSH_THEME=\"robbyrussell\"'/'ZSH_THEME=\"agnoster\"'/g ~/.zshrc
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
+mv zsh-syntax-highlighting ~/.oh-my-zsh/plugins
+echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
+git clone https://github.com/zsh-users/zsh-autosuggestions
+mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
+sed -i s/'plugins=(git)'/'plugins=(git archlinux extract sudo themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
+echo "hyfetch" >> ~/.zshrc
+sudo reboot
+
 
 
 ########################
@@ -749,19 +836,19 @@ clear
 clear
 pacman -Syy
 clear
-pacman -S cinnamon cinnamon-translations blueman dconf-editor ffmpegthumbnailer gcolor3 gnome-disk-utility gnome-keyring gnome-online-accounts gnome-screenshot gnome-system-monitor gnome-terminal gnome-themes-extra mousetweaks onboard pavucontrol powertop system-config-printer webapp-manager xreader xviewer-plugins iso-flag-png xdg-desktop-portal-gnome evince --needed --noconfirm
+pacman -S cinnamon cinnamon-translations blueman dconf-editor ffmpegthumbnailer gcolor3 gnome-disk-utility gnome-keyring gnome-online-accounts gnome-screenshot gnome-system-monitor gnome-terminal gnome-themes-extra mousetweaks onboard pavucontrol powertop system-config-printer webapp-manager xreader xviewer-plugins iso-flag-png xdg-desktop-portal-gnome evince
  clear
-pacman -S nemo-fileroller nemo-preview nemo-python nemo-share --needed --noconfirm
+pacman -S nemo-fileroller nemo-preview nemo-python nemo-share
 clear
-pacman -S bibata-cursor-theme arcolinux-kvantum --needed --noconfirm
+pacman -S bibata-cursor-theme arcolinux-kvantum
 clear
-pacman -S icon-naming-utils mint-l-theme mint-themes  --needed --noconfirm
+pacman -S icon-naming-utils mint-l-theme mint-themes 
 clear
-pacman -S terminus-font ttf-dejavu ttf-droid ttf-inconsolata ttf-indic-otf ttf-liberation  --needed --noconfirm
+pacman -S terminus-font ttf-dejavu ttf-droid ttf-inconsolata ttf-indic-otf ttf-liberation 
 clear
-pacman -S baobab bulky galculator mintstick netctl numlockx pix python-pyxdg qt5ct redshift squashfs-tools touchegg tree udiskie xed  --needed --noconfirm
+pacman -S baobab bulky galculator mintstick netctl numlockx pix python-pyxdg qt5ct redshift squashfs-tools touchegg tree udiskie xed 
 clear
-pacman -S lightdm lightdm-slick-greeter lightdm-settings  --needed --noconfirm
+pacman -S lightdm lightdm-slick-greeter lightdm-settings 
 clear
 systemctl enable lightdm.service
 sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
@@ -797,6 +884,25 @@ systemctl --user --force enable wireplumber.service
 clear
 
 
+# zsh
+sudo pacman -S zsh
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+clear
+
+
+
+# ohmyzsh-congig
+chsh -s $(which zsh)
+sed -i s/'ZSH_THEME=\"robbyrussell\"'/'ZSH_THEME=\"agnoster\"'/g ~/.zshrc
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
+mv zsh-syntax-highlighting ~/.oh-my-zsh/plugins
+echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
+git clone https://github.com/zsh-users/zsh-autosuggestions
+mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
+sed -i s/'plugins=(git)'/'plugins=(git archlinux extract sudo themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
+echo "hyfetch" >> ~/.zshrc
+sudo reboot
+
 
 
 ####################
@@ -804,10 +910,10 @@ clear
 ####################
 
 
-pacman -S mate mate-extra --needed --noconfirm
-pacman -S mate-themes mate-tweak brisk-menu gnome-system-tools --needed --noconfirm
-pacman -S plank plank-themes --needed --noconfirm
-pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
+pacman -S mate mate-extra
+pacman -S mate-themes mate-tweak brisk-menu gnome-system-tools
+pacman -S plank plank-themes
+pacman -Sy lightdm lightdm-slick-greeter lightdm-settings
 sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
 sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
 systemctl enable lightdm.service
@@ -840,6 +946,26 @@ systemctl --user --force enable wireplumber.service
 clear
 
 
+# zsh
+sudo pacman -S zsh
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+clear
+
+
+
+# ohmyzsh-congig
+chsh -s $(which zsh)
+sed -i s/'ZSH_THEME=\"robbyrussell\"'/'ZSH_THEME=\"agnoster\"'/g ~/.zshrc
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
+mv zsh-syntax-highlighting ~/.oh-my-zsh/plugins
+echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
+git clone https://github.com/zsh-users/zsh-autosuggestions
+mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
+sed -i s/'plugins=(git)'/'plugins=(git archlinux extract sudo themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
+echo "hyfetch" >> ~/.zshrc
+sudo reboot
+
+
 
 
 ####################
@@ -848,8 +974,8 @@ clear
 
 
 
-pacman -S lxqt lxqt-themes xscreensaver picom libstatgrab libsysstat breeze-icons kvantum-qt5 mugshot nm-tray --needed --noconfirm
-pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
+pacman -S lxqt lxqt-themes xscreensaver picom libstatgrab libsysstat breeze-icons kvantum-qt5 mugshot nm-tray
+pacman -Sy lightdm lightdm-slick-greeter lightdm-settings
 clear
 sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
 sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
@@ -883,6 +1009,25 @@ systemctl --user --force enable wireplumber.service
 clear
 
 
+# zsh
+sudo pacman -S zsh
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+clear
+
+
+
+# ohmyzsh-congig
+chsh -s $(which zsh)
+sed -i s/'ZSH_THEME=\"robbyrussell\"'/'ZSH_THEME=\"agnoster\"'/g ~/.zshrc
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
+mv zsh-syntax-highlighting ~/.oh-my-zsh/plugins
+echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
+git clone https://github.com/zsh-users/zsh-autosuggestions
+mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
+sed -i s/'plugins=(git)'/'plugins=(git archlinux extract sudo themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
+echo "hyfetch" >> ~/.zshrc
+sudo reboot
+
 
 
 ########## Флаги ##############
@@ -912,18 +1057,18 @@ mv -i Nuvola_Russian_flag.svg ru.svg
 
 pacman -Syy
 clear
-pacman -S lxde leafpad openbox ttf-dejavu ttf-liberation obconf pavucontrol alsa-utils xfce4-notifyd --needed --noconfirm
+pacman -S lxde leafpad openbox ttf-dejavu ttf-liberation obconf pavucontrol alsa-utils xfce4-notifyd
 clear
-pacman -S xscreensaver picom libstatgrab libsysstat arc-gtk-theme mugshot nm-tray dunst --needed --noconfirm
+pacman -S xscreensaver picom libstatgrab libsysstat arc-gtk-theme mugshot nm-tray dunst
 clear
-pacman -Sy lxqt-archiver ffmpegthumbnailer exaile --needed --noconfirm
+pacman -Sy lxqt-archiver ffmpegthumbnailer exaile
 clear
-pacman -S thunar-archive-plugin  thunar-media-tags-plugin thunar-shares-plugin ffmpegthumbnailer libgsf udiskie --needed --noconfirm
+pacman -S thunar-archive-plugin  thunar-media-tags-plugin thunar-shares-plugin ffmpegthumbnailer libgsf udiskie
 update-menus
 clear
-pacman -Sy lightdm lightdm-slick-greeter lightdm-settings --needed --noconfirm
+pacman -Sy lightdm lightdm-slick-greeter lightdm-settings
 clear
-pacman -Sy blueman lxqt-archiver ffmpegthumbnailer exaile --needed --noconfirm
+pacman -Sy blueman lxqt-archiver ffmpegthumbnailer exaile
 clear
 sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
 sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
@@ -956,6 +1101,26 @@ systemctl --user --force enable wireplumber.service
 clear
 
 
+# zsh
+sudo pacman -S zsh
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+clear
+
+
+
+# ohmyzsh-congig
+chsh -s $(which zsh)
+sed -i s/'ZSH_THEME=\"robbyrussell\"'/'ZSH_THEME=\"agnoster\"'/g ~/.zshrc
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
+mv zsh-syntax-highlighting ~/.oh-my-zsh/plugins
+echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
+git clone https://github.com/zsh-users/zsh-autosuggestions
+mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
+sed -i s/'plugins=(git)'/'plugins=(git archlinux extract sudo themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
+echo "hyfetch" >> ~/.zshrc
+sudo reboot
+
+
 
 
 ######################
@@ -964,10 +1129,10 @@ clear
 
 
 pacman -Syy
-pacman -S budgie-desktop --needed --noconfirm
-pacman -S gnome gnome-control-center --needed --noconfirm
-pacman -S materia-gtk-theme papirus-icon-theme i3lock --needed --noconfirm
-pacman -S lightdm lightdm-gtk-greeter --needed --noconfirm
+pacman -S budgie-desktop
+pacman -S gnome gnome-control-center
+pacman -S materia-gtk-theme papirus-icon-theme i3lock
+pacman -S lightdm lightdm-gtk-greeter
 sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
 systemctl enable lightdm
 clear
@@ -1006,22 +1171,29 @@ clear
 
 
 
-
-
-
-###############
-## Программы ##
-###############
-
-
-
-
-sudo pacman -Syy
+# zsh
+sudo pacman -S zsh
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 clear
-sudo pacman -S ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 stacer cherrytree htop seahorse system-monitoring-center  smplayer strawberry doublecmd-qt6 nomacs ocs-url  --needed --noconfirm
-clear
-yay -S radiotray-ng --needed --noconfirm
-clear
+
+
+
+# ohmyzsh-congig
+chsh -s $(which zsh)
+sed -i s/'ZSH_THEME=\"robbyrussell\"'/'ZSH_THEME=\"agnoster\"'/g ~/.zshrc
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
+mv zsh-syntax-highlighting ~/.oh-my-zsh/plugins
+echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
+git clone https://github.com/zsh-users/zsh-autosuggestions
+mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
+sed -i s/'plugins=(git)'/'plugins=(git archlinux extract sudo themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
+echo "hyfetch" >> ~/.zshrc
+sudo reboot
+
+
+
+
+
 sudo reboot
 
 
@@ -1030,9 +1202,3 @@ sudo reboot
 ############################################################
 ################# FINISH ###################################
 ############################################################
-
-
-
-
-
-
