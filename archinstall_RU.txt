@@ -673,19 +673,19 @@ sudo reboot
 
 
 clear
-pacman -S xfce4
+sudo pamac install --no-confirm xfce4
 clear
-pacman -S mousepad thunar-archive-plugin thunar-media-tags-plugin xfburn xfce4-artwork xfce4-battery-plugin xfce4-clipman-plugin xfce4-cpufreq-plugin xfce4-cpugraph-plugin xfce4-dict xfce4-diskperf-plugin xfce4-eyes-plugin xfce4-fsguard-plugin xfce4-genmon-plugin xfce4-mailwatch-plugin xfce4-mount-plugin xfce4-mpc-plugin xfce4-netload-plugin xfce4-notes-plugin xfce4-notifyd xfce4-places-plugin xfce4-pulseaudio-plugin xfce4-screensaver  xfce4-screenshooter xfce4-sensors-plugin xfce4-smartbookmark-plugin xfce4-systemload-plugin  xfce4-taskmanager xfce4-time-out-plugin xfce4-timer-plugin xfce4-verve-plugin xfce4-wavelan-plugin xfce4-weather-plugin xfce4-whiskermenu-plugin xfce4-xkb-plugin
+sudo pamac install --no-confirm mousepad thunar-archive-plugin thunar-media-tags-plugin xfburn xfce4-artwork xfce4-battery-plugin xfce4-clipman-plugin xfce4-cpufreq-plugin xfce4-cpugraph-plugin xfce4-dict xfce4-diskperf-plugin xfce4-eyes-plugin xfce4-fsguard-plugin xfce4-genmon-plugin xfce4-mailwatch-plugin xfce4-mount-plugin xfce4-mpc-plugin xfce4-netload-plugin xfce4-notes-plugin xfce4-notifyd xfce4-places-plugin xfce4-pulseaudio-plugin xfce4-screensaver  xfce4-screenshooter xfce4-sensors-plugin xfce4-smartbookmark-plugin xfce4-systemload-plugin  xfce4-taskmanager xfce4-time-out-plugin xfce4-timer-plugin xfce4-verve-plugin xfce4-wavelan-plugin xfce4-weather-plugin xfce4-whiskermenu-plugin xfce4-xkb-plugin
 clear
-pacman -S mugshot pavucontrol archlinux-xdg-menu xdg-desktop-portal-gtk menulibre network-manager-applet
+sudo pamac install --no-confirm mugshot pavucontrol archlinux-xdg-menu xdg-desktop-portal-gtk menulibre network-manager-applet
 update-menus
-pacman -Sy lightdm lightdm-slick-greeter lightdm-settings
+sudo pamac install --no-confirm lightdm lightdm-slick-greeter lightdm-settings
 clear
-pacman -Sy blueman engrampa ffmpegthumbnailer libgsf udiskie evince
+sudo pamac install --no-confirm blueman engrampa ffmpegthumbnailer libgsf udiskie evince
 clear
-pacman -S catfish galculator libopenraw mtpfs ntp numlockx perl-file-mimeinfo pidgin powertop unace xcursor-simpleandsoft xcursor-vanilla-dmz-aa gcolor3 xiccd 
+sudo pamac install --no-confirm catfish galculator libopenraw mtpfs ntp numlockx perl-file-mimeinfo pidgin powertop unace xcursor-simpleandsoft xcursor-vanilla-dmz-aa gcolor3 xiccd 
 clear
-pacman -S adobe-source-sans-fonts noto-fonts noto-fonts-cjk terminus-font ttf-inconsolata ttf-indic-otf
+sudo pamac install --no-confirm adobe-source-sans-fonts noto-fonts noto-fonts-cjk terminus-font ttf-inconsolata ttf-indic-otf
 clear
 sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
 sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
@@ -726,11 +726,17 @@ mv -i Nuvola_USA_flag.svg us.svg
 mv -i Nuvola_Russian_flag.svg ru.svg
 cd
 clear
+clear
+sudo pamac update
+sudo pamac upgrade --no-confirm
+sudo pamac install --no-confirm radiotray-ng 
+clear
+
 
 
 
 # zsh
-sudo pacman -S zsh
+sudo pamac install --no-confirm zsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 clear
 
@@ -758,21 +764,21 @@ sudo reboot
 
 
 #  Gnome
-pacman -S baobab evince gnome-backgrounds gnome-calculator gnome-calendar gnome-characters gnome-clocks gnome-connections gnome-contacts gnome-control-center gnome-disk-utility gnome-font-viewer gnome-logs gnome-maps gnome-remote-desktop gnome-shell gnome-shell-extensions gnome-system-monitor gnome-text-editor gnome-tour gnome-user-docs gnome-user-share gnome-weather grilo-plugins malcontent nautilus rygel simple-scan snapshot sushi totem gdm
+sudo pamac install --no-confirm baobab evince gnome-backgrounds gnome-calculator gnome-calendar gnome-characters gnome-clocks gnome-connections gnome-contacts gnome-control-center gnome-disk-utility gnome-font-viewer gnome-logs gnome-maps gnome-remote-desktop gnome-shell gnome-shell-extensions gnome-system-monitor gnome-text-editor gnome-tour gnome-user-docs gnome-user-share gnome-weather grilo-plugins malcontent nautilus rygel simple-scan snapshot sushi totem gdm
 systemctl enable gdm
 clear
 #  Gnome-extra
-pacman -S endeavour file-roller gnome-boxes gnome-chess gnome-mines gnome-terminal-transparency gnome-tweaks iagno quadrapassel
+sudo pamac install --no-confirm endeavour file-roller gnome-boxes gnome-chess gnome-mines gnome-terminal-transparency gnome-tweaks iagno quadrapassel
 clear
-pacman -S gnome-browser-connector gnome-firmware gnome-shell-extension-appindicator gnome-shell-extension-arc-menu gnome-shell-extension-dash-to-dock gnome-shell-extension-dash-to-panel gnome-shell-extension-forge-git gnome-shell-extension-gnome-ui-tune-git gnome-shell-extension-gsconnect gnome-shell-extension-space-bar-git gnome-shell-extension-x11gestures gnuchess power-profiles-daemon squashfs-tools
+sudo pamac install --no-confirm gnome-browser-connector gnome-firmware gnome-shell-extension-appindicator gnome-shell-extension-arc-menu gnome-shell-extension-dash-to-dock gnome-shell-extension-dash-to-panel gnome-shell-extension-forge-git gnome-shell-extension-gnome-ui-tune-git gnome-shell-extension-gsconnect gnome-shell-extension-space-bar-git gnome-shell-extension-x11gestures gnuchess power-profiles-daemon squashfs-tools
 clear
-pacman -S gthumb gtkmm3 qt5ct qt6ct system-config-printer deja-dup touche webapp-manager
+sudo pamac install --no-confirm gthumb gtkmm3 qt5ct qt6ct system-config-printer deja-dup touche webapp-manager
 clear
-pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra  ttf-hack ttf-indic-otf
+sudo pamac install --no-confirm noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra  ttf-hack ttf-indic-otf
 clear
-pacman -S adw-gtk-theme bibata-cursor-theme gnome-themes-extra 
+sudo pamac install --no-confirm adw-gtk-theme bibata-cursor-theme gnome-themes-extra 
 clear
-pacman -S ffmpegthumbnailer ffmpeg-audio-thumbnailer 
+sudo pamac install --no-confirm ffmpegthumbnailer ffmpeg-audio-thumbnailer 
 clear
 sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
@@ -805,10 +811,18 @@ sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clear
+clear
+sudo pamac update
+sudo pamac upgrade --no-confirm
+sudo pamac install --no-confirm radiotray-ng 
+clear
+
+
+
 
 
 # zsh
-sudo pacman -S zsh
+sudo pamac install --no-confirm zsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 clear
 
@@ -834,21 +848,21 @@ sudo reboot
 
 
 clear
-pacman -Syy
+sudo pamac update
 clear
-pacman -S cinnamon cinnamon-translations blueman dconf-editor ffmpegthumbnailer gcolor3 gnome-disk-utility gnome-keyring gnome-online-accounts gnome-screenshot gnome-system-monitor gnome-terminal gnome-themes-extra mousetweaks onboard pavucontrol powertop system-config-printer webapp-manager xreader xviewer-plugins iso-flag-png xdg-desktop-portal-gnome evince
+sudo pamac install --no-confirm cinnamon cinnamon-translations blueman dconf-editor ffmpegthumbnailer gcolor3 gnome-disk-utility gnome-keyring gnome-online-accounts gnome-screenshot gnome-system-monitor gnome-terminal gnome-themes-extra mousetweaks onboard pavucontrol powertop system-config-printer webapp-manager xreader xviewer-plugins iso-flag-png xdg-desktop-portal-gnome evince
  clear
-pacman -S nemo-fileroller nemo-preview nemo-python nemo-share
+sudo pamac install --no-confirm nemo-fileroller nemo-preview nemo-python nemo-share
 clear
-pacman -S bibata-cursor-theme arcolinux-kvantum
+sudo pamac install --no-confirm bibata-cursor-theme arcolinux-kvantum
 clear
-pacman -S icon-naming-utils mint-l-theme mint-themes 
+sudo pamac install --no-confirm icon-naming-utils mint-l-theme mint-themes 
 clear
-pacman -S terminus-font ttf-dejavu ttf-droid ttf-inconsolata ttf-indic-otf ttf-liberation 
+sudo pamac install --no-confirm terminus-font ttf-dejavu ttf-droid ttf-inconsolata ttf-indic-otf ttf-liberation 
 clear
-pacman -S baobab bulky galculator mintstick netctl numlockx pix python-pyxdg qt5ct redshift squashfs-tools touchegg tree udiskie xed 
+sudo pamac install --no-confirm baobab bulky galculator mintstick netctl numlockx pix python-pyxdg qt5ct redshift squashfs-tools touchegg tree udiskie xed 
 clear
-pacman -S lightdm lightdm-slick-greeter lightdm-settings 
+sudo pamac install --no-confirm lightdm lightdm-slick-greeter lightdm-settings 
 clear
 systemctl enable lightdm.service
 sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
@@ -882,10 +896,18 @@ sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clear
+clear
+sudo pamac update
+sudo pamac upgrade --no-confirm
+sudo pamac install --no-confirm radiotray-ng 
+clear
+
+
+
 
 
 # zsh
-sudo pacman -S zsh
+sudo pamac install --no-confirm zsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 clear
 
@@ -910,10 +932,10 @@ sudo reboot
 ####################
 
 
-pacman -S mate mate-extra
-pacman -S mate-themes mate-tweak brisk-menu gnome-system-tools
-pacman -S plank plank-themes
-pacman -Sy lightdm lightdm-slick-greeter lightdm-settings
+sudo pamac install --no-confirm mate mate-extra
+sudo pamac install --no-confirm mate-themes mate-tweak brisk-menu gnome-system-tools
+sudo pamac install --no-confirm plank plank-themes
+sudo pamac install --no-confirm lightdm lightdm-slick-greeter lightdm-settings
 sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
 sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
 systemctl enable lightdm.service
@@ -944,10 +966,18 @@ sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clear
+clear
+sudo pamac update
+sudo pamac upgrade --no-confirm
+sudo pamac install --no-confirm radiotray-ng 
+clear
+
+
+
 
 
 # zsh
-sudo pacman -S zsh
+sudo pamac install --no-confirm zsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 clear
 
@@ -974,8 +1004,8 @@ sudo reboot
 
 
 
-pacman -S lxqt lxqt-themes xscreensaver picom libstatgrab libsysstat breeze-icons kvantum-qt5 mugshot nm-tray
-pacman -Sy lightdm lightdm-slick-greeter lightdm-settings
+sudo pamac install --no-confirm lxqt lxqt-themes xscreensaver picom libstatgrab libsysstat breeze-icons kvantum-qt5 mugshot nm-tray
+sudo pamac install --no-confirm lightdm lightdm-slick-greeter lightdm-settings
 clear
 sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
 sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
@@ -1007,10 +1037,18 @@ sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clear
+clear
+sudo pamac update
+sudo pamac upgrade --no-confirm
+sudo pamac install --no-confirm radiotray-ng 
+clear
+
+
+
 
 
 # zsh
-sudo pacman -S zsh
+sudo pamac install --no-confirm zsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 clear
 
@@ -1057,18 +1095,18 @@ mv -i Nuvola_Russian_flag.svg ru.svg
 
 pacman -Syy
 clear
-pacman -S lxde leafpad openbox ttf-dejavu ttf-liberation obconf pavucontrol alsa-utils xfce4-notifyd
+sudo pamac install --no-confirm lxde leafpad openbox ttf-dejavu ttf-liberation obconf pavucontrol alsa-utils xfce4-notifyd
 clear
-pacman -S xscreensaver picom libstatgrab libsysstat arc-gtk-theme mugshot nm-tray dunst
+sudo pamac install --no-confirm xscreensaver picom libstatgrab libsysstat arc-gtk-theme mugshot nm-tray dunst
 clear
-pacman -Sy lxqt-archiver ffmpegthumbnailer exaile
+sudo pamac install --no-confirm lxqt-archiver ffmpegthumbnailer exaile
 clear
-pacman -S thunar-archive-plugin  thunar-media-tags-plugin thunar-shares-plugin ffmpegthumbnailer libgsf udiskie
+sudo pamac install --no-confirm thunar-archive-plugin  thunar-media-tags-plugin thunar-shares-plugin ffmpegthumbnailer libgsf udiskie
 update-menus
 clear
-pacman -Sy lightdm lightdm-slick-greeter lightdm-settings
+sudo pamac install --no-confirm lightdm lightdm-slick-greeter lightdm-settings
 clear
-pacman -Sy blueman lxqt-archiver ffmpegthumbnailer exaile
+sudo pamac install --no-confirm blueman lxqt-archiver ffmpegthumbnailer exaile
 clear
 sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
 sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
@@ -1099,10 +1137,18 @@ sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clear
+clear
+sudo pamac update
+sudo pamac upgrade --no-confirm
+sudo pamac install --no-confirm radiotray-ng 
+clear
+
+
+
 
 
 # zsh
-sudo pacman -S zsh
+sudo pamac install --no-confirm zsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 clear
 
@@ -1129,10 +1175,10 @@ sudo reboot
 
 
 pacman -Syy
-pacman -S budgie-desktop
-pacman -S gnome gnome-control-center
-pacman -S materia-gtk-theme papirus-icon-theme i3lock
-pacman -S lightdm lightdm-gtk-greeter
+sudo pamac install --no-confirm budgie-desktop
+sudo pamac install --no-confirm gnome gnome-control-center
+sudo pamac install --no-confirm materia-gtk-theme papirus-icon-theme i3lock
+sudo pamac install --no-confirm lightdm lightdm-gtk-greeter
 sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
 systemctl enable lightdm
 clear
@@ -1168,11 +1214,18 @@ systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clearenable wireplumber.service
 clear
+clear
+sudo pamac update
+sudo pamac upgrade --no-confirm
+sudo pamac install --no-confirm radiotray-ng 
+clear
+
+
 
 
 
 # zsh
-sudo pacman -S zsh
+sudo pamac install --no-confirm zsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 clear
 
