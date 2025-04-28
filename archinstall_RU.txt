@@ -258,7 +258,7 @@ pacman -S pamac --noconfirm
 clear
 sed -i s/'MaxParallelDownloads = 4'/'MaxParallelDownloads = 10'/g /etc/pamac.conf
 clear
-pamac update --dry-run
+sudo pamac update --dry-run
 clear
 
 
@@ -300,7 +300,7 @@ locale-gen
 time_zone=$(curl -s https://ipinfo.io/timezone)
 ln -sf /usr/share/zoneinfo/$time_zone /etc/localtime
 hwclock --systohc
-pamac update --dry-run
+sudo pamac update --dry-run
 clear
 date
 lsblk
@@ -358,16 +358,16 @@ clear
 
 
 clear
-pamac update --dry-run
+sudo pamac update --dry-run
 clear
-pamac install --no-confirm reflector
+sudo pamac install --no-confirm reflector
 clear
 reflector --latest 20 --fastest 5 --connection-timeout 1 --save /etc/pacman.d/mirrorlist
 systemctl enable --now reflector.timer
 clear
-pamac update --dry-run
+sudo pamac update --dry-run
 clear
-pamac install --no-confirm linux-lts linux-lts-headers linux-firmware networkmanager wpa_supplicant grub grub-btrfs os-prober plymouth
+sudo pamac install --no-confirm linux-lts linux-lts-headers linux-firmware networkmanager wpa_supplicant grub grub-btrfs os-prober plymouth
 clear
 grub-install /dev/sda
 grub-install --target=x86_64-efi --removable
@@ -437,67 +437,67 @@ clear
 
 
 
-pamac update --dry-run
+sudo pamac update --dry-run
 clear
 # Services
-pamac install --no-confirm nm-connection-editor modemmanager usb_modeswitch rp-pppoe
+sudo pamac install --no-confirm nm-connection-editor modemmanager usb_modeswitch rp-pppoe
 clear
-pamac install --no-confirm bluez bluez-utils
+sudo pamac install --no-confirm bluez bluez-utils
 clear
-pamac install --no-confirm cups cups-pdf ghostscript gsfonts
+sudo pamac install --no-confirm cups cups-pdf ghostscript gsfonts
 clear
-pamac install --no-confirm cronie haveged openssh
+sudo pamac install --no-confirm cronie haveged openssh
 clear
-pamac install --no-confirm mlocate chrony
+sudo pamac install --no-confirm mlocate chrony
 systemctl enable chrony-wait.service chronyd.service
 clear
 # Advanced Configuration and Power Interface
-pamac install --no-confirm acpi acpid 
+sudo pamac install --no-confirm acpi acpid 
 systemctl enable acpid.service
 clear
-pamac install --no-confirm cpupower sysfsutils wireless-regdb 
+sudo pamac install --no-confirm cpupower sysfsutils wireless-regdb 
 clear
 # XDG
-pamac install --no-confirm xdg-utils xdg-user-dirs
+sudo pamac install --no-confirm xdg-utils xdg-user-dirs
 clear
 systemctl enable grub-btrfsd.service sshd.service NetworkManager.service ModemManager.service cups.service  cronie.service bluetooth.service haveged.service systemd-timesyncd
 clear
 # Pacman-contrib
-pamac update --dry-run
-pamac install --no-confirm pacman-contrib
+sudo pamac update --dry-run
+sudo pamac install --no-confirm pacman-contrib
 clear
 # Generic
-pamac install --no-confirm vim wget usbutils lsof dmidecode dialog
+sudo pamac install --no-confirm vim wget usbutils lsof dmidecode dialog
 clear
 # Compression
-pamac install --no-confirm zip unzip unrar p7zip lzop lrzip
+sudo pamac install --no-confirm zip unzip unrar p7zip lzop lrzip
 clear
 # Network Tools
-pamac install --no-confirm rsync traceroute bind-tools
+sudo pamac install --no-confirm rsync traceroute bind-tools
 clear
 # File System
-pamac install --no-confirm dosfstools ntfs-3g btrfs-progs exfatprogs gptfdisk fuse2 fuse3 fuseiso
+sudo pamac install --no-confirm dosfstools ntfs-3g btrfs-progs exfatprogs gptfdisk fuse2 fuse3 fuseiso
 clear
 # SAMBA
-pamac install --no-confirm samba gvfs gvfs-smb smbclient cifs-utils gvfs-afc gvfs-mtp gvfs-nfs gvfs-dnssd gvfs-goa gvfs-google gvfs-gphoto2 gvfs-onedrive gvfs-wsdd
+sudo pamac install --no-confirm samba gvfs gvfs-smb smbclient cifs-utils gvfs-afc gvfs-mtp gvfs-nfs gvfs-dnssd gvfs-goa gvfs-google gvfs-gphoto2 gvfs-onedrive gvfs-wsdd
 # ЗВУК
 # Wireplumber Pipewire
-pamac install --no-confirm wireplumber pipewire-alsa pipewire-jack pipewire-pulse pipewire-v4l2 pipewire-zeroconf gst-plugin-pipewire helvum
+sudo pamac install --no-confirm wireplumber pipewire-alsa pipewire-jack pipewire-pulse pipewire-v4l2 pipewire-zeroconf gst-plugin-pipewire helvum
 clear
 # Alsa
-pamac install --no-confirm alsa-firmware alsa-plugins alsa-utils sof-firmware
+sudo pamac install --no-confirm alsa-firmware alsa-plugins alsa-utils sof-firmware
 clear
 # GStreamer
-pamac install --no-confirm gst-libav gst-plugins-bad gst-plugins-base gst-plugins-ugly gst-plugin-pipewire gst-plugin-va gstreamer
+sudo pamac install --no-confirm gst-libav gst-plugins-bad gst-plugins-base gst-plugins-ugly gst-plugin-pipewire gst-plugin-va gstreamer
 clear
 # MAN
-pamac install --no-confirm man-db most man-pages man-pages-ru yelp xorg-xman
+sudo pamac install --no-confirm man-db most man-pages man-pages-ru yelp xorg-xman
 clear
 # Утилиты вывода системной информации
-pamac install --no-confirm hyfetch fastfetch
+sudo pamac install --no-confirm hyfetch fastfetch
 clear
 # XORG
-pamac install --no-confirm xorg-server xorg-apps xorg-xinit
+sudo pamac install --no-confirm xorg-server xorg-apps xorg-xinit
 clear
 
 
@@ -517,9 +517,9 @@ clear
 
 
 clear
-pamac update --dry-run
+sudo pamac update --dry-run
 clear
-pamac install --no-confirm grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant
+sudo pamac install --no-confirm grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant
 clear
 
 
@@ -530,9 +530,9 @@ clear
 
 
 clear
-pamac update --dry-run
+sudo pamac update --dry-run
 clear
-pamac install --no-confirm timeshift timeshift-autosnap 
+sudo pamac install --no-confirm timeshift timeshift-autosnap 
 clear
 
 
@@ -544,9 +544,9 @@ clear
 
 
 clear
-pamac update --dry-run
+sudo pamac update --dry-run
 clear
-pamac install --no-confirm mkinitcpio-firmware update-grub yay archlinux-wallpaper
+sudo pamac install --no-confirm mkinitcpio-firmware update-grub yay archlinux-wallpaper
 clear
 
 
@@ -558,9 +558,9 @@ clear
 
 
 clear
-pamac update --dry-run
+sudo pamac update --dry-run
 clear
-pamac install --no-confirm ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 cherrytree htop seahorse system-monitoring-center  smplayer strawberry doublecmd-qt6 nomacs ocs-url
+sudo pamac install --no-confirm ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 cherrytree htop seahorse system-monitoring-center  smplayer strawberry doublecmd-qt6 nomacs ocs-url
 clear
 
 
@@ -606,7 +606,7 @@ clear
 # fonts
 sudo pamac install --no-confirm adobe-source-sans-fonts terminus-font ttf-dejavu ttf-droid ttf-inconsolata ttf-indic-otf ttf-liberation
 clear
-sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
+sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
 exit
 
@@ -640,12 +640,12 @@ sudo pamac upgrade --no-confirm
 sudo pamac install --no-confirm pamac-tray-plasma-git radiotray-ng 
 clear
 
-stacer-bin
+
 
 
 
 # zsh
-pamac install --no-confirm zsh
+sudo pamac install --no-confirm zsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 clear
 
