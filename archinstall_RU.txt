@@ -472,6 +472,9 @@ clear
 # Compression
 sudo pamac install --no-confirm zip unzip unrar p7zip lzop lrzip
 clear
+# Шрифты
+sudo pamac install --no-confirm gsfonts sdl_ttf ttf-bitstream-vera ttf-dejavu ttf-liberation xorg-fonts-type1
+clear
 # Network Tools
 sudo pamac install --no-confirm rsync traceroute bind-tools
 clear
@@ -599,14 +602,11 @@ clear
 # kde-network
 sudo pamac install --no-confirm kdeconnect kdenetwork-filesharing kio-extras
 clear
-sudo pamac install --no-confirm breeze5 dolphin-plugins filelight fwupd gtkmm3 kaccounts-providers kimageformats kwayland-integration lib32-libcanberra mtpfs noto-fonts-cjk ntp numlockx perl-file-mimeinfo power-profiles-daemon powertop python-pillow python-pip python-pysmbc python-reportlab qemu-guest-agent s-nail spice-vdagent sshfs system-config-printer udiskie unarchiver
+sudo pamac install --no-confirm breeze5 dolphin-plugins filelight fwupd gtkmm3 kaccounts-providers kimageformats kwayland-integration lib32-libcanberra mtpfs ntp numlockx perl-file-mimeinfo power-profiles-daemon powertop python-pillow python-pip python-pysmbc python-reportlab qemu-guest-agent s-nail spice-vdagent sshfs system-config-printer udiskie unarchiver
 clear
 sudo pamac install --no-confirm gnome-themes-extra
 clear
-# fonts
-sudo pamac install --no-confirm adobe-source-sans-fonts terminus-font ttf-dejavu ttf-droid ttf-inconsolata ttf-indic-otf ttf-liberation
-clear
-sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
+sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
 exit
 
@@ -684,8 +684,6 @@ clear
 sudo pamac install --no-confirm blueman engrampa ffmpegthumbnailer libgsf udiskie evince
 clear
 sudo pamac install --no-confirm catfish galculator libopenraw mtpfs ntp numlockx perl-file-mimeinfo pidgin powertop unace xcursor-simpleandsoft xcursor-vanilla-dmz-aa gcolor3 xiccd 
-clear
-sudo pamac install --no-confirm adobe-source-sans-fonts noto-fonts noto-fonts-cjk terminus-font ttf-inconsolata ttf-indic-otf
 clear
 sudo sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
 sudo sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
@@ -776,8 +774,6 @@ sudo pamac install --no-confirm gnome-browser-connector gnome-firmware gnome-she
 clear
 sudo pamac install --no-confirm gthumb gtkmm3 qt5ct qt6ct system-config-printer deja-dup touche webapp-manager
 clear
-sudo pamac install --no-confirm noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra  ttf-hack ttf-indic-otf
-clear
 sudo pamac install --no-confirm adw-gtk-theme bibata-cursor-theme gnome-themes-extra 
 clear
 sudo pamac install --no-confirm ffmpegthumbnailer ffmpeg-audio-thumbnailer 
@@ -862,8 +858,6 @@ clear
 sudo pamac install --no-confirm bibata-cursor-theme arcolinux-kvantum
 clear
 sudo pamac install --no-confirm icon-naming-utils mint-l-theme mint-themes 
-clear
-sudo pamac install --no-confirm terminus-font ttf-dejavu ttf-droid ttf-inconsolata ttf-indic-otf ttf-liberation 
 clear
 sudo pamac install --no-confirm baobab bulky galculator mintstick netctl numlockx pix python-pyxdg qt5ct redshift squashfs-tools touchegg tree udiskie xed 
 clear
@@ -1109,7 +1103,7 @@ mv -i Nuvola_Russian_flag.svg ru.svg
 
 pacman -Syy
 clear
-sudo pamac install --no-confirm lxde leafpad openbox ttf-dejavu ttf-liberation obconf pavucontrol alsa-utils xfce4-notifyd
+sudo pamac install --no-confirm lxde leafpad openbox obconf pavucontrol alsa-utils xfce4-notifyd
 clear
 sudo pamac install --no-confirm xscreensaver picom libstatgrab libsysstat arc-gtk-theme mugshot nm-tray dunst
 clear
