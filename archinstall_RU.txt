@@ -546,7 +546,7 @@ clear
 clear
 sudo pamac update
 clear
-sudo pamac install --no-confirm mkinitcpio-firmware update-grub yay archlinux-wallpaper
+sudo pamac install --no-confirm mkinitcpio-firmware update-grub yay-bin archlinux-wallpaper
 clear
 
 
