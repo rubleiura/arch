@@ -687,11 +687,11 @@ sudo pamac install --no-confirm catfish galculator libopenraw mtpfs ntp numlockx
 clear
 sudo pamac install --no-confirm adobe-source-sans-fonts noto-fonts noto-fonts-cjk terminus-font ttf-inconsolata ttf-indic-otf
 clear
-sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
-sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
-systemctl enable lightdm.service
+sudo sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
+sudo sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
+sudo systemctl enable lightdm.service
 clear
-sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
+sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
 exit
 
@@ -726,10 +726,12 @@ mv -i Nuvola_USA_flag.svg us.svg
 mv -i Nuvola_Russian_flag.svg ru.svg
 cd
 clear
+sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
+sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
 sudo pamac update
 sudo pamac upgrade --no-confirm
-sudo pamac install --no-confirm radiotray-ng 
+sudo pamac install --no-confirm pamac-tray-plasma-git radiotray-ng 
 clear
 
 
@@ -811,11 +813,14 @@ sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clear
+sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
+sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
 sudo pamac update
 sudo pamac upgrade --no-confirm
-sudo pamac install --no-confirm radiotray-ng 
+sudo pamac install --no-confirm pamac-tray-plasma-git radiotray-ng 
 clear
+
 
 
 
@@ -896,11 +901,14 @@ sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clear
+sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
+sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
 sudo pamac update
 sudo pamac upgrade --no-confirm
-sudo pamac install --no-confirm radiotray-ng 
+sudo pamac install --no-confirm pamac-tray-plasma-git radiotray-ng 
 clear
+
 
 
 
@@ -966,11 +974,14 @@ sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clear
+sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
+sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
 sudo pamac update
 sudo pamac upgrade --no-confirm
-sudo pamac install --no-confirm radiotray-ng 
+sudo pamac install --no-confirm pamac-tray-plasma-git radiotray-ng 
 clear
+
 
 
 
@@ -1037,11 +1048,14 @@ sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clear
+sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
+sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
 sudo pamac update
 sudo pamac upgrade --no-confirm
-sudo pamac install --no-confirm radiotray-ng 
+sudo pamac install --no-confirm pamac-tray-plasma-git radiotray-ng 
 clear
+
 
 
 
@@ -1137,11 +1151,14 @@ sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clear
+sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
+sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
 sudo pamac update
 sudo pamac upgrade --no-confirm
-sudo pamac install --no-confirm radiotray-ng 
+sudo pamac install --no-confirm pamac-tray-plasma-git radiotray-ng 
 clear
+
 
 
 
@@ -1214,11 +1231,14 @@ systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clearenable wireplumber.service
 clear
+sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
+sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
 sudo pamac update
 sudo pamac upgrade --no-confirm
-sudo pamac install --no-confirm radiotray-ng 
+sudo pamac install --no-confirm pamac-tray-plasma-git radiotray-ng 
 clear
+
 
 
 
