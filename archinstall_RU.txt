@@ -16,9 +16,7 @@ clear
 loadkeys ru
 setfont cyr-sun16
 sed -i "s/#\(en_US\.UTF-8\)/\1/" /etc/locale.gen
-sed -i "s/#\(en_US\ ISO-8859-1\)/\1/" /etc/locale.gen
 sed -i "s/#\(ru_RU\.UTF-8\)/\1/" /etc/locale.gen
-sed -i "s/#\(ru_RU\ ISO-8859-5\)/\1/" /etc/locale.gen
 locale-gen
 export LANG=ru_RU.UTF-8
 sed -i s/'#ParallelDownloads = 5'/'ParallelDownloads = 15'/g /etc/pacman.conf
@@ -33,7 +31,7 @@ clear
 fastfetch
 date
 sudo inxi -M
-sudo inxi -I
+sudo nxi -I
 lsblk
 
 
@@ -146,11 +144,11 @@ mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@log /d
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@tmp /dev/sda2 /mnt/var/tmp
 mount /dev/sda1 /mnt/boot/efi
 clear
-pacstrap /mnt base base-devel btrfs-progs bash-completion archlinux-keyring nano nano-syntax-highlighting intel-ucode inxi efibootmgr memtest86+-efi
+pacstrap /mnt base base-devel btrfs-progs bash-completion archlinux-keyring nano nano-syntax-highlighting intel-ucode inxi efibootmgr
 clear
 genfstab -U -p /mnt >> /mnt/etc/fstab
 clear
-arch-chroot /mnt
+arch-chroot /mnt /bin/bash
 
 
 
@@ -208,11 +206,11 @@ mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@cache 
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@log /dev/sda2 /mnt/var/log
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@tmp /dev/sda2 /mnt/var/tmp
 clear
-pacstrap /mnt base base-devel btrfs-progs bash-completion archlinux-keyring nano nano-syntax-highlighting intel-ucode inxi memtest86+
+pacstrap /mnt base base-devel btrfs-progs bash-completion archlinux-keyring nano nano-syntax-highlighting intel-ucode inxi
 clear
 genfstab -U -p /mnt >> /mnt/etc/fstab
 clear
-arch-chroot /mnt
+arch-chroot /mnt /bin/bash
 
 
 
@@ -231,20 +229,26 @@ arch-chroot /mnt
 #################
 
 
+
+
+
+pacman -Syy
 clear
+#Начнем с извлечения первичного ключа , чтобы обеспечить установку нашей связки ключей и списка зеркал.
 pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
 pacman-key --lsign-key 3056513887B78AEB
+#Это позволяет нам установить наши пакеты chaotic-keyring и chaotic-mirrorlist .
 pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --noconfirm
 pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
-echo "#" >> /etc/pacman.conf
-echo "#" >> /etc/pacman.conf
+#Затем мы добавляем (добавляя в конец) следующее /etc/pacman.conf:
 echo "### Chaotic-AUR #####" >> /etc/pacman.conf
 echo "[chaotic-aur]" >> /etc/pacman.conf
 echo "Include = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
-#echo "GTK_THEME=Adwaita:dark" >> /etc/environment
-pacman -Syy
+#Мы рекомендуем запустить полное обновление системы и синхронизировать наш список зеркал.
+pacman -Syu --noconfirm
+#После выполнения этого действия репозиторий готов к использованию!
+pacman -S firedragon --noconfirm
 clear
-
 
 
 
@@ -254,11 +258,13 @@ clear
 ###########
 
 
+pacman -Syy
+clear
 pacman -S pamac --noconfirm
 clear
 sed -i s/'MaxParallelDownloads = 4'/'MaxParallelDownloads = 10'/g /etc/pamac.conf
 clear
-sudo pamac update
+pacman -Syy
 clear
 
 
@@ -272,35 +278,22 @@ clear
 
 sed -i 's/\S*subvol=\(\S*\)/subvol=\1,ssd,noatime,space_cache=v2,compress=zstd:2,discard=async/g'  /etc/fstab
 sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
-sed -i s/'#ParallelDownloads = 5'/'ParallelDownloads = 15'/g /etc/pacman.conf
+sed -i s/'ParallelDownloads = 5'/'ParallelDownloads = 15'/g /etc/pacman.conf
 sed -i s/'#Color'/'Color'/g /etc/pacman.conf
 echo "[options]" >> /etc/pacman.conf
 echo "ILoveCandy" >> /etc/pacman.conf
-echo "KEYMAP=ruwin_alt_sh-UTF-8" >> /etc/vconsole.conf
+echo "KEYMAP=ru" > /etc/vconsole.conf
 echo "FONT=cyr-sun16" >> /etc/vconsole.conf
 echo "LANG=ru_RU.UTF-8" > /etc/locale.conf
-echo "LC_CTYPE=ru_RU.UTF-8" >> /etc/locale.conf
-echo "LC_NUMERIC=ru_RU.UTF-8" >> /etc/locale.conf
-echo "LC_TIME=ru_RU.UTF-8" >> /etc/locale.conf
-echo "LC_COLLATE=C.UTF-8" >> /etc/locale.conf
-echo "LC_MONETARY=ru_RU.UTF-8" >> /etc/locale.conf
-echo "LC_MESSAGES=ru_RU.UTF-8" >> /etc/locale.conf
-echo "LC_PAPER=ru_RU.UTF-8" >> /etc/locale.conf
-echo "LC_NAME=ru_RU.UTF-8" >> /etc/locale.conf
-echo "LC_ADDRESS=ru_RU.UTF-8" >> /etc/locale.conf
-echo "LC_TELEPHONE=ru_RU.UTF-8" >> /etc/locale.conf
-echo "LC_MEASUREMENT=ru_RU.UTF-8" >> /etc/locale.conf
-echo "LC_IDENTIFICATION=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_COLLATE=C" >> /etc/locale.conf
 sed -i "s/#\(en_US\.UTF-8\)/\1/" /etc/locale.gen
-sed -i "s/#\(en_US\ ISO-8859-1\)/\1/" /etc/locale.gen
 sed -i "s/#\(ru_RU\.UTF-8\)/\1/" /etc/locale.gen
-sed -i "s/#\(ru_RU\ ISO-8859-5\)/\1/" /etc/locale.gen
 sed -i 's/\(\/boot\/efi\s\+vfat\s\+\)\S\+\(.*\)/\1umask=0077    0 2/' /etc/fstab
 locale-gen
 time_zone=$(curl -s https://ipinfo.io/timezone)
 ln -sf /usr/share/zoneinfo/$time_zone /etc/localtime
 hwclock --systohc
-sudo pamac update
+pacman -Syy
 clear
 date
 lsblk
@@ -358,16 +351,16 @@ clear
 
 
 clear
-sudo pamac update
+pacman -Syy
 clear
-sudo pamac install --no-confirm reflector
+pamac install --no-confirm reflector
 clear
 reflector --latest 20 --fastest 5 --connection-timeout 1 --save /etc/pacman.d/mirrorlist
 systemctl enable --now reflector.timer
 clear
-sudo pamac update
+pacman -Syy
 clear
-sudo pamac install --no-confirm linux-lts linux-lts-headers linux-firmware networkmanager wpa_supplicant grub grub-btrfs os-prober plymouth
+pamac install --no-confirm linux-lts linux-lts-headers linux-firmware networkmanager wpa_supplicant grub grub-btrfs os-prober plymouth
 clear
 grub-install /dev/sda
 grub-install --target=x86_64-efi --removable
@@ -437,70 +430,66 @@ clear
 
 
 
-sudo pamac update
+pacman -Syy
 clear
 # Services
-sudo pamac install --no-confirm nm-connection-editor modemmanager usb_modeswitch rp-pppoe
+pamac install --no-confirm modemmanager
 clear
-sudo pamac install --no-confirm bluez bluez-utils
+pamac install --no-confirm bluez bluez-utils
 clear
-sudo pamac install --no-confirm cups cups-pdf ghostscript gsfonts
+pamac install --no-confirm cups cups-pdf ghostscript gsfonts
 clear
-sudo pamac install --no-confirm cronie haveged openssh
+pamac install --no-confirm cronie haveged openssh
 clear
-sudo pamac install --no-confirm mlocate chrony
+pamac install --no-confirm mlocate chrony
 systemctl enable chrony-wait.service chronyd.service
 clear
-# Advanced Configuration and Power Interface
-sudo pamac install --no-confirm acpi acpid 
-systemctl enable acpid.service
-clear
-sudo pamac install --no-confirm cpupower sysfsutils wireless-regdb 
+pamac install --no-confirm cpupower sysfsutils wireless-regdb
 clear
 # XDG
-sudo pamac install --no-confirm xdg-utils xdg-user-dirs
+pamac install --no-confirm xdg-utils xdg-user-dirs
 clear
 systemctl enable grub-btrfsd.service sshd.service NetworkManager.service ModemManager.service cups.service  cronie.service bluetooth.service haveged.service systemd-timesyncd
 clear
 # Pacman-contrib
-sudo pamac update
-sudo pamac install --no-confirm pacman-contrib
+pacman -Syy
+pamac install --no-confirm pacman-contrib
 clear
 # Generic
-sudo pamac install --no-confirm vim wget usbutils lsof dmidecode dialog
+pamac install --no-confirm vim wget usbutils lsof dmidecode dialog
 clear
 # Compression
-sudo pamac install --no-confirm zip unzip unrar p7zip lzop lrzip
+pamac install --no-confirm zip unzip unrar p7zip lzop lrzip
 clear
 # Шрифты
-sudo pamac install --no-confirm gsfonts sdl_ttf ttf-bitstream-vera ttf-dejavu ttf-liberation xorg-fonts-type1
+pamac install --no-confirm gsfonts sdl_ttf ttf-bitstream-vera ttf-dejavu ttf-liberation xorg-fonts-type1
 clear
 # Network Tools
-sudo pamac install --no-confirm rsync traceroute bind-tools
+pamac install --no-confirm rsync traceroute bind-tools
 clear
 # File System
-sudo pamac install --no-confirm dosfstools ntfs-3g btrfs-progs exfatprogs gptfdisk fuse2 fuse3 fuseiso
+pamac install --no-confirm dosfstools ntfs-3g btrfs-progs exfatprogs gptfdisk fuse2 fuse3 fuseiso
 clear
 # SAMBA
-sudo pamac install --no-confirm samba gvfs gvfs-smb smbclient cifs-utils gvfs-afc gvfs-mtp gvfs-nfs gvfs-dnssd gvfs-goa gvfs-google gvfs-gphoto2 gvfs-onedrive gvfs-wsdd
+pamac install --no-confirm samba gvfs gvfs-smb smbclient cifs-utils gvfs-afc gvfs-mtp gvfs-nfs gvfs-dnssd gvfs-goa gvfs-google gvfs-gphoto2 gvfs-onedrive gvfs-wsdd
 # ЗВУК
 # Wireplumber Pipewire
-sudo pamac install --no-confirm wireplumber pipewire-alsa pipewire-jack pipewire-pulse pipewire-v4l2 pipewire-zeroconf gst-plugin-pipewire helvum
+pamac install --no-confirm wireplumber pipewire-alsa pipewire-jack pipewire-pulse pipewire-v4l2 pipewire-zeroconf gst-plugin-pipewire helvum
 clear
 # Alsa
-sudo pamac install --no-confirm alsa-firmware alsa-plugins alsa-utils sof-firmware
+pamac install --no-confirm alsa-firmware alsa-plugins alsa-utils sof-firmware
 clear
 # GStreamer
-sudo pamac install --no-confirm gst-libav gst-plugins-bad gst-plugins-base gst-plugins-ugly gst-plugin-pipewire gst-plugin-va gstreamer
+pamac install --no-confirm gst-libav gst-plugins-bad gst-plugins-base gst-plugins-ugly gst-plugin-pipewire gst-plugin-va gstreamer
 clear
 # MAN
-sudo pamac install --no-confirm man-db most man-pages man-pages-ru yelp xorg-xman
+pamac install --no-confirm man-db most man-pages man-pages-ru yelp xorg-xman
 clear
 # Утилиты вывода системной информации
-sudo pamac install --no-confirm hyfetch fastfetch
+pamac install --no-confirm hyfetch fastfetch
 clear
 # XORG
-sudo pamac install --no-confirm xorg-server xorg-apps xorg-xinit
+pamac install --no-confirm xorg-server xorg-xinit
 clear
 
 
@@ -520,9 +509,9 @@ clear
 
 
 clear
-sudo pamac update
+pacman -Syy
 clear
-sudo pamac install --no-confirm grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant
+pamac install --no-confirm grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant
 clear
 
 
@@ -533,9 +522,9 @@ clear
 
 
 clear
-sudo pamac update
+pacman -Syy
 clear
-sudo pamac install --no-confirm timeshift timeshift-autosnap 
+pamac install --no-confirm timeshift timeshift-autosnap
 clear
 
 
@@ -547,9 +536,9 @@ clear
 
 
 clear
-sudo pamac update
+pacman -Syy
 clear
-sudo pamac install --no-confirm mkinitcpio-firmware update-grub yay archlinux-wallpaper
+pamac install --no-confirm mkinitcpio-firmware update-grub yay archlinux-wallpaper
 clear
 
 
@@ -561,9 +550,9 @@ clear
 
 
 clear
-sudo pamac update
+pacman -Syy
 clear
-sudo pamac install --no-confirm ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 cherrytree htop seahorse system-monitoring-center  smplayer strawberry doublecmd-qt6 nomacs ocs-url
+pamac install --no-confirm ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 cherrytree htop seahorse system-monitoring-center  smplayer strawberry doublecmd-qt6 nomacs ocs-url
 clear
 
 
@@ -580,33 +569,35 @@ clear
 ###################
 
 
-
 clear
-sudo pamac update
+pacman -Syy
 clear
-sudo pamac install --no-confirm sddm plasma
-sudo systemctl enable sddm
+pamac install --no-confirm plasma
+clear
+pamac install --no-confirm sddm
+clear
+systemctl enable sddm
 clear
 # kde-system
-sudo pamac install --no-confirm dolphin khelpcenter ksystemlog
+pamac install --no-confirm dolphin khelpcenter ksystemlog
 clear
 # kde-utilities
-sudo pamac install --no-confirm ark kate kcalc keditbookmarks kfind konsole kwalletmanager yakuake
+pamac install --no-confirm ark kate kcalc keditbookmarks kfind konsole kwalletmanager yakuake
 clear
 # kde-multimedia
-sudo pamac install --no-confirm audiocd-kio elisa ffmpegthumbs
+pamac install --no-confirm audiocd-kio elisa ffmpegthumbs
 clear
 # kde-graphics
-sudo pamac install --no-confirm gwenview kamera kdegraphics-thumbnailers okular skanlite
+pamac install --no-confirm gwenview kamera kdegraphics-thumbnailers okular skanlite
 clear
 # kde-network
-sudo pamac install --no-confirm kdeconnect kdenetwork-filesharing kio-extras
+pamac install --no-confirm kdeconnect kdenetwork-filesharing kio-extras
 clear
-sudo pamac install --no-confirm breeze5 dolphin-plugins filelight fwupd gtkmm3 kaccounts-providers kimageformats kwayland-integration lib32-libcanberra mtpfs ntp numlockx perl-file-mimeinfo power-profiles-daemon powertop python-pillow python-pip python-pysmbc python-reportlab qemu-guest-agent s-nail spice-vdagent sshfs system-config-printer udiskie unarchiver
+pamac install --no-confirm breeze5 dolphin-plugins filelight fwupd gtkmm3 kaccounts-providers kimageformats kwayland-integration lib32-libcanberra mtpfs ntp numlockx perl-file-mimeinfo power-profiles-daemon powertop python-pillow python-pip python-pysmbc python-reportlab qemu-guest-agent s-nail spice-vdagent sshfs system-config-printer udiskie unarchiver
 clear
-sudo pamac install --no-confirm gnome-themes-extra
+pamac install --no-confirm gnome-themes-extra
 clear
-sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
+sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
 exit
 
@@ -617,6 +608,7 @@ reboot
 
 
 rm -r .ssh/
+
 
 
 ###############################
@@ -632,12 +624,12 @@ sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clear
-sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
-sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
+sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
+sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
-sudo pamac update
-sudo pamac upgrade --no-confirm
-sudo pamac install --no-confirm pamac-tray-plasma-git radiotray-ng 
+pacman -Syy
+pamac upgrade --no-confirm
+pamac install --no-confirm pamac-tray-plasma-git radiotray-ng
 clear
 
 
@@ -645,7 +637,7 @@ clear
 
 
 # zsh
-sudo pamac install --no-confirm zsh
+pamac install --no-confirm zsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 clear
 
@@ -659,9 +651,9 @@ mv zsh-syntax-highlighting ~/.oh-my-zsh/plugins
 echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
 git clone https://github.com/zsh-users/zsh-autosuggestions
 mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
-sed -i s/'plugins=(git)'/'plugins=(git archlinux extract sudo themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
+sed -i s/'plugins=(git)'/'plugins=(git archlinux extract themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
 echo "hyfetch" >> ~/.zshrc
-sudo reboot
+reboot
 
 
 
@@ -673,23 +665,23 @@ sudo reboot
 
 
 clear
-sudo pamac install --no-confirm xfce4
+pamac install --no-confirm xfce4
 clear
-sudo pamac install --no-confirm mousepad thunar-archive-plugin thunar-media-tags-plugin xfburn xfce4-artwork xfce4-battery-plugin xfce4-clipman-plugin xfce4-cpufreq-plugin xfce4-cpugraph-plugin xfce4-dict xfce4-diskperf-plugin xfce4-eyes-plugin xfce4-fsguard-plugin xfce4-genmon-plugin xfce4-mailwatch-plugin xfce4-mount-plugin xfce4-mpc-plugin xfce4-netload-plugin xfce4-notes-plugin xfce4-notifyd xfce4-places-plugin xfce4-pulseaudio-plugin xfce4-screensaver  xfce4-screenshooter xfce4-sensors-plugin xfce4-smartbookmark-plugin xfce4-systemload-plugin  xfce4-taskmanager xfce4-time-out-plugin xfce4-timer-plugin xfce4-verve-plugin xfce4-wavelan-plugin xfce4-weather-plugin xfce4-whiskermenu-plugin xfce4-xkb-plugin
+pamac install --no-confirm mousepad thunar-archive-plugin thunar-media-tags-plugin xfburn xfce4-artwork xfce4-battery-plugin xfce4-clipman-plugin xfce4-cpufreq-plugin xfce4-cpugraph-plugin xfce4-dict xfce4-diskperf-plugin xfce4-eyes-plugin xfce4-fsguard-plugin xfce4-genmon-plugin xfce4-mailwatch-plugin xfce4-mount-plugin xfce4-mpc-plugin xfce4-netload-plugin xfce4-notes-plugin xfce4-notifyd xfce4-places-plugin xfce4-pulseaudio-plugin xfce4-screensaver  xfce4-screenshooter xfce4-sensors-plugin xfce4-smartbookmark-plugin xfce4-systemload-plugin  xfce4-taskmanager xfce4-time-out-plugin xfce4-timer-plugin xfce4-verve-plugin xfce4-wavelan-plugin xfce4-weather-plugin xfce4-whiskermenu-plugin xfce4-xkb-plugin
 clear
-sudo pamac install --no-confirm mugshot pavucontrol archlinux-xdg-menu xdg-desktop-portal-gtk menulibre network-manager-applet
+pamac install --no-confirm mugshot pavucontrol archlinux-xdg-menu xdg-desktop-portal-gtk menulibre network-manager-applet
 update-menus
-sudo pamac install --no-confirm lightdm lightdm-slick-greeter lightdm-settings
+pamac install --no-confirm lightdm lightdm-slick-greeter lightdm-settings
 clear
-sudo pamac install --no-confirm blueman engrampa ffmpegthumbnailer libgsf udiskie evince
+pamac install --no-confirm blueman engrampa ffmpegthumbnailer libgsf udiskie evince
 clear
-sudo pamac install --no-confirm catfish galculator libopenraw mtpfs ntp numlockx perl-file-mimeinfo pidgin powertop unace xcursor-simpleandsoft xcursor-vanilla-dmz-aa gcolor3 xiccd 
+pamac install --no-confirm catfish galculator libopenraw mtpfs ntp numlockx perl-file-mimeinfo pidgin powertop unace xcursor-simpleandsoft xcursor-vanilla-dmz-aa gcolor3 xiccd
 clear
-sudo sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
-sudo sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
-sudo systemctl enable lightdm.service
+sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
+sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
+systemctl enable lightdm.service
 clear
-sudo sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
+sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
 exit
 
@@ -724,19 +716,19 @@ mv -i Nuvola_USA_flag.svg us.svg
 mv -i Nuvola_Russian_flag.svg ru.svg
 cd
 clear
-sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
-sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
+sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
+sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
-sudo pamac update
-sudo pamac upgrade --no-confirm
-sudo pamac install --no-confirm pamac-tray-plasma-git radiotray-ng 
+pacman -Syy
+pamac upgrade --no-confirm
+pamac install --no-confirm pamac-tray-plasma-git radiotray-ng
 clear
 
 
 
 
 # zsh
-sudo pamac install --no-confirm zsh
+pamac install --no-confirm zsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 clear
 
@@ -750,9 +742,9 @@ mv zsh-syntax-highlighting ~/.oh-my-zsh/plugins
 echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
 git clone https://github.com/zsh-users/zsh-autosuggestions
 mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
-sed -i s/'plugins=(git)'/'plugins=(git archlinux extract sudo themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
+sed -i s/'plugins=(git)'/'plugins=(git archlinux extract themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
 echo "hyfetch" >> ~/.zshrc
-sudo reboot
+reboot
 
 
 
@@ -764,19 +756,19 @@ sudo reboot
 
 
 #  Gnome
-sudo pamac install --no-confirm baobab evince gnome-backgrounds gnome-calculator gnome-calendar gnome-characters gnome-clocks gnome-connections gnome-contacts gnome-control-center gnome-disk-utility gnome-font-viewer gnome-logs gnome-maps gnome-remote-desktop gnome-shell gnome-shell-extensions gnome-system-monitor gnome-text-editor gnome-tour gnome-user-docs gnome-user-share gnome-weather grilo-plugins malcontent nautilus rygel simple-scan snapshot sushi totem gdm
+pamac install --no-confirm baobab evince gnome-backgrounds gnome-calculator gnome-calendar gnome-characters gnome-clocks gnome-connections gnome-contacts gnome-control-center gnome-disk-utility gnome-font-viewer gnome-logs gnome-maps gnome-remote-desktop gnome-shell gnome-shell-extensions gnome-system-monitor gnome-text-editor gnome-tour gnome-user-docs gnome-user-share gnome-weather grilo-plugins malcontent nautilus rygel simple-scan snapshot sushi totem gdm
 systemctl enable gdm
 clear
 #  Gnome-extra
-sudo pamac install --no-confirm endeavour file-roller gnome-boxes gnome-chess gnome-mines gnome-terminal-transparency gnome-tweaks iagno quadrapassel
+pamac install --no-confirm endeavour file-roller gnome-boxes gnome-chess gnome-mines gnome-terminal-transparency gnome-tweaks iagno quadrapassel
 clear
-sudo pamac install --no-confirm gnome-browser-connector gnome-firmware gnome-shell-extension-appindicator gnome-shell-extension-arc-menu gnome-shell-extension-dash-to-dock gnome-shell-extension-dash-to-panel gnome-shell-extension-forge-git gnome-shell-extension-gnome-ui-tune-git gnome-shell-extension-gsconnect gnome-shell-extension-space-bar-git gnome-shell-extension-x11gestures gnuchess power-profiles-daemon squashfs-tools
+pamac install --no-confirm gnome-browser-connector gnome-firmware gnome-shell-extension-appindicator gnome-shell-extension-arc-menu gnome-shell-extension-dash-to-dock gnome-shell-extension-dash-to-panel gnome-shell-extension-forge-git gnome-shell-extension-gnome-ui-tune-git gnome-shell-extension-gsconnect gnome-shell-extension-space-bar-git gnome-shell-extension-x11gestures gnuchess power-profiles-daemon squashfs-tools
 clear
-sudo pamac install --no-confirm gthumb gtkmm3 qt5ct qt6ct system-config-printer deja-dup touche webapp-manager
+pamac install --no-confirm gthumb gtkmm3 qt5ct qt6ct system-config-printer deja-dup touche webapp-manager
 clear
-sudo pamac install --no-confirm adw-gtk-theme bibata-cursor-theme gnome-themes-extra 
+pamac install --no-confirm adw-gtk-theme bibata-cursor-theme gnome-themes-extra
 clear
-sudo pamac install --no-confirm ffmpegthumbnailer ffmpeg-audio-thumbnailer 
+pamac install --no-confirm ffmpegthumbnailer ffmpeg-audio-thumbnailer
 clear
 sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
@@ -809,12 +801,12 @@ sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clear
-sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
-sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
+sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
+sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
-sudo pamac update
-sudo pamac upgrade --no-confirm
-sudo pamac install --no-confirm pamac-tray-plasma-git radiotray-ng 
+pacman -Syy
+pamac upgrade --no-confirm
+pamac install --no-confirm pamac-tray-plasma-git radiotray-ng
 clear
 
 
@@ -823,7 +815,7 @@ clear
 
 
 # zsh
-sudo pamac install --no-confirm zsh
+pamac install --no-confirm zsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 clear
 
@@ -837,9 +829,9 @@ mv zsh-syntax-highlighting ~/.oh-my-zsh/plugins
 echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
 git clone https://github.com/zsh-users/zsh-autosuggestions
 mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
-sed -i s/'plugins=(git)'/'plugins=(git archlinux extract sudo themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
+sed -i s/'plugins=(git)'/'plugins=(git archlinux extract themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
 echo "hyfetch" >> ~/.zshrc
-sudo reboot
+reboot
 
 
 
@@ -849,19 +841,19 @@ sudo reboot
 
 
 clear
-sudo pamac update
+pacman -Syy
 clear
-sudo pamac install --no-confirm cinnamon cinnamon-translations blueman dconf-editor ffmpegthumbnailer gcolor3 gnome-disk-utility gnome-keyring gnome-online-accounts gnome-screenshot gnome-system-monitor gnome-terminal gnome-themes-extra mousetweaks onboard pavucontrol powertop system-config-printer webapp-manager xreader xviewer-plugins iso-flag-png xdg-desktop-portal-gnome evince
+pamac install --no-confirm cinnamon cinnamon-translations blueman dconf-editor ffmpegthumbnailer gcolor3 gnome-disk-utility gnome-keyring gnome-online-accounts gnome-screenshot gnome-system-monitor gnome-terminal gnome-themes-extra mousetweaks onboard pavucontrol powertop system-config-printer webapp-manager xreader xviewer-plugins iso-flag-png xdg-desktop-portal-gnome evince
  clear
-sudo pamac install --no-confirm nemo-fileroller nemo-preview nemo-python nemo-share
+pamac install --no-confirm nemo-fileroller nemo-preview nemo-python nemo-share
 clear
-sudo pamac install --no-confirm bibata-cursor-theme arcolinux-kvantum
+pamac install --no-confirm bibata-cursor-theme arcolinux-kvantum
 clear
-sudo pamac install --no-confirm icon-naming-utils mint-l-theme mint-themes 
+pamac install --no-confirm icon-naming-utils mint-l-theme mint-themes
 clear
-sudo pamac install --no-confirm baobab bulky galculator mintstick netctl numlockx pix python-pyxdg qt5ct redshift squashfs-tools touchegg tree udiskie xed 
+pamac install --no-confirm baobab bulky galculator mintstick netctl numlockx pix python-pyxdg qt5ct redshift squashfs-tools touchegg tree udiskie xed
 clear
-sudo pamac install --no-confirm lightdm lightdm-slick-greeter lightdm-settings 
+pamac install --no-confirm lightdm lightdm-slick-greeter lightdm-settings
 clear
 systemctl enable lightdm.service
 sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
@@ -895,12 +887,12 @@ sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clear
-sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
-sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
+sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
+sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
-sudo pamac update
-sudo pamac upgrade --no-confirm
-sudo pamac install --no-confirm pamac-tray-plasma-git radiotray-ng 
+pacman -Syy
+pamac upgrade --no-confirm
+pamac install --no-confirm pamac-tray-plasma-git radiotray-ng
 clear
 
 
@@ -909,7 +901,7 @@ clear
 
 
 # zsh
-sudo pamac install --no-confirm zsh
+pamac install --no-confirm zsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 clear
 
@@ -923,9 +915,9 @@ mv zsh-syntax-highlighting ~/.oh-my-zsh/plugins
 echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
 git clone https://github.com/zsh-users/zsh-autosuggestions
 mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
-sed -i s/'plugins=(git)'/'plugins=(git archlinux extract sudo themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
+sed -i s/'plugins=(git)'/'plugins=(git archlinux extract themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
 echo "hyfetch" >> ~/.zshrc
-sudo reboot
+reboot
 
 
 
@@ -934,10 +926,10 @@ sudo reboot
 ####################
 
 
-sudo pamac install --no-confirm mate mate-extra
-sudo pamac install --no-confirm mate-themes mate-tweak brisk-menu gnome-system-tools
-sudo pamac install --no-confirm plank plank-themes
-sudo pamac install --no-confirm lightdm lightdm-slick-greeter lightdm-settings
+pamac install --no-confirm mate mate-extra
+pamac install --no-confirm mate-themes mate-tweak brisk-menu gnome-system-tools
+pamac install --no-confirm plank plank-themes
+pamac install --no-confirm lightdm lightdm-slick-greeter lightdm-settings
 sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
 sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
 systemctl enable lightdm.service
@@ -968,12 +960,12 @@ sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clear
-sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
-sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
+sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
+sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
-sudo pamac update
-sudo pamac upgrade --no-confirm
-sudo pamac install --no-confirm pamac-tray-plasma-git radiotray-ng 
+pacman -Syy
+pamac upgrade --no-confirm
+pamac install --no-confirm pamac-tray-plasma-git radiotray-ng
 clear
 
 
@@ -982,7 +974,7 @@ clear
 
 
 # zsh
-sudo pamac install --no-confirm zsh
+pamac install --no-confirm zsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 clear
 
@@ -996,9 +988,9 @@ mv zsh-syntax-highlighting ~/.oh-my-zsh/plugins
 echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
 git clone https://github.com/zsh-users/zsh-autosuggestions
 mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
-sed -i s/'plugins=(git)'/'plugins=(git archlinux extract sudo themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
+sed -i s/'plugins=(git)'/'plugins=(git archlinux extract themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
 echo "hyfetch" >> ~/.zshrc
-sudo reboot
+reboot
 
 
 
@@ -1009,8 +1001,8 @@ sudo reboot
 
 
 
-sudo pamac install --no-confirm lxqt lxqt-themes xscreensaver picom libstatgrab libsysstat breeze-icons kvantum-qt5 mugshot nm-tray
-sudo pamac install --no-confirm lightdm lightdm-slick-greeter lightdm-settings
+pamac install --no-confirm lxqt lxqt-themes xscreensaver picom libstatgrab libsysstat breeze-icons kvantum-qt5 mugshot nm-tray
+pamac install --no-confirm lightdm lightdm-slick-greeter lightdm-settings
 clear
 sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
 sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
@@ -1042,12 +1034,12 @@ sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clear
-sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
-sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
+sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
+sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
-sudo pamac update
-sudo pamac upgrade --no-confirm
-sudo pamac install --no-confirm pamac-tray-plasma-git radiotray-ng 
+pacman -Syy
+pamac upgrade --no-confirm
+pamac install --no-confirm pamac-tray-plasma-git radiotray-ng
 clear
 
 
@@ -1056,7 +1048,7 @@ clear
 
 
 # zsh
-sudo pamac install --no-confirm zsh
+pamac install --no-confirm zsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 clear
 
@@ -1070,9 +1062,9 @@ mv zsh-syntax-highlighting ~/.oh-my-zsh/plugins
 echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
 git clone https://github.com/zsh-users/zsh-autosuggestions
 mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
-sed -i s/'plugins=(git)'/'plugins=(git archlinux extract sudo themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
+sed -i s/'plugins=(git)'/'plugins=(git archlinux extract themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
 echo "hyfetch" >> ~/.zshrc
-sudo reboot
+reboot
 
 
 
@@ -1103,18 +1095,18 @@ mv -i Nuvola_Russian_flag.svg ru.svg
 
 pacman -Syy
 clear
-sudo pamac install --no-confirm lxde leafpad openbox obconf pavucontrol alsa-utils xfce4-notifyd
+pamac install --no-confirm lxde leafpad openbox obconf pavucontrol alsa-utils xfce4-notifyd
 clear
-sudo pamac install --no-confirm xscreensaver picom libstatgrab libsysstat arc-gtk-theme mugshot nm-tray dunst
+pamac install --no-confirm xscreensaver picom libstatgrab libsysstat arc-gtk-theme mugshot nm-tray dunst
 clear
-sudo pamac install --no-confirm lxqt-archiver ffmpegthumbnailer exaile
+pamac install --no-confirm lxqt-archiver ffmpegthumbnailer exaile
 clear
-sudo pamac install --no-confirm thunar-archive-plugin  thunar-media-tags-plugin thunar-shares-plugin ffmpegthumbnailer libgsf udiskie
+pamac install --no-confirm thunar-archive-plugin  thunar-media-tags-plugin thunar-shares-plugin ffmpegthumbnailer libgsf udiskie
 update-menus
 clear
-sudo pamac install --no-confirm lightdm lightdm-slick-greeter lightdm-settings
+pamac install --no-confirm lightdm lightdm-slick-greeter lightdm-settings
 clear
-sudo pamac install --no-confirm blueman lxqt-archiver ffmpegthumbnailer exaile
+pamac install --no-confirm blueman lxqt-archiver ffmpegthumbnailer exaile
 clear
 sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
 sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
@@ -1145,12 +1137,12 @@ sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clear
-sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
-sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
+sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
+sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
-sudo pamac update
-sudo pamac upgrade --no-confirm
-sudo pamac install --no-confirm pamac-tray-plasma-git radiotray-ng 
+pacman -Syy
+pamac upgrade --no-confirm
+pamac install --no-confirm pamac-tray-plasma-git radiotray-ng
 clear
 
 
@@ -1159,7 +1151,7 @@ clear
 
 
 # zsh
-sudo pamac install --no-confirm zsh
+pamac install --no-confirm zsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 clear
 
@@ -1173,9 +1165,9 @@ mv zsh-syntax-highlighting ~/.oh-my-zsh/plugins
 echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
 git clone https://github.com/zsh-users/zsh-autosuggestions
 mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
-sed -i s/'plugins=(git)'/'plugins=(git archlinux extract sudo themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
+sed -i s/'plugins=(git)'/'plugins=(git archlinux extract themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
 echo "hyfetch" >> ~/.zshrc
-sudo reboot
+reboot
 
 
 
@@ -1186,10 +1178,10 @@ sudo reboot
 
 
 pacman -Syy
-sudo pamac install --no-confirm budgie-desktop
-sudo pamac install --no-confirm gnome gnome-control-center
-sudo pamac install --no-confirm materia-gtk-theme papirus-icon-theme i3lock
-sudo pamac install --no-confirm lightdm lightdm-gtk-greeter
+pamac install --no-confirm budgie-desktop
+pamac install --no-confirm gnome gnome-control-center
+pamac install --no-confirm materia-gtk-theme papirus-icon-theme i3lock
+pamac install --no-confirm lightdm lightdm-gtk-greeter
 sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
 systemctl enable lightdm
 clear
@@ -1220,17 +1212,17 @@ systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force clear
 # xinitrc
 echo "exec cinnamon-session" > ~/.xinitrc
-sudo cp ~/.xinitrc /root/.xinitrc
+cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clearenable wireplumber.service
 clear
-sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
-sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
+sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
+sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
-sudo pamac update
-sudo pamac upgrade --no-confirm
-sudo pamac install --no-confirm pamac-tray-plasma-git radiotray-ng 
+pacman -Syy
+pamac upgrade --no-confirm
+pamac install --no-confirm pamac-tray-plasma-git radiotray-ng
 clear
 
 
@@ -1239,7 +1231,7 @@ clear
 
 
 # zsh
-sudo pamac install --no-confirm zsh
+pamac install --no-confirm zsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 clear
 
@@ -1253,15 +1245,15 @@ mv zsh-syntax-highlighting ~/.oh-my-zsh/plugins
 echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
 git clone https://github.com/zsh-users/zsh-autosuggestions
 mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
-sed -i s/'plugins=(git)'/'plugins=(git archlinux extract sudo themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
+sed -i s/'plugins=(git)'/'plugins=(git archlinux extract themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
 echo "hyfetch" >> ~/.zshrc
-sudo reboot
+reboot
 
 
 
 
 
-sudo reboot
+reboot
 
 
 
