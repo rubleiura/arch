@@ -542,7 +542,7 @@ clear
 clear
 pacman -Syy
 clear
-pamac install --no-confirm update-grub yay archlinux-wallpaper
+pamac install --no-confirm mkinitcpio-firmware update-grub yay archlinux-wallpaper
 clear
 
 
