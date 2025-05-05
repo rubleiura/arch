@@ -144,7 +144,7 @@ mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@log /d
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@tmp /dev/sda2 /mnt/var/tmp
 mount /dev/sda1 /mnt/boot/efi
 clear
-pacstrap /mnt base base-devel btrfs-progs bash-completion archlinux-keyring nano nano-syntax-highlighting intel-ucode inxi efibootmgr
+pacstrap /mnt base base-devel btrfs-progs bash-completion archlinux-keyring nano nano-syntax-highlighting intel-ucode inxi efibootmgr memtest86+-efi
 clear
 genfstab -U -p /mnt >> /mnt/etc/fstab
 clear
@@ -206,7 +206,7 @@ mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@cache 
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@log /dev/sda2 /mnt/var/log
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@tmp /dev/sda2 /mnt/var/tmp
 clear
-pacstrap /mnt base base-devel btrfs-progs bash-completion archlinux-keyring nano nano-syntax-highlighting intel-ucode inxi
+pacstrap /mnt base base-devel btrfs-progs bash-completion archlinux-keyring nano nano-syntax-highlighting intel-ucode inxi memtest86+
 clear
 genfstab -U -p /mnt >> /mnt/etc/fstab
 clear
@@ -258,6 +258,8 @@ clear
 ###########
 
 
+
+
 pacman -Syy
 clear
 pacman -S pamac --noconfirm
@@ -266,6 +268,8 @@ sed -i s/'MaxParallelDownloads = 4'/'MaxParallelDownloads = 10'/g /etc/pamac.con
 clear
 pacman -Syy
 clear
+
+
 
 
 
@@ -538,7 +542,7 @@ clear
 clear
 pacman -Syy
 clear
-pamac install --no-confirm mkinitcpio-firmware update-grub yay archlinux-wallpaper
+pamac install --no-confirm update-grub yay archlinux-wallpaper
 clear
 
 
@@ -593,7 +597,7 @@ clear
 # kde-network
 pamac install --no-confirm kdeconnect kdenetwork-filesharing kio-extras
 clear
-pamac install --no-confirm breeze5 dolphin-plugins filelight fwupd gtkmm3 kaccounts-providers kimageformats kwayland-integration lib32-libcanberra mtpfs ntp numlockx perl-file-mimeinfo power-profiles-daemon powertop python-pillow python-pip python-pysmbc python-reportlab qemu-guest-agent s-nail spice-vdagent sshfs system-config-printer udiskie unarchiver
+pamac install --no-confirm breeze5 dolphin-plugins filelight fwupd gtkmm3 kaccounts-providers kimageformats kwayland-integration lib32-libcanberra mtpfs ntp numlockx perl-file-mimeinfo power-profiles-daemon powertop qemu-guest-agent s-nail spice-vdagent sshfs system-config-printer udiskie unarchiver
 clear
 pamac install --no-confirm gnome-themes-extra
 clear
@@ -624,10 +628,10 @@ sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clear
-sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
-sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
+sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
+sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
-pacman -Syy
+sudo pacman -Syy
 pamac upgrade --no-confirm
 pamac install --no-confirm pamac-tray-plasma-git radiotray-ng
 clear
@@ -653,7 +657,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions
 mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
 sed -i s/'plugins=(git)'/'plugins=(git archlinux extract themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
 echo "hyfetch" >> ~/.zshrc
-reboot
+sudo reboot
 
 
 
@@ -716,12 +720,12 @@ mv -i Nuvola_USA_flag.svg us.svg
 mv -i Nuvola_Russian_flag.svg ru.svg
 cd
 clear
-sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
-sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
+sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
+sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
-pacman -Syy
+sudo pacman -Syy
 pamac upgrade --no-confirm
-pamac install --no-confirm pamac-tray-plasma-git radiotray-ng
+pamac install --no-confirm radiotray-ng
 clear
 
 
@@ -744,7 +748,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions
 mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
 sed -i s/'plugins=(git)'/'plugins=(git archlinux extract themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
 echo "hyfetch" >> ~/.zshrc
-reboot
+sudo reboot
 
 
 
@@ -801,10 +805,10 @@ sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clear
-sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
-sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
+sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
+sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
-pacman -Syy
+sudo pacman -Syy
 pamac upgrade --no-confirm
 pamac install --no-confirm pamac-tray-plasma-git radiotray-ng
 clear
@@ -831,7 +835,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions
 mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
 sed -i s/'plugins=(git)'/'plugins=(git archlinux extract themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
 echo "hyfetch" >> ~/.zshrc
-reboot
+sudo reboot
 
 
 
@@ -887,10 +891,10 @@ sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clear
-sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
-sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
+sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
+sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
-pacman -Syy
+sudo pacman -Syy
 pamac upgrade --no-confirm
 pamac install --no-confirm pamac-tray-plasma-git radiotray-ng
 clear
@@ -917,7 +921,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions
 mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
 sed -i s/'plugins=(git)'/'plugins=(git archlinux extract themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
 echo "hyfetch" >> ~/.zshrc
-reboot
+sudo reboot
 
 
 
@@ -960,10 +964,10 @@ sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clear
-sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
-sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
+sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
+sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
-pacman -Syy
+sudo pacman -Syy
 pamac upgrade --no-confirm
 pamac install --no-confirm pamac-tray-plasma-git radiotray-ng
 clear
@@ -990,7 +994,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions
 mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
 sed -i s/'plugins=(git)'/'plugins=(git archlinux extract themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
 echo "hyfetch" >> ~/.zshrc
-reboot
+sudo reboot
 
 
 
@@ -1034,10 +1038,10 @@ sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clear
-sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
-sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
+sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
+sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
-pacman -Syy
+sudo pacman -Syy
 pamac upgrade --no-confirm
 pamac install --no-confirm pamac-tray-plasma-git radiotray-ng
 clear
@@ -1064,7 +1068,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions
 mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
 sed -i s/'plugins=(git)'/'plugins=(git archlinux extract themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
 echo "hyfetch" >> ~/.zshrc
-reboot
+sudo reboot
 
 
 
@@ -1137,10 +1141,10 @@ sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clear
-sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
-sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
+sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
+sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
-pacman -Syy
+sudo pacman -Syy
 pamac upgrade --no-confirm
 pamac install --no-confirm pamac-tray-plasma-git radiotray-ng
 clear
@@ -1167,7 +1171,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions
 mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
 sed -i s/'plugins=(git)'/'plugins=(git archlinux extract themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
 echo "hyfetch" >> ~/.zshrc
-reboot
+sudo reboot
 
 
 
@@ -1217,10 +1221,10 @@ systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clearenable wireplumber.service
 clear
-sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
-sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
+sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
+sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
-pacman -Syy
+sudo pacman -Syy
 pamac upgrade --no-confirm
 pamac install --no-confirm pamac-tray-plasma-git radiotray-ng
 clear
@@ -1247,7 +1251,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions
 mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
 sed -i s/'plugins=(git)'/'plugins=(git archlinux extract themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
 echo "hyfetch" >> ~/.zshrc
-reboot
+sudo reboot
 
 
 
