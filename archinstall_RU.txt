@@ -66,11 +66,11 @@ lsblk
 #############################################
 #   Hostname 	    #   Sony                #
 #############################################
-#   Microcode	    #   intel-ucode         #
+#   Microcode	    #   amd-ucode           #
 #############################################
-#   Ядро	    #   linux-lts           #
+#   Ядро	        #   linux-lts           #
 #############################################
-#   размер SWAP	    #	sgdisk -n 2::-4G    #
+#   размер SWAP	    #	sgdisk -n 2::-16G   #
 #############################################
 
 
@@ -104,7 +104,7 @@ clear
 sgdisk -Z /dev/sda
 sgdisk -a 2048 -o /dev/sda
 sgdisk -n 1::+512M --typecode=1:ef00 --change-name=1:'EFI' /dev/sda
-sgdisk -n 2::-4G --typecode=2:8300 --change-name=2:'ArchLinux' /dev/sda
+sgdisk -n 2::-16G --typecode=2:8300 --change-name=2:'ArchLinux' /dev/sda
 sgdisk -n 3::-0 --typecode=3:8200 --change-name=3:'SWAP' /dev/sda
 clear
 fdisk -l /dev/sda
@@ -144,7 +144,7 @@ mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@log /d
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@tmp /dev/sda2 /mnt/var/tmp
 mount /dev/sda1 /mnt/boot/efi
 clear
-pacstrap /mnt base base-devel btrfs-progs bash-completion archlinux-keyring nano nano-syntax-highlighting intel-ucode inxi efibootmgr memtest86+-efi
+pacstrap /mnt base base-devel btrfs-progs bash-completion archlinux-keyring nano nano-syntax-highlighting amd-ucode inxi efibootmgr memtest86+-efi
 clear
 genfstab -U -p /mnt >> /mnt/etc/fstab
 clear
@@ -168,7 +168,7 @@ clear
 sgdisk -Z /dev/sda
 sgdisk -a 2048 -o /dev/sda
 sgdisk -n 1::+8M --typecode=1:ef02 --change-name=1:'BIOSBOOT' /dev/sda
-sgdisk -n 2::-4G --typecode=2:8300 --change-name=2:'ArchLinux' /dev/sda
+sgdisk -n 2::-16G --typecode=2:8300 --change-name=2:'ArchLinux' /dev/sda
 sgdisk -n 3::-0 --typecode=3:8200 --change-name=3:'SWAP' /dev/sda
 clear
 fdisk -l /dev/sda
@@ -206,7 +206,7 @@ mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@cache 
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@log /dev/sda2 /mnt/var/log
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@tmp /dev/sda2 /mnt/var/tmp
 clear
-pacstrap /mnt base base-devel btrfs-progs bash-completion archlinux-keyring nano nano-syntax-highlighting intel-ucode inxi memtest86+
+pacstrap /mnt base base-devel btrfs-progs bash-completion archlinux-keyring nano nano-syntax-highlighting amd-ucode inxi memtest86+
 clear
 genfstab -U -p /mnt >> /mnt/etc/fstab
 clear
@@ -499,6 +499,29 @@ clear
 
 
 
+
+########################################################
+########## ВИДЕО ДРАЙВЕРА ############
+########################################################
+
+
+
+
+clear
+pamac install --no-confirm mesa lib32-mesa xf86-video-amdgpu vulkan-radeon lib32-vulkan-radeon
+clear
+pamac install --no-confirm nvidia-lts nvidia-utils lib32-nvidia-utils nvidia-settings egl-wayland
+clear
+echo "blacklist nouveau" > /usr/lib/modprobe.d/nvidia.conf
+echo "options nouveau modeset=0" >> /usr/lib/modprobe.d/nvidia.conf
+sed -i s/'splash'/'splash nvidia-drm.modeset=1'/g /etc/default/grub
+clear
+mkinitcpio -P
+grub-mkconfig -o /boot/grub/grub.cfg
+clear
+
+
+
 ########################################################
 ########## ПРОГРАММЫ РЕЗЕРВНОГО КОПИРОВАНИЯ ############
 ########################################################
@@ -556,8 +579,7 @@ clear
 clear
 pacman -Syy
 clear
-pamac install --no-confirm ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 cherrytree htop seahorse system-monitoring-center  smplayer strawberry doublecmd-qt6 nomacs ocs-url
-clear
+pamac install --no-confirm ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 cherrytree htop seahorse system-monitoring-center  smplayer strawberry doublecmd-qt6 nomacs teams-for-linux telegram-desktop zoom virtualbox
 
 
  
@@ -633,7 +655,12 @@ sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
 sudo pacman -Syy
 pamac upgrade --no-confirm
-pamac install --no-confirm pamac-tray-plasma-git radiotray-ng
+pamac install --no-confirm pamac-tray-plasma-git radiotray-ng ocs-url ufw gufw
+clear
+sudo ufw default allow outgoing
+sudo ufw default deny incoming
+sudo ufw allow in ssh
+sudo ufw allow in 22
 clear
 
 
@@ -725,9 +752,13 @@ sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
 sudo pacman -Syy
 pamac upgrade --no-confirm
-pamac install --no-confirm radiotray-ng
+pamac install --no-confirm radiotray-ng ocs-url ufw gufw
 clear
-
+sudo ufw default allow outgoing
+sudo ufw default deny incoming
+sudo ufw allow in ssh
+sudo ufw allow in 22
+clear
 
 
 
@@ -810,7 +841,12 @@ sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
 sudo pacman -Syy
 pamac upgrade --no-confirm
-pamac install --no-confirm pamac-tray-plasma-git radiotray-ng
+pamac install --no-confirm radiotray-ng ocs-url ufw gufw
+clear
+sudo ufw default allow outgoing
+sudo ufw default deny incoming
+sudo ufw allow in ssh
+sudo ufw allow in 22
 clear
 
 
@@ -895,8 +931,12 @@ sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
 sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
 sudo pacman -Syy
-pamac upgrade --no-confirm
-pamac install --no-confirm pamac-tray-plasma-git radiotray-ng
+pamac install --no-confirm radiotray-ng ocs-url ufw gufw
+clear
+sudo ufw default allow outgoing
+sudo ufw default deny incoming
+sudo ufw allow in ssh
+sudo ufw allow in 22
 clear
 
 
@@ -969,7 +1009,12 @@ sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
 sudo pacman -Syy
 pamac upgrade --no-confirm
-pamac install --no-confirm pamac-tray-plasma-git radiotray-ng
+pamac install --no-confirm radiotray-ng ocs-url ufw gufw
+clear
+sudo ufw default allow outgoing
+sudo ufw default deny incoming
+sudo ufw allow in ssh
+sudo ufw allow in 22
 clear
 
 
@@ -1042,8 +1087,12 @@ sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
 sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
 sudo pacman -Syy
-pamac upgrade --no-confirm
-pamac install --no-confirm pamac-tray-plasma-git radiotray-ng
+pamac install --no-confirm radiotray-ng ocs-url ufw gufw
+clear
+sudo ufw default allow outgoing
+sudo ufw default deny incoming
+sudo ufw allow in ssh
+sudo ufw allow in 22
 clear
 
 
@@ -1146,7 +1195,12 @@ sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
 sudo pacman -Syy
 pamac upgrade --no-confirm
-pamac install --no-confirm pamac-tray-plasma-git radiotray-ng
+pamac install --no-confirm radiotray-ng ocs-url ufw gufw
+clear
+sudo ufw default allow outgoing
+sudo ufw default deny incoming
+sudo ufw allow in ssh
+sudo ufw allow in 22
 clear
 
 
@@ -1226,7 +1280,12 @@ sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
 sudo pacman -Syy
 pamac upgrade --no-confirm
-pamac install --no-confirm pamac-tray-plasma-git radiotray-ng
+pamac install --no-confirm radiotray-ng ocs-url ufw gufw
+clear
+sudo ufw default allow outgoing
+sudo ufw default deny incoming
+sudo ufw allow in ssh
+sudo ufw allow in 22
 clear
 
 
