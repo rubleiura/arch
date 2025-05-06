@@ -660,6 +660,8 @@ sudo pacman -Syy
 pamac upgrade --no-confirm
 pamac install --no-confirm pamac-tray-plasma-git radiotray-ng ocs-url ufw gufw
 clear
+pamac install --no-confirm glib2-devel user-admin
+clear
 sudo ufw default allow outgoing
 sudo ufw default deny incoming
 sudo ufw allow in ssh
@@ -706,14 +708,14 @@ pamac install --no-confirm mousepad thunar-archive-plugin thunar-media-tags-plug
 clear
 pamac install --no-confirm mugshot pavucontrol archlinux-xdg-menu xdg-desktop-portal-gtk menulibre network-manager-applet
 update-menus
-pamac install --no-confirm lightdm lightdm-slick-greeter lightdm-settings
+pamac install --no-confirm lightdm lightdm-slick-greeter
 clear
 pamac install --no-confirm blueman engrampa ffmpegthumbnailer libgsf udiskie evince
 clear
 pamac install --no-confirm catfish galculator libopenraw mtpfs ntp numlockx perl-file-mimeinfo pidgin powertop unace xcursor-simpleandsoft xcursor-vanilla-dmz-aa gcolor3 xiccd
 clear
 sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
-sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
+#sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
 systemctl enable lightdm.service
 clear
 sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
@@ -756,7 +758,9 @@ sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
 sudo pacman -Syy
 pamac upgrade --no-confirm
-pamac install --no-confirm radiotray-ng ocs-url ufw gufw
+pamac install --no-confirm radiotray-ng ocs-url ufw gufw lightdm-settings
+clear
+pamac install --no-confirm glib2-devel user-admin
 clear
 sudo ufw default allow outgoing
 sudo ufw default deny incoming
@@ -847,6 +851,8 @@ clear
 sudo pacman -Syy
 pamac upgrade --no-confirm
 pamac install --no-confirm radiotray-ng ocs-url ufw gufw
+clear
+pamac install --no-confirm glib2-devel user-admin
 clear
 sudo ufw default allow outgoing
 sudo ufw default deny incoming
@@ -939,6 +945,8 @@ clear
 sudo pacman -Syy
 pamac install --no-confirm radiotray-ng ocs-url ufw gufw
 clear
+pamac install --no-confirm glib2-devel user-admin
+clear
 sudo ufw default allow outgoing
 sudo ufw default deny incoming
 sudo ufw allow in ssh
@@ -1018,6 +1026,8 @@ sudo pacman -Syy
 pamac upgrade --no-confirm
 pamac install --no-confirm radiotray-ng ocs-url ufw gufw
 clear
+pamac install --no-confirm glib2-devel user-admin
+clear
 sudo ufw default allow outgoing
 sudo ufw default deny incoming
 sudo ufw allow in ssh
@@ -1096,6 +1106,8 @@ sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
 sudo pacman -Syy
 pamac install --no-confirm radiotray-ng ocs-url ufw gufw
+clear
+pamac install --no-confirm glib2-devel user-admin
 clear
 sudo ufw default allow outgoing
 sudo ufw default deny incoming
@@ -1206,6 +1218,8 @@ sudo pacman -Syy
 pamac upgrade --no-confirm
 pamac install --no-confirm radiotray-ng ocs-url ufw gufw
 clear
+pamac install --no-confirm glib2-devel user-admin
+clear
 sudo ufw default allow outgoing
 sudo ufw default deny incoming
 sudo ufw allow in ssh
@@ -1291,6 +1305,8 @@ clear
 sudo pacman -Syy
 pamac upgrade --no-confirm
 pamac install --no-confirm radiotray-ng ocs-url ufw gufw
+clear
+pamac install --no-confirm glib2-devel user-admin
 clear
 sudo ufw default allow outgoing
 sudo ufw default deny incoming
