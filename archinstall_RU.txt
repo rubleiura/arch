@@ -661,6 +661,7 @@ sudo ufw default allow outgoing
 sudo ufw default deny incoming
 sudo ufw allow in ssh
 sudo ufw allow in 22
+sudo usermod -a -G vboxusers $USER
 clear
 
 
@@ -758,6 +759,7 @@ sudo ufw default allow outgoing
 sudo ufw default deny incoming
 sudo ufw allow in ssh
 sudo ufw allow in 22
+sudo usermod -a -G vboxusers $USER
 clear
 
 
@@ -847,6 +849,7 @@ sudo ufw default allow outgoing
 sudo ufw default deny incoming
 sudo ufw allow in ssh
 sudo ufw allow in 22
+sudo usermod -a -G vboxusers $USER
 clear
 
 
@@ -937,6 +940,7 @@ sudo ufw default allow outgoing
 sudo ufw default deny incoming
 sudo ufw allow in ssh
 sudo ufw allow in 22
+sudo usermod -a -G vboxusers $USER
 clear
 
 
@@ -1015,6 +1019,7 @@ sudo ufw default allow outgoing
 sudo ufw default deny incoming
 sudo ufw allow in ssh
 sudo ufw allow in 22
+sudo usermod -a -G vboxusers $USER
 clear
 
 
@@ -1093,6 +1098,7 @@ sudo ufw default allow outgoing
 sudo ufw default deny incoming
 sudo ufw allow in ssh
 sudo ufw allow in 22
+sudo usermod -a -G vboxusers $USER
 clear
 
 
@@ -1201,6 +1207,7 @@ sudo ufw default allow outgoing
 sudo ufw default deny incoming
 sudo ufw allow in ssh
 sudo ufw allow in 22
+sudo usermod -a -G vboxusers $USER
 clear
 
 
@@ -1286,6 +1293,7 @@ sudo ufw default allow outgoing
 sudo ufw default deny incoming
 sudo ufw allow in ssh
 sudo ufw allow in 22
+sudo usermod -a -G vboxusers $USER
 clear
 
 
