@@ -19,7 +19,7 @@ sed -i "s/#\(en_US\.UTF-8\)/\1/" /etc/locale.gen
 sed -i "s/#\(ru_RU\.UTF-8\)/\1/" /etc/locale.gen
 locale-gen
 export LANG=ru_RU.UTF-8
-sed -i s/'#ParallelDownloads = 5'/'ParallelDownloads = 15'/g /etc/pacman.conf
+sed -i s/'ParallelDownloads = 5'/'ParallelDownloads = 15'/g /etc/pacman.conf
 sed -i s/'#Color'/'Color'/g /etc/pacman.conf
 echo "[options]" >> /etc/pacman.conf
 echo "ILoveCandy" >> /etc/pacman.conf
@@ -146,6 +146,10 @@ mount /dev/sda1 /mnt/boot/efi
 clear
 pacstrap /mnt base base-devel btrfs-progs bash-completion archlinux-keyring nano nano-syntax-highlighting amd-ucode inxi efibootmgr memtest86+-efi
 clear
+mount -t proc proc /mnt/proc
+mount -t sysfs sys /mnt/sys
+mount -o bind /dev /mnt/dev
+mount -t tmpfs tmpfs /mnt/run
 genfstab -U -p /mnt >> /mnt/etc/fstab
 clear
 arch-chroot /mnt /bin/bash
@@ -208,6 +212,10 @@ mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@tmp /d
 clear
 pacstrap /mnt base base-devel btrfs-progs bash-completion archlinux-keyring nano nano-syntax-highlighting amd-ucode inxi memtest86+
 clear
+mount -t proc proc /mnt/proc
+mount -t sysfs sys /mnt/sys
+mount -o bind /dev /mnt/dev
+mount -t tmpfs tmpfs /mnt/run
 genfstab -U -p /mnt >> /mnt/etc/fstab
 clear
 arch-chroot /mnt /bin/bash
@@ -221,7 +229,7 @@ arch-chroot /mnt /bin/bash
 
 
 ################################
-## ДОПОЛНИТЕЛЬНЫЕ РЕПОЗИТОРИИ ##
+## ДОПОЛНИТЕЛЬНЫЙ РЕПОЗИТОРИЙ ##
 ################################
 
 #################
@@ -234,20 +242,14 @@ arch-chroot /mnt /bin/bash
 
 pacman -Syy
 clear
-#Начнем с извлечения первичного ключа , чтобы обеспечить установку нашей связки ключей и списка зеркал.
 pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
 pacman-key --lsign-key 3056513887B78AEB
-#Это позволяет нам установить наши пакеты chaotic-keyring и chaotic-mirrorlist .
 pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --noconfirm
 pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
-#Затем мы добавляем (добавляя в конец) следующее /etc/pacman.conf:
 echo "### Chaotic-AUR #####" >> /etc/pacman.conf
 echo "[chaotic-aur]" >> /etc/pacman.conf
 echo "Include = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
-#Мы рекомендуем запустить полное обновление системы и синхронизировать наш список зеркал.
 pacman -Syu --noconfirm
-#После выполнения этого действия репозиторий готов к использованию!
-pacman -S firedragon --noconfirm
 clear
 
 
@@ -298,6 +300,7 @@ time_zone=$(curl -s https://ipinfo.io/timezone)
 ln -sf /usr/share/zoneinfo/$time_zone /etc/localtime
 hwclock --systohc
 pacman -Syy
+pamac update --force-refresh
 clear
 date
 lsblk
@@ -355,7 +358,7 @@ clear
 
 
 clear
-pacman -Syy
+pamac update --force-refresh
 clear
 pamac install --no-confirm reflector
 clear
@@ -363,6 +366,7 @@ reflector --latest 20 --fastest 5 --connection-timeout 1 --save /etc/pacman.d/mi
 systemctl enable --now reflector.timer
 clear
 pacman -Syy
+pamac update --force-refresh
 clear
 pamac install --no-confirm linux-lts linux-lts-headers linux-firmware networkmanager wpa_supplicant grub grub-btrfs os-prober plymouth
 clear
@@ -434,7 +438,7 @@ clear
 
 
 
-pacman -Syy
+pamac update --force-refresh
 clear
 # Services
 pamac install --no-confirm modemmanager
@@ -456,7 +460,7 @@ clear
 systemctl enable grub-btrfsd.service sshd.service NetworkManager.service ModemManager.service cups.service  cronie.service bluetooth.service haveged.service systemd-timesyncd
 clear
 # Pacman-contrib
-pacman -Syy
+pamac update --force-refresh
 pamac install --no-confirm pacman-contrib
 clear
 # Generic
@@ -524,6 +528,14 @@ clear
 
 
 
+
+
+#(plasma6-applets-optimus-gpu-switcher-git) Аплет переключения видео карт
+
+
+
+
+
 ########################################################
 ########## ПРОГРАММЫ РЕЗЕРВНОГО КОПИРОВАНИЯ ############
 ########################################################
@@ -538,7 +550,7 @@ clear
 
 
 clear
-pacman -Syy
+pamac update --force-refresh
 clear
 pamac install --no-confirm grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant
 clear
@@ -551,7 +563,7 @@ clear
 
 
 clear
-pacman -Syy
+pamac update --force-refresh
 clear
 pamac install --no-confirm timeshift timeshift-autosnap
 clear
@@ -565,7 +577,7 @@ clear
 
 
 clear
-pacman -Syy
+pamac update --force-refresh
 clear
 pamac install --no-confirm mkinitcpio-firmware update-grub yay archlinux-wallpaper
 clear
@@ -579,7 +591,7 @@ clear
 
 
 clear
-pacman -Syy
+pamac update --force-refresh
 clear
 pamac install --no-confirm ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 cherrytree htop seahorse system-monitoring-center  smplayer strawberry doublecmd-qt6 nomacs teams-for-linux telegram-desktop zoom virtualbox glmark2
 clear
@@ -599,7 +611,7 @@ clear
 
 
 clear
-pacman -Syy
+pamac update --force-refresh
 clear
 pamac install --no-confirm plasma
 clear
@@ -632,6 +644,7 @@ exit
 
 
 
+umount -R /mnt
 reboot
 
 
@@ -656,7 +669,7 @@ clear
 sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
 sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
-sudo pacman -Syy
+pamac update --force-refresh
 pamac upgrade --no-confirm
 pamac install --no-confirm pamac-tray-plasma-git radiotray-ng ocs-url ufw gufw
 clear
@@ -723,7 +736,7 @@ clear
 exit
 
 
-
+umount -R /mnt
 reboot
 
 
@@ -756,7 +769,7 @@ clear
 sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
 sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
-sudo pacman -Syy
+pamac update --force-refresh
 pamac upgrade --no-confirm
 pamac install --no-confirm radiotray-ng ocs-url ufw gufw lightdm-settings
 clear
@@ -768,6 +781,7 @@ sudo ufw allow in ssh
 sudo ufw allow in 22
 sudo usermod -a -G vboxusers $USER
 clear
+
 
 
 
@@ -819,7 +833,8 @@ clear
 exit
 
 
-
+u
+mount -R /mnt
 reboot
 
 
@@ -848,7 +863,7 @@ clear
 sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
 sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
-sudo pacman -Syy
+pamac update --force-refresh
 pamac upgrade --no-confirm
 pamac install --no-confirm radiotray-ng ocs-url ufw gufw
 clear
@@ -893,7 +908,7 @@ sudo reboot
 
 
 clear
-pacman -Syy
+pamac update --force-refresh
 clear
 pamac install --no-confirm cinnamon cinnamon-translations blueman dconf-editor ffmpegthumbnailer gcolor3 gnome-disk-utility gnome-keyring gnome-online-accounts gnome-screenshot gnome-system-monitor gnome-terminal gnome-themes-extra mousetweaks onboard pavucontrol powertop system-config-printer webapp-manager xreader xviewer-plugins iso-flag-png xdg-desktop-portal-gnome evince
  clear
@@ -915,7 +930,7 @@ clear
 exit
 
 
-
+umount -R /mnt
 reboot
 
 
@@ -942,7 +957,7 @@ clear
 sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
 sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
-sudo pacman -Syy
+pamac update --force-refresh
 pamac install --no-confirm radiotray-ng ocs-url ufw gufw
 clear
 pamac install --no-confirm glib2-devel user-admin
@@ -985,6 +1000,8 @@ sudo reboot
 ####################
 
 
+
+pamac update --force-refresh
 pamac install --no-confirm mate mate-extra
 pamac install --no-confirm mate-themes mate-tweak brisk-menu gnome-system-tools
 pamac install --no-confirm plank plank-themes
@@ -998,7 +1015,7 @@ clear
 exit
 
 
-
+umount -R /mnt
 reboot
 
 
@@ -1022,7 +1039,7 @@ clear
 sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
 sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
-sudo pacman -Syy
+pamac update --force-refresh
 pamac upgrade --no-confirm
 pamac install --no-confirm radiotray-ng ocs-url ufw gufw
 clear
@@ -1079,7 +1096,7 @@ clear
 exit
 
 
-
+umount -R /mnt
 reboot
 
 
@@ -1104,7 +1121,7 @@ clear
 sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
 sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
-sudo pacman -Syy
+pamac update --force-refresh
 pamac install --no-confirm radiotray-ng ocs-url ufw gufw
 clear
 pamac install --no-confirm glib2-devel user-admin
@@ -1167,7 +1184,7 @@ mv -i Nuvola_Russian_flag.svg ru.svg
 
 
 
-pacman -Syy
+pamac update --force-refresh
 clear
 pamac install --no-confirm lxde leafpad openbox obconf pavucontrol alsa-utils xfce4-notifyd
 clear
@@ -1190,7 +1207,7 @@ clear
 exit
 
 
-
+umount -R /mnt
 reboot
 
 
@@ -1214,7 +1231,7 @@ clear
 sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
 sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
-sudo pacman -Syy
+pamac update --force-refresh
 pamac upgrade --no-confirm
 pamac install --no-confirm radiotray-ng ocs-url ufw gufw
 clear
@@ -1259,7 +1276,7 @@ sudo reboot
 ######################
 
 
-pacman -Syy
+pamac update --force-refresh
 pamac install --no-confirm budgie-desktop
 pamac install --no-confirm gnome gnome-control-center
 pamac install --no-confirm materia-gtk-theme papirus-icon-theme i3lock
@@ -1273,6 +1290,8 @@ exit
 
 
 
+
+umount -R /mnt
 reboot
 
 
@@ -1302,7 +1321,7 @@ clear
 sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
 sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
-sudo pacman -Syy
+pamac update --force-refresh
 pamac upgrade --no-confirm
 pamac install --no-confirm radiotray-ng ocs-url ufw gufw
 clear
