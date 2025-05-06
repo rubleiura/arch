@@ -519,6 +519,8 @@ clear
 mkinitcpio -P
 grub-mkconfig -o /boot/grub/grub.cfg
 clear
+ppamac install --no-confirm upd72020x-fw
+clear
 
 
 
@@ -579,7 +581,8 @@ clear
 clear
 pacman -Syy
 clear
-pamac install --no-confirm ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 cherrytree htop seahorse system-monitoring-center  smplayer strawberry doublecmd-qt6 nomacs teams-for-linux telegram-desktop zoom virtualbox
+pamac install --no-confirm ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 cherrytree htop seahorse system-monitoring-center  smplayer strawberry doublecmd-qt6 nomacs teams-for-linux telegram-desktop zoom virtualbox glmark2
+clear
 
 
  
