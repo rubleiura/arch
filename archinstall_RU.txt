@@ -363,7 +363,7 @@ clear
 pamac install --no-confirm reflector
 clear
 reflector --age 12 --latest 20 --sort rate --save /etc/pacman.d/mirrorlist
-systemctl enable --now reflector.timer
+systemctl enable reflector.timer
 clear
 pacman -Syy
 pamac update --force-refresh
