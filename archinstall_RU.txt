@@ -402,6 +402,8 @@ echo "Sony" > /etc/hostname
 echo "127.0.0.1   localhost" > /etc/hosts
 echo ": :1        localhost" >> /etc/hosts
 echo "127.0.1.1   Sony.localdomain   Sony" >> /etc/hosts
+clear
+echo "Создайте пароль root"
 passwd
 clear
 
@@ -417,6 +419,8 @@ clear
 useradd login -m -c "User Name" -s /bin/bash
 usermod -aG wheel,users login
 sed -i s/'# %wheel ALL=(ALL:ALL) ALL'/'%wheel ALL=(ALL:ALL) ALL'/g /etc/sudoers
+clear
+echo "Создайте пароль User Name"
 passwd login
 clear
 
@@ -833,8 +837,9 @@ clear
 exit
 
 
-u
-mount -R /mnt
+
+
+umount -R /mnt
 reboot
 
 
