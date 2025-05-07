@@ -523,7 +523,6 @@ clear
 echo "blacklist nouveau" > /usr/lib/modprobe.d/nvidia.conf
 echo "options nouveau modeset=0" >> /usr/lib/modprobe.d/nvidia.conf
 sed -i s/'splash'/'splash nvidia-drm.modeset=1'/g /etc/default/grub
-echo "blacklist nouveau" | tee /etc/modprobe.d/blacklist-nvidia-nouveau.conf
 clear
 mkinitcpio -P
 grub-mkconfig -o /boot/grub/grub.cfg
