@@ -362,7 +362,7 @@ pamac update --force-refresh
 clear
 pamac install --no-confirm reflector
 clear
-reflector --latest 20 --fastest 5 --connection-timeout 1 --save /etc/pacman.d/mirrorlist
+reflector --age 12 --latest 20 --sort rate --save /etc/pacman.d/mirrorlist
 systemctl enable --now reflector.timer
 clear
 pacman -Syy
@@ -919,17 +919,17 @@ pamac install --no-confirm cinnamon cinnamon-translations blueman dconf-editor f
  clear
 pamac install --no-confirm nemo-fileroller nemo-preview nemo-python nemo-share
 clear
-pamac install --no-confirm bibata-cursor-theme arcolinux-kvantum
+pamac install --no-confirm bibata-cursor-theme kvantum
 clear
 pamac install --no-confirm icon-naming-utils mint-l-theme mint-themes
 clear
 pamac install --no-confirm baobab bulky galculator mintstick netctl numlockx pix python-pyxdg qt5ct redshift squashfs-tools touchegg tree udiskie xed
 clear
-pamac install --no-confirm lightdm lightdm-slick-greeter lightdm-settings
+pamac install --no-confirm lightdm lightdm-slick-greeter
 clear
 systemctl enable lightdm.service
 sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
-sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
+#sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
 sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
 exit
@@ -963,7 +963,7 @@ sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
 sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
 pamac update --force-refresh
-pamac install --no-confirm radiotray-ng ocs-url ufw gufw
+pamac install --no-confirm radiotray-ng ocs-url ufw gufw lightdm-settings
 clear
 pamac install --no-confirm glib2-devel user-admin
 clear
@@ -1010,7 +1010,7 @@ pamac update --force-refresh
 pamac install --no-confirm mate mate-extra
 pamac install --no-confirm mate-themes mate-tweak brisk-menu gnome-system-tools
 pamac install --no-confirm plank plank-themes
-pamac install --no-confirm lightdm lightdm-slick-greeter lightdm-settings
+pamac install --no-confirm lightdm lightdm-slick-greeter
 sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
 sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
 systemctl enable lightdm.service
@@ -1046,7 +1046,7 @@ sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
 pamac update --force-refresh
 pamac upgrade --no-confirm
-pamac install --no-confirm radiotray-ng ocs-url ufw gufw
+pamac install --no-confirm radiotray-ng ocs-url ufw gufw lightdm-settings
 clear
 pamac install --no-confirm glib2-devel user-admin
 clear
@@ -1091,7 +1091,7 @@ sudo reboot
 
 
 pamac install --no-confirm lxqt lxqt-themes xscreensaver picom libstatgrab libsysstat breeze-icons kvantum-qt5 mugshot nm-tray
-pamac install --no-confirm lightdm lightdm-slick-greeter lightdm-settings
+pamac install --no-confirm lightdm lightdm-slick-greeter
 clear
 sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
 sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
@@ -1127,7 +1127,7 @@ sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
 sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
 pamac update --force-refresh
-pamac install --no-confirm radiotray-ng ocs-url ufw gufw
+pamac install --no-confirm radiotray-ng ocs-url ufw gufw lightdm-settings
 clear
 pamac install --no-confirm glib2-devel user-admin
 clear
@@ -1200,7 +1200,7 @@ clear
 pamac install --no-confirm thunar-archive-plugin  thunar-media-tags-plugin thunar-shares-plugin ffmpegthumbnailer libgsf udiskie
 update-menus
 clear
-pamac install --no-confirm lightdm lightdm-slick-greeter lightdm-settings
+pamac install --no-confirm lightdm lightdm-slick-greeter
 clear
 pamac install --no-confirm blueman lxqt-archiver ffmpegthumbnailer exaile
 clear
@@ -1238,7 +1238,7 @@ sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
 clear
 pamac update --force-refresh
 pamac upgrade --no-confirm
-pamac install --no-confirm radiotray-ng ocs-url ufw gufw
+pamac install --no-confirm radiotray-ng ocs-url ufw gufw lightdm-settings
 clear
 pamac install --no-confirm glib2-devel user-admin
 clear
