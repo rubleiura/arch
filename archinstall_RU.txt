@@ -464,7 +464,6 @@ clear
 systemctl enable grub-btrfsd.service sshd.service NetworkManager.service ModemManager.service cups.service  cronie.service bluetooth.service haveged.service systemd-timesyncd
 clear
 # Pacman-contrib
-pamac update --force-refresh
 pamac install --no-confirm pacman-contrib
 clear
 # Generic
@@ -548,11 +547,15 @@ clear
 ###############################
 
 
+
+
 clear
 pamac update --force-refresh
 clear
 pamac install --no-confirm mkinitcpio-firmware update-grub yay archlinux-wallpaper
 clear
+
+
 
 
 ###############
@@ -594,6 +597,8 @@ clear
 ###################
 ## Установка KDE ##
 ###################
+
+
 
 
 clear
@@ -650,6 +655,9 @@ rm -r .ssh/
 ###############################
 
 
+
+
+
 clear
 # xinitrc
 echo "export DESKTOP_SESSION=plasma" > ~/.xinitrc
@@ -671,7 +679,6 @@ sudo ufw default allow outgoing
 sudo ufw default deny incoming
 sudo ufw allow in ssh
 sudo ufw allow in 22
-sudo usermod -a -G vboxusers $USER
 clear
 
 
@@ -771,7 +778,6 @@ sudo ufw default allow outgoing
 sudo ufw default deny incoming
 sudo ufw allow in ssh
 sudo ufw allow in 22
-sudo usermod -a -G vboxusers $USER
 clear
 
 
@@ -866,7 +872,6 @@ sudo ufw default allow outgoing
 sudo ufw default deny incoming
 sudo ufw allow in ssh
 sudo ufw allow in 22
-sudo usermod -a -G vboxusers $USER
 clear
 
 
@@ -959,7 +964,6 @@ sudo ufw default allow outgoing
 sudo ufw default deny incoming
 sudo ufw allow in ssh
 sudo ufw allow in 22
-sudo usermod -a -G vboxusers $USER
 clear
 
 
@@ -1042,7 +1046,6 @@ sudo ufw default allow outgoing
 sudo ufw default deny incoming
 sudo ufw allow in ssh
 sudo ufw allow in 22
-sudo usermod -a -G vboxusers $USER
 clear
 
 
@@ -1123,7 +1126,6 @@ sudo ufw default allow outgoing
 sudo ufw default deny incoming
 sudo ufw allow in ssh
 sudo ufw allow in 22
-sudo usermod -a -G vboxusers $USER
 clear
 
 
@@ -1234,7 +1236,6 @@ sudo ufw default allow outgoing
 sudo ufw default deny incoming
 sudo ufw allow in ssh
 sudo ufw allow in 22
-sudo usermod -a -G vboxusers $USER
 clear
 
 
@@ -1324,7 +1325,6 @@ sudo ufw default allow outgoing
 sudo ufw default deny incoming
 sudo ufw allow in ssh
 sudo ufw allow in 22
-sudo usermod -a -G vboxusers $USER
 clear
 
 
