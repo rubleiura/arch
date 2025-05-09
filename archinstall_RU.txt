@@ -509,38 +509,6 @@ clear
 
 
 ########################################################
-########## ВИДЕО ДРАЙВЕРА ############
-########################################################
-
-
-
-
-clear
-pamac install --no-confirm mesa lib32-mesa xf86-video-amdgpu vulkan-radeon lib32-vulkan-radeon
-clear
-pamac install --no-confirm nvidia-lts nvidia-utils lib32-nvidia-utils nvidia-settings egl-wayland
-clear
-echo "blacklist nouveau" > /usr/lib/modprobe.d/nvidia.conf
-echo "options nouveau modeset=0" >> /usr/lib/modprobe.d/nvidia.conf
-sed -i s/'splash'/'splash nvidia-drm.modeset=1'/g /etc/default/grub
-clear
-mkinitcpio -P
-grub-mkconfig -o /boot/grub/grub.cfg
-clear
-ppamac install --no-confirm upd72020x-fw
-clear
-
-
-
-
-
-#(plasma6-applets-optimus-gpu-switcher-git) Аплет переключения видео карт
-
-
-
-
-
-########################################################
 ########## ПРОГРАММЫ РЕЗЕРВНОГО КОПИРОВАНИЯ ############
 ########################################################
 
@@ -597,8 +565,22 @@ clear
 clear
 pamac update --force-refresh
 clear
-pamac install --no-confirm ventoy-bin gparted qbittorrent google-chrome thunderbird-i18n-ru libreoffice-fresh-ru btop cpu-x grub-customizer hardinfo2 cherrytree htop seahorse system-monitoring-center  smplayer strawberry doublecmd-qt6 nomacs teams-for-linux telegram-desktop zoom virtualbox glmark2
+pamac install --no-confirm google-chrome qbittorrent thunderbird-i18n-ru
 clear
+pamac install --no-confirm teams-for-linux telegram-desktop zoom
+clear
+pamac install --no-confirm libreoffice-fresh-ru cherrytree doublecmd-qt6
+clear
+pamac install --no-confirm btop cpu-x hardinfo2 htop system-monitoring-center
+clear
+pamac install --no-confirm ventoy-bin gparted
+clear
+pamac install --no-confirm smplayer strawberry
+clear
+pamac install --no-confirm grub-customizer seahorse virtualbox reflector-simple
+clear
+
+
 
 
  
@@ -638,7 +620,13 @@ clear
 # kde-network
 pamac install --no-confirm kdeconnect kdenetwork-filesharing kio-extras
 clear
-pamac install --no-confirm breeze5 dolphin-plugins filelight fwupd gtkmm3 kaccounts-providers kimageformats kwayland-integration lib32-libcanberra mtpfs ntp numlockx perl-file-mimeinfo power-profiles-daemon powertop qemu-guest-agent s-nail spice-vdagent sshfs system-config-printer udiskie unarchiver
+pamac install --no-confirm qemu-guest-agent s-nail spice-vdagent sshfs system-config-printer udiskie unarchiver
+clear
+pamac install --no-confirm breeze5 dolphin-plugins filelight fwupd gtkmm3 kaccounts-providers
+clear
+pamac install --no-confirm kimageformats kwayland-integration lib32-libcanberra mtpfs ntp
+clear
+pamac install --no-confirm numlockx perl-file-mimeinfo power-profiles-daemon powertop
 clear
 pamac install --no-confirm gnome-themes-extra
 clear
