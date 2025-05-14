@@ -144,7 +144,7 @@ mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@log /d
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@tmp /dev/sda2 /mnt/var/tmp
 mount /dev/sda1 /mnt/boot/efi
 clear
-pacstrap /mnt base base-devel btrfs-progs bash-completion archlinux-keyring nano nano-syntax-highlighting amd-ucode inxi efibootmgr memtest86+-efi
+pacstrap /mnt base base-devel btrfs-progs bash-completion archlinux-keyring nano nano-syntax-highlighting amd-ucode inxi efibootmgr memtest86+-efi reflector
 clear
 mount -t proc proc /mnt/proc
 mount -t sysfs sys /mnt/sys
@@ -210,7 +210,7 @@ mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@cache 
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@log /dev/sda2 /mnt/var/log
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@tmp /dev/sda2 /mnt/var/tmp
 clear
-pacstrap /mnt base base-devel btrfs-progs bash-completion archlinux-keyring nano nano-syntax-highlighting amd-ucode inxi memtest86+
+pacstrap /mnt base base-devel btrfs-progs bash-completion archlinux-keyring nano nano-syntax-highlighting amd-ucode inxi memtest86+ reflector
 clear
 mount -t proc proc /mnt/proc
 mount -t sysfs sys /mnt/sys
@@ -228,52 +228,6 @@ arch-chroot /mnt /bin/bash
 ########################################################
 
 
-################################
-## ДОПОЛНИТЕЛЬНЫЙ РЕПОЗИТОРИЙ ##
-################################
-
-#################
-## Chaotic-AUR ##
-#################
-
-
-
-
-
-pacman -Syy
-clear
-pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
-pacman-key --lsign-key 3056513887B78AEB
-pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --noconfirm
-pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
-echo "### Chaotic-AUR #####" >> /etc/pacman.conf
-echo "[chaotic-aur]" >> /etc/pacman.conf
-echo "Include = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
-pacman -Syu --noconfirm
-clear
-
-
-
-
-###########
-## PAMAC ##
-###########
-
-
-
-
-pacman -Syy
-clear
-pacman -S pamac --noconfirm
-clear
-sed -i s/'MaxParallelDownloads = 4'/'MaxParallelDownloads = 10'/g /etc/pamac.conf
-clear
-pacman -Syy
-clear
-
-
-
-
 
 ##############################################
 ## НАСТРОЙКИ PACMAN,FSTAB,ЯЗЫК,ЧАСОВОЙ ПОЯС ##
@@ -282,6 +236,10 @@ clear
 
 
 
+
+
+
+clear
 sed -i 's/\S*subvol=\(\S*\)/subvol=\1,ssd,noatime,space_cache=v2,compress=zstd:2,discard=async/g'  /etc/fstab
 sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
 sed -i s/'ParallelDownloads = 5'/'ParallelDownloads = 15'/g /etc/pacman.conf
@@ -300,7 +258,10 @@ time_zone=$(curl -s https://ipinfo.io/timezone)
 ln -sf /usr/share/zoneinfo/$time_zone /etc/localtime
 hwclock --systohc
 pacman -Syy
-pamac update --force-refresh
+reflector --age 12 --latest 20 --sort rate --save /etc/pacman.d/mirrorlist
+systemctl enable reflector.timer
+clear
+pacman -Syy
 clear
 date
 lsblk
@@ -348,24 +309,73 @@ clear
 
 
 
-##############################################
-### УСТ.ЯДРА, GRUB и MKINITCPIO. ЗЕРКАЛА #####
-##############################################
+
+
+
+################################
+## ДОПОЛНИТЕЛЬНЫЙ РЕПОЗИТОРИЙ ##
+################################
 
 
 
 
+#################
+## Chaotic-AUR ##
+#################
 
 
-clear
-pamac update --force-refresh
-clear
-pamac install --no-confirm reflector
-clear
-reflector --age 12 --latest 20 --sort rate --save /etc/pacman.d/mirrorlist
-systemctl enable reflector.timer
+
+
 clear
 pacman -Syy
+clear
+pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
+pacman-key --lsign-key 3056513887B78AEB
+pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --noconfirm
+pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
+echo "### Chaotic-AUR #####" >> /etc/pacman.conf
+echo "[chaotic-aur]" >> /etc/pacman.conf
+echo "Include = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
+pacman -Syu --noconfirm
+clear
+
+
+
+
+###########
+## PAMAC ##
+###########
+
+
+
+
+pacman -Syy
+clear
+pacman -S pamac --noconfirm
+clear
+sed -i s/'MaxParallelDownloads = 4'/'MaxParallelDownloads = 10'/g /etc/pamac.conf
+clear
+pacman -Syy
+clear
+
+
+
+
+
+
+
+
+
+##############################################
+### УСТ.ЯДРА, GRUB и MKINITCPIO.#####
+##############################################
+
+
+
+
+
+
+clear
 pamac update --force-refresh
 clear
 pamac install --no-confirm linux-lts linux-lts-headers linux-firmware networkmanager wpa_supplicant grub grub-btrfs os-prober plymouth
@@ -500,7 +510,7 @@ clear
 pamac install --no-confirm hyfetch fastfetch
 clear
 # XORG
-pamac install --no-confirm xorg-server xorg-xinit
+pamac install --no-confirm xorg-server xorg-xinit xorg-xkill
 clear
 
 
