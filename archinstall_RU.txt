@@ -254,10 +254,13 @@ sed -i "s/#\(en_US\.UTF-8\)/\1/" /etc/locale.gen
 sed -i "s/#\(ru_RU\.UTF-8\)/\1/" /etc/locale.gen
 sed -i 's/\(\/boot\/efi\s\+vfat\s\+\)\S\+\(.*\)/\1umask=0077    0 2/' /etc/fstab
 locale-gen
+clear
 time_zone=$(curl -s https://ipinfo.io/timezone)
 ln -sf /usr/share/zoneinfo/$time_zone /etc/localtime
 hwclock --systohc
 pacman -Syy
+clear
+echo "<<< ИДЁТ ОБНОВЛЕНИЕ ЗЕРКАЛ >>>"
 reflector --age 12 --latest 20 --sort rate --save /etc/pacman.d/mirrorlist
 systemctl enable reflector.timer
 clear
@@ -329,6 +332,7 @@ clear
 clear
 pacman -Syy
 clear
+echo "<<< ИДЁТ НАСТРОЙКА РЕПОЗИТОРИЯ CHAOTIC-AUR >>>"
 pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
 pacman-key --lsign-key 3056513887B78AEB
 pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --noconfirm
@@ -351,6 +355,7 @@ clear
 
 pacman -Syy
 clear
+echo "<<< УСТАНОВКА PAMAC >>>"
 pacman -S pamac --noconfirm
 clear
 sed -i s/'MaxParallelDownloads = 4'/'MaxParallelDownloads = 10'/g /etc/pamac.conf
@@ -366,9 +371,9 @@ clear
 
 
 
-##############################################
+#####################################
 ### УСТ.ЯДРА, GRUB и MKINITCPIO.#####
-##############################################
+#####################################
 
 
 
@@ -378,6 +383,7 @@ clear
 clear
 pamac update --force-refresh
 clear
+echo "<<< УСТАНОВКА СИСТЕМЫ >>>"
 pamac install --no-confirm linux-lts linux-lts-headers linux-firmware networkmanager wpa_supplicant grub grub-btrfs os-prober plymouth
 clear
 grub-install /dev/sda
@@ -689,6 +695,7 @@ sudo ufw default allow outgoing
 sudo ufw default deny incoming
 sudo ufw allow in ssh
 sudo ufw allow in 22
+sudo systemctl enable ufw.service
 clear
 
 
@@ -745,6 +752,8 @@ clear
 exit
 
 
+
+
 umount -R /mnt
 reboot
 
@@ -788,6 +797,7 @@ sudo ufw default allow outgoing
 sudo ufw default deny incoming
 sudo ufw allow in ssh
 sudo ufw allow in 22
+sudo systemctl enable ufw.service
 clear
 
 
@@ -882,6 +892,7 @@ sudo ufw default allow outgoing
 sudo ufw default deny incoming
 sudo ufw allow in ssh
 sudo ufw allow in 22
+sudo systemctl enable ufw.service
 clear
 
 
@@ -974,6 +985,7 @@ sudo ufw default allow outgoing
 sudo ufw default deny incoming
 sudo ufw allow in ssh
 sudo ufw allow in 22
+sudo systemctl enable ufw.service
 clear
 
 
@@ -1056,6 +1068,7 @@ sudo ufw default allow outgoing
 sudo ufw default deny incoming
 sudo ufw allow in ssh
 sudo ufw allow in 22
+sudo systemctl enable ufw.service
 clear
 
 
@@ -1136,6 +1149,7 @@ sudo ufw default allow outgoing
 sudo ufw default deny incoming
 sudo ufw allow in ssh
 sudo ufw allow in 22
+sudo systemctl enable ufw.service
 clear
 
 
@@ -1246,6 +1260,7 @@ sudo ufw default allow outgoing
 sudo ufw default deny incoming
 sudo ufw allow in ssh
 sudo ufw allow in 22
+sudo systemctl enable ufw.service
 clear
 
 
@@ -1335,6 +1350,7 @@ sudo ufw default allow outgoing
 sudo ufw default deny incoming
 sudo ufw allow in ssh
 sudo ufw allow in 22
+sudo systemctl enable ufw.service
 clear
 
 
