@@ -115,9 +115,6 @@ noatime,space_cache=v2,compress=zstd:2,autodefrag
 
 
 
-########################################################
-################### УСТАНОВКА В UEFI  ##################
-########################################################
 
 
 ##############
@@ -677,196 +674,6 @@ echo "#############################################
 #############################################"
 echo ""
 echo ""
-
-
-
-
-
-
-################################
-## ДОПОЛНИТЕЛЬНЫЙ РЕПОЗИТОРИЙ ##
-################################
-#################
-## Chaotic-AUR ##
-#################
-
-
-
-
-clear
-echo ""
-echo ""
-echo "#####################################################
-## <<<  ИДЁТ НАСТРОЙКА РЕПОЗИТОРИЯ CHAOTIC-AUR >>> ##
-#####################################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
-pacman-key --lsign-key 3056513887B78AEB
-pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --noconfirm
-pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
-echo "### Chaotic-AUR #####" >> /etc/pacman.conf
-echo "[chaotic-aur]" >> /etc/pacman.conf
-echo "Include = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
-pacman -Syu --noconfirm
-clear
-echo ""
-echo ""
-echo "##########################################################
-## <<<  НАСТРОЙКА РЕПОЗИТОРИЯ CHAOTIC-AUR ЗАВЕРШЕНА >>> ##
-##########################################################"
-echo ""
-echo ""
-
-
-
-
-
-
-###########
-## PAMAC ##
-###########
-
-
-
-
-
-clear
-echo ""
-echo ""
-echo "###################################
-## <<<  ИДЁТ УСТАНОВКА PAMAC >>> ##
-###################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-echo "<<< УСТАНОВКА PAMAC >>>"
-pacman -S pamac --noconfirm
-clear
-sed -i s/'MaxParallelDownloads = 4'/'MaxParallelDownloads = 10'/g /etc/pamac.conf
-clear
-pacman -Syy
-clear
-echo ""
-echo ""
-echo "########################################
-## <<<  УСТАНОВКА PAMAC ЗАВЕРШЕНА >>> ##
-########################################"
-echo ""
-echo ""
-
-
-
-
-
-
-######################
-##  BTRFS ASSISTANT ##
-######################
-
-
-
-
-
-clear
-echo ""
-echo ""
-echo "#############################################
-## <<<  ИДЁТ УСТАНОВКА BTRFS ASSISTANT >>> ##
-#############################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant
-clear
-echo ""
-echo ""
-echo "##################################################
-## <<<  УСТАНОВКА BTRFS ASSISTANT ЗАВЕРШЕНА >>> ##
-##################################################"
-echo ""
-echo ""
-
-
-
-
-
-
-###############################
-## СИСТЕМНЫЕ УТИЛИТЫ CHAOTIC ##
-###############################
-
-
-
-
-clear
-echo ""
-echo ""
-echo "######################################################
-## <<<  ИДЁТ УСТАНОВКА СИСТЕМНЫХ УТИЛИТ CHAOTIC >>> ##
-######################################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm mkinitcpio-firmware update-grub yay archlinux-wallpaper
-clear
-echo ""
-echo ""
-echo "###########################################################
-## <<<  УСТАНОВКА СИСТЕМНЫХ УТИЛИТ CHAOTIC ЗАВЕРШЕНА >>> ##
-###########################################################"
-echo ""
-echo ""
-
-
-
-
-
-###############
-## Программы ##
-###############
-
-
-
-
-
-
-clear
-echo ""
-echo ""
-echo "###################################################
-## <<<  ИДЁТ УСТАНОВКА ПРОГРАММ ПОЛЬЗОВАТЕЛЯ >>> ##
-###################################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm google-chrome qbittorrent thunderbird-i18n-ru
-clear
-pacman -S --noconfirm teams-for-linux telegram-desktop zoom
-clear
-pacman -S --noconfirm libreoffice-fresh-ru cherrytree doublecmd-qt6
-clear
-pacman -S --noconfirm btop cpu-x hardinfo2 htop system-monitoring-center
-clear
-pacman -S --noconfirm ventoy-bin gparted
-clear
-pacman -S --noconfirm smplayer strawberry
-clear
-pacman -S --noconfirm grub-customizer seahorse virtualbox reflector-simple
-clear
-echo ""
-echo ""
-echo "########################################################
-## <<<  УСТАНОВКА ПРОГРАММ ПОЛЬЗОВАТЕЛЯ ЗАВЕРШЕНА >>> ##
-########################################################"
-echo ""
-echo ""
 exit
 
 
@@ -878,6 +685,10 @@ reboot
 
 
 rm -r .ssh/
+
+
+
+
 
 
 
@@ -896,13 +707,6 @@ echo "exec startplasma-x11" >> ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
-clear
-sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
-sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
-clear
-pamac install --no-confirm pamac-tray-plasma-git radiotray-ng ocs-url
-clear
-pamac install --no-confirm glib2-devel user-admin
 clear
 
 
@@ -938,6 +742,13 @@ sudo reboot
 
 
 clear
+echo ""
+echo ""
+echo "###################################
+## <<<  ИДЁТ УСТАНОВКА XFCE4 >>> ##
+###################################"; sleep 3
+echo ""
+echo ""
 pacman -S --noconfirm xfce4
 clear
 pacman -S --noconfirm mousepad thunar-archive-plugin thunar-media-tags-plugin xfburn xfce4-artwork xfce4-battery-plugin xfce4-clipman-plugin xfce4-cpufreq-plugin xfce4-cpugraph-plugin xfce4-dict xfce4-diskperf-plugin xfce4-eyes-plugin xfce4-fsguard-plugin xfce4-genmon-plugin xfce4-mailwatch-plugin xfce4-mount-plugin xfce4-mpc-plugin xfce4-netload-plugin xfce4-notes-plugin xfce4-notifyd xfce4-places-plugin xfce4-pulseaudio-plugin xfce4-screensaver  xfce4-screenshooter xfce4-sensors-plugin xfce4-smartbookmark-plugin xfce4-systemload-plugin  xfce4-taskmanager xfce4-time-out-plugin xfce4-timer-plugin xfce4-verve-plugin xfce4-wavelan-plugin xfce4-weather-plugin xfce4-whiskermenu-plugin xfce4-xkb-plugin
@@ -956,225 +767,11 @@ systemctl enable lightdm.service
 clear
 sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
-
-
-################################
-## ДОПОЛНИТЕЛЬНЫЙ РЕПОЗИТОРИЙ ##
-################################
-#################
-## Chaotic-AUR ##
-#################
-
-
-
-
-clear
-echo ""
-echo ""
-echo "#####################################################
-## <<<  ИДЁТ НАСТРОЙКА РЕПОЗИТОРИЯ CHAOTIC-AUR >>> ##
-#####################################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-echo "<<< ИДЁТ НАСТРОЙКА РЕПОЗИТОРИЯ CHAOTIC-AUR >>>"
-pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
-pacman-key --lsign-key 3056513887B78AEB
-pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --noconfirm
-pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
-echo "### Chaotic-AUR #####" >> /etc/pacman.conf
-echo "[chaotic-aur]" >> /etc/pacman.conf
-echo "Include = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
-pacman -Syu --noconfirm
-clear
-echo ""
-echo ""
-echo "##########################################################
-## <<<  НАСТРОЙКА РЕПОЗИТОРИЯ CHAOTIC-AUR ЗАВЕРШЕНА >>> ##
-##########################################################"
-echo ""
-echo ""
-
-
-
-
-
-
-###########
-## PAMAC ##
-###########
-
-
-
-
-
-clear
-echo ""
-echo ""
-echo "###################################
-## <<<  ИДЁТ УСТАНОВКА PAMAC >>> ##
-###################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-echo "<<< УСТАНОВКА PAMAC >>>"
-pacman -S pamac --noconfirm
-clear
-sed -i s/'MaxParallelDownloads = 4'/'MaxParallelDownloads = 10'/g /etc/pamac.conf
-clear
-pacman -Syy
-clear
 echo ""
 echo ""
 echo "########################################
-## <<<  УСТАНОВКА PAMAC ЗАВЕРШЕНА >>> ##
+## <<<  УСТАНОВКА XFCE4 ЗАВЕРШЕНА >>> ##
 ########################################"
-echo ""
-echo ""
-
-
-
-
-
-########################################################
-########## ПРОГРАММЫ РЕЗЕРВНОГО КОПИРОВАНИЯ ############
-########################################################
-
-
-
-
-######################
-##  BTRFS ASSISTANT ##
-######################
-
-
-
-
-
-clear
-echo ""
-echo ""
-echo "#############################################
-## <<<  ИДЁТ УСТАНОВКА BTRFS ASSISTANT >>> ##
-#############################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant
-clear
-echo ""
-echo ""
-echo "##################################################
-## <<<  УСТАНОВКА BTRFS ASSISTANT ЗАВЕРШЕНА >>> ##
-##################################################"
-echo ""
-echo ""
-
-
-
-
-
-################
-##  TIMESHIFT ##
-################
-
-
-
-
-
-clear
-echo ""
-echo ""
-echo "#######################################
-## <<<  ИДЁТ УСТАНОВКА TIMESHIFT >>> ##
-#######################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm timeshift timeshift-autosnap
-clear
-echo ""
-echo ""
-echo "############################################
-## <<<  УСТАНОВКА TIMESHIFT ЗАВЕРШЕНА >>> ##
-############################################"
-echo ""
-echo ""
-
-
-
-
-
-###############################
-## СИСТЕМНЫЕ УТИЛИТЫ CHAOTIC ##
-###############################
-
-
-
-
-clear
-echo ""
-echo ""
-echo "######################################################
-## <<<  ИДЁТ УСТАНОВКА СИСТЕМНЫХ УТИЛИТ CHAOTIC >>> ##
-######################################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm mkinitcpio-firmware update-grub yay archlinux-wallpaper
-clear
-echo ""
-echo ""
-echo "###########################################################
-## <<<  УСТАНОВКА СИСТЕМНЫХ УТИЛИТ CHAOTIC ЗАВЕРШЕНА >>> ##
-###########################################################"
-echo ""
-echo ""
-
-
-
-
-###############
-## Программы ##
-###############
-
-
-
-
-clear
-echo ""
-echo ""
-echo "###################################################
-## <<<  ИДЁТ УСТАНОВКА ПРОГРАММ ПОЛЬЗОВАТЕЛЯ >>> ##
-###################################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm google-chrome qbittorrent thunderbird-i18n-ru
-clear
-pacman -S --noconfirm teams-for-linux telegram-desktop zoom
-clear
-pacman -S --noconfirm libreoffice-fresh-ru cherrytree doublecmd-qt6
-clear
-pacman -S --noconfirm btop cpu-x hardinfo2 htop system-monitoring-center
-clear
-pacman -S --noconfirm ventoy-bin gparted
-clear
-pacman -S --noconfirm smplayer strawberry
-clear
-pacman -S --noconfirm grub-customizer seahorse virtualbox reflector-simple
-clear
-echo ""
-echo ""
-echo "########################################################
-## <<<  УСТАНОВКА ПРОГРАММ ПОЛЬЗОВАТЕЛЯ ЗАВЕРШЕНА >>> ##
-########################################################"
 echo ""
 echo ""
 exit
@@ -1213,13 +810,7 @@ mv -i Nuvola_USA_flag.svg us.svg
 mv -i Nuvola_Russian_flag.svg ru.svg
 cd
 clear
-sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
-sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
-clear
-pamac install --no-confirm radiotray-ng ocs-url lightdm-settings
-clear
-pamac install --no-confirm glib2-devel user-admin
-clear
+
 
 
 
@@ -1252,6 +843,15 @@ sudo reboot
 
 
 
+
+
+echo ""
+echo ""
+echo "###################################
+## <<<  ИДЁТ УСТАНОВКА GNOME >>> ##
+###################################"; sleep 3
+echo ""
+echo ""
 #  Gnome
 pacman -S --noconfirm baobab evince gnome-backgrounds gnome-calculator gnome-calendar gnome-characters gnome-clocks gnome-connections gnome-contacts gnome-control-center gnome-disk-utility gnome-font-viewer gnome-logs gnome-maps gnome-remote-desktop gnome-shell gnome-shell-extensions gnome-system-monitor gnome-text-editor gnome-tour gnome-user-docs gnome-user-share gnome-weather grilo-plugins malcontent nautilus rygel simple-scan snapshot sushi totem gdm
 systemctl enable gdm
@@ -1269,225 +869,11 @@ pacman -S --noconfirm ffmpegthumbnailer ffmpeg-audio-thumbnailer
 clear
 sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
-
-
-################################
-## ДОПОЛНИТЕЛЬНЫЙ РЕПОЗИТОРИЙ ##
-################################
-#################
-## Chaotic-AUR ##
-#################
-
-
-
-
-clear
-echo ""
-echo ""
-echo "#####################################################
-## <<<  ИДЁТ НАСТРОЙКА РЕПОЗИТОРИЯ CHAOTIC-AUR >>> ##
-#####################################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-echo "<<< ИДЁТ НАСТРОЙКА РЕПОЗИТОРИЯ CHAOTIC-AUR >>>"
-pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
-pacman-key --lsign-key 3056513887B78AEB
-pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --noconfirm
-pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
-echo "### Chaotic-AUR #####" >> /etc/pacman.conf
-echo "[chaotic-aur]" >> /etc/pacman.conf
-echo "Include = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
-pacman -Syu --noconfirm
-clear
-echo ""
-echo ""
-echo "##########################################################
-## <<<  НАСТРОЙКА РЕПОЗИТОРИЯ CHAOTIC-AUR ЗАВЕРШЕНА >>> ##
-##########################################################"
-echo ""
-echo ""
-
-
-
-
-
-
-###########
-## PAMAC ##
-###########
-
-
-
-
-
-clear
-echo ""
-echo ""
-echo "###################################
-## <<<  ИДЁТ УСТАНОВКА PAMAC >>> ##
-###################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-echo "<<< УСТАНОВКА PAMAC >>>"
-pacman -S pamac --noconfirm
-clear
-sed -i s/'MaxParallelDownloads = 4'/'MaxParallelDownloads = 10'/g /etc/pamac.conf
-clear
-pacman -Syy
-clear
 echo ""
 echo ""
 echo "########################################
-## <<<  УСТАНОВКА PAMAC ЗАВЕРШЕНА >>> ##
+## <<<  УСТАНОВКА GNOME ЗАВЕРШЕНА >>> ##
 ########################################"
-echo ""
-echo ""
-
-
-
-
-
-########################################################
-########## ПРОГРАММЫ РЕЗЕРВНОГО КОПИРОВАНИЯ ############
-########################################################
-
-
-
-
-######################
-##  BTRFS ASSISTANT ##
-######################
-
-
-
-
-
-clear
-echo ""
-echo ""
-echo "#############################################
-## <<<  ИДЁТ УСТАНОВКА BTRFS ASSISTANT >>> ##
-#############################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant
-clear
-echo ""
-echo ""
-echo "##################################################
-## <<<  УСТАНОВКА BTRFS ASSISTANT ЗАВЕРШЕНА >>> ##
-##################################################"
-echo ""
-echo ""
-
-
-
-
-
-################
-##  TIMESHIFT ##
-################
-
-
-
-
-
-clear
-echo ""
-echo ""
-echo "#######################################
-## <<<  ИДЁТ УСТАНОВКА TIMESHIFT >>> ##
-#######################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm timeshift timeshift-autosnap
-clear
-echo ""
-echo ""
-echo "############################################
-## <<<  УСТАНОВКА TIMESHIFT ЗАВЕРШЕНА >>> ##
-############################################"
-echo ""
-echo ""
-
-
-
-
-
-###############################
-## СИСТЕМНЫЕ УТИЛИТЫ CHAOTIC ##
-###############################
-
-
-
-
-clear
-echo ""
-echo ""
-echo "######################################################
-## <<<  ИДЁТ УСТАНОВКА СИСТЕМНЫХ УТИЛИТ CHAOTIC >>> ##
-######################################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm mkinitcpio-firmware update-grub yay archlinux-wallpaper
-clear
-echo ""
-echo ""
-echo "###########################################################
-## <<<  УСТАНОВКА СИСТЕМНЫХ УТИЛИТ CHAOTIC ЗАВЕРШЕНА >>> ##
-###########################################################"
-echo ""
-echo ""
-
-
-
-
-###############
-## Программы ##
-###############
-
-
-
-
-clear
-echo ""
-echo ""
-echo "###################################################
-## <<<  ИДЁТ УСТАНОВКА ПРОГРАММ ПОЛЬЗОВАТЕЛЯ >>> ##
-###################################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm google-chrome qbittorrent thunderbird-i18n-ru
-clear
-pacman -S --noconfirm teams-for-linux telegram-desktop zoom
-clear
-pacman -S --noconfirm libreoffice-fresh-ru cherrytree doublecmd-qt6
-clear
-pacman -S --noconfirm btop cpu-x hardinfo2 htop system-monitoring-center
-clear
-pacman -S --noconfirm ventoy-bin gparted
-clear
-pacman -S --noconfirm smplayer strawberry
-clear
-pacman -S --noconfirm grub-customizer seahorse virtualbox reflector-simple
-clear
-echo ""
-echo ""
-echo "########################################################
-## <<<  УСТАНОВКА ПРОГРАММ ПОЛЬЗОВАТЕЛЯ ЗАВЕРШЕНА >>> ##
-########################################################"
 echo ""
 echo ""
 exit
@@ -1520,13 +906,7 @@ sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clear
-sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
-sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
-clear
-pamac install --no-confirm radiotray-ng ocs-url
-clear
-pamac install --no-confirm glib2-devel user-admin
-clear
+
 
 
 
@@ -1554,9 +934,15 @@ sudo reboot
 
 
 
+
+
+
 ########################
 ## Установка Cinnamon ##
 ########################
+
+
+
 
 
 clear
@@ -1579,227 +965,6 @@ sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-gre
 #sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
 sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
-
-
-################################
-## ДОПОЛНИТЕЛЬНЫЙ РЕПОЗИТОРИЙ ##
-################################
-#################
-## Chaotic-AUR ##
-#################
-
-
-
-
-clear
-echo ""
-echo ""
-echo "#####################################################
-## <<<  ИДЁТ НАСТРОЙКА РЕПОЗИТОРИЯ CHAOTIC-AUR >>> ##
-#####################################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-echo "<<< ИДЁТ НАСТРОЙКА РЕПОЗИТОРИЯ CHAOTIC-AUR >>>"
-pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
-pacman-key --lsign-key 3056513887B78AEB
-pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --noconfirm
-pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
-echo "### Chaotic-AUR #####" >> /etc/pacman.conf
-echo "[chaotic-aur]" >> /etc/pacman.conf
-echo "Include = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
-pacman -Syu --noconfirm
-clear
-echo ""
-echo ""
-echo "##########################################################
-## <<<  НАСТРОЙКА РЕПОЗИТОРИЯ CHAOTIC-AUR ЗАВЕРШЕНА >>> ##
-##########################################################"
-echo ""
-echo ""
-
-
-
-
-
-
-###########
-## PAMAC ##
-###########
-
-
-
-
-
-clear
-echo ""
-echo ""
-echo "###################################
-## <<<  ИДЁТ УСТАНОВКА PAMAC >>> ##
-###################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-echo "<<< УСТАНОВКА PAMAC >>>"
-pacman -S pamac --noconfirm
-clear
-sed -i s/'MaxParallelDownloads = 4'/'MaxParallelDownloads = 10'/g /etc/pamac.conf
-clear
-pacman -Syy
-clear
-echo ""
-echo ""
-echo "########################################
-## <<<  УСТАНОВКА PAMAC ЗАВЕРШЕНА >>> ##
-########################################"
-echo ""
-echo ""
-
-
-
-
-
-########################################################
-########## ПРОГРАММЫ РЕЗЕРВНОГО КОПИРОВАНИЯ ############
-########################################################
-
-
-
-
-######################
-##  BTRFS ASSISTANT ##
-######################
-
-
-
-
-
-clear
-echo ""
-echo ""
-echo "#############################################
-## <<<  ИДЁТ УСТАНОВКА BTRFS ASSISTANT >>> ##
-#############################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant
-clear
-echo ""
-echo ""
-echo "##################################################
-## <<<  УСТАНОВКА BTRFS ASSISTANT ЗАВЕРШЕНА >>> ##
-##################################################"
-echo ""
-echo ""
-
-
-
-
-
-################
-##  TIMESHIFT ##
-################
-
-
-
-
-
-clear
-echo ""
-echo ""
-echo "#######################################
-## <<<  ИДЁТ УСТАНОВКА TIMESHIFT >>> ##
-#######################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm timeshift timeshift-autosnap
-clear
-echo ""
-echo ""
-echo "############################################
-## <<<  УСТАНОВКА TIMESHIFT ЗАВЕРШЕНА >>> ##
-############################################"
-echo ""
-echo ""
-
-
-
-
-
-###############################
-## СИСТЕМНЫЕ УТИЛИТЫ CHAOTIC ##
-###############################
-
-
-
-
-clear
-echo ""
-echo ""
-echo "######################################################
-## <<<  ИДЁТ УСТАНОВКА СИСТЕМНЫХ УТИЛИТ CHAOTIC >>> ##
-######################################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm mkinitcpio-firmware update-grub yay archlinux-wallpaper
-clear
-echo ""
-echo ""
-echo "###########################################################
-## <<<  УСТАНОВКА СИСТЕМНЫХ УТИЛИТ CHAOTIC ЗАВЕРШЕНА >>> ##
-###########################################################"
-echo ""
-echo ""
-
-
-
-
-###############
-## Программы ##
-###############
-
-
-
-
-clear
-echo ""
-echo ""
-echo "###################################################
-## <<<  ИДЁТ УСТАНОВКА ПРОГРАММ ПОЛЬЗОВАТЕЛЯ >>> ##
-###################################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm google-chrome qbittorrent thunderbird-i18n-ru
-clear
-pacman -S --noconfirm teams-for-linux telegram-desktop zoom
-clear
-pacman -S --noconfirm libreoffice-fresh-ru cherrytree doublecmd-qt6
-clear
-pacman -S --noconfirm btop cpu-x hardinfo2 htop system-monitoring-center
-clear
-pacman -S --noconfirm ventoy-bin gparted
-clear
-pacman -S --noconfirm smplayer strawberry
-clear
-pacman -S --noconfirm grub-customizer seahorse virtualbox reflector-simple
-clear
-echo ""
-echo ""
-echo "########################################################
-## <<<  УСТАНОВКА ПРОГРАММ ПОЛЬЗОВАТЕЛЯ ЗАВЕРШЕНА >>> ##
-########################################################"
-echo ""
-echo ""
 exit
 
 
@@ -1827,13 +992,7 @@ sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clear
-sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
-sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
-clear
-pamac install --no-confirm radiotray-ng ocs-url lightdm-settings
-clear
-pamac install --no-confirm glib2-devel user-admin
-clear
+
 
 
 
@@ -1867,6 +1026,8 @@ sudo reboot
 
 
 
+
+
 pacman -Syy
 pacman -S --noconfirm mate mate-extra
 pacman -S --noconfirm mate-themes mate-tweak brisk-menu gnome-system-tools
@@ -1878,227 +1039,6 @@ systemctl enable lightdm.service
 clear
 sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
-
-
-################################
-## ДОПОЛНИТЕЛЬНЫЙ РЕПОЗИТОРИЙ ##
-################################
-#################
-## Chaotic-AUR ##
-#################
-
-
-
-
-clear
-echo ""
-echo ""
-echo "#####################################################
-## <<<  ИДЁТ НАСТРОЙКА РЕПОЗИТОРИЯ CHAOTIC-AUR >>> ##
-#####################################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-echo "<<< ИДЁТ НАСТРОЙКА РЕПОЗИТОРИЯ CHAOTIC-AUR >>>"
-pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
-pacman-key --lsign-key 3056513887B78AEB
-pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --noconfirm
-pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
-echo "### Chaotic-AUR #####" >> /etc/pacman.conf
-echo "[chaotic-aur]" >> /etc/pacman.conf
-echo "Include = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
-pacman -Syu --noconfirm
-clear
-echo ""
-echo ""
-echo "##########################################################
-## <<<  НАСТРОЙКА РЕПОЗИТОРИЯ CHAOTIC-AUR ЗАВЕРШЕНА >>> ##
-##########################################################"
-echo ""
-echo ""
-
-
-
-
-
-
-###########
-## PAMAC ##
-###########
-
-
-
-
-
-clear
-echo ""
-echo ""
-echo "###################################
-## <<<  ИДЁТ УСТАНОВКА PAMAC >>> ##
-###################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-echo "<<< УСТАНОВКА PAMAC >>>"
-pacman -S pamac --noconfirm
-clear
-sed -i s/'MaxParallelDownloads = 4'/'MaxParallelDownloads = 10'/g /etc/pamac.conf
-clear
-pacman -Syy
-clear
-echo ""
-echo ""
-echo "########################################
-## <<<  УСТАНОВКА PAMAC ЗАВЕРШЕНА >>> ##
-########################################"
-echo ""
-echo ""
-
-
-
-
-
-########################################################
-########## ПРОГРАММЫ РЕЗЕРВНОГО КОПИРОВАНИЯ ############
-########################################################
-
-
-
-
-######################
-##  BTRFS ASSISTANT ##
-######################
-
-
-
-
-
-clear
-echo ""
-echo ""
-echo "#############################################
-## <<<  ИДЁТ УСТАНОВКА BTRFS ASSISTANT >>> ##
-#############################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant
-clear
-echo ""
-echo ""
-echo "##################################################
-## <<<  УСТАНОВКА BTRFS ASSISTANT ЗАВЕРШЕНА >>> ##
-##################################################"
-echo ""
-echo ""
-
-
-
-
-
-################
-##  TIMESHIFT ##
-################
-
-
-
-
-
-clear
-echo ""
-echo ""
-echo "#######################################
-## <<<  ИДЁТ УСТАНОВКА TIMESHIFT >>> ##
-#######################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm timeshift timeshift-autosnap
-clear
-echo ""
-echo ""
-echo "############################################
-## <<<  УСТАНОВКА TIMESHIFT ЗАВЕРШЕНА >>> ##
-############################################"
-echo ""
-echo ""
-
-
-
-
-
-###############################
-## СИСТЕМНЫЕ УТИЛИТЫ CHAOTIC ##
-###############################
-
-
-
-
-clear
-echo ""
-echo ""
-echo "######################################################
-## <<<  ИДЁТ УСТАНОВКА СИСТЕМНЫХ УТИЛИТ CHAOTIC >>> ##
-######################################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm mkinitcpio-firmware update-grub yay archlinux-wallpaper
-clear
-echo ""
-echo ""
-echo "###########################################################
-## <<<  УСТАНОВКА СИСТЕМНЫХ УТИЛИТ CHAOTIC ЗАВЕРШЕНА >>> ##
-###########################################################"
-echo ""
-echo ""
-
-
-
-
-###############
-## Программы ##
-###############
-
-
-
-
-clear
-echo ""
-echo ""
-echo "###################################################
-## <<<  ИДЁТ УСТАНОВКА ПРОГРАММ ПОЛЬЗОВАТЕЛЯ >>> ##
-###################################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm google-chrome qbittorrent thunderbird-i18n-ru
-clear
-pacman -S --noconfirm teams-for-linux telegram-desktop zoom
-clear
-pacman -S --noconfirm libreoffice-fresh-ru cherrytree doublecmd-qt6
-clear
-pacman -S --noconfirm btop cpu-x hardinfo2 htop system-monitoring-center
-clear
-pacman -S --noconfirm ventoy-bin gparted
-clear
-pacman -S --noconfirm smplayer strawberry
-clear
-pacman -S --noconfirm grub-customizer seahorse virtualbox reflector-simple
-clear
-echo ""
-echo ""
-echo "########################################################
-## <<<  УСТАНОВКА ПРОГРАММ ПОЛЬЗОВАТЕЛЯ ЗАВЕРШЕНА >>> ##
-########################################################"
-echo ""
-echo ""
 exit
 
 
@@ -2125,13 +1065,6 @@ echo "exec mate-session" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
-clear
-sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
-sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
-clear
-pamac install --no-confirm radiotray-ng ocs-url lightdm-settings
-clear
-pamac install --no-confirm glib2-devel user-admin
 clear
 
 
@@ -2175,227 +1108,6 @@ sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-
 systemctl enable lightdm.service
 sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
-
-
-################################
-## ДОПОЛНИТЕЛЬНЫЙ РЕПОЗИТОРИЙ ##
-################################
-#################
-## Chaotic-AUR ##
-#################
-
-
-
-
-clear
-echo ""
-echo ""
-echo "#####################################################
-## <<<  ИДЁТ НАСТРОЙКА РЕПОЗИТОРИЯ CHAOTIC-AUR >>> ##
-#####################################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-echo "<<< ИДЁТ НАСТРОЙКА РЕПОЗИТОРИЯ CHAOTIC-AUR >>>"
-pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
-pacman-key --lsign-key 3056513887B78AEB
-pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --noconfirm
-pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
-echo "### Chaotic-AUR #####" >> /etc/pacman.conf
-echo "[chaotic-aur]" >> /etc/pacman.conf
-echo "Include = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
-pacman -Syu --noconfirm
-clear
-echo ""
-echo ""
-echo "##########################################################
-## <<<  НАСТРОЙКА РЕПОЗИТОРИЯ CHAOTIC-AUR ЗАВЕРШЕНА >>> ##
-##########################################################"
-echo ""
-echo ""
-
-
-
-
-
-
-###########
-## PAMAC ##
-###########
-
-
-
-
-
-clear
-echo ""
-echo ""
-echo "###################################
-## <<<  ИДЁТ УСТАНОВКА PAMAC >>> ##
-###################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-echo "<<< УСТАНОВКА PAMAC >>>"
-pacman -S pamac --noconfirm
-clear
-sed -i s/'MaxParallelDownloads = 4'/'MaxParallelDownloads = 10'/g /etc/pamac.conf
-clear
-pacman -Syy
-clear
-echo ""
-echo ""
-echo "########################################
-## <<<  УСТАНОВКА PAMAC ЗАВЕРШЕНА >>> ##
-########################################"
-echo ""
-echo ""
-
-
-
-
-
-########################################################
-########## ПРОГРАММЫ РЕЗЕРВНОГО КОПИРОВАНИЯ ############
-########################################################
-
-
-
-
-######################
-##  BTRFS ASSISTANT ##
-######################
-
-
-
-
-
-clear
-echo ""
-echo ""
-echo "#############################################
-## <<<  ИДЁТ УСТАНОВКА BTRFS ASSISTANT >>> ##
-#############################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant
-clear
-echo ""
-echo ""
-echo "##################################################
-## <<<  УСТАНОВКА BTRFS ASSISTANT ЗАВЕРШЕНА >>> ##
-##################################################"
-echo ""
-echo ""
-
-
-
-
-
-################
-##  TIMESHIFT ##
-################
-
-
-
-
-
-clear
-echo ""
-echo ""
-echo "#######################################
-## <<<  ИДЁТ УСТАНОВКА TIMESHIFT >>> ##
-#######################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm timeshift timeshift-autosnap
-clear
-echo ""
-echo ""
-echo "############################################
-## <<<  УСТАНОВКА TIMESHIFT ЗАВЕРШЕНА >>> ##
-############################################"
-echo ""
-echo ""
-
-
-
-
-
-###############################
-## СИСТЕМНЫЕ УТИЛИТЫ CHAOTIC ##
-###############################
-
-
-
-
-clear
-echo ""
-echo ""
-echo "######################################################
-## <<<  ИДЁТ УСТАНОВКА СИСТЕМНЫХ УТИЛИТ CHAOTIC >>> ##
-######################################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm mkinitcpio-firmware update-grub yay archlinux-wallpaper
-clear
-echo ""
-echo ""
-echo "###########################################################
-## <<<  УСТАНОВКА СИСТЕМНЫХ УТИЛИТ CHAOTIC ЗАВЕРШЕНА >>> ##
-###########################################################"
-echo ""
-echo ""
-
-
-
-
-###############
-## Программы ##
-###############
-
-
-
-
-clear
-echo ""
-echo ""
-echo "###################################################
-## <<<  ИДЁТ УСТАНОВКА ПРОГРАММ ПОЛЬЗОВАТЕЛЯ >>> ##
-###################################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm google-chrome qbittorrent thunderbird-i18n-ru
-clear
-pacman -S --noconfirm teams-for-linux telegram-desktop zoom
-clear
-pacman -S --noconfirm libreoffice-fresh-ru cherrytree doublecmd-qt6
-clear
-pacman -S --noconfirm btop cpu-x hardinfo2 htop system-monitoring-center
-clear
-pacman -S --noconfirm ventoy-bin gparted
-clear
-pacman -S --noconfirm smplayer strawberry
-clear
-pacman -S --noconfirm grub-customizer seahorse virtualbox reflector-simple
-clear
-echo ""
-echo ""
-echo "########################################################
-## <<<  УСТАНОВКА ПРОГРАММ ПОЛЬЗОВАТЕЛЯ ЗАВЕРШЕНА >>> ##
-########################################################"
-echo ""
-echo ""
 exit
 
 
@@ -2415,6 +1127,8 @@ rm -r .ssh/
 ###############################
 
 
+
+
 clear
 # xinitrc
 echo "exec startlxqt" > ~/.xinitrc
@@ -2422,13 +1136,7 @@ sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clear
-sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
-sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
-clear
-pamac install --no-confirm radiotray-ng ocs-url lightdm-settings
-clear
-pamac install --no-confirm glib2-devel user-admin
-clear
+
 
 
 
@@ -2457,6 +1165,9 @@ sudo reboot
 
 
 ########## Флаги ##############
+
+
+
 
 mkdir -p .local/share/flags
 cd .local/share/flags
@@ -2501,227 +1212,6 @@ sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-
 systemctl enable lightdm.service
 sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
-
-
-################################
-## ДОПОЛНИТЕЛЬНЫЙ РЕПОЗИТОРИЙ ##
-################################
-#################
-## Chaotic-AUR ##
-#################
-
-
-
-
-clear
-echo ""
-echo ""
-echo "#####################################################
-## <<<  ИДЁТ НАСТРОЙКА РЕПОЗИТОРИЯ CHAOTIC-AUR >>> ##
-#####################################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-echo "<<< ИДЁТ НАСТРОЙКА РЕПОЗИТОРИЯ CHAOTIC-AUR >>>"
-pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
-pacman-key --lsign-key 3056513887B78AEB
-pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --noconfirm
-pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
-echo "### Chaotic-AUR #####" >> /etc/pacman.conf
-echo "[chaotic-aur]" >> /etc/pacman.conf
-echo "Include = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
-pacman -Syu --noconfirm
-clear
-echo ""
-echo ""
-echo "##########################################################
-## <<<  НАСТРОЙКА РЕПОЗИТОРИЯ CHAOTIC-AUR ЗАВЕРШЕНА >>> ##
-##########################################################"
-echo ""
-echo ""
-
-
-
-
-
-
-###########
-## PAMAC ##
-###########
-
-
-
-
-
-clear
-echo ""
-echo ""
-echo "###################################
-## <<<  ИДЁТ УСТАНОВКА PAMAC >>> ##
-###################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-echo "<<< УСТАНОВКА PAMAC >>>"
-pacman -S pamac --noconfirm
-clear
-sed -i s/'MaxParallelDownloads = 4'/'MaxParallelDownloads = 10'/g /etc/pamac.conf
-clear
-pacman -Syy
-clear
-echo ""
-echo ""
-echo "########################################
-## <<<  УСТАНОВКА PAMAC ЗАВЕРШЕНА >>> ##
-########################################"
-echo ""
-echo ""
-
-
-
-
-
-########################################################
-########## ПРОГРАММЫ РЕЗЕРВНОГО КОПИРОВАНИЯ ############
-########################################################
-
-
-
-
-######################
-##  BTRFS ASSISTANT ##
-######################
-
-
-
-
-
-clear
-echo ""
-echo ""
-echo "#############################################
-## <<<  ИДЁТ УСТАНОВКА BTRFS ASSISTANT >>> ##
-#############################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant
-clear
-echo ""
-echo ""
-echo "##################################################
-## <<<  УСТАНОВКА BTRFS ASSISTANT ЗАВЕРШЕНА >>> ##
-##################################################"
-echo ""
-echo ""
-
-
-
-
-
-################
-##  TIMESHIFT ##
-################
-
-
-
-
-
-clear
-echo ""
-echo ""
-echo "#######################################
-## <<<  ИДЁТ УСТАНОВКА TIMESHIFT >>> ##
-#######################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm timeshift timeshift-autosnap
-clear
-echo ""
-echo ""
-echo "############################################
-## <<<  УСТАНОВКА TIMESHIFT ЗАВЕРШЕНА >>> ##
-############################################"
-echo ""
-echo ""
-
-
-
-
-
-###############################
-## СИСТЕМНЫЕ УТИЛИТЫ CHAOTIC ##
-###############################
-
-
-
-
-clear
-echo ""
-echo ""
-echo "######################################################
-## <<<  ИДЁТ УСТАНОВКА СИСТЕМНЫХ УТИЛИТ CHAOTIC >>> ##
-######################################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm mkinitcpio-firmware update-grub yay archlinux-wallpaper
-clear
-echo ""
-echo ""
-echo "###########################################################
-## <<<  УСТАНОВКА СИСТЕМНЫХ УТИЛИТ CHAOTIC ЗАВЕРШЕНА >>> ##
-###########################################################"
-echo ""
-echo ""
-
-
-
-
-###############
-## Программы ##
-###############
-
-
-
-
-clear
-echo ""
-echo ""
-echo "###################################################
-## <<<  ИДЁТ УСТАНОВКА ПРОГРАММ ПОЛЬЗОВАТЕЛЯ >>> ##
-###################################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm google-chrome qbittorrent thunderbird-i18n-ru
-clear
-pacman -S --noconfirm teams-for-linux telegram-desktop zoom
-clear
-pacman -S --noconfirm libreoffice-fresh-ru cherrytree doublecmd-qt6
-clear
-pacman -S --noconfirm btop cpu-x hardinfo2 htop system-monitoring-center
-clear
-pacman -S --noconfirm ventoy-bin gparted
-clear
-pacman -S --noconfirm smplayer strawberry
-clear
-pacman -S --noconfirm grub-customizer seahorse virtualbox reflector-simple
-clear
-echo ""
-echo ""
-echo "########################################################
-## <<<  УСТАНОВКА ПРОГРАММ ПОЛЬЗОВАТЕЛЯ ЗАВЕРШЕНА >>> ##
-########################################################"
-echo ""
-echo ""
 exit
 
 
@@ -2749,13 +1239,7 @@ sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clear
-sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
-sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
-clear
-pamac install --no-confirm radiotray-ng ocs-url lightdm-settings
-clear
-pamac install --no-confirm glib2-devel user-admin
-clear
+
 
 
 
@@ -2799,227 +1283,6 @@ systemctl enable lightdm
 clear
 sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
-
-
-################################
-## ДОПОЛНИТЕЛЬНЫЙ РЕПОЗИТОРИЙ ##
-################################
-#################
-## Chaotic-AUR ##
-#################
-
-
-
-
-clear
-echo ""
-echo ""
-echo "#####################################################
-## <<<  ИДЁТ НАСТРОЙКА РЕПОЗИТОРИЯ CHAOTIC-AUR >>> ##
-#####################################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-echo "<<< ИДЁТ НАСТРОЙКА РЕПОЗИТОРИЯ CHAOTIC-AUR >>>"
-pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
-pacman-key --lsign-key 3056513887B78AEB
-pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --noconfirm
-pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
-echo "### Chaotic-AUR #####" >> /etc/pacman.conf
-echo "[chaotic-aur]" >> /etc/pacman.conf
-echo "Include = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
-pacman -Syu --noconfirm
-clear
-echo ""
-echo ""
-echo "##########################################################
-## <<<  НАСТРОЙКА РЕПОЗИТОРИЯ CHAOTIC-AUR ЗАВЕРШЕНА >>> ##
-##########################################################"
-echo ""
-echo ""
-
-
-
-
-
-
-###########
-## PAMAC ##
-###########
-
-
-
-
-
-clear
-echo ""
-echo ""
-echo "###################################
-## <<<  ИДЁТ УСТАНОВКА PAMAC >>> ##
-###################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-echo "<<< УСТАНОВКА PAMAC >>>"
-pacman -S pamac --noconfirm
-clear
-sed -i s/'MaxParallelDownloads = 4'/'MaxParallelDownloads = 10'/g /etc/pamac.conf
-clear
-pacman -Syy
-clear
-echo ""
-echo ""
-echo "########################################
-## <<<  УСТАНОВКА PAMAC ЗАВЕРШЕНА >>> ##
-########################################"
-echo ""
-echo ""
-
-
-
-
-
-########################################################
-########## ПРОГРАММЫ РЕЗЕРВНОГО КОПИРОВАНИЯ ############
-########################################################
-
-
-
-
-######################
-##  BTRFS ASSISTANT ##
-######################
-
-
-
-
-
-clear
-echo ""
-echo ""
-echo "#############################################
-## <<<  ИДЁТ УСТАНОВКА BTRFS ASSISTANT >>> ##
-#############################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant
-clear
-echo ""
-echo ""
-echo "##################################################
-## <<<  УСТАНОВКА BTRFS ASSISTANT ЗАВЕРШЕНА >>> ##
-##################################################"
-echo ""
-echo ""
-
-
-
-
-
-################
-##  TIMESHIFT ##
-################
-
-
-
-
-
-clear
-echo ""
-echo ""
-echo "#######################################
-## <<<  ИДЁТ УСТАНОВКА TIMESHIFT >>> ##
-#######################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm timeshift timeshift-autosnap
-clear
-echo ""
-echo ""
-echo "############################################
-## <<<  УСТАНОВКА TIMESHIFT ЗАВЕРШЕНА >>> ##
-############################################"
-echo ""
-echo ""
-
-
-
-
-
-###############################
-## СИСТЕМНЫЕ УТИЛИТЫ CHAOTIC ##
-###############################
-
-
-
-
-clear
-echo ""
-echo ""
-echo "######################################################
-## <<<  ИДЁТ УСТАНОВКА СИСТЕМНЫХ УТИЛИТ CHAOTIC >>> ##
-######################################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm mkinitcpio-firmware update-grub yay archlinux-wallpaper
-clear
-echo ""
-echo ""
-echo "###########################################################
-## <<<  УСТАНОВКА СИСТЕМНЫХ УТИЛИТ CHAOTIC ЗАВЕРШЕНА >>> ##
-###########################################################"
-echo ""
-echo ""
-
-
-
-
-###############
-## Программы ##
-###############
-
-
-
-
-clear
-echo ""
-echo ""
-echo "###################################################
-## <<<  ИДЁТ УСТАНОВКА ПРОГРАММ ПОЛЬЗОВАТЕЛЯ >>> ##
-###################################################"; sleep 3
-echo ""
-echo ""
-pacman -Syy
-clear
-pacman -S --noconfirm google-chrome qbittorrent thunderbird-i18n-ru
-clear
-pacman -S --noconfirm teams-for-linux telegram-desktop zoom
-clear
-pacman -S --noconfirm libreoffice-fresh-ru cherrytree doublecmd-qt6
-clear
-pacman -S --noconfirm btop cpu-x hardinfo2 htop system-monitoring-center
-clear
-pacman -S --noconfirm ventoy-bin gparted
-clear
-pacman -S --noconfirm smplayer strawberry
-clear
-pacman -S --noconfirm grub-customizer seahorse virtualbox reflector-simple
-clear
-echo ""
-echo ""
-echo "########################################################
-## <<<  УСТАНОВКА ПРОГРАММ ПОЛЬЗОВАТЕЛЯ ЗАВЕРШЕНА >>> ##
-########################################################"
-echo ""
-echo ""
 exit
 
 
@@ -3053,13 +1316,7 @@ systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clearenable wireplumber.service
 clear
-sudo sed -i s/'#EnableAUR'/'EnableAUR'/g /etc/pamac.conf
-sudo sed -i s/'#CheckAURUpdates'/'CheckAURUpdates'/g /etc/pamac.conf
-clear
-pamac install --no-confirm radiotray-ng ocs-url
-clear
-pamac install --no-confirm glib2-devel user-admin
-clear
+
 
 
 
@@ -3070,6 +1327,8 @@ clear
 pacman -S --noconfirm zsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 clear
+
+
 
 
 
