@@ -222,3 +222,8 @@ pamac install --no-confirm pamac-tray-plasma-git
 
 
 
+
+
+
+
+
