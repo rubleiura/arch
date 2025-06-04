@@ -361,9 +361,9 @@ sed -i s/'# set promptcolor lightwhite,grey'/'set promptcolor lightwhite,grey'/g
 sed -i s/'# set statuscolor bold,white,green'/'set statuscolor bold,white,green'/g /etc/nanorc
 sed -i s/'# set errorcolor bold,white,red'/'set errorcolor bold,white,red'/g /etc/nanorc
 sed -i s/'# set spotlightcolor black,lightyellow'/'set spotlightcolor black,lightyellow'/g /etc/nanorc
-sed -i s/'# set selectedcolor lightwhite,magenta'/'set selectedcolor lightwhite,magenta'/g /etc/nanorc
-sed -i s/'# set stripecolor ,yellow'/'set stripecolor ,yellow'/g /etc/nanorc
-sed -i s/'# set scrollercolor cyan'/'set scrollercolor cyan'/g /etc/nanorc
+sed -i s/'# set selectedcolor lightwhite,#804'/'set selectedcolor lightwhite,#804'/g /etc/nanorc
+sed -i s/'# set stripecolor ,#444'/'set stripecolor ,#444'/g /etc/nanorc
+sed -i s/'# set scrollercolor slate,#222'/'set scrollercolor slate,#222'/g /etc/nanorc
 sed -i s/'# set numbercolor cyan'/'set numbercolor cyan'/g /etc/nanorc
 sed -i s/'# set keycolor cyan'/'set keycolor cyan'/g /etc/nanorc
 sed -i s/'# set functioncolor green'/'set functioncolor green'/g /etc/nanorc
@@ -378,7 +378,7 @@ sed -i s/'# set scrollercolor magenta'/'set scrollercolor magenta'/g /etc/nanorc
 sed -i s/'# set numbercolor magenta'/'set numbercolor magenta'/g /etc/nanorc
 sed -i s/'# set keycolor lightmagenta'/'set keycolor lightmagenta'/g /etc/nanorc
 sed -i s/'# set functioncolor magenta'/'set functioncolor magenta'/g /etc/nanorc
-sed -i s/'\# include \"\/usr\/share\/nano\/\*\.nanorc\"'/'include "\/usr\/share\/nano\/\*\.nanorc"'/g /etc/nanorc
+sed -i s/'\# include \/usr\/share\/nano\/\*\.nanorc'/'include \/usr\/share\/nano\/\*\.nanorc'/g /etc/nanorc
 clear
 echo ""
 echo ""
