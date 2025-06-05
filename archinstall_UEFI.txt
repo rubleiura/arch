@@ -471,7 +471,7 @@ pacman -S --noconfirm linux-lts linux-lts-headers linux-firmware networkmanager 
 systemctl enable NetworkManager.service grub-btrfsd.service sshd.service
 clear
 grub-install --target=x86_64-efi --removable
-grub-install --target=i386-pc /dev/sda
+sed -i "s/#GRUB_DISABLE_OS_PROBER=false/GRUB_DISABLE_OS_PROBER=false/" /etc/default/grub
 clear
 sed -i "s/loglevel=3 quiet/quiet splash udev.log_priority=3/" /etc/default/grub
 sed -i "s/udev.log_priority=3/resume=UUID=$(blkid -o value  /dev/sda3|head -n 1|tail -n 2) udev.log_priority=3/" /etc/default/grub
