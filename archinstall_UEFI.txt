@@ -94,9 +94,9 @@ echo ""
 ############################################
 #   Microcode	    #   amd-ucode          #
 ############################################
-#   Ядро	        #   linux-lts          #
+#   Ядро	    #   linux-lts          #
 ############################################
-#   размер SWAP	    #	sgdisk -n 2::-16G  #
+#   размер SWAP	    #	sgdisk -n 2::-4G   #
 ############################################
 
 
@@ -137,7 +137,7 @@ clear
 sgdisk -Z /dev/sda
 sgdisk -a 2048 -o /dev/sda
 sgdisk -n 1::+1024M --typecode=1:ef00 --change-name=1:'EFI' /dev/sda
-sgdisk -n 2::-32G --typecode=2:8300 --change-name=2:'ArchLinux' /dev/sda
+sgdisk -n 2::-4G --typecode=2:8300 --change-name=2:'ArchLinux' /dev/sda
 sgdisk -n 3::-0 --typecode=3:8200 --change-name=3:'SWAP' /dev/sda
 clear
 fdisk -l /dev/sda
@@ -172,21 +172,29 @@ echo "##################################################
 ##################################################"; sleep 3
 echo ""
 echo ""
+mkfs.fat -F32 /dev/sda1
 mkswap /dev/sda3
 swapon /dev/sda3
-mkfs.fat -F32 /dev/sda1
 mkfs.btrfs -f /dev/sda2
 clear
 mount /dev/sda2 /mnt
-btrfs subvolume create /mnt/@
-btrfs subvolume create /mnt/@home
+btrfs su cr /mnt/@
+btrfs su cr /mnt/@home
+btrfs su cr /mnt/@root
+btrfs su cr /mnt/@srv
+btrfs su cr /mnt/@cache
+btrfs su cr /mnt/@log
+btrfs su cr /mnt/@tmp
 umount /mnt
 clear
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@ /dev/sda2 /mnt
-mkdir -p /mnt/{boot,home,var/lib/machines,var/lib/portables}
+mkdir -p /mnt/{boot/efi,home,root,srv,/var/cache,/var/log,/var/tmp,var/lib/machines,var/lib/portables}
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@home /dev/sda2 /mnt/home
-mount /dev/sda3 /mnt/boot
-mkdir /mnt/boot/efi
+mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@root /dev/sda2 /mnt/root
+mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@srv /dev/sda2 /mnt/srv
+mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@cache /dev/sda2 /mnt/var/cache
+mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@log /dev/sda2 /mnt/var/log
+mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@tmp /dev/sda2 /mnt/var/tmp
 mount /dev/sda1 /mnt/boot/efi
 clear
 lsblk
@@ -582,7 +590,7 @@ clear
 pacman -S --noconfirm hyfetch fastfetch
 clear
 # XORG
-pacman -S --noconfirm xorg xorg-xinit xf86-input-evdev xf86-input-libinput xf86-input-synaptics xf86-input-vmmouse xf86-input-void xf86-video-fbdev xf86-video-vesa
+pacman -S --noconfirm xorg xorg-xinit
 clear
 echo "<<< УСТАНОВКА СИСТЕМНЫХ ПРОГРАММ И XORG ЗАВЕРШЕНА >>>"
 echo ""
