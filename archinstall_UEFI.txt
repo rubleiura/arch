@@ -852,7 +852,7 @@ clear
 systemctl enable gdm
 clear
 #  Gnome-extra
-pacman -S --noconfirm accerciser d-spy 	dconf-editor devhelp endeavour 	eog  file-roller gitg 	glade gnome-devel-docs gnome-multi-writer gnome-notes gnome-sound-recorder gnome-terminal gnome-tweaks seahorse sysprof
+pacman -S --noconfirm dconf-editor eog file-roller gnome-devel-docs gnome-multi-writer gnome-notes gnome-sound-recorder gnome-terminal gnome-tweaks seahorse sysprof
 clear
 pacman -S --noconfirm gnome-browser-connector gnome-firmware gnome-shell-extension-appindicator gnome-shell-extension-arc-menu gnome-shell-extension-dash-to-panel gnuchess power-profiles-daemon squashfs-tools
 clear
