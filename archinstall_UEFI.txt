@@ -231,7 +231,7 @@ echo "#######################################
 #######################################"; sleep 3
 echo ""
 echo ""
-pacstrap /mnt base base-devel btrfs-progs bash-completion archlinux-keyring nano nano-syntax-highlighting amd-ucode inxi efibootmgr memtest86+-efi memtest86+ reflector pacman-contrib
+pacstrap /mnt base base-devel btrfs-progs bash-completion archlinux-keyring nano nano-syntax-highlighting amd-ucode inxi efibootmgr memtest86+-efi reflector pacman-contrib
 clear
 mount -t proc proc /mnt/proc
 mount -t sysfs sys /mnt/sys
@@ -838,7 +838,7 @@ sudo reboot
 
 
 
-
+clear
 echo ""
 echo ""
 echo "###################################
@@ -847,19 +847,20 @@ echo "###################################
 echo ""
 echo ""
 #  Gnome
-pacman -S --noconfirm baobab evince gnome-backgrounds gnome-calculator gnome-calendar gnome-characters gnome-clocks gnome-connections gnome-contacts gnome-control-center gnome-disk-utility gnome-font-viewer gnome-logs gnome-maps gnome-remote-desktop gnome-shell gnome-shell-extensions gnome-system-monitor gnome-text-editor gnome-tour gnome-user-docs gnome-user-share gnome-weather grilo-plugins malcontent nautilus rygel simple-scan snapshot sushi totem gdm
+pacman -S --noconfirm baobab decibels epiphany evince gnome-backgrounds gnome-calculator gnome-calendar gnome-characters gnome-clocks 	gnome-color-manager gnome-connections gnome-console gnome-contacts gnome-control-center gnome-disk-utility gnome-font-viewer gnome-keyring gnome-logs gnome-maps gnome-menus gnome-music gnome-remote-desktop gnome-session gnome-settings-daemon gnome-shell gnome-shell-extensions gnome-system-monitor gnome-text-editor gnome-tour gnome-user-docs gnome-user-share gnome-weather grilo-plugins gvfs 	gvfs-afc gvfs-dnssd gvfs-goa gvfs-google gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-onedrive gvfs-smb gvfs-wsdd loupe malcontent nautilus orca rygel simple-scan 	snapshot sushi tecla totem xdg-desktop-portal-gnome xdg-user-dirs-gtk yelp gdm
+clear
 systemctl enable gdm
 clear
 #  Gnome-extra
-pacman -S --noconfirm endeavour file-roller gnome-boxes gnome-chess gnome-mines gnome-terminal-transparency gnome-tweaks iagno quadrapassel
+pacman -S --noconfirm accerciser d-spy 	dconf-editor devhelp endeavour 	eog  file-roller gitg 	glade gnome-devel-docs gnome-multi-writer gnome-notes gnome-sound-recorder gnome-terminal gnome-tweaks quadrapassel seahorse sysprof
 clear
-pacman -S --noconfirm gnome-browser-connector gnome-firmware gnome-shell-extension-appindicator gnome-shell-extension-arc-menu gnome-shell-extension-dash-to-dock gnome-shell-extension-dash-to-panel gnome-shell-extension-forge-git gnome-shell-extension-gnome-ui-tune-git gnome-shell-extension-gsconnect gnome-shell-extension-space-bar-git gnome-shell-extension-x11gestures gnuchess power-profiles-daemon squashfs-tools
+pacman -S --noconfirm gnome-browser-connector gnome-firmware gnome-shell-extension-appindicator gnome-shell-extension-arc-menu gnome-shell-extension-dash-to-panel gnuchess power-profiles-daemon squashfs-tools
 clear
-pacman -S --noconfirm gthumb gtkmm3 qt5ct qt6ct system-config-printer deja-dup touche webapp-manager
+pacman -S --noconfirm gthumb gtkmm3 qt5ct qt6ct system-config-printer deja-dup 
 clear
-pacman -S --noconfirm adw-gtk-theme bibata-cursor-theme gnome-themes-extra
+pacman -S --noconfirm adw-gtk-theme gnome-themes-extra
 clear
-pacman -S --noconfirm ffmpegthumbnailer ffmpeg-audio-thumbnailer
+pacman -S --noconfirm ffmpegthumbnailer
 clear
 sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
@@ -876,7 +877,7 @@ exit
 
 
 umount -R /mnt
-reboot
+poweroff
 
 
 
@@ -942,7 +943,7 @@ sudo reboot
 clear
 pacman -Syy
 clear
-pacman -S --noconfirm cinnamon cinnamon-translations blueman dconf-editor ffmpegthumbnailer gcolor3 gnome-disk-utility gnome-keyring gnome-online-accounts gnome-screenshot gnome-system-monitor gnome-terminal gnome-themes-extra mousetweaks onboard pavucontrol powertop system-config-printer webapp-manager xreader xviewer-plugins iso-flag-png xdg-desktop-portal-gnome evince
+pacman -S --noconfirm cinnamon cinnamon-translations blueman dconf-editor ffmpegthumbnailer gcolor3 gnome-disk-utility gnome-keyring gnome-online-accounts gnome-screenshot gnome-system-monitor gnome-terminal gnome-themes-extra mousetweaks onboard pavucontrol powertop system-config-printer  xreader xviewer-plugins iso-flag-png xdg-desktop-portal-gnome evince
  clear
 pacman -S --noconfirm nemo-fileroller nemo-preview nemo-python nemo-share
 clear
@@ -950,7 +951,7 @@ pacman -S --noconfirm bibata-cursor-theme kvantum
 clear
 pacman -S --noconfirm icon-naming-utils mint-l-theme mint-themes
 clear
-pacman -S --noconfirm baobab bulky galculator mintstick netctl numlockx pix python-pyxdg qt5ct redshift squashfs-tools touchegg tree udiskie xed
+pacman -S --noconfirm baobab bulky galculator mintstick netctl numlockx pix python-pyxdg qt5ct redshift squashfs-tools gg tree udiskie xed
 clear
 pacman -S --noconfirm lightdm lightdm-slick-greeter
 clear
