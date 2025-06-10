@@ -94,7 +94,7 @@ echo ""
 ############################################
 #   Microcode	    #   amd-ucode          #
 ############################################
-#   Ядро	    #   linux-lts          #
+#   Ядро	        #   linux-lts          #
 ############################################
 #   размер SWAP	    #	sgdisk -n 2::-4G   #
 ############################################
@@ -232,7 +232,7 @@ echo "#######################################
 #######################################"; sleep 3
 echo ""
 echo ""
-pacstrap /mnt base base-devel btrfs-progs bash-completion archlinux-keyring nano nano-syntax-highlighting amd-ucode inxi efibootmgr memtest86+-efi reflector pacman-contrib
+pacstrap /mnt base base-devel btrfs-progs bash-completion archlinux-keyring nano amd-ucode efibootmgr memtest86+-efi reflector pacman-contrib
 clear
 mount -t proc proc /mnt/proc
 mount -t sysfs sys /mnt/sys
@@ -290,7 +290,6 @@ echo "LANG=ru_RU.UTF-8" > /etc/locale.conf
 echo "LC_COLLATE=C" >> /etc/locale.conf
 sed -i "s/#\(en_US\.UTF-8\)/\1/" /etc/locale.gen
 sed -i "s/#\(ru_RU\.UTF-8\)/\1/" /etc/locale.gen
-sed -i 's/\(\/boot\/efi\s\+vfat\s\+\)\S\+\(.*\)/\1umask=0077    0 2/' /etc/fstab
 locale-gen
 clear
 time_zone=$(curl -s https://ipinfo.io/timezone)
@@ -309,7 +308,6 @@ echo ""
 echo ""
 clear
 pacman -Syy
-pacman -S pacman-contrib --noconfirm
 clear
 curl -L "https://archlinux.org/mirrorlist/?country=RU&protocol=https" -o /etc/pacman.d/mirrorlist.raw \
 && sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.raw \
@@ -475,7 +473,6 @@ echo "###############################################
 echo ""
 echo ""
 pacman -Syy
-clear
 pacman -S --noconfirm linux-lts linux-lts-headers linux-firmware networkmanager wpa_supplicant grub grub-btrfs openssh os-prober plymouth
 systemctl enable NetworkManager.service grub-btrfsd.service sshd.service
 clear
@@ -539,38 +536,20 @@ echo ""
 pacman -Syy
 clear
 # Services
-pacman -S --noconfirm modemmanager
-clear
 pacman -S --noconfirm bluez bluez-utils
 clear
 pacman -S --noconfirm cups cups-pdf ghostscript gsfonts
 clear
 pacman -S --noconfirm cronie haveged
 clear
-pacman -S --noconfirm mlocate chrony
+pacman -S --noconfirm chrony
 systemctl enable chrony-wait.service chronyd.service
 clear
-pacman -S --noconfirm cpupower sysfsutils wireless-regdb
-clear
-# XDG
-pacman -S --noconfirm xdg-utils xdg-user-dirs
-clear
-systemctl enable ModemManager.service cups.service  cronie.service bluetooth.service haveged.service systemd-timesyncd
+systemctl enable cups.service  cronie.service bluetooth.service haveged.service
 clear
 # Generic
-pacman -S --noconfirm vim wget usbutils lsof dmidecode dialog
-clear
-# Compression
-pacman -S --noconfirm zip unzip unrar p7zip lzop lrzip
-clear
-# Шрифты
-pacman -S --noconfirm gsfonts sdl_ttf ttf-bitstream-vera ttf-dejavu ttf-liberation xorg-fonts-type1
-clear
-# Network Tools
-pacman -S --noconfirm rsync traceroute bind-tools
-clear
 # File System
-pacman -S --noconfirm dosfstools ntfs-3g btrfs-progs exfatprogs gptfdisk fuse2 fuse3 fuseiso
+pacman -S --noconfirm dosfstools ntfs-3g exfatprogs gptfdisk fuse2 fuse3 fuseiso
 clear
 # SAMBA
 pacman -S --noconfirm samba gvfs gvfs-smb smbclient cifs-utils gvfs-afc gvfs-mtp gvfs-nfs gvfs-dnssd gvfs-goa gvfs-google gvfs-gphoto2 gvfs-onedrive gvfs-wsdd
@@ -578,20 +557,14 @@ pacman -S --noconfirm samba gvfs gvfs-smb smbclient cifs-utils gvfs-afc gvfs-mtp
 # Wireplumber Pipewire
 pacman -S --noconfirm wireplumber pipewire-alsa pipewire-jack pipewire-pulse pipewire-v4l2 pipewire-zeroconf gst-plugin-pipewire helvum
 clear
-# Alsa
-pacman -S --noconfirm alsa-firmware alsa-plugins alsa-utils sof-firmware
-clear
-# GStreamer
-pacman -S --noconfirm gst-libav gst-plugins-bad gst-plugins-base gst-plugins-ugly gst-plugin-pipewire gst-plugin-va gstreamer
-clear
 # MAN
-pacman -S --noconfirm man-db most man-pages man-pages-ru yelp xorg-xman
+pacman -S --noconfirm man-db man-pages-ru
 clear
 # Утилиты вывода системной информации
 pacman -S --noconfirm hyfetch fastfetch
 clear
 # XORG
-pacman -S --noconfirm xorg xorg-xinit
+pacman -S --noconfirm xorg-server xorg-xinit xorg-xkill xorg-xclock
 clear
 echo "<<< УСТАНОВКА СИСТЕМНЫХ ПРОГРАММ И XORG ЗАВЕРШЕНА >>>"
 echo ""
@@ -725,7 +698,7 @@ echo ""
 echo ""
 pacman -S --noconfirm xfce4
 clear
-pacman -S --noconfirm mousepad thunar-archive-plugin thunar-media-tags-plugin xfburn xfce4-artwork xfce4-battery-plugin xfce4-clipman-plugin xfce4-cpufreq-plugin xfce4-cpugraph-plugin xfce4-dict xfce4-diskperf-plugin xfce4-eyes-plugin xfce4-fsguard-plugin xfce4-genmon-plugin xfce4-mailwatch-plugin xfce4-mount-plugin xfce4-mpc-plugin xfce4-netload-plugin xfce4-notes-plugin xfce4-notifyd xfce4-places-plugin xfce4-pulseaudio-plugin xfce4-screensaver  xfce4-screenshooter xfce4-sensors-plugin xfce4-smartbookmark-plugin xfce4-systemload-plugin  xfce4-taskmanager xfce4-time-out-plugin xfce4-timer-plugin xfce4-verve-plugin xfce4-wavelan-plugin xfce4-weather-plugin xfce4-whiskermenu-plugin xfce4-xkb-plugin
+pacman -S --noconfirm mousepad thunar-archive-plugin thunar-media-tags-plugin xfburn xfce4-artwork xfce4-battery-plugin xfce4-clipman-plugin xfce4-cpufreq-plugin xfce4-cpugraph-plugin xfce4-dict xfce4-diskperf-plugin xfce4-eyes-plugin xfce4-fsguard-plugin xfce4-genmon-plugin xfce4-mailwatch-plugin xfce4-mount-plugin xfce4-mpc-plugin xfce4-netload-plugin xfce4-notes-plugin xfce4-notifyd xfce4-places-plugin xfce4-pulseaudio-plugin xfce4-screensaver  xfce4-screenshooter xfce4-sensors-plugin xfce4-smartbookmark-plugin xfce4-systemload-plugin  xfce4-taskmanager xfce4-time-out-plugin xfce4-timer-plugin xfce4-verve-plugin xfce4-wavelan-plugin xfce4-weather-plugin xfce4-whiskermenu-plugin xfce4-xkb-plugin xdg-user-dirs
 clear
 pacman -S --noconfirm mugshot pavucontrol archlinux-xdg-menu xdg-desktop-portal-gtk menulibre network-manager-applet
 update-menus
@@ -735,7 +708,6 @@ pacman -S --noconfirm blueman engrampa ffmpegthumbnailer libgsf udiskie evince
 clear
 pacman -S --noconfirm catfish galculator libopenraw mtpfs ntp numlockx perl-file-mimeinfo pidgin powertop unace xcursor-simpleandsoft xcursor-vanilla-dmz-aa gcolor3 xiccd
 clear
-#sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
 systemctl enable lightdm.service
 clear
 sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
@@ -753,7 +725,7 @@ exit
 
 
 umount -R /mnt
-reboot
+poweroff
 
 
 
@@ -922,7 +894,7 @@ sudo reboot
 clear
 pacman -Syy
 clear
-pacman -S --noconfirm cinnamon cinnamon-translations blueman dconf-editor ffmpegthumbnailer gcolor3 gnome-disk-utility gnome-keyring gnome-online-accounts gnome-screenshot gnome-system-monitor gnome-terminal gnome-themes-extra mousetweaks onboard pavucontrol powertop system-config-printer  xreader xviewer-plugins iso-flag-png xdg-desktop-portal-gnome evince
+pacman -S --noconfirm cinnamon cinnamon-translations blueman dconf-editor ffmpegthumbnailer gcolor3 gnome-disk-utility gnome-keyring gnome-online-accounts gnome-screenshot gnome-system-monitor gnome-terminal gnome-themes-extra mousetweaks onboard pavucontrol powertop system-config-printer  xreader xdg-desktop-portal-gnome evince
  clear
 pacman -S --noconfirm nemo-fileroller nemo-preview nemo-python nemo-share
 clear
@@ -936,7 +908,6 @@ pacman -S --noconfirm lightdm lightdm-slick-greeter
 clear
 systemctl enable lightdm.service
 sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
-#sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
 sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
 exit
@@ -945,7 +916,7 @@ exit
 
 
 umount -R /mnt
-reboot
+poweroff
 
 
 
@@ -956,6 +927,7 @@ rm -r .ssh/
 ###############################
 ## КОНФИГУРАЦИЯ ПОЛЬЗОВАТЕЛЯ ##
 ###############################
+
 
 
 
@@ -1004,11 +976,11 @@ sudo reboot
 
 pacman -Syy
 pacman -S --noconfirm mate mate-extra
-pacman -S --noconfirm mate-themes mate-tweak brisk-menu gnome-system-tools
-pacman -S --noconfirm plank plank-themes
+pacman -S --noconfirm mate-themes
+pacman -S --noconfirm plank
 pacman -S --noconfirm lightdm lightdm-slick-greeter
+systemctl enable lightdm.service
 sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
-sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
 systemctl enable lightdm.service
 clear
 sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
@@ -1030,6 +1002,8 @@ rm -r .ssh/
 ###############################
 ## КОНФИГУРАЦИЯ ПОЛЬЗОВАТЕЛЯ ##
 ###############################
+
+
 
 
 
@@ -1238,91 +1212,6 @@ mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
 sed -i s/'plugins=(git)'/'plugins=(git archlinux extract themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
 echo "hyfetch" >> ~/.zshrc
 sudo reboot
-
-
-
-
-######################
-## Установка BUDGIE ##
-######################
-
-
-pacman -Syy
-pacman -S --noconfirm budgie-desktop
-pacman -S --noconfirm gnome gnome-control-center
-pacman -S --noconfirm materia-gtk-theme papirus-icon-theme i3lock
-pacman -S --noconfirm lightdm lightdm-gtk-greeter
-sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
-systemctl enable lightdm
-clear
-sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
-clear
-exit
-
-
-
-
-umount -R /mnt
-reboot
-
-
-
-rm -r .ssh/
-
-
-
-###############################
-## КОНФИГУРАЦИЯ ПОЛЬЗОВАТЕЛЯ ##
-###############################
-
-
-clear
-# xinitrc
-echo "export XDG_CURRENT_DESKTOP=Budgie:GNOME" > ~/.xinitrc
-echo "exec budgie-desktop" >> ~/.xinitrc
-sudo cp ~/.xinitrc /root/.xinitrc
-systemctl --user enable pipewire.socket pipewire-pulse.socket
-systemctl --user --force clear
-# xinitrc
-echo "exec cinnamon-session" > ~/.xinitrc
-cp ~/.xinitrc /root/.xinitrc
-systemctl --user enable pipewire.socket pipewire-pulse.socket
-systemctl --user --force enable wireplumber.service
-clearenable wireplumber.service
-clear
-
-
-
-
-
-
-
-# zsh
-pacman -S --noconfirm zsh
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-clear
-
-
-
-
-
-# ohmyzsh-congig
-chsh -s $(which zsh)
-sed -i s/'ZSH_THEME=\"robbyrussell\"'/'ZSH_THEME=\"agnoster\"'/g ~/.zshrc
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
-mv zsh-syntax-highlighting ~/.oh-my-zsh/plugins
-echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
-git clone https://github.com/zsh-users/zsh-autosuggestions
-mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
-sed -i s/'plugins=(git)'/'plugins=(git archlinux extract themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
-echo "hyfetch" >> ~/.zshrc
-sudo reboot
-
-
-
-
-
-reboot
 
 
 
