@@ -84,13 +84,13 @@ echo ""
 ############################################
 #  Объект           #   Переменная         #
 ############################################
-#  Диски            #   sda sda1 sda2 sda3 #
+#  Диски            #   nvme0n1 nvme0n1p4 nvme0n1p5 nvme0n1p6 #
 ############################################
-#  Имя пользователя #   login	           #
+#  Имя пользователя #   rublev	           #
 ############################################
-#  Имя менедж.входа #  	User Name          #
+#  Имя менедж.входа #  	Юрий Рублёв          #
 ############################################
-#   Hostname 	    #   Sony               #
+#   Hostname 	    #   MAIBENBEN               #
 ############################################
 #   Microcode	    #   amd-ucode          #
 ############################################
@@ -134,14 +134,14 @@ echo "#############################
 echo ""
 echo ""
 clear
-wipefs --all /dev/sda
-sgdisk -Z /dev/sda
-sgdisk -a 2048 -o /dev/sda
-sgdisk -n 1::+1024M --typecode=1:ef00 --change-name=1:'EfiArchLinux' /dev/sda
-sgdisk -n 2::-4G --typecode=2:8300 --change-name=2:'SystemArchLinux' /dev/sda
-sgdisk -n 3::-0 --typecode=3:8200 --change-name=3:'SwapArchLinux' /dev/sda
+wipefs --all /dev/nvme0n1
+sgdisk -Z /dev/nvme0n1
+sgdisk -a 2048 -o /dev/nvme0n1
+sgdisk -n 1::+1024M --typecode=1:ef00 --change-name=1:'EfiArchLinux' /dev/nvme0n1
+sgdisk -n 2::-4G --typecode=2:8300 --change-name=2:'SystemArchLinux' /dev/nvme0n1
+sgdisk -n 3::-0 --typecode=3:8200 --change-name=3:'SwapArchLinux' /dev/nvme0n1
 clear
-fdisk -l /dev/sda
+fdisk -l /dev/nvme0n1
 echo ""
 echo ""
 echo "#######################################
@@ -173,12 +173,12 @@ echo "##################################################
 ##################################################"; sleep 3
 echo ""
 echo ""
-mkfs.fat -F32 /dev/sda1
-mkswap /dev/sda3
-swapon /dev/sda3
-mkfs.btrfs -f /dev/sda2
+mkfs.fat -F32 /dev/nvme0n1p4
+mkswap /dev/nvme0n1p6
+swapon /dev/nvme0n1p6
+mkfs.btrfs -f /dev/nvme0n1p5
 clear
-mount /dev/sda2 /mnt
+mount /dev/nvme0n1p5 /mnt
 btrfs su cr /mnt/@
 btrfs su cr /mnt/@home
 btrfs su cr /mnt/@root
@@ -188,15 +188,15 @@ btrfs su cr /mnt/@log
 btrfs su cr /mnt/@tmp
 umount /mnt
 clear
-mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@ /dev/sda2 /mnt
+mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@ /dev/nvme0n1p5 /mnt
 mkdir -p /mnt/{boot/efi,home,root,srv,/var/cache,/var/log,/var/tmp,var/lib/machines,var/lib/portables}
-mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@home /dev/sda2 /mnt/home
-mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@root /dev/sda2 /mnt/root
-mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@srv /dev/sda2 /mnt/srv
-mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@cache /dev/sda2 /mnt/var/cache
-mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@log /dev/sda2 /mnt/var/log
-mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@tmp /dev/sda2 /mnt/var/tmp
-mount /dev/sda1 /mnt/boot/efi
+mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@home /dev/nvme0n1p5 /mnt/home
+mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@root /dev/nvme0n1p5 /mnt/root
+mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@srv /dev/nvme0n1p5 /mnt/srv
+mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@cache /dev/nvme0n1p5 /mnt/var/cache
+mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@log /dev/nvme0n1p5 /mnt/var/log
+mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@tmp /dev/nvme0n1p5 /mnt/var/tmp
+mount /dev/nvme0n1p4 /mnt/boot/efi
 clear
 lsblk
 btrfs subvolume list /
@@ -404,10 +404,10 @@ echo "##################################
 ## <<<  ИДЁТ НАСТРОЙКА HOST >>> ##
 ##################################"; sleep 3
 clear
-echo "Sony" > /etc/hostname
+echo "MAIBENBEN" > /etc/hostname
 echo "127.0.0.1   localhost" > /etc/hosts
 echo ": :1        localhost" >> /etc/hosts
-echo "127.0.1.1   Sony.localdomain   Sony" >> /etc/hosts
+echo "127.0.1.1   MAIBENBEN.localdomain   MAIBENBEN" >> /etc/hosts
 clear
 echo ""
 echo ""
@@ -436,18 +436,18 @@ clear
 clear
 echo ""
 echo ""
-echo " <<<  ИДЁТ НАСТРОЙКА User Name >>> "; sleep 3
+echo " <<<  ИДЁТ НАСТРОЙКА Юрий Рублёв >>> "; sleep 3
 clear
-useradd login -m -c "User Name" -s /bin/bash
-usermod -aG wheel,users login
+useradd rublev -m -c "Юрий Рублёв" -s /bin/bash
+usermod -aG wheel,users rublev
 sed -i s/'# %wheel ALL=(ALL:ALL) ALL'/'%wheel ALL=(ALL:ALL) ALL'/g /etc/sudoers
 clear
 echo ""
 echo ""
-echo " <<<  СОЗДАЙТЕ ПАРОЛЬ User Name >>> "
+echo " <<<  СОЗДАЙТЕ ПАРОЛЬ Юрий Рублёв >>> "
 echo ""
 echo ""
-passwd login
+passwd rublev
 clear
 
 
@@ -480,7 +480,7 @@ grub-install --target=x86_64-efi --removable
 sed -i "s/#GRUB_DISABLE_OS_PROBER=false/GRUB_DISABLE_OS_PROBER=false/" /etc/default/grub
 clear
 sed -i "s/loglevel=3 quiet/quiet splash udev.log_priority=3/" /etc/default/grub
-sed -i "s/udev.log_priority=3/resume=UUID=$(blkid -o value  /dev/sda3|head -n 1|tail -n 2) udev.log_priority=3/" /etc/default/grub
+sed -i "s/udev.log_priority=3/resume=UUID=$(blkid -o value  /dev/nvme0n1p6|head -n 1|tail -n 2) udev.log_priority=3/" /etc/default/grub
 sed -i s/'#GRUB_BTRFS_SUBMENUNAME="Arch Linux snapshots"'/'GRUB_BTRFS_SUBMENUNAME="Arch Linux snapshots"'/g /etc/default/grub-btrfs/config
 sed -i s/'#GRUB_BTRFS_TITLE_FORMAT=("date" "snapshot" "type" "description")'/'GRUB_BTRFS_TITLE_FORMAT=("description" "date")'/g /etc/default/grub-btrfs/config
 sed -i 's/ProtectSystem=strict/ProtectSystem=full/' /usr/lib/systemd/system/mkinitcpio-generate-shutdown-ramfs.service
@@ -536,20 +536,38 @@ echo ""
 pacman -Syy
 clear
 # Services
+pacman -S --noconfirm modemmanager
+clear
 pacman -S --noconfirm bluez bluez-utils
 clear
 pacman -S --noconfirm cups cups-pdf ghostscript gsfonts
 clear
 pacman -S --noconfirm cronie haveged
 clear
-pacman -S --noconfirm chrony
+pacman -S --noconfirm mlocate chrony
 systemctl enable chrony-wait.service chronyd.service
 clear
-systemctl enable cups.service  cronie.service bluetooth.service haveged.service
+pacman -S --noconfirm cpupower sysfsutils wireless-regdb
+clear
+# XDG
+pacman -S --noconfirm xdg-utils xdg-user-dirs
+clear
+systemctl enable ModemManager.service cups.service  cronie.service bluetooth.service haveged.service systemd-timesyncd
 clear
 # Generic
+pacman -S --noconfirm vim wget usbutils lsof dmidecode dialog
+clear
+# Compression
+pacman -S --noconfirm zip unzip unrar p7zip lzop lrzip
+clear
+# Шрифты
+pacman -S --noconfirm gsfonts sdl_ttf ttf-bitstream-vera ttf-dejavu ttf-liberation xorg-fonts-type1
+clear
+# Network Tools
+pacman -S --noconfirm rsync traceroute bind-tools
+clear
 # File System
-pacman -S --noconfirm dosfstools ntfs-3g exfatprogs gptfdisk fuse2 fuse3 fuseiso
+pacman -S --noconfirm dosfstools ntfs-3g btrfs-progs exfatprogs gptfdisk fuse2 fuse3 fuseiso
 clear
 # SAMBA
 pacman -S --noconfirm samba gvfs gvfs-smb smbclient cifs-utils gvfs-afc gvfs-mtp gvfs-nfs gvfs-dnssd gvfs-goa gvfs-google gvfs-gphoto2 gvfs-onedrive gvfs-wsdd
@@ -557,8 +575,14 @@ pacman -S --noconfirm samba gvfs gvfs-smb smbclient cifs-utils gvfs-afc gvfs-mtp
 # Wireplumber Pipewire
 pacman -S --noconfirm wireplumber pipewire-alsa pipewire-jack pipewire-pulse pipewire-v4l2 pipewire-zeroconf gst-plugin-pipewire helvum
 clear
+# Alsa
+pacman -S --noconfirm alsa-firmware alsa-plugins alsa-utils sof-firmware
+clear
+# GStreamer
+pacman -S --noconfirm gst-libav gst-plugins-bad gst-plugins-base gst-plugins-ugly gst-plugin-pipewire gst-plugin-va gstreamer
+clear
 # MAN
-pacman -S --noconfirm man-db man-pages-ru
+pacman -S --noconfirm man-db most man-pages man-pages-ru yelp xorg-xman
 clear
 # Утилиты вывода системной информации
 pacman -S --noconfirm hyfetch fastfetch
@@ -566,7 +590,6 @@ clear
 # XORG
 pacman -S --noconfirm xorg-server xorg-xinit xorg-xkill xorg-xclock
 clear
-echo "<<< УСТАНОВКА СИСТЕМНЫХ ПРОГРАММ И XORG ЗАВЕРШЕНА >>>"
 echo ""
 echo ""
 echo "############################################################
@@ -661,7 +684,7 @@ clear
 
 
 # zsh
-pacman -S --noconfirm zsh
+sudo pacman -S --noconfirm zsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 clear
 
@@ -1129,7 +1152,7 @@ mv -i Nuvola_Russian_flag.svg ru.svg
 
 путь к флагам:
 
-/home/login/.local/share/flags/%1.svg
+/home/rublev/.local/share/flags/%1.svg
 
 
 
