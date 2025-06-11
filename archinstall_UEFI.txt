@@ -429,7 +429,13 @@ echo ""
 echo ""
 passwd
 clear
-
+echo ""
+echo ""
+echo "##############################################
+## <<<  НАСТРОЙКА ROOT И HOST ЗАВЕРШЕНА >>> ##
+##############################################"
+echo ""
+echo ""
 
 
 
@@ -447,7 +453,9 @@ clear
 clear
 echo ""
 echo ""
-echo " <<<  ИДЁТ НАСТРОЙКА User Name >>> "; sleep 3
+echo "##########################################
+## <<<  ИДЁТ НАСТРОЙКА ПОЛЬЗОВАТЕЛЯ >>> ##
+##########################################"; sleep 3
 clear
 useradd login -m -c "User Name" -s /bin/bash
 usermod -aG wheel,users login
@@ -455,12 +463,20 @@ sed -i s/'# %wheel ALL=(ALL:ALL) ALL'/'%wheel ALL=(ALL:ALL) ALL'/g /etc/sudoers
 clear
 echo ""
 echo ""
-echo " <<<  СОЗДАЙТЕ ПАРОЛЬ User Name >>> "
+echo "###########################################
+## <<<  СОЗДАЙТЕ ПАРОЛЬ ПОЛЬЗОВАТЕЛЯ >>> ##
+###########################################"
 echo ""
 echo ""
 passwd login
 clear
-
+echo ""
+echo ""
+echo "###############################################
+## <<<  НАСТРОЙКА ПОЛЬЗОВАТЕЛЯ ЗАВЕРШЕНА >>> ##
+###############################################"
+echo ""
+echo ""
 
 
 
@@ -601,6 +617,8 @@ clear
 # XORG
 pacman -S --noconfirm xorg-server xorg-xinit xorg-xkill xorg-xclock
 clear
+echo ""
+echo ""
 echo "Видеокарты:" && lspci -nn | grep -i 'vga' ; echo "Драйверы:" && lsmod | grep -iE 'nvidia|amdgpu|i915'
 echo ""
 echo ""
@@ -610,6 +628,7 @@ echo "#####################################
 echo ""
 echo ""
 pacman -S xorg-drivers
+clear
 echo ""
 echo ""
 echo "############################################################
