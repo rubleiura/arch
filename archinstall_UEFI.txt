@@ -43,12 +43,22 @@ echo "ILoveCandy" >> /etc/pacman.conf
 time_zone=$(curl -s https://ipinfo.io/timezone)
 timedatectl set-timezone $time_zone
 pacman -Syy
-pacman -Sy archlinux-keyring fastfetch inxi --noconfirm
+pacman -Sy archlinux-keyring inxi util-linux lshw --noconfirm
 clear
-fastfetch
+echo ""
+echo ""
 date
+echo ""
+echo ""
+sudo lshw -C cpu 2>/dev/null | grep 'vendor:' | uniq
+echo ""
+echo ""
 sudo inxi -M
-sudo nxi -I
+echo ""
+echo ""
+sudo inxi -I
+echo ""
+echo ""
 lsblk -o PATH,PTTYPE,PARTTYPE,FSTYPE,PARTTYPENAME
 echo ""
 echo ""
@@ -198,7 +208,8 @@ mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@log /d
 mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@tmp /dev/sda2 /mnt/var/tmp
 mount /dev/sda1 /mnt/boot/efi
 clear
-lsblk
+lsblk -o PATH,PTTYPE,PARTTYPE,FSTYPE,PARTTYPENAME /dev/sda
+lsblk /dev/sda
 btrfs subvolume list /
 echo ""
 echo ""
@@ -590,6 +601,15 @@ clear
 # XORG
 pacman -S --noconfirm xorg-server xorg-xinit xorg-xkill xorg-xclock
 clear
+echo "Видеокарты:" && lspci -nn | grep -i 'vga' ; echo "Драйверы:" && lsmod | grep -iE 'nvidia|amdgpu|i915'
+echo ""
+echo ""
+echo "#####################################
+## <<<  УСТАНОВКА XORG-DRIVERS >>> ##
+#####################################"
+echo ""
+echo ""
+pacman -S xorg-drivers
 echo ""
 echo ""
 echo "############################################################
@@ -1014,7 +1034,7 @@ exit
 
 
 umount -R /mnt
-reboot
+poweroff
 
 
 
