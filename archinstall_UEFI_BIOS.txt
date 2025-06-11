@@ -43,13 +43,23 @@ echo "ILoveCandy" >> /etc/pacman.conf
 time_zone=$(curl -s https://ipinfo.io/timezone)
 timedatectl set-timezone $time_zone
 pacman -Syy
-pacman -Sy archlinux-keyring fastfetch inxi --noconfirm
+pacman -Sy archlinux-keyring inxi util-linux lshw --noconfirm
 clear
-fastfetch
+echo ""
+echo ""
 date
+echo ""
+echo ""
+sudo lshw -C cpu 2>/dev/null | grep 'vendor:' | uniq
+echo ""
+echo ""
 sudo inxi -M
-sudo nxi -I
-lsblk
+echo ""
+echo ""
+sudo inxi -I
+echo ""
+echo ""
+lsblk -o PATH,PTTYPE,PARTTYPE,FSTYPE,PARTTYPENAME
 echo ""
 echo ""
 echo "#################################################
@@ -57,6 +67,7 @@ echo "#################################################
 #################################################"
 echo ""
 echo ""
+
 
 
 
@@ -202,7 +213,8 @@ mount /dev/sda3 /mnt/boot
 mkdir /mnt/boot/efi
 mount /dev/sda2 /mnt/boot/efi
 clear
-lsblk
+lsblk -o PATH,PTTYPE,PARTTYPE,FSTYPE,PARTTYPENAME /dev/sda
+lsblk /dev/sda
 btrfs subvolume list /
 echo ""
 echo ""
@@ -596,9 +608,17 @@ clear
 pacman -S --noconfirm hyfetch fastfetch
 clear
 # XORG
-pacman -S --noconfirm xorg xorg-xinit xf86-input-evdev xf86-input-libinput xf86-input-synaptics xf86-input-vmmouse xf86-input-void xf86-video-fbdev xf86-video-vesa
+pacman -S --noconfirm xorg-server xorg-xinit xorg-xkill xorg-xclock
 clear
-echo "<<< УСТАНОВКА СИСТЕМНЫХ ПРОГРАММ И XORG ЗАВЕРШЕНА >>>"
+echo "Видеокарты:" && lspci -nn | grep -i 'vga' ; echo "Драйверы:" && lsmod | grep -iE 'nvidia|amdgpu|i915'
+echo ""
+echo ""
+echo "#####################################
+## <<<  УСТАНОВКА XORG-DRIVERS >>> ##
+#####################################"
+echo ""
+echo ""
+pacman -S xorg-drivers
 echo ""
 echo ""
 echo "############################################################
