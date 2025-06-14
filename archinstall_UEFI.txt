@@ -650,7 +650,7 @@ echo ""
 
 
 clear
-pacman -S virtualbox-guest-utils xf86-video-vmware
+pacman -S --noconfirm virtualbox-guest-utils xf86-video-vmware
 clear
 
 
