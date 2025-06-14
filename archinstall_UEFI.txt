@@ -650,7 +650,7 @@ echo ""
 
 
 clear
-pacman -S --noconfirm virtualbox-guest-utils xf86-video-vmware
+pacman -S --noconfirm virtualbox-guest-utils
 clear
 
 
@@ -1124,7 +1124,7 @@ sudo reboot
 
 
 
-pacman -S --noconfirm lxqt lxqt-themes xscreensaver picom libstatgrab libsysstat breeze-icons kvantum-qt5 mugshot nm-tray
+pacman -S --noconfirm lxqt lxqt-themes xscreensaver picom libstatgrab libsysstat breeze-icons kvantum-qt5 mugshot #nm-tray
 pacman -S --noconfirm lightdm lightdm-slick-greeter
 clear
 sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
