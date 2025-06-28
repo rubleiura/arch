@@ -1247,12 +1247,13 @@ sudo reboot
 
 
 
-pacman -S --noconfirm lxqt lxqt-themes xscreensaver picom libstatgrab libsysstat breeze-icons kvantum-qt5 mugshot #nm-tray
-pacman -S --noconfirm lightdm lightdm-slick-greeter
+pacman -S --noconfirm lxqt lxqt-themes xscreensaver picom libstatgrab libsysstat breeze-icons kvantum-qt5 blueman featherpad
 clear
-sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
-sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
-systemctl enable lightdm.service
+pacman -S --noconfirm  kwin kwin-x11 discover bluedevil systemsettings plasma-sdk aurorae breeze breeze-gtk flatpak-kcm kde-gtk-config kpipewire kscreen kscreenlocker gnome-keyring milou plasma-desktop plasma-pa print-manager qqc2-breeze-style xdg-desktop-portal-kde
+clear
+pacman -S --noconfirm sddm sddm-kcm
+clear
+systemctl enable sddm.service
 sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
 clear
 exit
@@ -1261,7 +1262,7 @@ exit
 
 
 umount -R /mnt
-reboot
+poweroff
 
 
 
@@ -1273,7 +1274,7 @@ rm -r .ssh/
 ## КОНФИГУРАЦИЯ ПОЛЬЗОВАТЕЛЯ ##
 ###############################
 
-
+yay --noconfirm -S nm-tray
 
 
 clear
@@ -1283,7 +1284,16 @@ sudo cp ~/.xinitrc /root/.xinitrc
 systemctl --user enable pipewire.socket pipewire-pulse.socket
 systemctl --user --force enable wireplumber.service
 clear
-
+# flags
+mkdir -p /home/login/.local/share/flags
+cd /home/login/.local/share/flags
+wget https://upload.wikimedia.org/wikipedia/commons/5/53/Nuvola_USA_flag.svg
+wget https://upload.wikimedia.org/wikipedia/commons/a/ac/Nuvola_Russian_flag.svg
+mv -i Nuvola_USA_flag.svg us.svg
+mv -i Nuvola_Russian_flag.svg ru.svg
+cd
+sed -i s/'layout\_flag_pattern\='/'layout\_flag_pattern\=\/home\/login\/.local\/share\/flags\/%1.svg'/g ~/.config/lxqt/panel.conf
+clear
 
 
 
@@ -1308,27 +1318,6 @@ mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
 sed -i s/'plugins=(git)'/'plugins=(git archlinux extract themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
 echo "hyfetch" >> ~/.zshrc
 sudo reboot
-
-
-
-########## Флаги ##############
-
-
-
-
-mkdir -p .local/share/flags
-cd .local/share/flags
-wget https://upload.wikimedia.org/wikipedia/commons/5/53/Nuvola_USA_flag.svg
-wget https://upload.wikimedia.org/wikipedia/commons/a/ac/Nuvola_Russian_flag.svg
-mv -i Nuvola_USA_flag.svg us.svg
-mv -i Nuvola_Russian_flag.svg ru.svg
-
-
-В нстройках клавиатуры указываем
-
-путь к флагам:
-
-/home/login/.local/share/flags/%1.svg
 
 
 
