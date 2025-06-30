@@ -1094,14 +1094,14 @@ clear
 pacman -Syy
 clear
 pacman -S --noconfirm cinnamon cinnamon-translations blueman dconf-editor ffmpegthumbnailer gcolor3 gnome-disk-utility gnome-keyring gnome-online-accounts gnome-screenshot gnome-system-monitor gnome-terminal gnome-themes-extra mousetweaks onboard pavucontrol powertop system-config-printer  xreader xdg-desktop-portal-gnome evince
- clear
+clear
 pacman -S --noconfirm nemo-fileroller nemo-preview nemo-python nemo-share
 clear
-pacman -S --noconfirm bibata-cursor-theme kvantum
+pacman -S --noconfirm kvantum
 clear
-pacman -S --noconfirm icon-naming-utils mint-l-theme mint-themes
+pacman -S --noconfirm icon-naming-utils
 clear
-pacman -S --noconfirm baobab bulky galculator mintstick netctl numlockx pix python-pyxdg qt5ct redshift squashfs-tools gg tree udiskie xed
+pacman -S --noconfirm baobab galculator netctl numlockx python-pyxdg qt5ct redshift squashfs-tools tree udiskie
 clear
 pacman -S --noconfirm lightdm lightdm-slick-greeter
 clear
@@ -1126,6 +1126,11 @@ rm -r .ssh/
 ###############################
 ## КОНФИГУРАЦИЯ ПОЛЬЗОВАТЕЛЯ ##
 ###############################
+
+
+
+
+yay -S bibata-cursor-theme mint-l-theme mint-themes xed bulky mintstick pix gg iso-flag-png
 
 
 
