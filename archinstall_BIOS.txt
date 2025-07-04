@@ -675,7 +675,7 @@ echo ""
 
 
 clear
-pacman -S --noconfirm virtualbox-guest-utils
+pacman -S --noconfirm virtualbox-guest-utils open-vm-tools qemu-guest-agent
 clear
 
 
