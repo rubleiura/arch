@@ -1001,16 +1001,16 @@ echo "###################################
 echo ""
 echo ""
 #  Gnome
-pacman -S --noconfirm baobab decibels gnome-backgrounds gnome-calculator gnome-calendar gnome-characters gnome-clocks gnome-connections gnome-contacts gnome-font-viewer gnome-logs gnome-maps gnome-system-monitor gnome-text-editor gnome-tour gnome-user-docs gnome-weather snapshot sushi totem gdm
+pacman -S --noconfirm baobab decibels epiphany evince gnome-backgrounds gnome-calculator gnome-calendar gnome-characters gnome-clocks 	gnome-color-manager gnome-connections gnome-console gnome-contacts gnome-control-center gnome-disk-utility gnome-font-viewer gnome-keyring gnome-logs gnome-maps gnome-menus gnome-music gnome-remote-desktop gnome-session gnome-settings-daemon gnome-shell gnome-shell-extensions gnome-system-monitor gnome-text-editor gnome-tour gnome-user-docs gnome-user-share gnome-weather grilo-plugins gvfs 	gvfs-afc gvfs-dnssd gvfs-goa gvfs-google gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-onedrive gvfs-smb gvfs-wsdd loupe malcontent nautilus orca rygel simple-scan 	snapshot sushi tecla totem xdg-desktop-portal-gnome xdg-user-dirs-gtk yelp gdm
 clear
 systemctl enable gdm
 clear
 #  Gnome-extra
-pacman -S --noconfirm endeavour file-roller gnome-boxes iagno quadrapassel
+pacman -S --noconfirm dconf-editor eog file-roller gnome-devel-docs gnome-multi-writer gnome-notes gnome-sound-recorder gnome-terminal gnome-tweaks seahorse sysprof
 clear
 pacman -S --noconfirm gnome-browser-connector gnome-firmware gnome-shell-extension-appindicator gnome-shell-extension-arc-menu gnome-shell-extension-dash-to-panel gnuchess power-profiles-daemon squashfs-tools
 clear
-pacman -S --noconfirm gthumb gtkmm3 qt5ct qt6ct system-config-printer deja-dup
+pacman -S --noconfirm gthumb gtkmm3 qt5ct qt6ct system-config-printer deja-dup 
 clear
 pacman -S --noconfirm adw-gtk-theme gnome-themes-extra
 clear
