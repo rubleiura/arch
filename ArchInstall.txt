@@ -1,0 +1,634 @@
+##################
+## Тестирование ##
+##################
+
+
+
+
+
+
+clear
+pacman -Syy
+pacman -S pacman-contrib --noconfirm
+clear
+curl -L "https://archlinux.org/mirrorlist/?country=RU&protocol=https" -o /etc/pacman.d/mirrorlist.raw \
+&& sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.raw \
+&& rankmirrors -n 5 /etc/pacman.d/mirrorlist.raw > /etc/pacman.d/mirrorlist
+pacman -Syy
+clear
+echo ""
+echo ""
+echo "##########################################
+## <<< ИДЁТ ТЕСТИРОВАНИЕ КОМПЬЮТЕРА >>> ##
+##########################################"; sleep 3
+echo ""
+echo ""
+loadkeys ru
+setfont cyr-sun16
+sed -i "s/#\(en_US\.UTF-8\)/\1/" /etc/locale.gen
+sed -i "s/#\(ru_RU\.UTF-8\)/\1/" /etc/locale.gen
+locale-gen
+export LANG=ru_RU.UTF-8
+export LC_MESSAGES=ru_RU.UTF-8
+export LC_TIME=ru_RU.UTF-8
+export LC_NUMERIC=ru_RU.UTF-8
+export LC_MONETARY=ru_RU.UTF-8
+export LC_COLLATE=ru_RU.UTF-8
+export LC_CTYPE=ru_RU.UTF-8
+export LC_NAME=ru_RU.UTF-8
+export LC_ADDRESS=ru_RU.UTF-8
+export LC_TELEPHONE=ru_RU.UTF-8
+export LC_MEASUREMENT=ru_RU.UTF-8
+export LC_PAPER=ru_RU.UTF-8
+export LC_IDENTIFICATION=ru_RU.UTF-8
+clear
+sed -i s/'ParallelDownloads = 5'/'ParallelDownloads = 15'/g /etc/pacman.conf
+sed -i s/'#Color'/'Color'/g /etc/pacman.conf
+echo "[options]" >> /etc/pacman.conf
+echo "ILoveCandy" >> /etc/pacman.conf
+time_zone=$(curl -s https://ipinfo.io/timezone)
+timedatectl set-timezone $time_zone
+pacman -Syy
+pacman -Sy archlinux-keyring inxi util-linux lshw --noconfirm
+clear
+echo ""
+echo ""
+date
+echo ""
+echo ""
+sudo lshw -C cpu 2>/dev/null | grep 'vendor:' | uniq
+echo ""
+echo ""
+sudo inxi -M
+echo ""
+echo ""
+sudo inxi -I
+echo ""
+echo ""
+lsblk -o PATH,PTTYPE,PARTTYPE,FSTYPE,PARTTYPENAME
+echo ""
+echo ""
+echo "#################################################
+## <<< ТЕСТИРОВАНИЕ КОМПЬЮТЕРА ЗАКОНЧИЛОСЬ >>> ##
+#################################################"
+echo ""
+echo ""
+
+
+
+
+
+
+################
+## Переменные ##
+################
+
+
+
+
+sda3
+
+
+############################
+## ОЧИСТКА ЖЁСТКОГО ДИСКА ##
+############################
+
+
+clear
+wipefs --all /dev/sda
+clear
+
+
+################################
+## ЗАПУСК СКРИПТА ARCHINSTALL ##
+################################
+
+
+archinstall
+
+
+
+
+clear
+pacman -Syy
+pacman -S --noconfirm gparted nano base base-devel btrfs-progs bash-completion archlinux-keyring nano amd-ucode efibootmgr memtest86+-efi reflector pacman-contrib
+clear
+
+
+
+##############################################
+## НАСТРОЙКИ PACMAN,FSTAB,ЯЗЫК,ЧАСОВОЙ ПОЯС ##
+##############################################
+
+
+
+
+
+
+
+clear
+echo ""
+echo ""
+echo "####################################
+## <<< ИДЁТ НАСТРОЙКА ЛОКАЛЕЙ >>> ##
+####################################"; sleep 3
+echo ""
+echo ""
+sed -i 's/\S*subvol=\(\S*\)/subvol=\1,ssd,noatime,space_cache=v2,compress=zstd:2,discard=async/g'  /etc/fstab
+sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
+sed -i s/'ParallelDownloads = 5'/'ParallelDownloads = 15'/g /etc/pacman.conf
+sed -i s/'#Color'/'Color'/g /etc/pacman.conf
+echo "[options]" >> /etc/pacman.conf
+echo "ILoveCandy" >> /etc/pacman.conf
+echo "KEYMAP=ru" > /etc/vconsole.conf
+echo "FONT=cyr-sun16" >> /etc/vconsole.conf
+echo "LANG=ru_RU.UTF-8" > /etc/locale.conf
+echo "LC_MESSAGES=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_TIME=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_NUMERIC=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_MONETARY=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_COLLATE=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_CTYPE=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_NAME=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_ADDRESS=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_TELEPHONE=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_MEASUREMENT=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_PAPER=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_IDENTIFICATION=ru_RU.UTF-8" >> /etc/locale.conf
+sed -i "s/#\(en_US\.UTF-8\)/\1/" /etc/locale.gen
+sed -i "s/#\(ru_RU\.UTF-8\)/\1/" /etc/locale.gen
+locale-gen
+export LANG=ru_RU.UTF-8
+export LC_MESSAGES=ru_RU.UTF-8
+export LC_TIME=ru_RU.UTF-8
+export LC_NUMERIC=ru_RU.UTF-8
+export LC_MONETARY=ru_RU.UTF-8
+export LC_COLLATE=ru_RU.UTF-8
+export LC_CTYPE=ru_RU.UTF-8
+export LC_NAME=ru_RU.UTF-8
+export LC_ADDRESS=ru_RU.UTF-8
+export LC_TELEPHONE=ru_RU.UTF-8
+export LC_MEASUREMENT=ru_RU.UTF-8
+export LC_PAPER=ru_RU.UTF-8
+export LC_IDENTIFICATION=ru_RU.UTF-8
+clear
+time_zone=$(curl -s https://ipinfo.io/timezone)
+ln -sf /usr/share/zoneinfo/$time_zone /etc/localtime
+hwclock --systohc
+pacman -Syy
+clear
+echo ""
+echo ""
+echo ""
+echo ""
+echo "####################################
+## <<< ИДЁТ ОБНОВЛЕНИЕ ЗЕРКАЛ >>> ##
+####################################"; sleep 3
+echo ""
+echo ""
+clear
+pacman -Syy
+clear
+curl -L "https://archlinux.org/mirrorlist/?country=RU&protocol=https" -o /etc/pacman.d/mirrorlist.raw \
+&& sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.raw \
+&& rankmirrors -n 5 /etc/pacman.d/mirrorlist.raw > /etc/pacman.d/mirrorlist
+systemctl enable reflector.timer
+clear
+pacman -Syy
+clear
+echo ""
+echo ""
+date
+echo ""
+echo ""
+echo "############################################
+## <<< ПЕРВОНАЧАЛЬНАЯ НАСТРОЙКА ЗАВЕРШЕНА ##
+############################################"
+echo ""
+
+
+
+
+
+
+##################################
+## УСТАНАВЛИВАЕМ GPARTED И NANO ##
+##################################
+
+
+clear
+pacman -Syy
+pacman -S --noconfirm gparted nano
+clear
+
+
+# Создаём SWAP раздел и узнаём его UUID
+
+
+lsblk
+
+blkid /dev/sda3
+
+
+
+####################
+## НАСТРОЙКА NANO ##
+####################
+
+
+
+
+
+
+clear
+echo ""
+echo ""
+echo "############################
+## <<< НАСТРОЙКА NANO >>> ##
+############################"; sleep 3
+echo ""
+echo ""
+sed -i s/'# set indicator'/'set indicator'/g /etc/nanorc
+sed -i s/'# set linenumbers'/'set linenumbers'/g /etc/nanorc
+sed -i s/'# set titlecolor bold,white,blue'/'set titlecolor bold,white,blue'/g /etc/nanorc
+sed -i s/'# set promptcolor lightwhite,grey'/'set promptcolor lightwhite,grey'/g /etc/nanorc
+sed -i s/'# set statuscolor bold,white,green'/'set statuscolor bold,white,green'/g /etc/nanorc
+sed -i s/'# set errorcolor bold,white,red'/'set errorcolor bold,white,red'/g /etc/nanorc
+sed -i s/'# set spotlightcolor black,lightyellow'/'set spotlightcolor black,lightyellow'/g /etc/nanorc
+sed -i s/'# set selectedcolor lightwhite,#804'/'set selectedcolor lightwhite,#804'/g /etc/nanorc
+sed -i s/'# set stripecolor ,#444'/'set stripecolor ,#444'/g /etc/nanorc
+sed -i s/'# set scrollercolor slate,#222'/'set scrollercolor slate,#222'/g /etc/nanorc
+sed -i s/'# set numbercolor cyan'/'set numbercolor cyan'/g /etc/nanorc
+sed -i s/'# set keycolor cyan'/'set keycolor cyan'/g /etc/nanorc
+sed -i s/'# set functioncolor green'/'set functioncolor green'/g /etc/nanorc
+sed -i s/'# set titlecolor bold,white,magenta'/'set titlecolor bold,white,magenta'/g /etc/nanorc
+sed -i s/'# set promptcolor black,yellow'/'set promptcolor black,yellow'/g /etc/nanorc
+sed -i s/'# set statuscolor bold,white,magenta'/'set statuscolor bold,white,magenta'/g /etc/nanorc
+sed -i s/'# set errorcolor bold,white,red'/'set errorcolor bold,white,red'/g /etc/nanorc
+sed -i s/'# set spotlightcolor black,orange'/'set spotlightcolor black,orange'/g /etc/nanorc
+sed -i s/'# set selectedcolor lightwhite,cyan'/'set selectedcolor lightwhite,cyan'/g /etc/nanorc
+sed -i s/'# set stripecolor ,yellow'/'set stripecolor ,yellow'/g /etc/nanorc
+sed -i s/'# set scrollercolor magenta'/'set scrollercolor magenta'/g /etc/nanorc
+sed -i s/'# set numbercolor magenta'/'set numbercolor magenta'/g /etc/nanorc
+sed -i s/'# set keycolor lightmagenta'/'set keycolor lightmagenta'/g /etc/nanorc
+sed -i s/'# set functioncolor magenta'/'set functioncolor magenta'/g /etc/nanorc
+sed -i s/'\# include \/usr\/share\/nano\/\*\.nanorc'/'include \/usr\/share\/nano\/\*\.nanorc'/g /etc/nanorc
+clear
+echo ""
+echo ""
+echo "######################################
+## <<< НАСТРОЙКА NANO ЗАВЕРШЕНА >>> ##
+######################################"
+echo ""
+echo ""
+
+
+
+#######################
+## РЕДАКТИРУЕМ FSTAB ##
+#######################
+
+nano /etc/fstab
+
+ssd,noatime,space_cache=v2,compress=zstd:2,discard=async
+
+
+# Добавляем Swap в fstab
+
+
+# /dev/nvme0n13
+UUID=a91c50b5-5777-4db6-b06e-ac3b46279c80       none            swap            defaults        0 0
+
+
+
+##########################
+## НАСТРОЙКА ЗАГРУЗЧИКА ##
+##########################
+
+
+
+clear
+echo ""
+echo ""
+pacman -Syy
+pacman -S --noconfirm grub-btrfs os-prober plymouth
+systemctl enable grub-btrfsd.service
+clear
+#grub-install --target=x86_64-efi --removable
+sed -i "s/#GRUB_DISABLE_OS_PROBER=false/GRUB_DISABLE_OS_PROBER=false/" /etc/default/grub
+clear
+sed -i "s/loglevel=3 quiet/quiet splash udev.log_priority=3/" /etc/default/grub
+sed -i "s/udev.log_priority=3/resume=UUID=$(blkid -o value  /dev/sda3|head -n 1|tail -n 2) udev.log_priority=3/" /etc/default/grub
+sed -i s/'#GRUB_BTRFS_SUBMENUNAME="Arch Linux snapshots"'/'GRUB_BTRFS_SUBMENUNAME="Arch Linux snapshots"'/g /etc/default/grub-btrfs/config
+sed -i s/'#GRUB_BTRFS_TITLE_FORMAT=("date" "snapshot" "type" "description")'/'GRUB_BTRFS_TITLE_FORMAT=("description" "date")'/g /etc/default/grub-btrfs/config
+sed -i 's/ProtectSystem=strict/ProtectSystem=full/' /usr/lib/systemd/system/mkinitcpio-generate-shutdown-ramfs.service
+sed -i 's/filesystems/plymouth resume btrfs filesystems/' /etc/mkinitcpio.conf
+sed -i 's/fsck/grub-btrfs-overlayfs/' /etc/mkinitcpio.conf
+sed -i 's/ consolefont//' /etc/mkinitcpio.conf
+clear
+grub-mkconfig -o /boot/grub/grub.cfg
+clear
+mkinitcpio -P
+clear
+echo ""
+echo ""
+
+
+
+
+
+
+#######################
+## СИСТЕМНЫЕ УТИЛИТЫ ##
+#######################
+
+
+
+
+
+
+clear
+echo ""
+echo ""
+echo "######################################################
+## <<<  НАЧИНАЕТСЯ УСТАНОВКА СИСТЕМНЫХ ПРОГРАММ >>> ##
+######################################################"; sleep 3
+echo ""
+echo ""
+pacman -Syy
+clear
+# Services
+pacman -S --noconfirm modemmanager
+clear
+pacman -S --noconfirm bluez bluez-utils
+clear
+pacman -S --noconfirm cups cups-pdf ghostscript gsfonts
+clear
+pacman -S --noconfirm cronie haveged
+clear
+pacman -S --noconfirm mlocate chrony
+systemctl enable chrony-wait.service chronyd.service
+clear
+pacman -S --noconfirm cpupower sysfsutils wireless-regdb
+clear
+# XDG
+pacman -S --noconfirm xdg-utils xdg-user-dirs
+clear
+systemctl enable ModemManager.service cups.service  cronie.service bluetooth.service haveged.service systemd-timesyncd
+sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
+clear
+# Generic
+pacman -S --noconfirm vim wget usbutils lsof dmidecode dialog
+clear
+# Compression
+pacman -S --noconfirm zip unzip unrar p7zip lzop lrzip
+clear
+# Шрифты
+pacman -S --noconfirm ttf-dejavu ttf-liberation noto-fonts noto-fonts-cjk noto-fonts-emoji
+clear
+# Network Tools
+pacman -S --noconfirm rsync traceroute bind-tools
+clear
+# File System
+pacman -S --noconfirm dosfstools ntfs-3g btrfs-progs exfatprogs gptfdisk fuse2 fuse3 fuseiso
+clear
+# SAMBA
+pacman -S --noconfirm samba gvfs gvfs-smb smbclient cifs-utils gvfs-afc gvfs-mtp gvfs-nfs gvfs-dnssd gvfs-goa gvfs-google gvfs-gphoto2 gvfs-onedrive gvfs-wsdd
+# ЗВУК
+# Wireplumber Pipewire
+pacman -S --noconfirm wireplumber pipewire-alsa pipewire-jack pipewire-pulse pipewire-v4l2 pipewire-zeroconf gst-plugin-pipewire helvum
+clear
+# Alsa
+pacman -S --noconfirm alsa-firmware alsa-plugins alsa-utils sof-firmware
+clear
+# GStreamer
+pacman -S --noconfirm gst-libav gst-plugins-bad gst-plugins-base gst-plugins-ugly gst-plugin-pipewire gst-plugin-va gstreamer
+clear
+# MAN
+pacman -S --noconfirm man-db most man-pages man-pages-ru yelp xorg-xman
+clear
+# Утилиты вывода системной информации
+pacman -S --noconfirm hyfetch fastfetch
+clear
+echo ""
+echo ""
+echo "Видеокарты:" && lspci -nn | grep -i 'vga' ; echo "Драйверы:" && lsmod | grep -iE 'nvidia|amdgpu|i915'
+echo ""
+echo ""
+echo "#####################################################
+## <<<  УСТАНОВКА СИСТЕМНЫХ ПРОГРАММ ЗАВЕРШЕНА >>> ##
+#####################################################"
+echo ""
+echo ""
+
+
+
+
+###############################
+## КОНФИГУРАЦИЯ ПОЛЬЗОВАТЕЛЯ ##
+###############################
+
+
+clear
+systemctl --user enable pipewire.socket pipewire-pulse.socket
+systemctl --user --force enable wireplumber.service
+clear
+
+
+# zsh
+sudo pacman -S --noconfirm zsh git curl
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+clear
+
+
+
+# ohmyzsh-congig
+chsh -s $(which zsh)
+sed -i s/'ZSH_THEME=\"robbyrussell\"'/'ZSH_THEME=\"agnoster\"'/g ~/.zshrc
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
+mv zsh-syntax-highlighting ~/.oh-my-zsh/plugins
+echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
+git clone https://github.com/zsh-users/zsh-autosuggestions
+mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
+sed -i s/'plugins=(git)'/'plugins=(git archlinux extract themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
+echo "hyfetch" >> ~/.zshrc
+sudo reboot
+
+
+
+
+##################################
+## ИНФОРМАЦИЯ О РАЗДЕЛАХ ДИСКОВ ##
+##################################
+
+
+lsblk -o PATH,PTTYPE,PARTTYPE,FSTYPE,PARTTYPENAME
+
+
+
+#########################################
+## ИНФОРМАЦИЯ ОБ УСТАНОВЛЕННЫХ ПАКЕТАХ ##
+#########################################
+
+
+pacman -Qqet | grep -v “$(pacman -Qqg base)”
+
+
+
+#################
+## YAY-AUR ##
+#################
+
+
+
+
+clear
+echo ""
+echo ""
+echo "###########################
+## <<<  ИДЁТ УСТАНОВКА YAY >>> ##
+#################################"; sleep 3
+echo ""
+echo ""
+sudo pacman -Syy
+clear
+sudo pacman -S git --noconfirm
+clear
+git clone https://aur.archlinux.org/yay-bin.git
+cd yay-bin/
+makepkg -si
+cd
+sudo rm -r yay-bin/
+clear
+echo ""
+echo ""
+echo "################################
+## <<<  УСТАНОВКА УАУ ЗАВЕРШЕНА >>> ##
+######################################"
+echo ""
+echo ""
+
+
+
+
+
+
+
+
+
+
+#############
+##  OCTOPI ##
+#############
+
+
+
+
+
+clear
+echo ""
+echo ""
+echo "####################################
+## <<<  ИДЁТ УСТАНОВКА OCTOPI >>> ##
+####################################"; sleep 3
+echo ""
+echo ""
+yay -Syy
+yay -S --noconfirm octopi
+clear
+echo ""
+echo ""
+echo "#########################################
+## <<<  УСТАНОВКА OCTOPI ЗАВЕРШЕНА >>> ##
+#########################################"
+echo ""
+echo ""
+
+
+
+
+
+
+######################
+##  BTRFS ASSISTANT ##
+######################
+
+
+
+
+
+clear
+echo ""
+echo ""
+echo "#############################################
+## <<<  ИДЁТ УСТАНОВКА BTRFS ASSISTANT >>> ##
+#############################################"; sleep 3
+echo ""
+echo ""
+yay -Syy
+yay -S --noconfirm grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant
+clear
+echo ""
+echo ""
+echo "##################################################
+## <<<  УСТАНОВКА BTRFS ASSISTANT ЗАВЕРШЕНА >>> ##
+##################################################"
+echo ""
+echo ""
+
+
+
+
+
+
+###############
+## Программы ##
+###############
+
+
+
+
+
+
+clear
+echo ""
+echo ""
+echo "###################################################
+## <<<  ИДЁТ УСТАНОВКА ПРОГРАММ ПОЛЬЗОВАТЕЛЯ >>> ##
+###################################################"; sleep 3
+echo ""
+echo ""
+yay -Syy
+clear
+yay -S --noconfirm google-chrome qbittorrent thunderbird-i18n-ru
+clear
+yay -S --noconfirm teams-for-linux telegram-desktop zoom
+clear
+yay -S --noconfirm libreoffice-fresh-ru cherrytree doublecmd-qt6
+clear
+yay -S --noconfirm btop cpu-x hardinfo2 htop system-monitoring-center
+clear
+yay -S --noconfirm ventoy-bin gparted
+clear
+yay -S --noconfirm smplayer strawberry
+clear
+yay -S --noconfirm grub-customizer
+clear
+yay -S --noconfirm radiotray-ng ocs-url
+clear
+yay -S --noconfirm glib2-devel user-admin
+clear
+yay -S seahorse virtualbox reflector-simple
+clear
+yay -S --noconfirm  update-grub
+clear
+yay -S --noconfirm archlinux-wallpaper
+clear
+echo ""
+echo ""
+echo "########################################################
+## <<<  УСТАНОВКА ПРОГРАММ ПОЛЬЗОВАТЕЛЯ ЗАВЕРШЕНА >>> ##
+########################################################"
+echo ""
+echo ""
+exit
