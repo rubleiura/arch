@@ -1012,7 +1012,7 @@ pacman -S --noconfirm dconf-editor eog file-roller gnome-devel-docs gnome-multi-
 clear
 pacman -S --noconfirm gnome-browser-connector gnome-firmware gnome-shell-extension-appindicator gnome-shell-extension-arc-menu gnome-shell-extension-dash-to-panel gnuchess power-profiles-daemon squashfs-tools
 clear
-pacman -S --noconfirm gthumb gtkmm3 qt5ct qt6ct system-config-printer deja-dup 
+pacman -S --noconfirm gthumb gtkmm3 system-config-printer deja-dup 
 clear
 pacman -S --noconfirm adw-gtk-theme gnome-themes-extra
 clear
