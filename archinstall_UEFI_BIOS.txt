@@ -606,7 +606,7 @@ clear
 # XDG
 pacman -S --noconfirm xdg-utils xdg-user-dirs
 clear
-systemctl enable cups.service  cronie.service bluetooth.service haveged.service systemd-timesyncd
+systemctl enable cups.service  cronie.service bluetooth.service haveged.service systemd-timesyncd.service
 clear
 # Generic
 pacman -S --noconfirm vim wget usbutils lsof dmidecode dialog
