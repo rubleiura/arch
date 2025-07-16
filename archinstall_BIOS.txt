@@ -613,9 +613,6 @@ clear
 # Шрифты
 pacman -S --noconfirm gsfonts sdl_ttf ttf-bitstream-vera ttf-dejavu ttf-liberation xorg-fonts-type1
 clear
-# Network Tools
-pacman -S --noconfirm rsync traceroute bind-tools
-clear
 # File System
 pacman -S --noconfirm dosfstools ntfs-3g btrfs-progs exfatprogs gptfdisk fuse2 fuse3 fuseiso
 clear
