@@ -588,8 +588,6 @@ echo ""
 pacman -Syy
 clear
 # Services
-pacman -S --noconfirm modemmanager
-clear
 pacman -S --noconfirm bluez bluez-utils
 clear
 pacman -S --noconfirm cups cups-pdf ghostscript gsfonts
