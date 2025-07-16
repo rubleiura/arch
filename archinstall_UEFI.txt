@@ -609,9 +609,6 @@ clear
 # Compression
 pacman -S --noconfirm zip unzip unrar p7zip lzop lrzip
 clear
-# Шрифты
-pacman -S --noconfirm ttf-dejavu ttf-liberation noto-fonts noto-fonts-cjk noto-fonts-emoji
-clear
 # File System
 pacman -S --noconfirm dosfstools ntfs-3g btrfs-progs exfatprogs gptfdisk fuse2 fuse3 fuseiso
 clear
