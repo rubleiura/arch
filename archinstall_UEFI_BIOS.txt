@@ -633,9 +633,6 @@ pacman -S --noconfirm samba gvfs gvfs-smb smbclient cifs-utils gvfs-afc gvfs-mtp
 # Wireplumber Pipewire
 pacman -S --noconfirm wireplumber pipewire-alsa pipewire-jack pipewire-pulse pipewire-v4l2 pipewire-zeroconf gst-plugin-pipewire helvum
 clear
-# Alsa
-pacman -S --noconfirm alsa-firmware alsa-plugins alsa-utils sof-firmware
-clear
 # GStreamer
 pacman -S --noconfirm gst-libav gst-plugins-bad gst-plugins-base gst-plugins-ugly gst-plugin-pipewire gst-plugin-va gstreamer
 clear
