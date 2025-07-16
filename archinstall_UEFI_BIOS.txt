@@ -594,8 +594,6 @@ echo ""
 pacman -Syy
 clear
 # Services
-pacman -S --noconfirm modemmanager
-clear
 pacman -S --noconfirm bluez bluez-utils
 clear
 pacman -S --noconfirm cups cups-pdf ghostscript gsfonts
@@ -608,7 +606,7 @@ clear
 # XDG
 pacman -S --noconfirm xdg-utils xdg-user-dirs
 clear
-systemctl enable ModemManager.service cups.service  cronie.service bluetooth.service haveged.service systemd-timesyncd
+systemctl enable cups.service  cronie.service bluetooth.service haveged.service systemd-timesyncd
 clear
 # Generic
 pacman -S --noconfirm vim wget usbutils lsof dmidecode dialog
