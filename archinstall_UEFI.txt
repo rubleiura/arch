@@ -598,8 +598,6 @@ clear
 pacman -S --noconfirm mlocate chrony
 systemctl enable chrony-wait.service chronyd.service
 clear
-pacman -S --noconfirm cpupower sysfsutils wireless-regdb
-clear
 # XDG
 pacman -S --noconfirm xdg-utils xdg-user-dirs
 clear
