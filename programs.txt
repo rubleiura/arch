@@ -1,0 +1,190 @@
+##################################
+## ИНФОРМАЦИЯ О РАЗДЕЛАХ ДИСКОВ ##
+##################################
+
+
+lsblk -o PATH,PTTYPE,PARTTYPE,FSTYPE,PARTTYPENAME
+
+
+
+#########################################
+## ИНФОРМАЦИЯ ОБ УСТАНОВЛЕННЫХ ПАКЕТАХ ##
+#########################################
+
+
+pacman -Qqet | grep -v “$(pacman -Qqg base)”
+
+
+
+#################
+## YAY-AUR ##
+#################
+
+
+
+
+clear
+echo ""
+echo ""
+echo "###########################
+## <<<  ИДЁТ УСТАНОВКА YAY >>> ##
+#################################"
+echo ""
+echo ""
+sudo pacman -Syy
+clear
+sudo pacman -S git --noconfirm
+clear
+git clone https://aur.archlinux.org/yay-bin.git
+cd yay-bin/
+makepkg -si
+cd
+sudo rm -r yay-bin/
+clear
+echo ""
+echo ""
+echo "################################
+## <<<  УСТАНОВКА УАУ ЗАВЕРШЕНА >>> ##
+######################################"
+echo ""
+echo ""
+
+
+
+
+
+
+
+
+
+
+#############
+##  OCTOPI ##
+#############
+
+
+
+
+
+clear
+echo ""
+echo ""
+echo "####################################
+## <<<  ИДЁТ УСТАНОВКА OCTOPI >>> ##
+####################################"
+echo ""
+echo ""
+yay -Syy
+yay -S --noconfirm octopi
+clear
+echo ""
+echo ""
+echo "#########################################
+## <<<  УСТАНОВКА OCTOPI ЗАВЕРШЕНА >>> ##
+#########################################"
+echo ""
+echo ""
+
+
+
+
+
+
+######################
+##  BTRFS ASSISTANT ##
+######################
+
+
+
+
+
+clear
+echo ""
+echo ""
+echo "#############################################
+## <<<  ИДЁТ УСТАНОВКА BTRFS ASSISTANT >>> ##
+#############################################"
+echo ""
+echo ""
+yay -Syy
+yay -S --noconfirm grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant
+clear
+echo ""
+echo ""
+echo "##################################################
+## <<<  УСТАНОВКА BTRFS ASSISTANT ЗАВЕРШЕНА >>> ##
+##################################################"
+echo ""
+echo ""
+
+
+
+
+
+
+###############
+## Программы ##
+###############
+
+
+
+
+
+
+clear
+echo ""
+echo ""
+echo "###################################################
+## <<<  ИДЁТ УСТАНОВКА ПРОГРАММ ПОЛЬЗОВАТЕЛЯ >>> ##
+###################################################"
+echo ""
+echo ""
+yay -Syy
+clear
+yay -S --noconfirm google-chrome qbittorrent thunderbird-i18n-ru
+clear
+yay -S --noconfirm teams-for-linux telegram-desktop zoom
+clear
+yay -S --noconfirm libreoffice-fresh-ru cherrytree doublecmd-qt6
+clear
+yay -S --noconfirm btop cpu-x hardinfo2 htop system-monitoring-center
+clear
+yay -S --noconfirm ventoy-bin gparted
+clear
+yay -S --noconfirm smplayer strawberry
+clear
+yay -S --noconfirm grub-customizer
+clear
+yay -S --noconfirm radiotray-ng ocs-url
+clear
+yay -S --noconfirm glib2-devel user-admin
+clear
+yay -S seahorse virtualbox reflector-simple
+clear
+yay -S --noconfirm  update-grub
+clear
+yay -S --noconfirm archlinux-wallpaper
+clear
+echo ""
+echo ""
+echo "########################################################
+## <<<  УСТАНОВКА ПРОГРАММ ПОЛЬЗОВАТЕЛЯ ЗАВЕРШЕНА >>> ##
+########################################################"
+echo ""
+echo ""
+exit
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
