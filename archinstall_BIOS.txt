@@ -530,6 +530,7 @@ sed -i "s/quiet/quiet rootflags=subvol=@/" /etc/default/grub
 sed -i s/'#GRUB_BTRFS_SUBMENUNAME="Arch Linux snapshots"'/'GRUB_BTRFS_SUBMENUNAME="Arch Linux snapshots"'/g /etc/default/grub-btrfs/config
 sed -i s/'#GRUB_BTRFS_TITLE_FORMAT=("date" "snapshot" "type" "description")'/'GRUB_BTRFS_TITLE_FORMAT=("description" "date")'/g /etc/default/grub-btrfs/config
 sed -i 's/ProtectSystem=strict/ProtectSystem=full/' /usr/lib/systemd/system/mkinitcpio-generate-shutdown-ramfs.service
+sed -i 's/MODULES=()/MODULES=(btrfs)/' /etc/mkinitcpio.conf
 sed -i 's/filesystems/plymouth resume btrfs filesystems/' /etc/mkinitcpio.conf
 sed -i 's/fsck/grub-btrfs-overlayfs/' /etc/mkinitcpio.conf
 sed -i 's/ consolefont//' /etc/mkinitcpio.conf
