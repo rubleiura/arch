@@ -556,7 +556,7 @@ clear
 pacman -S --noconfirm grub grub-btrfs os-prober
 clear
 # Сетевое управление
-pacman -S --noconfirm networkmanager wpa_supplicant
+pacman -S --noconfirm networkmanager wpa_supplicant wireless_tools
 clear
 # Удалённый доступ
 pacman -S --noconfirm openssh
