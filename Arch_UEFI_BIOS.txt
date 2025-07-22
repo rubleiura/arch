@@ -238,7 +238,29 @@ echo "#######################################
 #######################################"
 echo ""
 echo ""
-pacstrap /mnt base base-devel btrfs-progs bash-completion archlinux-keyring nano nano-syntax-highlighting amd-ucode inxi efibootmgr memtest86+-efi memtest86+ reflector pacman-contrib
+# БАЗОВАЯ СИСТЕМА: минимальный набор + инструменты разработки
+pacstrap /mnt base base-devel
+clear
+# БЕЗОПАСНОСТЬ: актуальные ключи пакетов
+pacstrap /mnt archlinux-keyring
+clear
+# ФАЙЛОВАЯ СИСТЕМА: утилиты для Btrfs
+pacstrap /mnt btrfs-progs
+clear
+# ОБОРУДОВАНИЕ: микрокод процессоров
+pacstrap /mnt amd-ucode
+clear
+# ДИАГНОСТИКА: тестер оперативной памяти (EFI)
+pacstrap /mnt memtest86+-efi memtest86+
+clear
+# ОБОЛОЧКА: автодополнение Bash
+pacstrap /mnt bash-completion
+clear
+# РЕДАКТОР: текстовый редактор
+pacstrap /mnt nano
+clear
+# PACMAN: оптимизация зеркал и доп. утилиты
+pacstrap /mnt reflector pacman-contrib
 clear
 mount -t proc proc /mnt/proc
 mount -t sysfs sys /mnt/sys
@@ -536,7 +558,7 @@ pacman -Sy
 pacman -S --noconfirm linux-lts linux-lts-headers linux-firmware
 clear
 # Загрузчик и управление загрузкой
-pacman -S --noconfirm grub grub-btrfs os-prober
+pacman -S --noconfirm grub grub-btrfs efibootmgr os-prober
 clear
 # Сетевое управление
 pacman -S --noconfirm networkmanager wpa_supplicant
