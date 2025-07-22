@@ -666,6 +666,7 @@ pacman -S --noconfirm xdg-utils xdg-user-dirs
 clear
 # Multimedia (PipeWire)
 pacman -S --noconfirm wireplumber pipewire-alsa pipewire-pulse pipewire-jack pipewire-v4l2 pipewire-zeroconf alsa-utils
+systemctl --global enable pipewire.socket pipewire-pulse.socket
 clear
 # Multimedia (codecs)
 pacman -S --noconfirm gstreamer gst-plugins-{base,good,bad,ugly} gst-libav ffmpeg a52dec faac faad2 flac lame libdca libdv libmad libmpeg2 libtheora libvorbis wavpack x264 x265 xvidcore libdvdcss intel-media-driver libva-utils mesa-vdpau libva-mesa-driver vlc
@@ -818,8 +819,7 @@ clear
 echo "export DESKTOP_SESSION=plasma" > ~/.xinitrc
 echo "exec startplasma-x11" >> ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
-systemctl --user enable pipewire pipewire-pulse
-systemctl --user enable wireplumber
+systemctl --user --now enable pipewire pipewire-pulse wireplumber
 clear
 
 
@@ -914,8 +914,7 @@ clear
 # xinitrc
 echo "exec /opt/trinity/bin/starttde" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
-systemctl --user enable pipewire pipewire-pulse
-systemctl --user enable wireplumber
+systemctl --user --now enable pipewire pipewire-pulse wireplumber
 clear
 
 
@@ -1005,8 +1004,7 @@ clear
 # xinitrc
 echo "exec startxfce4" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
-systemctl --user enable pipewire pipewire-pulse
-systemctl --user enable wireplumber
+systemctl --user --now enable pipewire pipewire-pulse wireplumber
 clear
 ## Флаги ##
 mkdir -p ~/.local/share/xfce4/xkb/flags/
@@ -1128,8 +1126,7 @@ echo "export XDG_SESSION_TYPE=x11" > ~/.xinitrc
 echo "export GDK_BACKEND=x11" >> ~/.xinitrc
 echo "exec gnome-session" >> ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
-systemctl --user enable pipewire pipewire-pulse
-systemctl --user enable wireplumber
+ssystemctl --user --now enable pipewire pipewire-pulse wireplumber
 clear
 
 
@@ -1218,8 +1215,7 @@ clear
 # xinitrc
 echo "exec cinnamon-session" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
-systemctl --user enable pipewire pipewire-pulse
-systemctl --user enable wireplumber
+systemctl --user --now enable pipewire pipewire-pulse wireplumber
 clear
 
 
@@ -1292,8 +1288,7 @@ clear
 # xinitrc
 echo "exec mate-session" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
-systemctl --user enable pipewire pipewire-pulse
-systemctl --user enable wireplumber
+systemctl --user --now enable pipewire pipewire-pulse wireplumber
 clear
 
 
@@ -1362,8 +1357,7 @@ clear
 # xinitrc
 echo "exec startlxqt" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
-systemctl --user enable pipewire pipewire-pulse
-systemctl --user enable wireplumber
+systemctl --user --now enable pipewire pipewire-pulse wireplumber
 clear
 # flags
 mkdir -p /home/login/.local/share/flags
@@ -1452,8 +1446,7 @@ clear
 # xinitrc
 echo "exec startlxde" > ~/.xinitrc
 sudo cp ~/.xinitrc /root/.xinitrc
-systemctl --user enable pipewire pipewire-pulse
-systemctl --user enable wireplumber
+systemctl --user --now enable pipewire pipewire-pulse wireplumber
 clear
 
 
