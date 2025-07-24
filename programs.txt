@@ -177,6 +177,20 @@ echo ""
 sudo reboot
 
 
+# Открыть hardinfo2
+hardinfo2
+# Выбрать Устройства памяти
+# согласно инструкции выполнить эти пункты
+sudo pacman -Syy
+sudo pacman -S --noconfirm dmidecode
+sudo systemctl enable hardinfo2.service --now
+# MODPROBE выбрать с галочкой
+# (or eeprom) (for SDR, DDR, DDR2, DDR3)
+sudo modprobe at24
+# (for DDR4)
+sudo modprobe ee1004
+# (for DDR5)
+sudo modprobe spd5118
 
 
 
