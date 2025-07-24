@@ -179,7 +179,7 @@ sudo reboot
 
 # Открыть hardinfo2
 hardinfo2
-# Выбрать Устройства памяти
+# Выбрать пункт Устройства памяти
 # согласно инструкции выполнить эти пункты
 sudo pacman -Syy
 sudo pacman -S --noconfirm dmidecode
