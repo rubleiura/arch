@@ -184,6 +184,8 @@ hardinfo2
 sudo pacman -Syy
 sudo pacman -S --noconfirm dmidecode
 sudo systemctl enable hardinfo2.service --now
+(login) Заданное имя пользователя
+sudo usermod -a -G hardinfo2 login
 # MODPROBE выбрать с галочкой
 # (or eeprom) (for SDR, DDR, DDR2, DDR3)
 sudo modprobe at24
