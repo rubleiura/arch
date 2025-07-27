@@ -1,0 +1,1530 @@
+
+
+########################################
+#### Макет установки Arch Linux ########
+########################################
+
+
+#################################################
+## Оптимизация SSH перед установкой Arch Linux ##
+## Этот пункт предназначен только при          ##
+## установке с помощью SSH соединения          ##
+#################################################
+
+
+
+
+
+clear
+# 1. Резервное копирование конфигурации
+cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+# 2. Настройка параметров производительности
+# Включение сжатия данных
+sed -i 's/^#*Compression .*/Compression yes/' /etc/ssh/sshd_config
+# Поддержание TCP-соединения
+sed -i 's/^#*TCPKeepAlive .*/TCPKeepAlive yes/' /etc/ssh/sshd_config
+# Проверка активности клиента
+sed -i 's/^#*ClientAliveInterval .*/ClientAliveInterval 60/' /etc/ssh/sshd_config
+# Макс. число проверок
+sed -i 's/^#*ClientAliveCountMax .*/ClientAliveCountMax 3/' /etc/ssh/sshd_config
+# Отключение DNS-проверок
+sed -i 's/^#*UseDNS .*/UseDNS no/' /etc/ssh/sshd_config
+# 3. Дополнительные улучшения для установки
+# Увеличение лимита подключений
+sed -i 's/^#*MaxStartups .*/MaxStartups 10:30:100/' /etc/ssh/sshd_config
+# Быстрые шифры
+sed -i 's/^#*Ciphers .*/Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com/' /etc/ssh/sshd_config
+# 4. Применение изменений
+systemctl restart sshd
+clear
+echo ""
+echo ""
+echo "#####################################
+## <<< НАСТРОЙКА SSH Завершена >>> ##
+#####################################"
+echo ""
+echo ""
+# 5. Проверка изменений
+echo "Текущая конфигурация:"
+grep -E 'Compression|TCPKeepAlive|ClientAlive|UseDNS|MaxStartups|Ciphers' /etc/ssh/sshd_config
+echo ""
+echo ""
+
+
+
+
+
+############################
+## Подготовка к установке ##
+############################
+
+
+
+clear
+# Синхронизация системных часов с NTP-серверами
+timedatectl set-ntp true
+# Установка русской раскладки клавиатуры
+loadkeys ru
+# Установка шрифта с поддержкой кириллицы
+setfont cyr-sun16
+# Активация локалей (убираем комментарии в конфигурационном файле)
+sed -i "s/#\(en_US\.UTF-8\)/\1/" /etc/locale.gen
+sed -i "s/#\(ru_RU\.UTF-8\)/\1/" /etc/locale.gen
+# Генерация активированных локалей
+locale-gen
+# Оптимизация pacman (параллельная загрузка пакетов)
+sed -i s/'ParallelDownloads = 5'/'ParallelDownloads = 15'/g /etc/pacman.conf
+# Включение цветного вывода pacman
+sed -i s/'#Color'/'Color'/g /etc/pacman.conf
+# Добавление визуальных улучшений в pacman
+echo "[options]" >> /etc/pacman.conf
+echo "ILoveCandy" >> /etc/pacman.conf
+# Обновление списка пакетов
+# Обновляем базу данных пакетов
+pacman -Syy
+# Установка необходимых компонентов:
+# haveged - генератор энтропии для ускорения криптоопераций
+# archlinux-keyring - актуальные ключи подписи пакетов
+# inxi - система диагностики
+# util-linux - дополнительные системные утилиты
+# lshw - информация об аппаратном обеспечении
+# pacman-contrib  - доп. утилиты
+pacman -S --noconfirm  haveged archlinux-keyring inxi util-linux lshw pacman-contrib
+# Запуск haveged для генерации энтропии
+systemctl enable haveged.service --now
+clear
+# Копируем файл с официальным списком зеркал
+cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
+# Используем утилиту rankmirrors для сортировки зеркал по скорости
+rankmirrors -n 6 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
+# Обновляем базу данных пакетов
+pacman -Syy
+clear
+echo ""
+echo ""
+echo "################################################
+## <<< ПОДГОТОВКА К УСТАНОВКЕ ЗАВЕРШИЛАСЬ >>> ##
+################################################"
+echo ""
+echo ""
+
+
+
+##################
+## Тестирование ##
+##################
+
+
+
+
+clear
+echo ""
+echo ""
+# Определение производителя процессора
+sudo lshw -C cpu 2>/dev/null | grep 'vendor:' | uniq
+echo ""
+echo ""
+# Получение информации о материнской плате
+sudo inxi -M
+echo ""
+echo ""
+# Получение информации о системе
+sudo inxi -I
+echo ""
+echo ""
+# Просмотр информации о блочных устройствах с детализацией:
+# PATH - путь к устройству
+# PTTYPE - тип таблицы разделов
+# PARTTYPE - тип раздела (GUID)
+# FSTYPE - файловая система
+# PARTTYPENAME - человеко-читаемое название типа раздела
+lsblk -o PATH,PTTYPE,PARTTYPE,FSTYPE,PARTTYPENAME
+echo ""
+echo ""
+echo "#################################################
+## <<< ТЕСТИРОВАНИЕ КОМПЬЮТЕРА ЗАКОНЧИЛОСЬ >>> ##
+#################################################"
+echo ""
+echo ""
+
+
+
+
+
+
+################
+## Переменные ##
+################
+
+
+
+#########################################################################
+## Этот пункт предназначен для изменения переменных.                   ##
+## Он обязателен.Иначе установка системы  может пойти с ошибками.      ## 
+## Если параметры из раздела Тестирования не совпадают с параметрами   ##
+## раздела Переменные, необходимо с помощью текстового редактора       ##
+## провести групповое переименование переменных в таблице ниже,        ##
+## чтобы они соответствовали результатам тестирования.                 ##
+## По желанию можно изменить параметры пользователя, компьютера и ядра.##
+#########################################################################
+
+
+
+############################################
+#  Объект           #   Переменная         #
+############################################
+#  Диски            #   sda sda1 sda2 sda3 #
+############################################
+#  Имя пользователя #   login	           #
+############################################
+#  Имя менедж.входа #  	User Name          #
+############################################
+#   Hostname 	    #   Sony               #
+############################################
+#   Microcode	    #   amd-ucode          #
+############################################
+#   Ядро	        #   linux-lts          #
+############################################
+#   размер SWAP	    #	sgdisk -n 2::-4G   #
+############################################
+
+
+
+Если система ставится на HDD, необходимо
+
+изменить параметры btrfs c SSD :
+
+ssd,noatime,space_cache=v2,compress=zstd:2,discard=async
+
+на HDD :
+
+noatime,space_cache=v2,compress=zstd:2,autodefrag
+
+
+
+
+
+
+
+##############
+## РАЗМЕТКА ##
+##############
+
+
+
+
+
+clear
+# ===================================================
+# 1. ПОЛНАЯ ОЧИСТКА ДИСКА ОТ ПРЕДЫДУЩИХ РАЗМЕТОК
+# ===================================================
+# Удаляем все файловые системы и сигнатуры разделов
+wipefs --all --force /dev/sda
+# Стираем GPT/MBR структуры и создаем новую пустую таблицу
+sgdisk -Z /dev/sda
+# ===================================================
+# 2. СОЗДАНИЕ НОВОЙ GPT-ТАБЛИЦЫ С ВЫРАВНИВАНИЕМ
+# ===================================================
+# -a 2048: выравнивание по 2048 секторам (1M) для SSD
+# -o: создаем новую пустую GPT-таблицу
+sgdisk -a 2048 -o /dev/sda
+# ===================================================
+# 3. СОЗДАНИЕ РАЗДЕЛА ДЛЯ ЗАГРУЗЧИКА BIOS (GRUB)
+# ===================================================
+# -n 1:0:+1M: раздел 1, начало автоматически, размер 1M
+# -t 1:ef02: тип EF02 (BIOS Boot Partition)
+# -c 1:"BIOS Boot Arch": имя раздела (метка)
+sgdisk -n 1:0:+1M -t 1:ef02 -c 1:'BIOS Boot Arch' /dev/sda
+# ===================================================
+# 4. СОЗДАНИЕ КОРНЕВОГО РАЗДЕЛА (/)
+# ===================================================
+# -n 2:0:-4G: раздел 2, начало после предыдущего, размер до последних 4ГБ
+# -t 2:8300: тип 8300 (Linux Filesystem)
+# -c 2:"System Arch Linux": имя раздела (метка)
+sgdisk -n 2:0:-4G -t 2:8300 -c 2:'System Arch Linux' /dev/sda
+# ===================================================
+# 5. СОЗДАНИЕ SWAP-РАЗДЕЛА
+# ===================================================
+# -n 3:0:0: раздел 3, начало после предыдущего, размер весь остаток
+# -t 3:8200: тип 8200 (Linux Swap)
+# -c 3:"Swap Arch Linux": имя раздела (метка)
+sgdisk -n 3:0:0 -t 3:8200 -c 3:'Swap Arch Linux' /dev/sda
+echo ""
+echo ""
+# ===================================================
+# 6. ПРОВЕРКА СОЗДАННОЙ РАЗМЕТКИ
+# ===================================================
+# Просмотр GPT-таблицы в gdisk
+gdisk -l /dev/sda
+echo ""
+echo ""
+# Альтернативный просмотр в fdisk
+fdisk -l /dev/sda
+echo ""
+echo ""
+echo "#######################################
+## <<< РАЗМЕТКА ДИСКОВ ЗАВЕРШЕНА >>> ##
+#######################################"
+echo ""
+echo ""
+
+
+
+
+
+
+#############################################
+## ФОРМАТИРОВАНИЕ, МОНТИРОВАНИЕ, УСТАНОВКА ##
+## БАЗОВЫХ ПАКЕТОВ, ВХОД в СИСТЕМУ CHROOT  ##
+#############################################
+
+
+
+
+
+clear
+# Создание swap-раздела
+mkswap /dev/sda3
+# Активация swap-раздела
+swapon /dev/sda3
+# Форматирование раздела в Btrfs с принудительным пересозданием (-f)
+mkfs.btrfs -f /dev/sda2
+# Монтирование корневого раздела
+mount /dev/sda2 /mnt
+# Создание подтомов Btrfs:
+# @ - корневая система
+btrfs su cr /mnt/@
+# @home - домашние каталоги
+btrfs su cr /mnt/@home
+# @log - системные логи
+btrfs su cr /mnt/@log
+# @pkg - кэш пакетов pacman
+btrfs su cr /mnt/@pkg
+# Размонтирование корневого раздела
+umount /mnt
+# Монтирование корневого подтома с оптимизациями для SSD:
+# ssd - оптимизации под твердотельные накопители
+# noatime - не обновлять время доступа к файлам
+# space_cache=v2 - улучшенный кэш свободного места
+# compress=zstd:2 - сжатие Zstandard (уровень 2)
+# discard=async - асинхронное освобождение блоков
+# subvol=@ - указание подтома
+mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@ /dev/sda2 /mnt
+# Создание структуры каталогов для монтирования
+mkdir -p /mnt/{home,var/log,var/cache/pacman/pkg,var/lib/machines,var/lib/portables}
+# Монтирование подтома домашних каталогов
+mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@home /dev/sda2 /mnt/home
+# Монтирование подтома системных логов
+mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@log /dev/sda2 /mnt/var/log
+# Монтирование подтома кэша пакетов
+mount -o ssd,noatime,space_cache=v2,compress=zstd:2,discard=async,subvol=@pkg /dev/sda2 /mnt/var/cache/pacman/pkg
+clear
+echo ""
+echo ""
+# Просмотр информации о разделах (проверка)
+lsblk -o PATH,PTTYPE,PARTTYPE,FSTYPE,PARTTYPENAME /dev/sda
+echo ""
+echo ""
+# Просмотр созданных подтомов (после монтирования)
+lsblk /dev/sda
+echo ""
+echo ""
+# Просмотр созданных подтомов (после монтирования)
+btrfs subvolume list /mnt
+echo ""
+echo ""
+echo "############################################################
+## <<< ФОРМАТИРОВАНИЕ И МОНТИРОВАНИЕ ДИСКОВ ЗАВЕРШЕНО >>> ##
+############################################################"
+echo ""
+echo ""
+
+
+
+
+
+
+
+#######################################
+## <<< УСТАНОВКА БАЗОВЫХ ПАКЕТОВ >>> ##
+#######################################
+
+
+
+
+
+
+
+clear
+# БАЗОВАЯ СИСТЕМА: минимальный набор + инструменты разработки
+pacstrap /mnt base base-devel
+# БЕЗОПАСНОСТЬ: актуальные ключи пакетов
+pacstrap /mnt archlinux-keyring
+# ФАЙЛОВАЯ СИСТЕМА: утилиты для Btrfs
+pacstrap /mnt btrfs-progs
+# ОБОРУДОВАНИЕ: микрокод процессоров
+pacstrap /mnt amd-ucode
+# ДИАГНОСТИКА: тестер оперативной памяти
+pacstrap /mnt memtest86+
+# ОБОЛОЧКА: автодополнение Bash
+pacstrap /mnt bash-completion
+# РЕДАКТОР: текстовый редактор
+pacstrap /mnt nano
+# PACMAN: оптимизация зеркал и доп. утилиты
+pacstrap /mnt reflector pacman-contrib
+# Генерация файла fstab (таблицы файловых систем)
+genfstab -pU /mnt >> /mnt/etc/fstab
+clear
+echo ""
+echo ""
+echo "#################################################
+## <<< УСТАНОВКА БАЗОВЫХ ПАКЕТОВ ЗАВЕРШЕНА >>> ##
+#################################################"
+echo ""
+echo ""
+# Переход в только что установленную систему с помощью chroot
+# Важно: после выполнения этой команды все последующие команды
+# будут выполняться внутри установленной системы, а не в live-окружении
+arch-chroot /mnt /bin/bash
+echo ""
+echo ""
+
+
+
+
+########################################################
+################## CHROOT ##############################
+########################################################
+
+
+
+##############################################
+## НАСТРОЙКИ PACMAN,FSTAB,ЯЗЫК,ЧАСОВОЙ ПОЯС ##
+##############################################
+
+
+
+
+
+
+
+clear
+# Редактирование параметров монтирования Btrfs (для SSD):
+sed -i 's/\S*subvol=\(\S*\)/subvol=\1,ssd,noatime,space_cache=v2,compress=zstd:2,discard=async/g'  /etc/fstab
+# Активация multilib репозитория (для 32-битных приложений):
+# Раскомментирует все строки между [multilib] и Include включительно
+sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
+# Увеличение количества параллельных загрузок пакетов с 5 до 15
+sed -i s/'ParallelDownloads = 5'/'ParallelDownloads = 15'/g /etc/pacman.conf
+# Включение цветного вывода в pacman
+sed -i s/'#Color'/'Color'/g /etc/pacman.conf
+# Добавление графических улучшений в pacman (анимация прогресс-бара)
+echo "[options]" >> /etc/pacman.conf
+echo "ILoveCandy" >> /etc/pacman.conf
+# Настройка раскладки клавиатуры и шрифта консоли
+echo "KEYMAP=ru" > /etc/vconsole.conf
+echo "FONT=cyr-sun16" >> /etc/vconsole.conf
+# Установка системных локалей (русский язык)
+echo "LANG=ru_RU.UTF-8" > /etc/locale.conf
+echo "LC_MESSAGES=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_TIME=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_NUMERIC=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_MONETARY=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_COLLATE=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_CTYPE=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_NAME=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_ADDRESS=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_TELEPHONE=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_MEASUREMENT=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_PAPER=ru_RU.UTF-8" >> /etc/locale.conf
+echo "LC_IDENTIFICATION=ru_RU.UTF-8" >> /etc/locale.conf
+# Генерация локалей: раскомментирует en_US и ru_RU в locale.gen
+sed -i "s/#\(en_US\.UTF-8\)/\1/" /etc/locale.gen
+sed -i "s/#\(ru_RU\.UTF-8\)/\1/" /etc/locale.gen
+# Генерация локалей системы
+locale-gen
+# Экспорт локалей для текущей сессии (временная настройка)
+export LANG=ru_RU.UTF-8
+# Автоматическое определение временной зоны по IP
+time_zone=$(curl -s https://ipinfo.io/timezone)
+# Установка символьной ссылки на файл зоны
+ln -sf /usr/share/zoneinfo/$time_zone /etc/localtime
+# Синхронизация аппаратных часов
+hwclock --systohc
+pacman -Syy
+clear
+# Настройка зеркал для pacman (только российские репозитории):
+# 1. Скачивание актуального списка зеркал
+# 2. Раскомментирование всех репозиториев
+# 3. Ранжирование 5 самых быстрых зеркал
+curl -L "https://archlinux.org/mirrorlist/?country=RU&protocol=https" -o /etc/pacman.d/mirrorlist.raw \
+&& sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.raw \
+&& rankmirrors -n 5 /etc/pacman.d/mirrorlist.raw > /etc/pacman.d/mirrorlist
+# Включение автоматического обновления зеркал (таймер systemd)
+systemctl enable reflector.timer
+clear
+echo ""
+echo ""
+# Проверка настроек времени и даты
+timedatectl status
+echo ""
+echo ""
+# Отображение текущей даты и времени (верификация настроек)
+date
+echo ""
+echo ""
+echo "############################################
+## <<< ПЕРВОНАЧАЛЬНАЯ НАСТРОЙКА ЗАВЕРШЕНА ##
+############################################"
+echo ""
+echo ""
+
+
+
+
+
+####################
+## НАСТРОЙКА NANO ##
+####################
+
+
+
+
+
+
+clear
+# ==============================================================================
+# НАСТРОЙКА РЕДАКТОРА NANO В ARCH LINUX
+# ==============================================================================
+# Основные функциональные настройки
+# ==============================================================================
+# Активация автоотступов (копирует отступ предыдущей строки)
+sed -i 's/# set autoindent/set autoindent/g' /etc/nanorc
+# Постоянное отображение позиции курсора (строка/столбец)
+sed -i 's/# set constantshow/set constantshow/g' /etc/nanorc
+# Показывать индикатор прокрутки в правом верхнем углу
+sed -i 's/# set indicator/set indicator/g' /etc/nanorc
+# Включить номера строк (левая панель)
+sed -i 's/# set linenumbers/set linenumbers/g' /etc/nanorc
+# Разрешить открытие нескольких файлов в буферах
+sed -i 's/# set multibuffer/set multibuffer/g' /etc/nanorc
+# Очищать строку статуса после коротких сообщений
+sed -i 's/# set quickblank/set quickblank/g' /etc/nanorc
+# Умное поведение Home (переход к первому непустому символу)
+sed -i 's/# set smarthome/set smarthome/g' /etc/nanorc
+# Включить мягкое перенос длинных строк
+sed -i 's/# set softwrap/set softwrap/g' /etc/nanorc
+# Изменение размера табуляции с 8 на 4 пробела
+sed -i 's/# set tabsize 8/set tabsize 4/g' /etc/nanorc
+# Автоматическое преобразование табов в пробелы
+sed -i 's/# set tabstospaces/set tabstospaces/g' /etc/nanorc
+# Удаление пробелов в конце строк при сохранении
+sed -i 's/# set trimblanks/set trimblanks/g' /etc/nanorc
+# Принудительное использование Unix-формата окончаний строк (LF)
+sed -i 's/# set unix/set unix/g' /etc/nanorc
+# Умное определение границ слов для выделения текста
+sed -i 's/# set wordbounds/set wordbounds/g' /etc/nanorc
+# ==============================================================================
+# ЕДИНАЯ ЦВЕТОВАЯ СХЕМА (ПУРПУРНО-ЖЕЛТАЯ ГАММА)
+# ==============================================================================
+# Заголовок окна: жирный, белый текст на пурпурном фоне
+sed -i 's/# set titlecolor bold,white,magenta/set titlecolor bold,white,magenta/g' /etc/nanorc
+# Подсказки: черный текст на желтом фоне
+sed -i 's/# set promptcolor black,yellow/set promptcolor black,yellow/g' /etc/nanorc
+# Строка статуса: жирный, белый текст на пурпурном фоне
+sed -i 's/# set statuscolor bold,white,magenta/set statuscolor bold,white,magenta/g' /etc/nanorc
+# Сообщения об ошибках: жирный, белый текст на красном фоне
+sed -i 's/# set errorcolor bold,white,red/set errorcolor bold,white,red/g' /etc/nanorc
+# Поисковые совпадения: черный текст на оранжевом фоне
+sed -i 's/# set spotlightcolor black,orange/set spotlightcolor black,orange/g' /etc/nanorc
+# Выделенный текст: светло-белый текст на голубом фоне
+sed -i 's/# set selectedcolor lightwhite,cyan/set selectedcolor lightwhite,cyan/g' /etc/nanorc
+# Полоса прокрутки: желтый фон
+sed -i 's/# set stripecolor ,yellow/set stripecolor ,yellow/g' /etc/nanorc
+# Скроллбар: пурпурный цвет
+sed -i 's/# set scrollercolor magenta/set scrollercolor magenta/g' /etc/nanorc
+# Номера строк: пурпурный цвет
+sed -i 's/# set numbercolor magenta/set numbercolor magenta/g' /etc/nanorc
+# Горячие клавиши: светло-пурпурный
+sed -i 's/# set keycolor lightmagenta/set keycolor lightmagenta/g' /etc/nanorc
+# Функциональные клавиши: пурпурный
+sed -i 's/# set functioncolor magenta/set functioncolor magenta/g' /etc/nanorc
+# ==============================================================================
+# ДОПОЛНИТЕЛЬНЫЕ НАСТРОЙКИ
+# ==============================================================================
+# Включение подсветки синтаксиса для всех поддерживаемых языков
+sed -i 's/# include \/usr\/share\/nano\/\*\.nanorc/include \/usr\/share\/nano\/\*\.nanorc/g' /etc/nanorcetc/nanorc
+clear
+echo ""
+echo ""
+echo "######################################
+## <<< НАСТРОЙКА NANO ЗАВЕРШЕНА >>> ##
+######################################"
+echo ""
+echo ""
+
+
+
+
+
+
+
+
+########################
+##  HOST, ПАРОЛЬ ROOT ##
+########################
+
+
+
+
+
+clear
+# Установка имени компьютера (hostname)
+echo "Sony" > /etc/hostname
+# Создание файла hosts (база данных локальных узлов)
+echo "127.0.0.1   localhost" > /etc/hosts
+echo "::1         localhost" >> /etc/hosts
+echo "127.0.1.1   Sony.localdomain   Sony" >> /etc/hosts
+clear
+echo ""
+echo ""
+echo "###################################
+## <<<  СОЗДАЙТЕ ПАРОЛЬ ROOT >>> ##
+###################################"
+echo ""
+echo ""
+# Задаём пароль (root)
+passwd
+clear
+echo ""
+echo ""
+echo "##############################################
+## <<<  НАСТРОЙКА ROOT И HOST ЗАВЕРШЕНА >>> ##
+##############################################"
+echo ""
+echo ""
+
+
+
+
+
+###############################
+## ПОЛЬЗОВАТЕЛЬ И ЕГО ПАРОЛЬ ##
+###############################
+
+
+
+
+
+
+clear
+# Создание нового пользователя с указанными параметрами
+useradd login -m -c "User Name" -s /bin/bash
+# Добавление пользователя в системные группы
+usermod -aG wheel,users login
+# Разрешение sudo для группы wheel
+sed -i s/'# %wheel ALL=(ALL:ALL) ALL'/'%wheel ALL=(ALL:ALL) ALL'/g /etc/sudoers
+clear
+echo ""
+echo ""
+echo "###########################################
+## <<<  СОЗДАЙТЕ ПАРОЛЬ ПОЛЬЗОВАТЕЛЯ >>> ##
+###########################################"
+echo ""
+echo ""
+# Задаём пароль для пользователя (login)
+passwd login
+clear
+echo ""
+echo ""
+echo "###############################################
+## <<<  НАСТРОЙКА ПОЛЬЗОВАТЕЛЯ ЗАВЕРШЕНА >>> ##
+###############################################"
+echo ""
+echo ""
+
+
+
+
+
+#####################################
+### УСТ.ЯДРА, GRUB и MKINITCPIO.#####
+#####################################
+
+
+
+
+
+
+clear
+# 1. Установка пакетов
+pacman -Syy
+# Ядро Linux и компоненты
+pacman -S --noconfirm linux-lts linux-lts-headers linux-firmware
+# Загрузчик и управление загрузкой
+pacman -S --noconfirm grub grub-btrfs os-prober
+# Сетевое управление
+pacman -S --noconfirm networkmanager wpa_supplicant wireless_tools
+# Удалённый доступ
+pacman -S --noconfirm openssh
+# Интерфейс загрузки (Plymouth)
+pacman -S --noconfirm plymouth
+# 2. Включение служб
+systemctl enable NetworkManager.service grub-btrfsd.service sshd.service
+# 3. Установка GRUB
+grub-install --recheck /dev/sda
+# 4. Получение UUID SWAP раздела (/dev/sda3)
+SWAP_UUID=$(blkid -s UUID -o value /dev/sda3)
+# 5. Настройка параметров GRUB
+sed -i "s/#GRUB_DISABLE_OS_PROBER=false/GRUB_DISABLE_OS_PROBER=false/" /etc/default/grub
+sed -i "s|GRUB_CMDLINE_LINUX_DEFAULT=\".*\"|GRUB_CMDLINE_LINUX_DEFAULT=\"quiet splash plymouth resume=UUID=${SWAP_UUID} udev.log_priority=3 rootflags=subvol=@\"|" /etc/default/grub
+# 6. Настройка grub-btrfs
+sed -i "s/#GRUB_BTRFS_SUBMENUNAME=\"Arch Linux snapshots\"/GRUB_BTRFS_SUBMENUNAME=\"Arch Linux snapshots\"/" /etc/default/grub-btrfs/config
+sed -i "s/#GRUB_BTRFS_TITLE_FORMAT=(\"timedatectl status\" \"snapshot\" \"type\" \"description\")/GRUB_BTRFS_TITLE_FORMAT=(\"description\" \"date\")/" /etc/default/grub-btrfs/config
+# 7. Исправление службы shutdown ramfs
+sed -i 's/ProtectSystem=strict/ProtectSystem=full/' /usr/lib/systemd/system/mkinitcpio-generate-shutdown-ramfs.service
+# 8. Настройка mkinitcpio
+sed -i 's/MODULES=()/MODULES=(btrfs)/' /etc/mkinitcpio.conf
+sed -i 's|^HOOKS=.*|HOOKS=(base udev plymouth autodetect modconf kms keyboard keymap block grub-btrfs-overlayfs btrfs filesystems fsck resume)|' /etc/mkinitcpio.conf
+# 9. Генерация конфигурации GRUB
+grub-mkconfig -o /boot/grub/grub.cfg
+# 10. Пересборка образов initramfs
+mkinitcpio -P
+clear
+echo ""
+echo ""
+echo "##################################################
+##    УСТАНОВКА БАЗОВОЙ СИСТЕМЫ ЗАВЕРШЕНА       ##
+##         И ГОТОВА К ИСПОЛЬЗОВАНИЮ.            ##
+##  ПРИ ЖЕЛАНИИ ВЫ МОЖЕТЕ ВЫЙТИ ИЗ УСТАНОВЩИКА, ##
+##         ЛИБО ПРОДОЛЖИТЬ УСТАНОВКУ.           ##
+##################################################"
+echo ""
+echo ""
+
+
+
+
+
+
+
+
+#############################################
+### УСТАНОВКА БАЗОВОЙ СИСТЕМЫ ЗАВЕРШЕНА #####
+#############################################
+
+
+
+#######################
+## СИСТЕМНЫЕ УТИЛИТЫ ##
+#######################
+
+
+
+
+
+
+clear
+pacman -Syy
+# Генератор энтропии
+pacman -S --noconfirm haveged
+systemctl enable haveged.service
+# Базовые утилиты
+pacman -S --noconfirm wget vim usbutils lsof dmidecode dialog zip unzip unrar p7zip lzop lrzip
+# Файловые системы
+pacman -S --noconfirm dosfstools ntfs-3g btrfs-progs exfatprogs gptfdisk fuse2 fuse3 fuseiso
+# Системные сервисы
+pacman -S --noconfirm cronie chrony
+systemctl enable cronie.service chrony-wait.service chronyd.service
+# Bluetooth
+pacman -S --noconfirm bluez bluez-utils
+systemctl enable bluetooth.service
+sed -i s/'#AutoEnable=true'/'AutoEnable=true'/g /etc/bluetooth/main.conf
+# Печать и PDF
+pacman -S --noconfirm cups cups-pdf ghostscript gsfonts
+systemctl enable cups.service
+# Рабочий стол
+pacman -S --noconfirm xdg-utils xdg-user-dirs
+# Multimedia (PipeWire)
+pacman -S --noconfirm wireplumber pipewire-alsa pipewire-pulse pipewire-jack pipewire-v4l2 pipewire-zeroconf alsa-utils
+systemctl --global enable pipewire.socket pipewire-pulse.socket
+# Multimedia (codecs)
+pacman -S --noconfirm gstreamer gst-plugins-{base,good,bad,ugly} gst-libav ffmpeg a52dec faac faad2 flac lame libdca libdv libmad libmpeg2 libtheora libvorbis wavpack x264 x265 xvidcore libdvdcss intel-media-driver libva-utils mesa-vdpau libva-mesa-driver vlc
+pacman -S --noconfirm lib32-mesa-vdpau lib32-libva-mesa-driver
+# Документация
+pacman -S --noconfirm man-db man-pages man-pages-ru
+# Информация о системе
+pacman -S --noconfirm fastfetch hyfetch
+# XORG
+pacman -S --noconfirm xorg-server xorg-xinit xorg-xkill xorg-xclock
+clear
+echo ""
+echo ""
+echo "Видеокарты:" && lspci -nn | grep -i 'vga' ; echo "Драйверы:" && lsmod | grep -iE 'nvidia|amdgpu|i915'
+echo ""
+echo ""
+echo "#####################################
+## <<<  УСТАНОВКА XORG-DRIVERS >>> ##
+#####################################"
+echo ""
+echo ""
+pacman -S xorg-drivers
+clear
+echo ""
+echo ""
+echo "############################################################
+## <<<  УСТАНОВКА СИСТЕМНЫХ ПРОГРАММ И XORG ЗАВЕРШЕНА >>> ##
+############################################################"
+echo ""
+echo ""
+
+
+
+
+
+
+
+######################################################
+### УСТАНОВКА КОМПОНЕНТОВ ДЛЯ ВИРТУАЛЬНОЙ МАШИНЫ #####
+######################################################
+
+
+
+clear
+pacman -S --noconfirm virtualbox-guest-utils open-vm-tools qemu-guest-agent
+clear
+
+
+
+########################################################
+############### Установка графической оболочки #########
+########################################################
+
+
+
+
+###################
+## Установка KDE ##
+###################
+
+
+
+
+clear
+pacman -Syy
+# Plasma
+# Рабочий стол/Окна:
+pacman -S --noconfirm plasma-desktop plasma-workspace kwin kwin-x11 kwayland libplasma kdecoration layer-shell-qt plasma5support
+# Виджеты/Дополнения:
+pacman -S --noconfirm kdeplasma-addons plasma-systemmonitor plasma-sdk
+# Темы/Оформление:
+pacman -S --noconfirm breeze breeze-gtk aurorae oxygen qqc2-breeze-style oxygen-sounds ocean-sound-theme kgamma
+# Системные службы/Инфо:
+pacman -S --noconfirm kactivitymanagerd plasma-activities plasma-activities-stats kinfocenter ksystemstats libksysguard powerdevil kmenuedit kde-cli-tools kwrited milou
+# Настройки (KCM):
+pacman -S --noconfirm systemsettings kde-gtk-config kscreen libkscreen plasma-nm plasma-pa plasma-firewall sddm-kcm plymouth-kcm krdp flatpak-kcm wacomtablet plasma-disks plasma-thunderbolt
+# Безопасность:
+pacman -S --noconfirm kscreenlocker polkit-kde-agent kwallet-pam ksshaskpass plasma-vault
+# Аппаратура:
+pacman -S --noconfirm bluedevil plasma-disks plasma-thunderbolt kpipewire
+# Приложения:
+pacman -S --noconfirm discover spectacle drkonqi print-manager plasma-welcome
+# Сеть:
+pacman -S --noconfirm plasma-nm krdp
+# Звук:
+pacman -S --noconfirm plasma-pa oxygen-sounds ocean-sound-theme
+# Загрузка:
+pacman -S --noconfirm breeze-plymouth plymouth-kcm sddm-kcm
+# Интеграция:
+pacman -S --noconfirm plasma-integration kde-gtk-config flatpak-kcm plasma-browser-integration xdg-desktop-portal-kde
+# kde-system
+pacman -S --noconfirm khelpcenter ksystemlog
+# kde-utilities
+pacman -S --noconfirm ark filelight kate kcalc kfind yakuake
+# kde-sdk
+pacman -S --noconfirm dolphin-plugins
+# kde-multimedia
+pacman -S --noconfirm audiocd-kio elisa
+# kde-graphics
+pacman -S --noconfirm gwenview okular
+clear
+systemctl enable sddm
+clear
+echo ""
+echo ""
+echo "#############################################
+## <<<  УСТАНОВКА KDE PLASMA ЗАВЕРШЕНА >>> ##
+#############################################"
+echo ""
+echo ""
+exit
+
+
+
+
+umount -R /mnt
+poweroff
+
+
+
+rm -r .ssh/
+
+
+
+
+
+
+
+###############################
+## КОНФИГУРАЦИЯ ПОЛЬЗОВАТЕЛЯ ##
+###############################
+
+
+
+
+
+clear
+# xinitrc
+echo "export DESKTOP_SESSION=plasma" > ~/.xinitrc
+echo "exec startplasma-x11" >> ~/.xinitrc
+sudo cp ~/.xinitrc /root/.xinitrc
+systemctl --user --now enable pipewire pipewire-pulse wireplumber
+clear
+
+
+
+
+
+# zsh
+sudo pacman -S --noconfirm zsh git curl
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+clear
+
+
+
+# ohmyzsh-congig
+chsh -s $(which zsh)
+sed -i s/'ZSH_THEME=\"robbyrussell\"'/'ZSH_THEME=\"agnoster\"'/g ~/.zshrc
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
+mv zsh-syntax-highlighting ~/.oh-my-zsh/plugins
+echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
+git clone https://github.com/zsh-users/zsh-autosuggestions
+mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
+sed -i s/'plugins=(git)'/'plugins=(git archlinux extract themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
+echo "hyfetch" >> ~/.zshrc
+sudo reboot
+
+
+
+
+
+############################
+## Установка Arch Trinity ##
+############################
+
+
+
+
+clear
+pacman -Syy
+# Xorg
+pacman -S --noconfirm xorg
+echo "#" >> /etc/pacman.conf
+echo "#" >> /etc/pacman.conf
+echo "# Official Trinity ArchLinux repository" >> /etc/pacman.conf
+echo "[trinity]" >> /etc/pacman.conf
+echo "Server = https://mirror.ppa.trinitydesktop.org/trinity/archlinux/x86_64/" >> /etc/pacman.conf
+pacman-key --recv-key  D6D6FAA25E9A3E4ECD9FBDBEC93AF1698685AD8B
+pacman-key --lsign-key D6D6FAA25E9A3E4ECD9FBDBEC93AF1698685AD8B
+pacman -Syy
+pacman -S --noconfirm tde-meta gdb blueman
+systemctl enable tdm.service
+clear
+echo ""
+echo ""
+echo "###############################################
+## <<<  УСТАНОВКА ARCH TRINITY ЗАВЕРШЕНА >>> ##
+###############################################"
+echo ""
+echo ""
+exit
+
+
+
+umount -R /mnt
+poweroff
+
+
+
+rm -r .ssh/
+
+
+
+
+
+###############################
+## КОНФИГУРАЦИЯ ПОЛЬЗОВАТЕЛЯ ##
+###############################
+
+
+
+clear
+# xinitrc
+echo "exec /opt/trinity/bin/starttde" > ~/.xinitrc
+sudo cp ~/.xinitrc /root/.xinitrc
+systemctl --user --now enable pipewire pipewire-pulse wireplumber
+clear
+
+
+
+
+
+# zsh
+sudo pacman -S --noconfirm zsh git curl
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+clear
+
+
+
+# ohmyzsh-congig
+chsh -s $(which zsh)
+sed -i s/'ZSH_THEME=\"robbyrussell\"'/'ZSH_THEME=\"agnoster\"'/g ~/.zshrc
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
+mv zsh-syntax-highlighting ~/.oh-my-zsh/plugins
+echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
+git clone https://github.com/zsh-users/zsh-autosuggestions
+mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
+sed -i s/'plugins=(git)'/'plugins=(git archlinux extract themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
+echo "hyfetch" >> ~/.zshrc
+sudo reboot
+
+
+
+
+#####################
+## Установка XFCE4 ##
+#####################
+
+
+
+
+clear
+pacman -Syy
+pacman -S --noconfirm xfce4
+pacman -S --noconfirm mousepad thunar-archive-plugin thunar-media-tags-plugin xfburn xfce4-artwork xfce4-battery-plugin xfce4-clipman-plugin xfce4-cpufreq-plugin xfce4-cpugraph-plugin xfce4-dict xfce4-diskperf-plugin xfce4-eyes-plugin xfce4-fsguard-plugin xfce4-genmon-plugin xfce4-mailwatch-plugin xfce4-mount-plugin xfce4-mpc-plugin xfce4-netload-plugin xfce4-notes-plugin xfce4-notifyd xfce4-places-plugin xfce4-pulseaudio-plugin xfce4-screensaver  xfce4-screenshooter xfce4-sensors-plugin xfce4-smartbookmark-plugin xfce4-systemload-plugin  xfce4-taskmanager xfce4-time-out-plugin xfce4-timer-plugin xfce4-verve-plugin xfce4-wavelan-plugin xfce4-weather-plugin xfce4-whiskermenu-plugin xfce4-xkb-plugin xdg-user-dirs
+pacman -S --noconfirm mugshot pavucontrol archlinux-xdg-menu xdg-desktop-portal-gtk menulibre network-manager-applet
+update-menus
+pacman -S --noconfirm lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
+pacman -S --noconfirm blueman engrampa ffmpegthumbnailer libgsf udiskie evince
+pacman -S --noconfirm catfish galculator libopenraw mtpfs ntp numlockx perl-file-mimeinfo pidgin powertop unace xcursor-simpleandsoft xcursor-vanilla-dmz-aa gcolor3 xiccd
+systemctl enable lightdm.service
+clear
+echo ""
+echo ""
+echo "########################################
+## <<<  УСТАНОВКА XFCE4 ЗАВЕРШЕНА >>> ##
+########################################"
+echo ""
+echo ""
+exit
+
+
+
+
+umount -R /mnt
+poweroff
+
+
+
+rm -r .ssh/
+
+
+
+###############################
+## КОНФИГУРАЦИЯ ПОЛЬЗОВАТЕЛЯ ##
+###############################
+
+
+
+clear
+# xinitrc
+echo "exec startxfce4" > ~/.xinitrc
+sudo cp ~/.xinitrc /root/.xinitrc
+systemctl --user --now enable pipewire pipewire-pulse wireplumber
+clear
+## Флаги ##
+mkdir -p ~/.local/share/xfce4/xkb/flags/
+cd ~/.local/share/xfce4/xkb/flags/
+wget https://upload.wikimedia.org/wikipedia/commons/5/53/Nuvola_USA_flag.svg
+wget https://upload.wikimedia.org/wikipedia/commons/a/ac/Nuvola_Russian_flag.svg
+mv -i Nuvola_USA_flag.svg us.svg
+mv -i Nuvola_Russian_flag.svg ru.svg
+cd
+clear
+
+
+
+
+
+# zsh
+sudo pacman -S --noconfirm zsh git curl
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+clear
+
+
+
+# ohmyzsh-congig
+chsh -s $(which zsh)
+sed -i s/'ZSH_THEME=\"robbyrussell\"'/'ZSH_THEME=\"agnoster\"'/g ~/.zshrc
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
+mv zsh-syntax-highlighting ~/.oh-my-zsh/plugins
+echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
+git clone https://github.com/zsh-users/zsh-autosuggestions
+mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
+sed -i s/'plugins=(git)'/'plugins=(git archlinux extract themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
+echo "hyfetch" >> ~/.zshrc
+sudo reboot
+
+
+
+#####################
+## Установка Gnome ##
+#####################
+
+
+
+
+
+clear
+pacman -Syy
+#  Gnome
+# Базовый рабочий стол GNOME
+pacman -S --noconfirm gnome-shell gdm gnome-session gnome-control-center gnome-settings-daemon
+# Системные компоненты и сервисы
+pacman -S --noconfirm gnome-keyring gvfs grilo-plugins xdg-desktop-portal-gnome xdg-user-dirs-gtk
+# Основные приложения
+pacman -S --noconfirm nautilus gnome-software epiphany gnome-console gnome-text-editor
+# Мультимедиа
+pacman -S --noconfirm gnome-music totem loupe eog gnome-snapshot simple-scan
+# Утилиты и инструменты
+pacman -S --noconfirm gnome-calculator gnome-calendar gnome-clocks gnome-characters gnome-contacts gnome-weather gnome-maps gnome-disk-utility gnome-font-viewer gnome-logs gnome-color-manager baobab
+# Сетевая интеграция
+pacman -S --noconfirm gnome-connections gnome-remote-desktop gnome-user-share
+# Документация и доступность
+pacman -S --noconfirm gnome-user-docs yelp orca gnome-tour
+# Дополнительные сервисы
+pacman -S --noconfirm rygel sushi malcontent
+# Бэкенды GVFS (для устройств и облаков)
+pacman -S --noconfirm gvfs-afc gvfs-gphoto2 gvfs-mtp gvfs-smb gvfs-nfs gvfs-google gvfs-onedrive gvfs-goa gvfs-dnssd gvfs-wsdd
+systemctl enable gdm
+echo "[User]" > /var/lib/AccountsService/users/root
+echo "SystemAccount=true" > /var/lib/AccountsService/users/root
+#  Gnome-extra
+pacman -S --noconfirm dconf-editor eog file-roller gnome-devel-docs gnome-multi-writer gnome-notes gnome-sound-recorder gnome-terminal gnome-tweaks seahorse sysprof
+pacman -S --noconfirm gnome-browser-connector gnome-firmware gnome-shell-extension-appindicator gnome-shell-extension-arc-menu gnome-shell-extension-dash-to-panel gnuchess power-profiles-daemon squashfs-tools
+pacman -S --noconfirm gthumb gtkmm3 system-config-printer deja-dup
+pacman -S --noconfirm adw-gtk-theme gnome-themes-extra
+pacman -S --noconfirm ffmpegthumbnailer
+clear
+echo ""
+echo ""
+echo "########################################
+## <<<  УСТАНОВКА GNOME ЗАВЕРШЕНА >>> ##
+########################################"
+echo ""
+echo ""
+exit
+
+
+
+
+umount -R /mnt
+poweroff
+
+
+
+rm -r .ssh/
+
+
+
+###############################
+## КОНФИГУРАЦИЯ ПОЛЬЗОВАТЕЛЯ ##
+###############################
+
+
+
+
+clear
+# xinitrc
+echo "export XDG_SESSION_TYPE=x11" > ~/.xinitrc
+echo "export GDK_BACKEND=x11" >> ~/.xinitrc
+echo "exec gnome-session" >> ~/.xinitrc
+sudo cp ~/.xinitrc /root/.xinitrc
+systemctl --user --now enable pipewire pipewire-pulse wireplumber
+clear
+
+
+
+
+
+
+
+
+# zsh
+sudo pacman -S --noconfirm zsh git curl
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+clear
+
+
+# ohmyzsh-congig
+chsh -s $(which zsh)
+sed -i s/'ZSH_THEME=\"robbyrussell\"'/'ZSH_THEME=\"agnoster\"'/g ~/.zshrc
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
+mv zsh-syntax-highlighting ~/.oh-my-zsh/plugins
+echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
+git clone https://github.com/zsh-users/zsh-autosuggestions
+mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
+sed -i s/'plugins=(git)'/'plugins=(git archlinux extract themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
+echo "hyfetch" >> ~/.zshrc
+sudo reboot
+
+
+
+
+
+
+########################
+## Установка Cinnamon ##
+########################
+
+
+
+
+
+clear
+pacman -Syy
+pacman -S --noconfirm cinnamon cinnamon-translations blueman dconf-editor ffmpegthumbnailer gcolor3 gnome-disk-utility gnome-keyring gnome-online-accounts gnome-screenshot gnome-system-monitor gnome-terminal gnome-themes-extra mousetweaks onboard pavucontrol powertop system-config-printer  xreader xdg-desktop-portal-gnome evince
+pacman -S --noconfirm nemo-fileroller nemo-preview nemo-python nemo-share
+pacman -S --noconfirm kvantum
+pacman -S --noconfirm icon-naming-utils
+pacman -S --noconfirm baobab galculator netctl numlockx python-pyxdg qt5ct redshift squashfs-tools tree udiskie
+pacman -S --noconfirm lightdm lightdm-slick-greeter
+systemctl enable lightdm.service
+sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
+clear
+echo ""
+echo ""
+echo "##################################
+## <<<  УСТАНОВКА ЗАВЕРШЕНА >>> ##
+##################################"
+echo ""
+echo ""
+exit
+
+
+
+
+umount -R /mnt
+poweroff
+
+
+
+rm -r .ssh/
+
+
+
+###############################
+## КОНФИГУРАЦИЯ ПОЛЬЗОВАТЕЛЯ ##
+###############################
+
+
+
+
+yay -S bibata-cursor-theme mint-l-theme mint-themes xed bulky mintstick pix gg iso-flag-png
+
+
+
+
+clear
+# xinitrc
+echo "exec cinnamon-session" > ~/.xinitrc
+sudo cp ~/.xinitrc /root/.xinitrc
+systemctl --user --now enable pipewire pipewire-pulse wireplumber
+clear
+
+
+
+
+
+
+
+# zsh
+sudo pacman -S --noconfirm zsh git curl
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+clear
+
+
+
+# ohmyzsh-congig
+chsh -s $(which zsh)
+sed -i s/'ZSH_THEME=\"robbyrussell\"'/'ZSH_THEME=\"agnoster\"'/g ~/.zshrc
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
+mv zsh-syntax-highlighting ~/.oh-my-zsh/plugins
+echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
+git clone https://github.com/zsh-users/zsh-autosuggestions
+mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
+sed -i s/'plugins=(git)'/'plugins=(git archlinux extract themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
+echo "hyfetch" >> ~/.zshrc
+sudo reboot
+
+
+
+####################
+## Установка Mate ##
+####################
+
+
+
+
+clear
+pacman -Syy
+pacman -S --noconfirm mate mate-extra
+pacman -S --noconfirm mate-themes
+pacman -S --noconfirm plank
+pacman -S --noconfirm lightdm lightdm-slick-greeter
+systemctl enable lightdm.service
+sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
+systemctl enable lightdm.service
+clear
+echo ""
+echo ""
+echo "#######################################
+## <<<  УСТАНОВКА MATE ЗАВЕРШЕНА >>> ##
+#######################################"
+echo ""
+echo ""
+exit
+
+
+
+
+umount -R /mnt
+poweroff
+
+
+
+rm -r .ssh/
+
+
+
+###############################
+## КОНФИГУРАЦИЯ ПОЛЬЗОВАТЕЛЯ ##
+###############################
+
+
+
+
+
+clear
+# xinitrc
+echo "exec mate-session" > ~/.xinitrc
+sudo cp ~/.xinitrc /root/.xinitrc
+systemctl --user --now enable pipewire pipewire-pulse wireplumber
+clear
+
+
+
+
+
+
+# zsh
+sudo pacman -S --noconfirm zsh git curl
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+clear
+
+
+
+# ohmyzsh-congig
+chsh -s $(which zsh)
+sed -i s/'ZSH_THEME=\"robbyrussell\"'/'ZSH_THEME=\"agnoster\"'/g ~/.zshrc
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
+mv zsh-syntax-highlighting ~/.oh-my-zsh/plugins
+echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
+git clone https://github.com/zsh-users/zsh-autosuggestions
+mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
+sed -i s/'plugins=(git)'/'plugins=(git archlinux extract themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
+echo "hyfetch" >> ~/.zshrc
+sudo reboot
+
+
+
+
+####################
+## Установка LXQT ##
+####################
+
+
+
+clear
+pacman -Syy
+pacman -S --noconfirm lxqt lxqt-themes xscreensaver picom libstatgrab libsysstat breeze-icons kvantum-qt5 blueman featherpad
+pacman -S --noconfirm  kwin kwin-x11 discover bluedevil systemsettings plasma-sdk aurorae breeze breeze-gtk flatpak-kcm kde-gtk-config kpipewire kscreen kscreenlocker gnome-keyring milou plasma-desktop plasma-pa print-manager qqc2-breeze-style xdg-desktop-portal-kde
+pacman -S --noconfirm sddm sddm-kcm
+systemctl enable sddm.service
+clear
+echo ""
+echo ""
+echo "######################################
+## <<< УСТАНОВКА LXQT ЗАВЕРШЕНА >>> ##
+######################################"
+echo ""
+echo ""
+clear
+exit
+
+
+
+
+umount -R /mnt
+poweroff
+
+
+
+rm -r .ssh/
+
+
+
+###############################
+## КОНФИГУРАЦИЯ ПОЛЬЗОВАТЕЛЯ ##
+###############################
+
+yay --noconfirm -S nm-tray
+
+
+clear
+# xinitrc
+echo "exec startlxqt" > ~/.xinitrc
+sudo cp ~/.xinitrc /root/.xinitrc
+systemctl --user --now enable pipewire pipewire-pulse wireplumber
+clear
+# flags
+mkdir -p /home/login/.local/share/flags
+cd /home/login/.local/share/flags
+wget https://upload.wikimedia.org/wikipedia/commons/5/53/Nuvola_USA_flag.svg
+wget https://upload.wikimedia.org/wikipedia/commons/a/ac/Nuvola_Russian_flag.svg
+mv -i Nuvola_USA_flag.svg us.svg
+mv -i Nuvola_Russian_flag.svg ru.svg
+cd
+sed -i s/'layout\_flag_pattern\='/'layout\_flag_pattern\=\/home\/login\/.local\/share\/flags\/%1.svg'/g ~/.config/lxqt/panel.conf
+clear
+
+
+
+
+
+
+# zsh
+sudo pacman -S --noconfirm zsh git curl
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+clear
+
+
+
+# ohmyzsh-congig
+chsh -s $(which zsh)
+sed -i s/'ZSH_THEME=\"robbyrussell\"'/'ZSH_THEME=\"agnoster\"'/g ~/.zshrc
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
+mv zsh-syntax-highlighting ~/.oh-my-zsh/plugins
+echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
+git clone https://github.com/zsh-users/zsh-autosuggestions
+mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
+sed -i s/'plugins=(git)'/'plugins=(git archlinux extract themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
+echo "hyfetch" >> ~/.zshrc
+sudo reboot
+
+
+
+####################
+## Установка LXDE ##
+####################
+
+
+
+clear
+pacman -Syy
+pacman -S --noconfirm lxde leafpad openbox pavucontrol alsa-utils xfce4-notifyd
+pacman -S --noconfirm xscreensaver picom libstatgrab libsysstat mugshot dunst
+pacman -S --noconfirm lxqt-archiver ffmpegthumbnailer
+pacman -S --noconfirm thunar-archive-plugin  thunar-media-tags-plugin thunar-shares-plugin ffmpegthumbnailer libgsf udiskie
+update-menus
+pacman -S --noconfirm lightdm lightdm-slick-greeter
+pacman -S --noconfirm blueman lxqt-archiver ffmpegthumbnailer
+sed -i s/'#greeter-session=example-gtk-gnome'/'greeter-session=lightdm-slick-greeter'/g /etc/lightdm/lightdm.conf
+sed -i s/'#display-setup-script='/'display-setup-script=xrandr --output Virtual-1 --mode 1920x1080'/g /etc/lightdm/lightdm.conf
+systemctl enable lightdm.service
+clear
+echo ""
+echo ""
+echo "######################################
+## <<< УСТАНОВКА LXDE ЗАВЕРШЕНА >>> ##
+######################################"
+echo ""
+echo ""
+exit
+
+
+
+
+umount -R /mnt
+poweroff
+
+
+
+rm -r .ssh/
+
+
+
+###############################
+## КОНФИГУРАЦИЯ ПОЛЬЗОВАТЕЛЯ ##
+###############################
+
+
+
+clear
+# xinitrc
+echo "exec startlxde" > ~/.xinitrc
+sudo cp ~/.xinitrc /root/.xinitrc
+systemctl --user --now enable pipewire pipewire-pulse wireplumber
+clear
+
+
+
+
+
+
+
+# zsh
+sudo pacman -S --noconfirm zsh git curl
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+clear
+
+
+
+# ohmyzsh-congig
+chsh -s $(which zsh)
+sed -i s/'ZSH_THEME=\"robbyrussell\"'/'ZSH_THEME=\"agnoster\"'/g ~/.zshrc
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
+mv zsh-syntax-highlighting ~/.oh-my-zsh/plugins
+echo "source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
+git clone https://github.com/zsh-users/zsh-autosuggestions
+mv zsh-autosuggestions ~/.oh-my-zsh/custom/plugins
+sed -i s/'plugins=(git)'/'plugins=(git archlinux extract themes zsh-navigation-tools zsh-autosuggestions)'/g ~/.zshrc
+echo "hyfetch" >> ~/.zshrc
+sudo reboot
+
+
+yay -S --noconfirm nm-tray arc-gtk-theme exaile
+
+############################################################
+################# FINISH ###################################
+############################################################
