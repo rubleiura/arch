@@ -1,0 +1,208 @@
+##################################
+## ИНФОРМАЦИЯ О РАЗДЕЛАХ ДИСКОВ ##
+##################################
+
+
+lsblk -o PATH,PTTYPE,PARTTYPE,FSTYPE,PARTTYPENAME
+
+
+
+#########################################
+## ИНФОРМАЦИЯ ОБ УСТАНОВЛЕННЫХ ПАКЕТАХ ##
+#########################################
+
+
+pacman -Qqet | grep -v “$(pacman -Qqg base)”
+
+
+
+##################################################################
+## Показать все пакеты группы plasma (доступные в репозиториях) ##
+##################################################################
+
+
+pacman -Sg plasma
+
+
+
+
+#################
+## YAY-AUR ##
+#################
+
+
+
+
+clear
+echo ""
+echo ""
+echo "###########################
+## <<<  ИДЁТ УСТАНОВКА YAY >>> ##
+#################################"
+echo ""
+echo ""
+sudo pacman -Syy
+clear
+sudo pacman -S git --noconfirm
+clear
+git clone https://aur.archlinux.org/yay-bin.git
+cd yay-bin/
+makepkg -si
+cd
+sudo rm -r yay-bin/
+clear
+echo ""
+echo ""
+echo "################################
+## <<<  УСТАНОВКА УАУ ЗАВЕРШЕНА >>> ##
+######################################"
+echo ""
+echo ""
+
+
+
+
+
+
+
+
+
+
+#############
+##  OCTOPI ##
+#############
+
+
+
+
+
+clear
+echo ""
+echo ""
+echo "####################################
+## <<<  ИДЁТ УСТАНОВКА OCTOPI >>> ##
+####################################"
+echo ""
+echo ""
+yay -Syy
+yay -S --noconfirm octopi
+clear
+echo ""
+echo ""
+echo "#########################################
+## <<<  УСТАНОВКА OCTOPI ЗАВЕРШЕНА >>> ##
+#########################################"
+echo ""
+echo ""
+
+
+
+
+
+
+######################
+##  BTRFS ASSISTANT ##
+######################
+
+
+
+
+
+clear
+echo ""
+echo ""
+echo "#############################################
+## <<<  ИДЁТ УСТАНОВКА BTRFS ASSISTANT >>> ##
+#############################################"
+echo ""
+echo ""
+yay -Syy
+yay -S --noconfirm grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant
+clear
+echo ""
+echo ""
+echo "##################################################
+## <<<  УСТАНОВКА BTRFS ASSISTANT ЗАВЕРШЕНА >>> ##
+##################################################"
+echo ""
+echo ""
+
+
+
+
+
+
+###############
+## Программы ##
+###############
+
+
+
+
+
+
+clear
+echo ""
+echo ""
+echo "###################################################
+## <<<  ИДЁТ УСТАНОВКА ПРОГРАММ ПОЛЬЗОВАТЕЛЯ >>> ##
+###################################################"; sleep 3
+echo ""
+echo ""
+yay -Syy
+clear
+yay -S --noconfirm chromium qbittorrent thunderbird-i18n-ru
+clear
+yay -S --noconfirm libreoffice-fresh-ru doublecmd-qt6
+clear
+yay -S --noconfirm btop cpu-x hardinfo2 htop system-monitoring-center
+clear
+yay -S --noconfirm ventoy-bin gparted
+clear
+yay -S --noconfirm grub-customizer grub2-theme-arch-leap
+clear
+yay -S --noconfirm radiotray-ng ocs-url
+clear
+yay -S --noconfirm glib2-devel user-admin
+clear
+yay -S --noconfirm  update-grub
+clear
+echo ""
+echo ""
+echo "########################################################
+## <<<  УСТАНОВКА ПРОГРАММ ПОЛЬЗОВАТЕЛЯ ЗАВЕРШЕНА >>> ##
+########################################################"
+echo ""
+echo ""
+sudo reboot
+
+
+# Открыть hardinfo2
+hardinfo2
+# Выбрать пункт Устройства памяти
+# согласно инструкции выполнить эти пункты
+sudo pacman -Syy
+sudo pacman -S --noconfirm dmidecode
+sudo systemctl enable hardinfo2.service --now
+(login) Заданное имя пользователя
+sudo usermod -a -G hardinfo2 login
+# MODPROBE выбрать с галочкой
+# (or eeprom) (for SDR, DDR, DDR2, DDR3)
+sudo modprobe at24
+# (for DDR4)
+sudo modprobe ee1004
+# (for DDR5)
+sudo modprobe spd5118
+
+
+
+
+
+
+
+
+
+
+
+
+
