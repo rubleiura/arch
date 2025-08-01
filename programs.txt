@@ -7,8 +7,8 @@
 1. Информация о разделах диска:
    lsblk -o PATH,PTTYPE,PARTTYPE,FSTYPE,PARTTYPENAME,SIZE,MOUNTPOINTS
 
-2. Список установленных пакетов (без базовой группы):
-   pacman -Qqet | grep -v "$(pacman -Qqg base)"
+2. Список установленных пакетов:
+   pacman -Qqet | grep -v "$(pacman -Qqg)"
 
 === 1. УСТАНОВКА СИСТЕМНЫХ УТИЛИТ ===
 
