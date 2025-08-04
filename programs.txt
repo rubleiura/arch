@@ -1,0 +1,197 @@
+###########################################################
+# ПОЛНАЯ ИНСТРУКЦИЯ ПОСЛЕУСТАНОВОЧНОЙ НАСТРОЙКИ ARCH LINUX
+###########################################################
+
+=== ПРЕДВАРИТЕЛЬНЫЕ ПРОВЕРКИ ===
+
+1. Информация о разделах диска:
+   lsblk -o PATH,PTTYPE,PARTTYPE,FSTYPE,PARTTYPENAME,SIZE,MOUNTPOINTS
+
+2. Список установленных пакетов:
+   pacman -Qqet | grep -v "$(pacman -Qqg)"
+
+=== 1. УСТАНОВКА СИСТЕМНЫХ УТИЛИТ ===
+
+---- Yay (AUR Helper) ----
+# Первый и обязательный инструмент для работы с AUR-репозиториями
+sudo pacman -S --needed base-devel git
+git clone https://aur.archlinux.org/yay-bin.git  
+cd yay-bin
+makepkg -si
+cd ..
+rm -rf yay-bin
+yay --version
+
+---- Octopi ----
+# Графический интерфейс для управления пакетами
+yay -S octopi
+
+---- Btrfs Assistant ----
+# Комплекс инструментов для управления файловой системой Btrfs
+# grub-btrfs - для интеграции GRUB с моментальными снимками snapper
+# snapper и связанные с ним пакеты (snap-pac, snapper-tools) - для управления снимками
+# btrfsmaintenance - для задач обслуживания файловой системы
+# btrfs-assistant - сам графический интерфейс
+yay -S --noconfirm grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant
+sudo snapper -c root create-config /
+sudo snapper -c home create-config /home
+sudo systemctl enable snapper-cleanup.timer
+
+---- HardInfo ----
+# Инструмент для диагностики оборудования
+yay -S hardinfo2 dmidecode
+sudo systemctl enable --now hardinfo2.service
+sudo usermod -a -G hardinfo2 $USER
+sudo modprobe at24
+sudo modprobe ee1004
+sudo modprobe spd5118
+echo -e "at24\nee1004\nspd5118" | sudo tee /etc/modules-load.d/hardinfo.conf > /dev/null
+
+=== 2. УСТАНОВКА ПОЛЬЗОВАТЕЛЬСКИХ ПРОГРАММ ===
+
+---- Браузеры ----
+# Chromium: Открытый браузер на движке Blink
+yay -S chromium
+
+---- Торренты ----
+# qBittorrent: Мощный клиент для загрузки торрентов
+yay -S qbittorrent
+
+---- Офисные приложения ----
+# LibreOffice: Полнофункциональный офисный пакет
+# Double Commander: Файловый менеджер с двумя панелями
+yay -S libreoffice-fresh-ru doublecmd-qt6
+
+---- Системные утилиты ----
+# GParted: Редактор разделов диска
+# Ventoy: Создание мультизагрузочных USB
+# CPU-X: Информация о процессоре и памяти
+# Btop: Продвинутый мониторинг ресурсов
+yay -S gparted ventoy-bin cpu-x btop
+
+---- Сетевые приложения ----
+# Thunderbird: Почтовый клиент с русской локализацией
+# RadioTray-NG: Проигрыватель интернет-радио
+yay -S thunderbird-i18n-ru radiotray-ng
+
+---- Настройка системы ----
+# Grub Customizer: Настройка загрузчика GRUB
+# User Admin: Управление пользователями
+yay -S grub-customizer user-admin grub2-theme-arch-leap update-grub
+
+---- VirtualBox ----
+# Мощная система виртуализации
+yay -S virtualbox virtualbox-host-modules-arch
+
+# Добавление пользователя в группу vboxusers (необходимо для USB-устройств)
+sudo usermod -a -G vboxusers $USER
+
+# Установка расширений (для USB 2.0/3.0, поддержки дисков и т.д.)
+yay -S virtualbox-ext-oracle
+
+# Установка гостевых дополнений (для установки внутри гостевых ОС)
+yay -S virtualbox-guest-iso
+
+# !!! ВАЖНО: Если вы используете Wayland (например, KDE Plasma под Wayland),
+# уведомления VirtualBox могут быть неинтерактивны (нельзя закрыть кликом).
+# Чтобы отключить эти уведомления, выполните следующие команды после установки
+# и перезапустите VirtualBox:
+# Отключить мини-тулбар
+VBoxManage setextradata global GUI/ShowMiniToolBar 0
+# Отключить уведомления о пользовательском вводе
+VBoxManage setextradata global GUI/NotifyAboutUserInput 0
+VBoxManage setextradata global GUI/NotifyAbout3DUserInput 0
+# Отключить значки и общие уведомления (если опция существует)
+VBoxManage setextradata global GUI/ShowNotificationIcons 0
+VBoxManage setextradata global GUI/ShowNotifications 0
+
+=== 3. РУЧНАЯ НАСТРОЙКА КОМПОНЕНТОВ ===
+
+---- Настройка Snapper ----
+# Для корневого раздела:
+sudo nano /etc/snapper/configs/root
+
+# Для домашней директории:
+sudo nano /etc/snapper/configs/home
+
+# Пример конфигурации:
+NUMBER_LIMIT="10"           # Хранить 10 последних снимков
+NUMBER_LIMIT_IMPORTANT="5"  # Хранить 5 важных снимков
+TIMELINE_CREATE="yes"       # Включить автоматические снимки
+TIMELINE_LIMIT_HOURLY="5"   # Хранить 5 ежечасных снимков
+TIMELINE_LIMIT_DAILY="7"    # Хранить 7 ежедневных снимков
+
+---- Настройка HardInfo ----
+# После установки выполните:
+sudo systemctl restart hardinfo2.service
+
+# Для проверки работы:
+hardinfo2 -r -m devices.so
+
+# Если данные о памяти не отображаются:
+sudo modprobe -r at24 ee1004 spd5118
+sudo modprobe at24 ee1004 spd5118
+
+=== 4. КОМАНДЫ ДЛЯ УПРАВЛЕНИЯ СИСТЕМОЙ ===
+
+---- Управление снимками Btrfs ----
+# Создать снимок:
+sudo snapper -c root create -d "Описание снимка"
+
+# Просмотреть снимки:
+sudo snapper -c root list
+
+# Сравнить снимки:
+sudo snapper -c root status 10..20
+
+# Восстановить файл:
+sudo snapper -c home undochange 15..20 ~/document.txt
+
+---- Обслуживание Btrfs ----
+# Проверить использование пространства:
+sudo btrfs filesystem usage /
+
+# Выполнить балансировку:
+sudo btrfs balance start /
+
+---- Обновление системы ----
+# Стандартное обновление:
+yay -Syu
+
+# Полное обновление с пересборкой пакетов:
+yay -Syu --rebuild all
+
+# Очистка кеша:
+yay -Sc
+
+=== 5. РЕКОМЕНДАЦИИ И ЗАКЛЮЧЕНИЕ ===
+
+1. После установки выполните перезагрузку:
+   sudo reboot
+
+2. Для Btrfs Assistant:
+   - Откройте btrfs-assistant из меню приложений
+   - Настройте расписание снимков
+   - Проверьте вкладку "Snapshots"
+
+3. Для HardInfo:
+   - Запустите hardinfo2 и проверьте раздел "Memory"
+   - Для мониторинга температур установите:
+        yay -S lm_sensors
+        sudo sensors-detect
+
+4. Дополнительные настройки:
+   - Настройте автоматические обновления в Octopi
+   - Добавьте RadioTray-NG в автозагрузку
+   - Настройте тему GRUB через Grub Customizer
+   - Если вы устанавливали VirtualBox и используете Wayland, не забудьте выполнить команды отключения уведомлений из раздела 2.
+
+5. Важные примечания:
+   - Регулярно создавайте снимки системы перед крупными обновлениями
+   - Проверяйте свободное место в разделе Btrfs
+   - Обновляйте систему не реже 1 раза в неделю
+   - Если уведомления VirtualBox всё же мешают, можно временно переключиться на сессию X11 при входе в систему.
+
+####################################
+# НАСТРОЙКА СИСТЕМЫ ЗАВЕРШЕНА!
+####################################
