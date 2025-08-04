@@ -28,7 +28,7 @@ yay -S octopi
 
 ---- Btrfs Assistant ----
 # Комплекс инструментов для управления файловой системой Btrfs
-yay -S grub-btrfs snapper snap-pac btrfsmaintenance btrfs-assistant
+yay -S --noconfirm grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant
 sudo snapper -c root create-config /
 sudo snapper -c home create-config /home
 sudo systemctl enable snapper-cleanup.timer
