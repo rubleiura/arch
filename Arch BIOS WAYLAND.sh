@@ -123,13 +123,13 @@ echo ""
 lsblk
 echo ""
 echo "Производитель процессора:"
-lshw -C cpu 2>/dev/null | grep 'vendor:' | uniq
+sudo lshw -C cpu 2>/dev/null | grep 'vendor:' | uniq
 echo ""
 echo "Материнская плата:"
-inxi -M
+sudo inxi -M
 echo ""
 echo "Общая информация о системе:"
-inxi -I
+sudo inxi -I
 echo ""
 echo "#################################################"
 echo "## <<< ТЕСТИРОВАНИЕ КОМПЬЮТЕРА ЗАКОНЧИЛОСЬ >>> ##"
