@@ -767,7 +767,7 @@ pacman -S --noconfirm rygel sushi malcontent
 pacman -S --noconfirm gvfs-afc gvfs-gphoto2 gvfs-mtp gvfs-smb gvfs-nfs gvfs-google gvfs-onedrive gvfs-goa gvfs-dnssd gvfs-wsdd
 systemctl enable gdm
 echo "[User]" > /var/lib/AccountsService/users/root
-echo "SystemAccount=true" >> /var/lib/AccountsService/users/root
+echo "SystemAccount=true" > /var/lib/AccountsService/users/root
 pacman -S --noconfirm dconf-editor eog file-roller gnome-devel-docs gnome-multi-writer gnome-notes gnome-sound-recorder gnome-terminal gnome-tweaks seahorse sysprof
 pacman -S --noconfirm gnome-browser-connector gnome-firmware gnome-shell-extension-appindicator gnome-shell-extension-arc-menu gnome-shell-extension-dash-to-panel gnuchess power-profiles-daemon squashfs-tools
 pacman -S --noconfirm gthumb gtkmm3 system-config-printer deja-dup
