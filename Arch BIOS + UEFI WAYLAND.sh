@@ -741,7 +741,7 @@ pacman -S --noconfirm wacomtablet
 pacman -S --noconfirm xdg-desktop-portal-kde plasma-welcome plymouth-kcm
 #### kde-applications ####
 pacman -S --noconfirm falkon krdc krfb konversation kio-zeroconf kdenetwork-filesharing kio-gdrive
-pacman -S --noconfirm elisa ffmpegthumbs kamoso krecorder kwave k3b audiocd-kio audex kmix kdenlive
+pacman -S --noconfirm elisa ffmpegthumbs kamoso krecorder kwave k3b audiocd-kio audex kdenlive
 pacman -S --noconfirm gwenview kamera kcolorchooser kdegraphics-thumbnailers kimagemapeditor skanlite skanpage kolourpaint svgpart kgraphviewer
 pacman -S --noconfirm ghostwriter ark okular kwordquiz kalk korganizer
 pacman -S --noconfirm kdevelop kdevelop-php kdevelop-python kdesdk-kio kdesdk-thumbnailers kde-dev-scripts kde-dev-utils kcachegrind kdebugsettings kjournald massif-visualizer umbrello rocs kapptemplate poxml
