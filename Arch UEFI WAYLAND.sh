@@ -729,25 +729,40 @@ echo ""
 
 
 clear
-pacman -Syy
-pacman -S --noconfirm plasma-desktop plasma-workspace kwin kwin-x11 kwayland libplasma kdecoration layer-shell-qt plasma5support
-pacman -S --noconfirm kdeplasma-addons plasma-systemmonitor plasma-sdk
-pacman -S --noconfirm breeze breeze-gtk aurorae oxygen qqc2-breeze-style oxygen-sounds ocean-sound-theme kgamma
-pacman -S --noconfirm kactivitymanagerd plasma-activities plasma-activities-stats kinfocenter ksystemstats libksysguard powerdevil kmenuedit kde-cli-tools kwrited milou
-pacman -S --noconfirm systemsettings kde-gtk-config kscreen libkscreen plasma-nm plasma-pa plasma-firewall sddm-kcm plymouth-kcm krdp flatpak-kcm wacomtablet plasma-disks plasma-thunderbolt
-pacman -S --noconfirm kscreenlocker polkit-kde-agent kwallet-pam ksshaskpass plasma-vault
-pacman -S --noconfirm bluedevil plasma-disks plasma-thunderbolt kpipewire
-pacman -S --noconfirm discover spectacle drkonqi print-manager plasma-welcome
-pacman -S --noconfirm plasma-nm krdp
-pacman -S --noconfirm plasma-pa oxygen-sounds ocean-sound-theme
-pacman -S --noconfirm breeze-plymouth plymouth-kcm sddm-kcm
-pacman -S --noconfirm plasma-integration kde-gtk-config flatpak-kcm plasma-browser-integration xdg-desktop-portal-kde
-pacman -S --noconfirm khelpcenter ksystemlog
-pacman -S --noconfirm ark filelight kate kcalc kfind yakuake
-pacman -S --noconfirm dolphin-plugins
-pacman -S --noconfirm audiocd-kio elisa ffmpegthumbs
-pacman -S --noconfirm gwenview okular kdegraphics-thumbnailers
-systemctl enable sddm
+#### Plasma ####
+pacman -S --noconfirm plasma-desktop plasma-workspace plasma-workspace-wallpapers kdeplasma-addons kwin kwin-x11 kwayland libplasma plasma5support libkscreen
+pacman -S --noconfirm systemsettings kinfocenter kde-gtk-config polkit-kde-agent sddm-kcm kmenuedit kdecoration kscreen
+pacman -S --noconfirm plasma-browser-integration plasma-activities plasma-activities-stats milou plasma-integration
+pacman -S --noconfirm powerdevil print-manager bluedevil plasma-nm plasma-pa
+pacman -S --noconfirm plasma-firewall plasma-thunderbolt plasma-vault kscreenlocker kwallet-pam
+pacman -S --noconfirm ksystemstats drkonqi plasma-systemmonitor libksysguard plasma-disks
+pacman -S --noconfirm spectacle kgamma ksshaskpass kwrited kglobalacceld krdp
+pacman -S --noconfirm breeze breeze-gtk breeze-plymouth oxygen oxygen-sounds aurorae ocean-sound-theme qqc2-breeze-style
+pacman -S --noconfirm discover flatpak-kcm
+pacman -S --noconfirm kactivitymanagerd kpipewire layer-shell-qt
+pacman -S --noconfirm kde-cli-tools plasma-sdk
+pacman -S --noconfirm wacomtablet
+pacman -S --noconfirm xdg-desktop-portal-kde plasma-welcome plymouth-kcm
+#### kde-applications ####
+pacman -S --noconfirm falkon krdc krfb konversation kio-zeroconf kdenetwork-filesharing kio-gdrive
+pacman -S --noconfirm elisa ffmpegthumbs kamoso krecorder kwave k3b audiocd-kio audex kmix kdenlive
+pacman -S --noconfirm gwenview kamera kcolorchooser kdegraphics-thumbnailers kimagemapeditor skanlite skanpage kolourpaint svgpart kgraphviewer
+pacman -S --noconfirm ghostwriter ark okular kwordquiz kalk korganizer
+pacman -S --noconfirm kdevelop kdevelop-php kdevelop-python kdesdk-kio kdesdk-thumbnailers kde-dev-scripts kde-dev-utils kcachegrind kdebugsettings kjournald massif-visualizer umbrello rocs kapptemplate poxml
+pacman -S --noconfirm filelight ksystemlog kbackup sweeper partitionmanager kde-inotify-survey kcron khelpcenter
+pacman -S --noconfirm ark kcalc konsole kfind keditbookmarks kdf kcharselect kclock kruler kteatime ktimer yakuake dolphin dolphin-plugins kio-extras kio-admin kdialog kleopatra kgpg kwalletmanager accessibility-inspector kcachegrind kdebugsettings kde-dev-utils kde-dev-scripts kde-inotify-survey kdegraphics-thumbnailers kdenetwork-filesharing kdepim-addons kdesdk-kio kdesdk-thumbnailers kjournald massif-visualizer kio-extras kio-gdrive kio-zeroconf krunner
+pacman -S --noconfirm kmag kmousetool kmouth kontrast
+pacman -S --noconfirm colord-kde isoimagewriter signon-kwallet-extension markdownpart kweather lokalize qrca
+pacman -S --noconfirm chromium
+pacman -S --noconfirm htop
+pacman -S --noconfirm qbittorrent
+pacman -S --noconfirm libreoffice-fresh
+pacman -S --noconfirm doublecmd-qt6
+pacman -S --noconfirm smplayer
+pacman -S --noconfirm system-config-printer simple-scan
+sudo systemctl enable sddm.service
+systemctl enable sddm.service
+mkinitcpio -P
 clear
 echo ""
 echo "#############################################"
