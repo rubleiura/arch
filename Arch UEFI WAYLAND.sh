@@ -730,6 +730,7 @@ echo ""
 
 clear
 #### Plasma ####
+pacman -Syy
 pacman -S --noconfirm plasma-desktop plasma-workspace plasma-workspace-wallpapers kdeplasma-addons kwin kwin-x11 kwayland libplasma plasma5support libkscreen
 pacman -S --noconfirm systemsettings kinfocenter kde-gtk-config polkit-kde-agent sddm-kcm kmenuedit kdecoration kscreen
 pacman -S --noconfirm plasma-browser-integration plasma-activities plasma-activities-stats milou plasma-integration
@@ -753,6 +754,7 @@ pacman -S --noconfirm filelight ksystemlog kbackup sweeper partitionmanager kde-
 pacman -S --noconfirm ark kcalc konsole kfind keditbookmarks kdf kcharselect kclock kruler kteatime ktimer yakuake dolphin dolphin-plugins kio-extras kio-admin kdialog kleopatra kgpg kwalletmanager accessibility-inspector kcachegrind kdebugsettings kde-dev-utils kde-dev-scripts kde-inotify-survey kdegraphics-thumbnailers kdenetwork-filesharing kdepim-addons kdesdk-kio kdesdk-thumbnailers kjournald massif-visualizer kio-extras kio-gdrive kio-zeroconf krunner
 pacman -S --noconfirm kmag kmousetool kmouth kontrast
 pacman -S --noconfirm colord-kde isoimagewriter signon-kwallet-extension markdownpart kweather lokalize qrca
+#
 pacman -S --noconfirm chromium
 pacman -S --noconfirm htop
 pacman -S --noconfirm qbittorrent
@@ -783,25 +785,44 @@ echo ""
 
 
 
+
+
 clear
+###  GNOME  ##
 pacman -Syy
-pacman -S --noconfirm gnome-shell gdm gnome-session gnome-control-center gnome-settings-daemon
-pacman -S --noconfirm gnome-keyring gvfs grilo-plugins xdg-desktop-portal-gnome xdg-user-dirs-gtk
-pacman -S --noconfirm nautilus gnome-software epiphany gnome-console gnome-text-editor
-pacman -S --noconfirm gnome-music totem loupe eog gnome-snapshot simple-scan
-pacman -S --noconfirm gnome-calculator gnome-calendar gnome-clocks gnome-characters gnome-contacts gnome-weather gnome-maps gnome-disk-utility gnome-font-viewer gnome-logs gnome-color-manager baobab
-pacman -S --noconfirm gnome-connections gnome-remote-desktop gnome-user-share
-pacman -S --noconfirm gnome-user-docs yelp orca gnome-tour
-pacman -S --noconfirm rygel sushi malcontent
-pacman -S --noconfirm gvfs-afc gvfs-gphoto2 gvfs-mtp gvfs-smb gvfs-nfs gvfs-google gvfs-onedrive gvfs-goa gvfs-dnssd gvfs-wsdd
+pacman -S --noconfirm gnome-shell gnome-session gnome-settings-daemon
+pacman -S --noconfirm gnome-control-center gnome-backgrounds gnome-menus gnome-user-docs gnome-color-manager
+pacman -S --noconfirm nautilus gvfs gvfs-afc gvfs-dnssd gvfs-goa gvfs-google gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-onedrive gvfs-smb gvfs-wsdd gnome-keyring
+pacman -S --noconfirm gnome-system-monitor gnome-logs gnome-disk-utility baobab
+pacman -S --noconfirm epiphany gnome-connections gnome-remote-desktop gnome-maps
+pacman -S --noconfirm evince gnome-text-editor gnome-calculator gnome-font-viewer
+pacman -S --noconfirm gnome-calendar gnome-contacts gnome-clocks gnome-weather tecla orca
+pacman -S --noconfirm gnome-characters gnome-tour gnome-user-share sushi decibels malcontent grilo-plugins yelp gnome-console
+# Центр программ
+pacman -S --noconfirm gnome-software
+pacman -S --noconfirm gdm
+pacman -S --noconfirm xdg-desktop-portal-gnome xdg-user-dirs-gtk
+pacman -S --noconfirm rygel
+#
+###  gnome-extra  ###
+pacman -S --noconfirm dconf-editor
+pacman -S --noconfirm file-roller ghex d-spy
+pacman -S --noconfirm gnome-sound-recorder
+pacman -S --noconfirm gnome-tweaks
+pacman -S --noconfirm endeavour
+#
+pacman -S --noconfirm ristretto
+pacman -S --noconfirm chromium
+pacman -S --noconfirm htop
+pacman -S --noconfirm qbittorrent
+pacman -S --noconfirm libreoffice-fresh
+pacman -S --noconfirm doublecmd-qt6
+pacman -S --noconfirm smplayer elisa
+pacman -S --noconfirm system-config-printer simple-scan
 systemctl enable gdm
 echo "[User]" > /var/lib/AccountsService/users/root
 echo "SystemAccount=true" > /var/lib/AccountsService/users/root
-pacman -S --noconfirm dconf-editor eog file-roller gnome-devel-docs gnome-multi-writer gnome-notes gnome-sound-recorder gnome-terminal gnome-tweaks seahorse sysprof
-pacman -S --noconfirm gnome-browser-connector gnome-firmware gnome-shell-extension-appindicator gnome-shell-extension-arc-menu gnome-shell-extension-dash-to-panel gnuchess power-profiles-daemon squashfs-tools
-pacman -S --noconfirm gthumb gtkmm3 system-config-printer deja-dup
-pacman -S --noconfirm adw-gtk-theme gnome-themes-extra
-pacman -S --noconfirm ffmpegthumbnailer
+mkinitcpio -P
 clear
 echo ""
 echo "########################################"
