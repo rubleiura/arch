@@ -749,6 +749,7 @@ pacman -S --noconfirm filelight ksystemlog kbackup sweeper partitionmanager kde-
 pacman -S --noconfirm ark kcalc konsole kfind keditbookmarks kdf kcharselect kclock kruler kteatime ktimer yakuake dolphin dolphin-plugins kio-extras kio-admin kdialog kleopatra kgpg kwalletmanager accessibility-inspector kcachegrind kdebugsettings kde-dev-utils kde-dev-scripts kde-inotify-survey kdegraphics-thumbnailers kdenetwork-filesharing kdepim-addons kdesdk-kio kdesdk-thumbnailers kjournald massif-visualizer kio-extras kio-gdrive kio-zeroconf krunner
 pacman -S --noconfirm kmag kmousetool kmouth kontrast
 pacman -S --noconfirm colord-kde isoimagewriter signon-kwallet-extension markdownpart kweather lokalize qrca
+#
 pacman -S --noconfirm chromium
 pacman -S --noconfirm htop
 pacman -S --noconfirm qbittorrent
@@ -801,6 +802,7 @@ pacman -S --noconfirm file-roller ghex d-spy
 pacman -S --noconfirm gnome-sound-recorder
 pacman -S --noconfirm gnome-tweaks
 pacman -S --noconfirm endeavour
+#
 pacman -S --noconfirm ristretto
 pacman -S --noconfirm chromium
 pacman -S --noconfirm htop
