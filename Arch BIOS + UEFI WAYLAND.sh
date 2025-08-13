@@ -756,7 +756,6 @@ pacman -S --noconfirm libreoffice-fresh
 pacman -S --noconfirm doublecmd-qt6
 pacman -S --noconfirm smplayer
 pacman -S --noconfirm system-config-printer simple-scan
-sudo systemctl enable sddm.service
 systemctl enable sddm.service
 mkinitcpio -P
 clear
