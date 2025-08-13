@@ -715,6 +715,7 @@ echo ""
 
 clear
 #### Plasma ####
+pacman -Syy
 pacman -S --noconfirm plasma-desktop plasma-workspace plasma-workspace-wallpapers kdeplasma-addons kwin kwin-x11 kwayland libplasma plasma5support libkscreen
 pacman -S --noconfirm systemsettings kinfocenter kde-gtk-config polkit-kde-agent sddm-kcm kmenuedit kdecoration kscreen
 pacman -S --noconfirm plasma-browser-integration plasma-activities plasma-activities-stats milou plasma-integration
@@ -773,6 +774,7 @@ echo ""
 
 clear
 ###  GNOME  ##
+pacman -Syy
 pacman -S --noconfirm gnome-shell gnome-session gnome-settings-daemon
 pacman -S --noconfirm gnome-control-center gnome-backgrounds gnome-menus gnome-user-docs gnome-color-manager
 pacman -S --noconfirm nautilus gvfs gvfs-afc gvfs-dnssd gvfs-goa gvfs-google gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-onedrive gvfs-smb gvfs-wsdd gnome-keyring
