@@ -409,10 +409,10 @@ ln -sf /usr/share/zoneinfo/$time_zone /etc/localtime
 hwclock --systohc
 pacman -Syy
 COUNTRY=$(curl -s https://ipapi.co/country_code)
-sudo curl -L "https://archlinux.org/mirrorlist/?country=${COUNTRY}&protocol=https" -o /etc/pacman.d/mirrorlist.raw
-sudo sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.raw
+curl -L "https://archlinux.org/mirrorlist/?country=${COUNTRY}&protocol=https" -o /etc/pacman.d/mirrorlist.raw
+sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.raw
 sudo rankmirrors -n 5 /etc/pacman.d/mirrorlist.raw > /etc/pacman.d/mirrorlist
-sudo rm /etc/pacman.d/mirrorlist.raw
+rm /etc/pacman.d/mirrorlist.raw
 systemctl enable reflector.timer
 clear
 echo ""
