@@ -411,7 +411,7 @@ pacman -Syy
 COUNTRY=$(curl -s https://ipapi.co/country_code)
 curl -L "https://archlinux.org/mirrorlist/?country=${COUNTRY}&protocol=https" -o /etc/pacman.d/mirrorlist.raw
 sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.raw
-sudo rankmirrors -n 5 /etc/pacman.d/mirrorlist.raw > /etc/pacman.d/mirrorlist
+rankmirrors -n 5 /etc/pacman.d/mirrorlist.raw > /etc/pacman.d/mirrorlist
 rm /etc/pacman.d/mirrorlist.raw
 systemctl enable reflector.timer
 clear
