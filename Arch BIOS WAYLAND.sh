@@ -1044,6 +1044,7 @@ yay -S --noconfirm grub-btrfs snapper snap-pac snapper-tools btrfsmaintenance bt
 sudo systemctl enable --now snapper-cleanup.timer
 yay -S --noconfirm gparted ventoy-bin
 yay -S --noconfirm grub-customizer user-admin grub2-theme-arch-leap update-grub
+yay -S --noconfirm stacer-bin
 sudo pacman -S --noconfirm chromium
 sudo pacman -S --noconfirm htop
 sudo pacman -S --noconfirm qbittorrent
