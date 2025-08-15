@@ -1052,9 +1052,8 @@ grep -q "plugins=(.*extract.*)" ~/.zshrc || sed -i "s/\(plugins=(\)\(.*\)\()\)/\
 grep -q "plugins=(.*zsh-syntax-highlighting.*)" ~/.zshrc || sed -i "s/\(plugins=(\)\(.*\)\()\)/\1\2 zsh-syntax-highlighting\3/" ~/.zshrc
 grep -q "plugins=(.*zsh-autosuggestions.*)" ~/.zshrc || sed -i "s/\(plugins=(\)\(.*\)\()\)/\1\2 zsh-autosuggestions\3/" ~/.zshrc
 grep -q "hyfetch" ~/.zshrc || echo "hyfetch" >> ~/.zshrc
-yay -S --noconfirm grub-btrfs snapper snap-pac snapper-tools btrfsmaintenance btrfs-assistant
-sudo systemctl enable snapper-cleanup.timer
 yay -Syy
+yay -S --noconfirm octopi
 yay -S --noconfirm gparted ventoy-bin
 yay -S --noconfirm grub-customizer user-admin grub2-theme-arch-leap update-grub
 yay -S --noconfirm stacer-bin
