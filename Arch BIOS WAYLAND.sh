@@ -824,6 +824,7 @@ pacman -S --noconfirm lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
 pacman -S --noconfirm blueman engrampa ffmpegthumbnailer libgsf udiskie evince
 pacman -S --noconfirm catfish galculator libopenraw mtpfs ntp numlockx perl-file-mimeinfo pidgin powertop unace xcursor-simpleandsoft xcursor-vanilla-dmz-aa gcolor3 xiccd
 systemctl enable lightdm.service
+mkinitcpio -P
 clear
 echo ""
 echo "########################################"
@@ -1042,9 +1043,11 @@ grep -q "plugins=(.*zsh-autosuggestions.*)" ~/.zshrc || sed -i "s/\(plugins=(\)\
 grep -q "hyfetch" ~/.zshrc || echo "hyfetch" >> ~/.zshrc
 yay -S --noconfirm grub-btrfs snapper snap-pac snapper-tools btrfsmaintenance btrfs-assistant
 sudo systemctl enable --now snapper-cleanup.timer
+yay -Syy
 yay -S --noconfirm gparted ventoy-bin
 yay -S --noconfirm grub-customizer user-admin grub2-theme-arch-leap update-grub
 yay -S --noconfirm stacer-bin
+sudo pacman -Syy
 sudo pacman -S --noconfirm chromium
 sudo pacman -S --noconfirm htop
 sudo pacman -S --noconfirm qbittorrent
