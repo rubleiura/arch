@@ -712,15 +712,18 @@ echo ""
 
 
 
-########################################################
-############### Установка графической оболочки #########
-########################################################
+# ######################################################
+# ## 🌌 БЛОК 15: УСТАНОВКА ГРАФИЧЕСКОЙ СРЕДЫ ###########
+# ######################################################
+#
+# Зачем: Выбор удобной среды .
+# Включает: Все компоненты системы
 
 
 
 
 # #######################################################
-# ## 🌌 БЛОК 15: УСТАНОВКА KDE PLASMA ###################
+# ## 🌌 УСТАНОВКА KDE PLASMA ###########################№
 # #######################################################
 #
 # Зачем: Установка среды KDE Plasma.
@@ -754,14 +757,6 @@ pacman -S --noconfirm filelight ksystemlog kbackup sweeper partitionmanager kde-
 pacman -S --noconfirm ark kcalc konsole kfind keditbookmarks kdf kcharselect kclock kruler kteatime ktimer yakuake dolphin dolphin-plugins kio-extras kio-admin kdialog kleopatra kgpg kwalletmanager accessibility-inspector kcachegrind kdebugsettings kde-dev-utils kde-dev-scripts kde-inotify-survey kdegraphics-thumbnailers kdenetwork-filesharing kdepim-addons kdesdk-kio kdesdk-thumbnailers kjournald massif-visualizer kio-extras kio-gdrive kio-zeroconf krunner
 pacman -S --noconfirm kmag kmousetool kmouth kontrast
 pacman -S --noconfirm colord-kde isoimagewriter signon-kwallet-extension markdownpart kweather lokalize qrca
-#
-pacman -S --noconfirm chromium
-pacman -S --noconfirm htop
-pacman -S --noconfirm qbittorrent
-pacman -S --noconfirm libreoffice-fresh
-pacman -S --noconfirm doublecmd-qt6
-pacman -S --noconfirm smplayer
-pacman -S --noconfirm system-config-printer simple-scan
 systemctl enable sddm.service
 mkinitcpio -P
 clear
@@ -776,7 +771,7 @@ echo ""
 
 
 # #######################################################
-# ## 🌐 БЛОК 16: УСТАНОВКА GNOME ########################
+# ## 🌐 УСТАНОВКА GNOME #################################
 # #######################################################
 #
 # Зачем: Установка GNOME с полной интеграцией.
@@ -810,15 +805,6 @@ pacman -S --noconfirm file-roller ghex d-spy
 pacman -S --noconfirm gnome-sound-recorder
 pacman -S --noconfirm gnome-tweaks
 pacman -S --noconfirm endeavour
-#
-pacman -S --noconfirm ristretto
-pacman -S --noconfirm chromium
-pacman -S --noconfirm htop
-pacman -S --noconfirm qbittorrent
-pacman -S --noconfirm libreoffice-fresh
-pacman -S --noconfirm doublecmd-qt6
-pacman -S --noconfirm smplayer elisa
-pacman -S --noconfirm system-config-printer simple-scan
 systemctl enable gdm
 echo "[User]" > /var/lib/AccountsService/users/root
 echo "SystemAccount=true" > /var/lib/AccountsService/users/root
@@ -835,7 +821,7 @@ echo ""
 
 
 # ########################################################
-# ## 🪟 БЛОК 17: УСТАНОВКА XFCE4 #########################
+# ## 🪟 УСТАНОВКА XFCE4 ##################################
 # ########################################################
 #
 # Зачем: Установка XFCE4 с расширенными компонентами.
@@ -891,7 +877,7 @@ echo ""
 
 
 # #######################################################
-# ## 🕯️ БЛОК 19: УСТАНОВКА CINNAMON #####################
+# ## 🕯️ УСТАНОВКА CINNAMON ##############################
 # #######################################################
 #
 # Зачем: Установка Cinnamon с дополнительными пакетами.
@@ -918,7 +904,7 @@ echo ""
 
 
 # ########################################################
-# ## 🧩 БЛОК 20: УСТАНОВКА LXQT ##########################
+# ## 🧩 УСТАНОВКА LXQT ###################################
 # ########################################################
 #
 # Зачем: Установка LXQt с KWin и SDDM.
@@ -945,7 +931,7 @@ echo ""
 
 
 # ########################################################
-# ## 🖼️ БЛОК 21: УСТАНОВКА LXDE ##########################
+# ## 🖼️ УСТАНОВКА LXDE ###################################
 # ########################################################
 #
 # Зачем: Установка LXDE с Openbox и LightDM.
@@ -974,7 +960,7 @@ echo ""
 
 
 # ########################################################
-# ## 🌳 БЛОК 22: УСТАНОВКА TRINITY DESKTOP ###############
+# ## 🌳 УСТАНОВКА TRINITY DESKTOP #######################№
 # ########################################################
 #
 # Зачем: Установка Trinity Desktop (KDE3-подобный).
@@ -1006,8 +992,95 @@ echo ""
 
 
 
+
+##########################################################
+# ## 🌳 БЛОК 16: ДОПОЛНЕНИЯ ПОЛЬЗОВАТЕЛЬСКОЙ СРЕДЫ #######
+# ########################################################
+#
+# Зачем: Установка дополнительных компонентов системы).
+# Включает: пакеты пользоватя
+
+
+
+
+#######################################################
+# ## 🌳 БЛОК 16.1: ВХОД В ПОЛЬЗОВАТЕЛЬСУЮ СРЕДУ #######
+# #####################################################
+#
+# Зачем: Подготовка для установки пакетов из (AUR)
+# Включает: git, curl.
+
+
+
+
+
+clear
+pacman -Syy
+pacman -S --needed --noconfirm git curl
+sed -i 's/# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/%wheel ALL=(ALL:ALL) NOPASSWD: ALL/g' /etc/sudoers
+clear
+su - login
+
+
+
+
+
+
+
+#################################################################
+# ## 🌳 БЛОК 16.2: УСТАНОВКА И ВЫХОД ИЗ ПОЛЬЗОВАТЕЛЬСКОЙ СРЕДЫ ##
+# ###################################################№###########
+#
+# Зачем: Установка пакетов
+# Включает: btrfs-assistant другие пакеты
+
+
+
+
+
+clear
+git clone https://aur.archlinux.org/yay-bin.git
+cd yay-bin
+makepkg -si --noconfirm
+cd ..
+rm -rf yay-bin
+sudo pacman -S --noconfirm zsh
+[ ! -d "$HOME/.oh-my-zsh" ] && { export CHSH=no; export RUNZSH=no; sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended; }
+[ "$(getent passwd $USER | cut -d: -f7)" != "$(which zsh)" ] && chsh -s "$(which zsh)"
+sed -i 's/^ZSH_THEME=.*/ZSH_THEME="agnoster"/' ~/.zshrc
+[ ! -d "$HOME/.oh-my-zsh/plugins/zsh-syntax-highlighting" ] && git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/plugins/zsh-syntax-highlighting
+[ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ] && git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+grep -q "plugins=(.*archlinux.*)" ~/.zshrc || sed -i "s/\(plugins=(\)\(.*\)\()\)/\1\2 archlinux\3/" ~/.zshrc
+grep -q "plugins=(.*extract.*)" ~/.zshrc || sed -i "s/\(plugins=(\)\(.*\)\()\)/\1\2 extract\3/" ~/.zshrc
+grep -q "plugins=(.*zsh-syntax-highlighting.*)" ~/.zshrc || sed -i "s/\(plugins=(\)\(.*\)\()\)/\1\2 zsh-syntax-highlighting\3/" ~/.zshrc
+grep -q "plugins=(.*zsh-autosuggestions.*)" ~/.zshrc || sed -i "s/\(plugins=(\)\(.*\)\()\)/\1\2 zsh-autosuggestions\3/" ~/.zshrc
+grep -q "hyfetch" ~/.zshrc || echo "hyfetch" >> ~/.zshrc
+yay -S --noconfirm grub-btrfs snapper snap-pac snapper-tools btrfsmaintenance btrfs-assistant
+sudo systemctl enable --now snapper-cleanup.timer
+yay -S --noconfirm gparted ventoy-bin
+yay -S --noconfirm grub-customizer user-admin grub2-theme-arch-leap update-grub
+sudo pacman -S --noconfirm chromium
+sudo pacman -S --noconfirm htop
+sudo pacman -S --noconfirm qbittorrent
+sudo pacman -S --noconfirm libreoffice-fresh
+sudo pacman -S --noconfirm doublecmd-qt6
+sudo pacman -S --noconfirm smplayer
+sudo pacman -S --noconfirm system-config-printer simple-scan
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+sudo mkinitcpio -P
+sudo sed -i 's/%wheel ALL=(ALL:ALL) NOPASSWD: ALL/# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/g' /etc/sudoers
+clear
+exit
+
+
+
+
+
+
+
+
 # #######################################################
-# ## 🧱 БЛОК 23: ВЫХОД ИЗ УСТАНОВКИ #####################
+# ## 🧱 БЛОК 17: ВЫХОД ИЗ УСТАНОВКИ #####################
 # #######################################################
 #
 # Зачем: Завершение установки, отмонтирование, выключение.
@@ -1017,9 +1090,15 @@ echo ""
 
 
 exit
+
+
 umount -R /mnt
 swapoff -a
 poweroff
+
+
+
+
 # rm -r .ssh/  # Раскомментировать, если нужно очистить SSH-сессию
 
 
