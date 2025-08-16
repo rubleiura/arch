@@ -1048,6 +1048,8 @@ yay -S --noconfirm octopi
 yay -S --noconfirm gparted ventoy-bin
 yay -S --noconfirm grub-customizer user-admin grub2-theme-arch-leap update-grub
 yay -S --noconfirm stacer-bin
+yay -S --noconfirm grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant
+sudo systemctl enable snapper-cleanup.timer
 sudo pacman -Syy
 sudo pacman -S --noconfirm chromium
 sudo pacman -S --noconfirm htop
