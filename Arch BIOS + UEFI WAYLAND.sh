@@ -72,6 +72,9 @@ echo ""
 
 
 clear
+curl -o /etc/pacman.d/mirrorlist https://archlinux.org/mirrorlist/all/
+sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
+reflector --age 12 --protocol https --sort score --save /etc/pacman.d/mirrorlist
 timedatectl set-ntp true
 pacman -Syy
 sudo pacman -S --noconfirm pacman-contrib curl
@@ -405,11 +408,10 @@ time_zone=$(curl -s https://ipinfo.io/timezone)
 ln -sf /usr/share/zoneinfo/$time_zone /etc/localtime
 hwclock --systohc
 pacman -Syy
-COUNTRY=$(curl -s https://ipapi.co/country_code)
-curl -L "https://archlinux.org/mirrorlist/?country=${COUNTRY}&protocol=https" -o /etc/pacman.d/mirrorlist.raw
-sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.raw
-rankmirrors -n 5 /etc/pacman.d/mirrorlist.raw > /etc/pacman.d/mirrorlist
-rm /etc/pacman.d/mirrorlist.raw
+curl -o /etc/pacman.d/mirrorlist https://archlinux.org/mirrorlist/all/
+sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
+reflector --age 12 --protocol https --sort score --save /etc/pacman.d/mirrorlist
+pacman -Syy
 systemctl enable reflector.timer
 clear
 echo ""
