@@ -407,7 +407,6 @@ export LANG=XXXX.UTF-8
 time_zone=$(curl -s https://ipinfo.io/timezone)
 ln -sf /usr/share/zoneinfo/$time_zone /etc/localtime
 hwclock --systohc
-pacman -Syy
 curl -o /etc/pacman.d/mirrorlist https://archlinux.org/mirrorlist/all/
 sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
 reflector --age 12 --protocol https --sort score --save /etc/pacman.d/mirrorlist
