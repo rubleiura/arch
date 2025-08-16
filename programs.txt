@@ -65,7 +65,7 @@ echo ""
 # * snapper и связанные с ним пакеты (snap-pac, snapper-tools) - для управления снимками
 # * btrfsmaintenance - для задач обслуживания файловой системы
 # * btrfs-assistant - сам графический интерфейс
-yay -S --noconfirm grub-btrfs snapper snap-pac snapper-tools btrfsmaintenance btrfs-assistant
+yay -S --noconfirm grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant
 sudo snapper -c root create-config /
 sudo snapper -c home create-config /home
 sudo systemctl enable --now snapper-cleanup.timer
