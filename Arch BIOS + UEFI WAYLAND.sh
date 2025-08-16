@@ -748,7 +748,7 @@ pacman -S --noconfirm xdg-desktop-portal-kde plasma-welcome plymouth-kcm
 pacman -S --noconfirm falkon krdc krfb konversation kio-zeroconf kdenetwork-filesharing kio-gdrive
 pacman -S --noconfirm elisa ffmpegthumbs kamoso krecorder kwave k3b audiocd-kio audex kdenlive
 pacman -S --noconfirm gwenview kamera kcolorchooser kdegraphics-thumbnailers kimagemapeditor skanlite skanpage kolourpaint svgpart kgraphviewer
-pacman -S --noconfirm ghostwriter ark okular kwordquiz kalk korganizer
+pacman -S --noconfirm ghostwriter ark okular kwordquiz kalk korganizer kate
 pacman -S --noconfirm kdevelop kdevelop-php kdevelop-python kdesdk-kio kdesdk-thumbnailers kde-dev-scripts kde-dev-utils kcachegrind kdebugsettings kjournald massif-visualizer umbrello rocs kapptemplate poxml
 pacman -S --noconfirm filelight ksystemlog kbackup sweeper partitionmanager kde-inotify-survey kcron khelpcenter
 pacman -S --noconfirm ark kcalc konsole kfind keditbookmarks kdf kcharselect kclock kruler kteatime ktimer yakuake dolphin dolphin-plugins kio-extras kio-admin kdialog kleopatra kgpg kwalletmanager accessibility-inspector kcachegrind kdebugsettings kde-dev-utils kde-dev-scripts kde-inotify-survey kdegraphics-thumbnailers kdenetwork-filesharing kdepim-addons kdesdk-kio kdesdk-thumbnailers kjournald massif-visualizer kio-extras kio-gdrive kio-zeroconf krunner
