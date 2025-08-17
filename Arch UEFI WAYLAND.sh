@@ -821,19 +821,19 @@ echo ""
 
 
 
-# Питание ноутбука (раскоменируйте в случае необходимости)
-# Настройки действий кнопок питания и крышки ноутбука, а также режимов сна и гибернации
+## Питание ноутбука (раскоменируйте в случае необходимости)
+## Настройки действий кнопок питания и крышки ноутбука, а также режимов сна и гибернации
 
-# Вариант 1
-# Кнопка питания выключает компьютер, а закрытие крышки переводит его в сон:
+## Вариант 1
+## Кнопка питания выключает компьютер, а закрытие крышки переводит его в сон:
 # mkdir -p /etc/systemd/logind.conf.d
 # echo "[Login]" > /etc/systemd/logind.conf.d/50-power-options.conf
 # echo "HandlePowerKey=poweroff" >> /etc/systemd/logind.conf.d/50-power-options.conf
 # echo "HandleLidSwitch=suspend" >> /etc/systemd/logind.conf.d/50-power-options.conf
 # echo "HandleLidSwitchDocked=ignore" >> /etc/systemd/logind.conf.d/50-power-options.conf
 
-# Вариант 2
-# Кнопка питания выключает компьютер, а закрытие крышки переводит в гибернацию:
+## Вариант 2
+## Кнопка питания выключает компьютер, а закрытие крышки переводит в гибернацию:
 # mkdir -p /etc/systemd/logind.conf.d
 # echo "[Login]" > /etc/systemd/logind.conf.d/50-power-options.conf
 # echo "HandlePowerKey=poweroff" >> /etc/systemd/logind.conf.d/50-power-options.conf
@@ -841,8 +841,8 @@ echo ""
 # echo "HandleLidSwitchExternalPower=hibernate" >> /etc/systemd/logind.conf.d/50-power-options.conf
 # echo "HandleLidSwitchDocked=hibernate" >> /etc/systemd/logind.conf.d/50-power-options.conf
 
-# Вариант 3
-# Кнопка питания выключает компьютер, а закрытие крышки ничего не происходит:
+## Вариант 3
+## Кнопка питания выключает компьютер, а закрытие крышки ничего не происходит:
 # mkdir -p /etc/systemd/logind.conf.d
 # echo "[Login]" > /etc/systemd/logind.conf.d/50-power-options.conf
 # echo "HandlePowerKey=poweroff" >> /etc/systemd/logind.conf.d/50-power-options.conf
