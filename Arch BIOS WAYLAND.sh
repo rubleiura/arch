@@ -792,6 +792,8 @@ pacman -S --noconfirm file-roller ghex d-spy
 pacman -S --noconfirm gnome-sound-recorder
 pacman -S --noconfirm gnome-tweaks
 pacman -S --noconfirm endeavour
+#
+pacman -S --noconfirm ristretto
 systemctl enable gdm
 echo "[User]" > /var/lib/AccountsService/users/root
 echo "SystemAccount=true" > /var/lib/AccountsService/users/root
@@ -854,7 +856,7 @@ pacman -S --noconfirm xfce4 mousepad thunar-archive-plugin thunar-media-tags-plu
 pacman -S --noconfirm mugshot pavucontrol archlinux-xdg-menu xdg-desktop-portal-gtk menulibre network-manager-applet
 update-menus
 pacman -S --noconfirm lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
-pacman -S --noconfirm blueman engrampa ffmpegthumbnailer libgsf udiskie evince
+pacman -S --noconfirm blueman engrampa ffmpegthumbnailer libgsf udiskie evince ristretto
 pacman -S --noconfirm catfish galculator libopenraw mtpfs ntp numlockx perl-file-mimeinfo pidgin powertop unace xcursor-simpleandsoft xcursor-vanilla-dmz-aa gcolor3 xiccd
 systemctl enable lightdm.service
 mkinitcpio -P
