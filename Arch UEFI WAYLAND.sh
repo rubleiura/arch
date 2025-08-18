@@ -873,6 +873,7 @@ update-menus
 pacman -S --noconfirm lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
 pacman -S --noconfirm blueman engrampa ffmpegthumbnailer libgsf udiskie evince ristretto
 pacman -S --noconfirm catfish galculator libopenraw mtpfs ntp numlockx perl-file-mimeinfo pidgin powertop unace xcursor-simpleandsoft xcursor-vanilla-dmz-aa gcolor3 xiccd
+pacman -S --noconfirm gvfs gvfs-afc gvfs-dnssd gvfs-goa gvfs-google gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-onedrive gvfs-smb gvfs-wsdd gnome-keyring
 #
 pacman -S --noconfirm audacious audacious-plugins
 systemctl enable lightdm.service
@@ -902,6 +903,7 @@ clear
 pacman -Syy
 pacman -S --noconfirm mate mate-extra mate-applet-dock mate-applet-streamer plank network-manager-applet blueman
 pacman -S --noconfirm lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
+pacman -S --noconfirm gvfs gvfs-afc gvfs-dnssd gvfs-goa gvfs-google gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-onedrive gvfs-smb gvfs-wsdd gnome-keyring
 #
 pacman -S --noconfirm audacious audacious-plugins
 systemctl enable lightdm.service
