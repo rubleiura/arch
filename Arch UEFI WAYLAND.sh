@@ -898,9 +898,10 @@ echo ""
 
 clear
 pacman -Syy
-pacman -S --noconfirm mate mate-extra mate-themes plank lightdm lightdm-slick-greeter
-sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=lightdm-slick-greeter/' /etc/lightdm/lightdm.conf
+pacman -S --noconfirm mate mate-extra mate-applet-dock mate-applet-streamer plank network-manager-applet blueman
+pacman -S --noconfirm lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
 systemctl enable lightdm.service
+mkinitcpio -P
 clear
 echo ""
 echo "#######################################"
@@ -1092,6 +1093,10 @@ grep -q "plugins=(.*zsh-syntax-highlighting.*)" ~/.zshrc || sed -i "s/\(plugins=
 grep -q "plugins=(.*zsh-autosuggestions.*)" ~/.zshrc || sed -i "s/\(plugins=(\)\(.*\)\()\)/\1\2 zsh-autosuggestions\3/" ~/.zshrc
 grep -q "hyfetch" ~/.zshrc || echo "hyfetch" >> ~/.zshrc
 yay -Syy
+#################
+# Mate
+# yay -S --noconfirm mate-menu brisk-menu mate-tweak
+#################
 yay -S --noconfirm octopi
 yay -S --noconfirm gparted ventoy-bin
 yay -S --noconfirm grub-customizer user-admin grub2-theme-arch-leap update-grub
