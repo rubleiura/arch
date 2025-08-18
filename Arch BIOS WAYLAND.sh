@@ -1091,7 +1091,7 @@ sudo systemctl enable snapper-cleanup.timer
 sudo pacman -Syy
 #################
 # Mate
-# yay -S --noconfirm mate-menu brisk-menu mate-tweak
+# yay -S --noconfirm mate-menu brisk-menu mate-tweak iso-flag-png
 #################
 sudo pacman -S --noconfirm chromium
 sudo pacman -S --noconfirm htop
