@@ -1094,7 +1094,7 @@ grep -q "hyfetch" ~/.zshrc || echo "hyfetch" >> ~/.zshrc
 yay -Syy
 #################
 # Mate
-# yay -S --noconfirm mate-menu brisk-menu mate-tweak
+# yay -S --noconfirm mate-menu brisk-menu mate-tweak iso-flag-png
 #################
 yay -S --noconfirm octopi
 yay -S --noconfirm gparted ventoy-bin
