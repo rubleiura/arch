@@ -883,9 +883,10 @@ echo ""
 
 clear
 pacman -Syy
-pacman -S --noconfirm mate mate-extra mate-themes plank lightdm lightdm-slick-greeter
-sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=lightdm-slick-greeter/' /etc/lightdm/lightdm.conf
+pacman -S --noconfirm mate mate-extra mate-applet-dock mate-applet-streamer plank network-manager-applet blueman
+pacman -S --noconfirm lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
 systemctl enable lightdm.service
+mkinitcpio -P
 clear
 echo ""
 echo "#######################################"
@@ -1084,6 +1085,10 @@ yay -S --noconfirm stacer-bin
 yay -S --noconfirm grub-btrfs snapper snap-pac snapper-support snapper-tools btrfsmaintenance btrfs-assistant
 sudo systemctl enable snapper-cleanup.timer
 sudo pacman -Syy
+#################
+# Mate
+# yay -S --noconfirm mate-menu brisk-menu mate-tweak
+#################
 sudo pacman -S --noconfirm chromium
 sudo pacman -S --noconfirm htop
 sudo pacman -S --noconfirm qbittorrent
