@@ -82,6 +82,12 @@ sudo modprobe spd5118
 echo -e "at24\nee1004\nspd5118" | sudo tee /etc/modules-load.d/hardinfo.conf > /dev/null
 clear
 
+
+###########
+## Gnome ##
+###########
+# yay -S --noconfirm gnome-browser-connector-git
+
 ###########
 ## XFCE4 ##
 ###########
