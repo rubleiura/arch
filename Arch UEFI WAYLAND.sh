@@ -808,6 +808,7 @@ pacman -S --noconfirm gnome-sound-recorder
 pacman -S --noconfirm gnome-tweaks
 pacman -S --noconfirm endeavour
 #
+pacman -S --noconfirm tumbler ffmpegthumbnailer poppler-glib
 pacman -S --noconfirm ristretto
 systemctl enable gdm
 echo "[User]" > /var/lib/AccountsService/users/root
