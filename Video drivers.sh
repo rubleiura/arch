@@ -84,10 +84,7 @@ echo "options nvidia-drm modeset=1" > /etc/modprobe.d/nvidia.conf
 echo "options nvidia NVreg_DynamicPowerManagement=0x02" >> /etc/modprobe.d/nvidia.conf  # Для ноутбуков, экономия энергии
 echo "nvidia-drm" > /etc/modules-load.d/nvidia-drm.conf
 
-# Б. Конфиг для Wayland (улучшает совместимость):
-echo -e 'Section "OutputClass"\n    Identifier "nvidia"\n    MatchDriver "nvidia-drm"\n    Driver "nvidia"\n    Option "AllowExternalGpus" "true"\n    Option "PrimaryGPU" "yes"\nEndSection' > /etc/X11/xorg.conf.d/10-nvidia-wayland.conf
-
-# В. Переменные среды для гибридной графики (Prime Offloading):
+# Б. Переменные среды для гибридной графики (Prime Offloading):
 # Полезны ТОЛЬКО для гибридных систем. Не вредят, если установлен nvidia-prime.
 echo -e '__NV_PRIME_RENDER_OFFLOAD=1\n__VK_LAYER_NV_optimus=NVIDIA_only' >> /etc/environment
 
