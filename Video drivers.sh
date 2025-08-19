@@ -79,8 +79,8 @@
 # А. Настройка модулей ядра в /etc/modprobe.d/nvidia.conf:
 # ВАЖНО: Параметр NVreg_PreserveVideoMemoryAllocations=1 КОНФЛИКТУЕТ С ГИБЕРНАЦИЕЙ!
 # Он закомментирован. Раскомментируйте ТОЛЬКО если вы точно знаете, зачем он нужен.
+# echo "options nvidia NVreg_PreserveVideoMemoryAllocations=1" >> /etc/modprobe.d/nvidia.conf
 echo "options nvidia-drm modeset=1" > /etc/modprobe.d/nvidia.conf
-# echo "options nvidia NVreg_PreserveVideoMemoryAllocations=1" >> /etc/modprobe.d/nvidia.conf # ЗАКОММЕНТИРОВАНО ИЗ-ЗА ГИБЕРНАЦИИ
 echo "options nvidia NVreg_DynamicPowerManagement=0x02" >> /etc/modprobe.d/nvidia.conf  # Для ноутбуков, экономия энергии
 echo "nvidia-drm" > /etc/modules-load.d/nvidia-drm.conf
 
