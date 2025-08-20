@@ -927,10 +927,12 @@ echo ""
 
 clear
 pacman -Syy
-pacman -S --noconfirm cinnamon cinnamon-translations blueman dconf-editor ffmpegthumbnailer gcolor3 gnome-keyring gnome-terminal mousetweaks onboard pavucontrol powertop system-config-printer xreader evince
-pacman -S --noconfirm nemo-fileroller nemo-preview nemo-python nemo-share kvantum icon-naming-utils netctl numlockx python-pyxdg redshift squashfs-tools tree udiskie
-pacman -S --noconfirm gdm
-systemctl enable gdm.service
+pacman -S --noconfirm cinnamon cinnamon-translations blueberry ffmpegthumbnailer gnome-terminal evince
+pacman -S --noconfirm lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
+#
+pacman -S --noconfirm audacious audacious-plugins gedit ristretto
+systemctl enable lightdm.service
+mkinitcpio -P
 clear
 echo ""
 echo "##################################"
@@ -1041,7 +1043,6 @@ echo ""
 
 
 
-
 # Выход из chroot
 exit
 
@@ -1055,6 +1056,7 @@ poweroff
 
 # Очистка конфигурации ssh соединения 
 # rm -r .ssh/  # Раскомментировать, если нужно очистить SSH-сессию
+
 
 
 
