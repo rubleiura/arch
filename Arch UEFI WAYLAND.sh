@@ -622,7 +622,7 @@ systemctl enable cronie.service chronyd.service
 pacman -S --noconfirm bluez bluez-utils
 systemctl enable bluetooth.service
 sed -i 's/#AutoEnable=true/AutoEnable=true/g' /etc/bluetooth/main.conf
-pacman -S --noconfirm cups cups-pdf ghostscript gsfonts avahi hplip system-config-printer
+pacman -S --noconfirm cups cups-pdf ghostscript gsfonts avahi system-config-printer
 systemctl enable cups.service avahi-daemon.service
 pacman -S --noconfirm xdg-utils xdg-user-dirs
 xdg-user-dirs-update
