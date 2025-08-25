@@ -1046,7 +1046,7 @@ echo ""
 
 clear
 pacman -Syy
-pacman -S --noconfirm budgie budgie-screensaver budgie-control-center dconf-editor xorg
+pacman -S --noconfirm budgie budgie-screensaver budgie-control-center dconf-editor
 pacman -S --noconfirm budgie-desktop-view budgie-backgrounds network-manager-applet materia-gtk-theme papirus-icon-theme
 pacman -S --noconfirm nautilus gnome-terminal vlc eog evince gedit
 pacman -S --noconfirm blueman engrampa ffmpegthumbnailer libgsf udiskie evince ristretto
