@@ -1,0 +1,49 @@
+
+
+
+
+
+
+# ##############################################
+# ## 🖋️ НАСТРОЙКА NANO (chroot) #################
+# ##############################################
+#
+# Зачем: Глубокая настройка редактора nano.
+# Включает: Цвета, подсветку, автоотступы, табы, softwrap.
+
+
+
+
+
+
+clear
+sudo sed -i 's/# set autoindent/set autoindent/g' /etc/nanorc
+sudo sed -i 's/# set constantshow/set constantshow/g' /etc/nanorc
+sudo sed -i 's/# set indicator/set indicator/g' /etc/nanorc
+sudo sed -i 's/# set linenumbers/set linenumbers/g' /etc/nanorc
+sudo sed -i 's/# set multibuffer/set multibuffer/g' /etc/nanorc
+sudo sed -i 's/# set quickblank/set quickblank/g' /etc/nanorc
+sudo sed -i 's/# set smarthome/set smarthome/g' /etc/nanorc
+sudo sed -i 's/# set softwrap/set softwrap/g' /etc/nanorc
+sudo sed -i 's/# set tabsize 8/set tabsize 4/g' /etc/nanorc
+sudo sed -i 's/# set tabstospaces/set tabstospaces/g' /etc/nanorc
+sudo sed -i 's/# set trimblanks/set trimblanks/g' /etc/nanorc
+sudo sed -i 's/# set unix/set unix/g' /etc/nanorc
+sudo sed -i 's/# set wordbounds/set wordbounds/g' /etc/nanorc
+sudo sed -i 's/# set titlecolor bold,white,magenta/set titlecolor bold,white,magenta/g' /etc/nanorc
+sudo sed -i 's/# set promptcolor black,yellow/set promptcolor black,yellow/g' /etc/nanorc
+sudo sed -i 's/# set statuscolor bold,white,magenta/set statuscolor bold,white,magenta/g' /etc/nanorc
+sudo sed -i 's/# set errorcolor bold,white,red/set errorcolor bold,white,red/g' /etc/nanorc
+sudo sed -i 's/# set spotlightcolor black,orange/set spotlightcolor black,orange/g' /etc/nanorc
+sudo sed -i 's/# set selectedcolor lightwhite,cyan/set selectedcolor lightwhite,cyan/g' /etc/nanorc
+sudo sed -i 's/# set stripecolor ,yellow/set stripecolor ,yellow/g' /etc/nanorc
+sudo sed -i 's/# set scrollercolor magenta/set scrollercolor magenta/g' /etc/nanorc
+sudo sed -i 's/# set numbercolor magenta/set numbercolor magenta/g' /etc/nanorc
+sudo sed -i 's/# set keycolor lightmagenta/set keycolor lightmagenta/g' /etc/nanorc
+sudo sed -i 's/# set functioncolor magenta/set functioncolor magenta/g' /etc/nanorc
+sudo sed -i 's/# include \/usr\/share\/nano\/\*\.nanorc/include \/usr\/share\/nano\/\*\.nanorc/g' /etc/nanorc
+clear
+echo ""
+echo "######################################"
+echo "## <<< НАСТРОЙКА NANO ЗАВЕРШЕНА >>> ##"
+echo "######################################"
