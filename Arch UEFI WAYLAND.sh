@@ -1,4 +1,4 @@
-################################################################
+# ################################################################
 # #### Макет блочной установки Arch Linux (BTRFS + SNAPPER) ######
 # ################################################################
 #
@@ -72,14 +72,14 @@ echo ""
 
 
 clear
-curl -o /etc/pacman.d/mirrorlist https://archlinux.org/mirrorlist/all/
+curl -o /etc/pacman.d/mirrorlist https://archlinux.org/mirrorlist/all/  
 sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
 reflector --age 12 --protocol https --sort score --save /etc/pacman.d/mirrorlist
+pacman -Syy
 timedatectl set-ntp true
 pacman -Syy
-pacman -S --noconfirm pacman-contrib curl
-pacman -S --noconfirm  haveged archlinux-keyring inxi util-linux
-pacman -S --noconfirm lshw
+sudo pacman -S --noconfirm pacman-contrib curl
+pacman -S --noconfirm  haveged archlinux-keyring inxi util-linux lshw
 systemctl enable haveged.service --now
 clear
 echo ""
@@ -223,7 +223,7 @@ echo ""
 #############################################################
 #             Объект             #   Переменная             #
 #############################################################
-#             Имя                #  forename	                #
+#             Имя                #  login	                #
 #############################################################
 #             Полное имя         #  User Name               #
 #############################################################
@@ -363,7 +363,6 @@ pacstrap /mnt amd-ucode
 pacstrap /mnt memtest86+-efi
 pacstrap /mnt nano
 pacstrap /mnt reflector pacman-contrib curl
-# Генерация fstab
 genfstab -pU /mnt >> /mnt/etc/fstab
 clear
 echo ""
@@ -409,10 +408,10 @@ sed -i "s/#XXXX/XXXX/" /etc/locale.gen
 sed -i "s/#en_US/en_US/" /etc/locale.gen
 locale-gen
 export LANG=XXXX.UTF-8
-time_zone=$(curl -s https://ipinfo.io/timezone    )
+time_zone=$(curl -s https://ipinfo.io/timezone  )
 ln -sf /usr/share/zoneinfo/$time_zone /etc/localtime
 hwclock --systohc
-curl -o /etc/pacman.d/mirrorlist https://archlinux.org/mirrorlist/all/
+curl -o /etc/pacman.d/mirrorlist https://archlinux.org/mirrorlist/all/  
 sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
 reflector --age 12 --protocol https --sort score --save /etc/pacman.d/mirrorlist
 pacman -Syy
@@ -533,8 +532,8 @@ echo ""
 
 
 clear
-useradd forename -m -c "User Name" -s /bin/bash
-usermod -aG wheel,users forename
+useradd login -m -c "User Name" -s /bin/bash
+usermod -aG wheel,users login
 sed -i s/'# %wheel ALL=(ALL:ALL) ALL'/'%wheel ALL=(ALL:ALL) ALL'/g /etc/sudoers
 clear
 echo ""
@@ -542,7 +541,7 @@ echo "###########################################"
 echo "## <<<  СОЗДАЙТЕ ПАРОЛЬ ПОЛЬЗОВАТЕЛЯ >>> ##"
 echo "###########################################"
 echo ""
-passwd forename
+passwd login
 clear
 echo ""
 echo "###############################################"
@@ -573,7 +572,7 @@ pacman -S --noconfirm networkmanager wpa_supplicant wireless_tools
 pacman -S --noconfirm openssh
 pacman -S --noconfirm plymouth
 systemctl enable NetworkManager.service grub-btrfsd.service sshd.service
-grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id="Arch Linux"
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 SWAP_UUID=$(blkid -s UUID -o value /dev/sda3)
 sed -i "s/#GRUB_DISABLE_OS_PROBER=false/GRUB_DISABLE_OS_PROBER=false/" /etc/default/grub
 sed -i "s|GRUB_CMDLINE_LINUX_DEFAULT=\".*\"|GRUB_CMDLINE_LINUX_DEFAULT=\"quiet splash plymouth resume=UUID=${SWAP_UUID} udev.log_priority=3 rootflags=subvol=@\"|" /etc/default/grub
@@ -616,8 +615,8 @@ clear
 pacman -Syy
 pacman -S --noconfirm haveged
 systemctl enable haveged.service
-pacman -S --noconfirm wget usbutils lsof dmidecode dialog zip unzip unrar p7zip lzop lrzip sudo mlocate less bash-completion
-pacman -S --noconfirm dosfstools ntfs-3g exfatprogs gptfdisk fuse2 fuse3 fuseiso nfs-utils cifs-utils
+pacman -S --noconfirm wget vim usbutils lsof dmidecode dialog zip unzip unrar p7zip lzop lrzip sudo mlocate less bash-completion
+pacman -S --noconfirm dosfstools ntfs-3g btrfs-progs exfatprogs gptfdisk fuse2 fuse3 fuseiso nfs-utils cifs-utils
 pacman -S --noconfirm cronie chrony
 systemctl enable cronie.service chronyd.service
 pacman -S --noconfirm bluez bluez-utils
@@ -703,7 +702,7 @@ modprobe -a vboxguest vboxsf vboxvideo
 systemctl enable vboxservice.service
 echo "vboxguest vboxsf vboxvideo" > /etc/modules-load.d/virtualbox.conf
 mkinitcpio -P
-usermod -aG vboxsf forename
+usermod -aG vboxsf $USERNAME
 clear
 echo ""
 echo "#############################################"
@@ -715,12 +714,13 @@ echo ""
 
 
 
-######################################################
+# ######################################################
 # ## 🌌 БЛОК 15: УСТАНОВКА ГРАФИЧЕСКОЙ СРЕДЫ ###########
 # ######################################################
 #
-# Зачем: Установка предпочитаемой графической оболочки.
-# Включает: Различные DE/WM. Ниже следуют подблоки для каждой среды.
+# Зачем: Выбор удобной среды .
+# Включает: Все компоненты системы
+
 
 
 
@@ -736,7 +736,29 @@ echo ""
 clear
 #### Plasma ####
 pacman -Syy
-pacman -S --noconfirm plasma kde-applications
+pacman -S --noconfirm plasma-desktop plasma-workspace plasma-workspace-wallpapers kdeplasma-addons kwin kwin-x11 kwayland libplasma plasma5support libkscreen
+pacman -S --noconfirm systemsettings kinfocenter kde-gtk-config polkit-kde-agent sddm-kcm kmenuedit kdecoration kscreen
+pacman -S --noconfirm plasma-browser-integration plasma-activities plasma-activities-stats milou plasma-integration
+pacman -S --noconfirm powerdevil print-manager bluedevil plasma-nm plasma-pa
+pacman -S --noconfirm plasma-firewall plasma-thunderbolt plasma-vault kscreenlocker kwallet-pam
+pacman -S --noconfirm ksystemstats drkonqi plasma-systemmonitor libksysguard plasma-disks
+pacman -S --noconfirm spectacle kgamma ksshaskpass kwrited kglobalacceld krdp
+pacman -S --noconfirm breeze breeze-gtk breeze-plymouth oxygen oxygen-sounds aurorae ocean-sound-theme qqc2-breeze-style
+pacman -S --noconfirm discover flatpak-kcm
+pacman -S --noconfirm kactivitymanagerd kpipewire layer-shell-qt
+pacman -S --noconfirm kde-cli-tools plasma-sdk
+pacman -S --noconfirm wacomtablet
+pacman -S --noconfirm xdg-desktop-portal-kde plasma-welcome plymouth-kcm
+#### kde-applications ####
+pacman -S --noconfirm falkon krdc krfb konversation kio-zeroconf kdenetwork-filesharing kio-gdrive
+pacman -S --noconfirm elisa ffmpegthumbs kamoso krecorder kwave k3b audiocd-kio audex kdenlive
+pacman -S --noconfirm gwenview kamera kcolorchooser kdegraphics-thumbnailers kimagemapeditor skanlite skanpage kolourpaint svgpart kgraphviewer
+pacman -S --noconfirm ghostwriter ark okular kwordquiz kalk korganizer kate
+pacman -S --noconfirm kdevelop kdevelop-php kdevelop-python kdesdk-kio kdesdk-thumbnailers kde-dev-scripts kde-dev-utils kcachegrind kdebugsettings kjournald massif-visualizer umbrello rocs kapptemplate poxml
+pacman -S --noconfirm filelight ksystemlog kbackup sweeper partitionmanager kde-inotify-survey kcron khelpcenter
+pacman -S --noconfirm ark kcalc konsole kfind keditbookmarks kdf kcharselect kclock kruler kteatime ktimer yakuake dolphin dolphin-plugins kio-extras kio-admin kdialog kleopatra kgpg kwalletmanager accessibility-inspector kcachegrind kdebugsettings kde-dev-utils kde-dev-scripts kde-inotify-survey kdegraphics-thumbnailers kdenetwork-filesharing kdepim-addons kdesdk-kio kdesdk-thumbnailers kjournald massif-visualizer kio-extras kio-gdrive kio-zeroconf krunner
+pacman -S --noconfirm kmag kmousetool kmouth kontrast
+pacman -S --noconfirm colord-kde isoimagewriter signon-kwallet-extension markdownpart kweather lokalize qrca
 systemctl enable sddm.service
 mkinitcpio -P
 clear
@@ -745,258 +767,6 @@ echo "#############################################"
 echo "## <<<  УСТАНОВКА KDE PLASMA ЗАВЕРШЕНА >>> ##"
 echo "#############################################"
 echo ""
-
-
-# #######################################################
-# ## 🌐 УСТАНОВКА GNOME #################################
-# #######################################################
-#
-# Зачем: Установка GNOME с полной интеграцией.
-# Включает: GDM, portal, apps, extensions.
-
-
-
-
-clear
-###  GNOME  ##
-pacman -Syy
-pacman -S --noconfirm gnome gnome-extra
-systemctl enable gdm
-echo "[User]" > /var/lib/AccountsService/users/root
-echo "SystemAccount=true" >> /var/lib/AccountsService/users/root
-mkinitcpio -P
-clear
-echo ""
-echo "########################################"
-echo "## <<<  УСТАНОВКА GNOME ЗАВЕРШЕНА >>> ##"
-echo "########################################"
-echo ""
-
-
-
-
-## Питание ноутбука (раскоменируйте в случае необходимости)
-## Настройки действий кнопок питания и крышки ноутбука, а также режимов сна и гибернации
-
-## Вариант 1
-## Кнопка питания выключает компьютер, а закрытие крышки переводит его в сон:
-# mkdir -p /etc/systemd/logind.conf.d
-# echo "[Login]" > /etc/systemd/logind.conf.d/50-power-options.conf
-# echo "HandlePowerKey=poweroff" >> /etc/systemd/logind.conf.d/50-power-options.conf
-# echo "HandleLidSwitch=suspend" >> /etc/systemd/logind.conf.d/50-power-options.conf
-# echo "HandleLidSwitchDocked=ignore" >> /etc/systemd/logind.conf.d/50-power-options.conf
-
-## Вариант 2
-## Кнопка питания выключает компьютер, а закрытие крышки переводит в гибернацию:
-# mkdir -p /etc/systemd/logind.conf.d
-# echo "[Login]" > /etc/systemd/logind.conf.d/50-power-options.conf
-# echo "HandlePowerKey=poweroff" >> /etc/systemd/logind.conf.d/50-power-options.conf
-# echo "HandleLidSwitch=hibernate" >> /etc/systemd/logind.conf.d/50-power-options.conf
-# echo "HandleLidSwitchExternalPower=hibernate" >> /etc/systemd/logind.conf.d/50-power-options.conf
-# echo "HandleLidSwitchDocked=hibernate" >> /etc/systemd/logind.conf.d/50-power-options.conf
-
-## Вариант 3
-## Кнопка питания выключает компьютер, а закрытие крышки ничего не происходит:
-# mkdir -p /etc/systemd/logind.conf.d
-# echo "[Login]" > /etc/systemd/logind.conf.d/50-power-options.conf
-# echo "HandlePowerKey=poweroff" >> /etc/systemd/logind.conf.d/50-power-options.conf
-# echo "HandleLidSwitch=suspend" >> /etc/systemd/logind.conf.d/50-power-options.conf
-# echo "HandleLidSwitchExternalPower=ignore" >> /etc/systemd/logind.conf.d/50-power-options.conf
-# echo "HandleLidSwitchDocked=ignore" >> /etc/systemd/logind.conf.d/50-power-options.conf
-
-
-
-
-# ########################################################
-# ## 🪟 УСТАНОВКА XFCE4 ##################################
-# ########################################################
-#
-# Зачем: Установка XFCE4 с расширенными компонентами.
-# Включает: LightDM, plugins, apps.
-
-
-
-
-clear
-pacman -Syy
-pacman -S --noconfirm xfce4 xfce4-goodies lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings network-manager-applet blueman gvfs gvfs-* gnome-keyring mugshot pavucontrol xdg-user-dirs xdg-desktop-portal-gtk ristretto thunar-archive-plugin ffmpegthumbnailer
-systemctl enable lightdm.service
-mkinitcpio -P
-clear
-echo ""
-echo "########################################"
-echo "## <<<  УСТАНОВКА XFCE4 ЗАВЕРШЕНА >>> ##"
-echo "########################################"
-echo ""
-
-
-
-
-
-# #######################################################
-# ## 🍃 УСТАНОВКА MATE ##################################
-# #######################################################
-#
-# Зачем: Установка MATE с темами и greeter.
-# Включает: LightDM, slick-greeter.
-
-
-
-
-clear
-pacman -Syy
-pacman -S --noconfirm mate mate-extra lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings network-manager-applet blueman gvfs gvfs-* gnome-keyring
-systemctl enable lightdm.service
-mkinitcpio -P
-clear
-echo ""
-echo "#######################################"
-echo "## <<<  УСТАНОВКА MATE ЗАВЕРШЕНА >>> ##"
-echo "#######################################"
-echo ""
-
-
-
-
-
-# #######################################################
-# ## 🕯️ УСТАНОВКА CINNAMON ##############################
-# #######################################################
-#
-# Зачем: Установка Cinnamon с дополнительными пакетами.
-# Включает: LightDM, greeter, themes.
-
-
-
-
-clear
-pacman -Syy
-pacman -S --noconfirm cinnamon cinnamon-translations blueberry ffmpegthumbnailer lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings gnome-terminal evince gvfs gvfs-*
-systemctl enable lightdm.service
-mkinitcpio -P
-clear
-echo ""
-echo "#####################################"
-echo "## <<<  УСТАНОВКА CINNAMON ЗАВЕРШЕНА >>> ##"
-echo "#####################################"
-echo ""
-
-
-
-
-
-# ########################################################
-# ## 🧩 УСТАНОВКА LXQT ###################################
-# ########################################################
-#
-# Зачем: Установка LXQt с KWin и SDDM.
-# Включает: Themes, breeze, sddm.
-
-
-
-
-clear
-pacman -Syy
-pacman -S --noconfirm lxqt sddm breeze breeze-icons kvantum-qt5 xdg-desktop-portal-kde blueman featherpad picom libstatgrab libsysstat kwin
-systemctl enable sddm.service
-clear
-echo ""
-echo "######################################"
-echo "## <<< УСТАНОВКА LXQT ЗАВЕРШЕНА >>> ##"
-echo "######################################"
-echo ""
-
-
-
-
-
-# ########################################################
-# ## 🖼️ УСТАНОВКА LXDE ###################################
-# ########################################################
-#
-# Зачем: Установка LXDE с Openbox и LightDM.
-# Включает: Notifyd, dunst, plugins.
-
-
-
-
-clear
-pacman -Syy
-pacman -S --noconfirm lxde openbox leafpad lightdm lightdm-slick-greeter blueman gvfs gvfs-* gnome-keyring thunar-archive-plugin ffmpegthumbnailer udiskie xfce4-notifyd dunst picom
-sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=lightdm-slick-greeter/' /etc/lightdm/lightdm.conf
-# sed -i 's/#display-setup-script=/display-setup-script=xrandr --output Virtual-1 --mode 1920x1080/' /etc/lightdm/lightdm.conf # Опционально, закомментировано
-systemctl enable lightdm.service
-clear
-echo ""
-echo "######################################"
-echo "## <<< УСТАНОВКА LXDE ЗАВЕРШЕНА >>> ##"
-echo "######################################"
-echo ""
-
-
-
-
-
-# ########################################################
-# ## 🌳 УСТАНОВКА TRINITY DESKTOP #######################№
-# ########################################################
-#
-# Зачем: Установка Trinity Desktop (KDE3-подобный).
-# Включает: Добавление репозитория, TDM.
-
-
-
-
-clear
-pacman -Syy
-pacman -S --noconfirm xorg
-echo "#" >> /etc/pacman.conf
-echo "# Official Trinity ArchLinux repository" >> /etc/pacman.conf
-echo "[trinity]" >> /etc/pacman.conf
-echo "Server = https://mirror.ppa.trinitydesktop.org/trinity/archlinux/  \$arch" >> /etc/pacman.conf
-pacman-key --recv-key D6D6FAA25E9A3E4ECD9FBDBEC93AF1698685AD8B --keyserver keyserver.ubuntu.com
-pacman-key --lsign-key D6D6FAA25E9A3E4ECD9FBDBEC93AF1698685AD8B
-pacman -Syy
-pacman -S --noconfirm tde-meta blueman gdb xdg-desktop-portal-gtk
-systemctl enable tdm.service
-clear
-echo ""
-echo "###############################################"
-echo "## <<<  УСТАНОВКА ARCH TRINITY ЗАВЕРШЕНА >>> ##"
-echo "###############################################"
-echo ""
-
-
-
-
-
-
-# ########################################################
-# ## 🪟 УСТАНОВКА BUDGIE #################################
-# ########################################################
-#
-# Зачем: Установка BUDGIE с расширенными компонентами.
-# Включает: LightDM, audacious, evince.
-
-
-
-
-clear
-pacman -Syy
-pacman -S --noconfirm budgie-desktop budgie-screensaver budgie-control-center dconf-editor budgie-desktop-view budgie-backgrounds network-manager-applet materia-gtk-theme papirus-icon-theme gnome-terminal nautilus vlc eog evince gedit lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings blueman gvfs gvfs-* gnome-keyring
-systemctl enable lightdm.service
-mkinitcpio -P
-clear
-echo ""
-echo "#########################################"
-echo "## <<<  УСТАНОВКА BUDGIE ЗАВЕРШЕНА >>> ##"
-echo "#########################################"
-echo ""
-
-
-
-
-
 
 # #######################################################
 # ## 🧱 БЛОК 16: ВЫХОД ИЗ УСТАНОВКИ #####################
@@ -1012,13 +782,11 @@ exit
 
 
 # Отмонтирование разделов диска
-umount -R /mnt
+umount -R /mnt 
 swapoff -a
 poweroff
 
 
 
-# Очистка конфигурации ssh соединения
+# Очистка конфигурации ssh соединения 
 # rm -r .ssh/  # Раскомментировать, если нужно очистить SSH-сессию
-
-￼
