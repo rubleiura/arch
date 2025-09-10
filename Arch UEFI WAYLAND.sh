@@ -72,6 +72,11 @@ echo ""
 
 
 clear
+sed -i s/'ParallelDownloads = 5'/'ParallelDownloads = 15'/g /etc/pacman.conf
+sed -i s/'#Color'/'Color'/g /etc/pacman.conf
+sed -i '/^Color$/a VerbosePkgLists' /etc/pacman.conf
+sed -i '/^Color$/a DisableDownloadTimeout' /etc/pacman.conf
+sed -i '/^Color$/a ILoveCandy' /etc/pacman.conf
 curl -o /etc/pacman.d/mirrorlist https://archlinux.org/mirrorlist/all/
 sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
 reflector --age 12 --protocol https --sort score --save /etc/pacman.d/mirrorlist
