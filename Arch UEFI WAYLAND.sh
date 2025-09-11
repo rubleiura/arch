@@ -687,10 +687,8 @@ pacman -Syy
 pacman -S --noconfirm gnome
 ###  gnome-extra  ###
 pacman -S --noconfirm dconf-editor
-pacman -S --noconfirm file-roller ghex d-spy
-pacman -S --noconfirm gnome-sound-recorder
+pacman -S --noconfirm file-roller
 pacman -S --noconfirm gnome-tweaks
-pacman -S --noconfirm endeavour
 #
 pacman -S --noconfirm gnome-shell-extensions
 pacman -S --noconfirm tumbler ffmpegthumbnailer poppler-glib
