@@ -881,7 +881,6 @@ echo ""
 
 clear
 pacman -Syy
-pacman -S --noconfirm xorg
 echo "#" >> /etc/pacman.conf
 echo "# Official Trinity ArchLinux repository" >> /etc/pacman.conf
 echo "[trinity]" >> /etc/pacman.conf
