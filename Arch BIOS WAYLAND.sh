@@ -886,7 +886,7 @@ echo "#" >> /etc/pacman.conf
 echo "# Official Trinity ArchLinux repository" >> /etc/pacman.conf
 echo "[trinity]" >> /etc/pacman.conf
 echo "Server = https://mirror.ppa.trinitydesktop.org/trinity/archlinux/\$arch" >> /etc/pacman.conf
-pacman-key --recv-key D6D6FAA25E9A3E4ECD9FBDBEC93AF1698685AD8B --keyserver keyserver.ubuntu.com
+pacman-key --recv-key D6D6FAA25E9A3E4ECD9FBDBEC93AF1698685AD8B
 pacman-key --lsign-key D6D6FAA25E9A3E4ECD9FBDBEC93AF1698685AD8B
 pacman -Syy
 pacman -S --noconfirm tde-meta gdb xdg-desktop-portal-gtk
