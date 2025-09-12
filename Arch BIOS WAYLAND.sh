@@ -801,7 +801,7 @@ echo ""
 
 clear
 pacman -Syy
-pacman -S --noconfirm cinnamon cinnamon-translations blueberry ffmpegthumbnailer lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings gnome-terminal evince
+pacman -S --noconfirm cinnamon cinnamon-translations blueberry lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings gnome-terminal evince
 pacman -S --noconfirm gvfs gvfs-afc gvfs-dnssd gvfs-goa gvfs-google gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-onedrive gvfs-smb gvfs-wsdd gnome-keyring
 pacman -S --noconfirm ffmpegthumbnailer poppler-glib
 # sed -i 's/#display-setup-script=/display-setup-script=xrandr --output Virtual-1 --mode 1920x1080/' /etc/lightdm/lightdm.conf # Опционально, закомментировано
