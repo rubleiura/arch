@@ -1,0 +1,159 @@
+##############################################################
+### ОБНОВЛЕННОЕ РУКОВОДСТВО ПО УСТАНОВКЕ ГРАФИЧЕСКИХ ДРАЙВЕРОВ
+### (С акцентом на гибернацию и современные практики - 2025)
+##############################################################
+# ВАЖНО:
+# 1. Если вы в CHROOT (устанавливаете систему) - выполните только установку драйверов
+# 2. После перезагрузки в новой системе выполните проверки и настройки
+# 3. Для NVIDIA обязательно выполните проверку после перезагрузки!
+# 4. Эта инструкция избегает настроек, ломающих гибернацию (например, PreserveVideoMemoryAllocations=1)
+
+# 1. Определите тип видеокарты:
+#    lspci | grep -e VGA -e 3D
+# 2. Выберите ТОЛЬКО ОДИН подходящий вариант ниже
+# 3. После установки драйверов В CHROOT:
+#    - Установите графическую оболочку
+#    - Выполните перезагрузку
+#    - После загрузки в новой системе проверьте работу драйверов
+
+##############################################################
+### ВАРИАНТ 1: Intel Integrated Graphics
+##############################################################
+# БАЗОВАЯ УСТАНОВКА:
+# pacman -S --noconfirm vulkan-intel intel-media-driver libva-utils
+# pacman -S --noconfirm lib32-vulkan-intel lib32-mesa
+
+# Для новых GPU (Gen12+/Alchemist/Xe):
+# pacman -S --noconfirm onevpl-intel-gpu intel-compute-runtime
+
+# ОПЦИОНАЛЬНЫЕ НАСТРОЙКИ:
+# ---------------------------------------------
+# А. Для новейших GPU (если есть проблемы со стабильностью):
+# echo "options i915 enable_guc=2" > /etc/modprobe.d/i915.conf
+# echo "options i915 fastboot=1" >> /etc/modprobe.d/i915.conf
+
+# Б. Настройка VA-API (обычно определяется автоматически):
+#   - Для новых GPU (Gen8+):
+#     echo "LIBVA_DRIVER_NAME=iHD" >> /etc/environment
+#   - Для старых GPU:
+#     echo "LIBVA_DRIVER_NAME=i965" >> /etc/environment
+
+##############################################################
+### ВАРИАНТ 2: AMD Radeon Graphics
+##############################################################
+# БАЗОВАЯ УСТАНОВКА:
+# pacman -S --noconfirm mesa vulkan-radeon libva-mesa-driver libva-utils
+# pacman -S --noconfirm lib32-mesa lib32-vulkan-radeon
+
+# ОПЦИОНАЛЬНЫЕ НАСТРОЙКИ:
+# ---------------------------------------------
+# А. Настройки энергопотребления (обычно не требуются):
+# echo "options amdgpu dpm=1" > /etc/modprobe.d/amdgpu.conf
+# echo "options amdgpu ppfeaturemask=0xffffffff" >> /etc/modprobe.d/amdgpu.conf
+
+##############################################################
+### ВАРИАНТ 3: NVIDIA Graphics (ПОЛНАЯ И БЕЗОПАСНАЯ НАСТРОЙКА)
+##############################################################
+# ВНИМАНИЕ: Эта конфигурация избегает параметров, конфликтующих с гибернацией!
+
+# 1. ВЫБОР ДРАЙВЕРА (установите ТОЛЬКО ОДИН вариант)
+# --------------------------------------------------
+# Для стандартного ядра (рекомендуется для большинства):
+# pacman -S --noconfirm nvidia nvidia-utils nvidia-settings
+# pacman -S --noconfirm lib32-nvidia-utils
+# * Если у вас гибридная графика (Intel/AMD + NVIDIA): добавьте nvidia-prime
+#   pacman -S --noconfirm nvidia-prime
+
+# Для LTS-ядра:
+# pacman -S --noconfirm nvidia-lts nvidia-utils nvidia-settings
+# pacman -S --noconfirm lib32-nvidia-utils
+# * Если у вас гибридная графика: добавьте nvidia-prime
+
+# Универсальный DKMS-драйвер (если стандартный не подходит):
+# pacman -S --noconfirm nvidia-dkms nvidia-utils nvidia-settings
+# pacman -S --noconfirm lib32-nvidia-utils
+# * Если у вас гибридная графика: добавьте nvidia-prime
+
+# 2. КОНФИГУРАЦИЯ СИСТЕМЫ
+# ------------------------
+# А. Настройка модулей ядра в /etc/modprobe.d/nvidia.conf:
+# ВАЖНО: Параметр NVreg_PreserveVideoMemoryAllocations=1 КОНФЛИКТУЕТ С ГИБЕРНАЦИЕЙ!
+# Он закомментирован. Раскомментируйте ТОЛЬКО если вы точно знаете, зачем он нужен.
+# echo "options nvidia NVreg_PreserveVideoMemoryAllocations=1" >> /etc/modprobe.d/nvidia.conf
+echo "options nvidia-drm modeset=1" > /etc/modprobe.d/nvidia.conf
+echo "options nvidia NVreg_DynamicPowerManagement=0x02" >> /etc/modprobe.d/nvidia.conf  # Для ноутбуков, экономия энергии
+echo "nvidia-drm" > /etc/modules-load.d/nvidia-drm.conf
+
+# Б. Переменные среды для гибридной графики (Prime Offloading):
+# Полезны ТОЛЬКО для гибридных систем. Не вредят, если установлен nvidia-prime.
+echo -e '__NV_PRIME_RENDER_OFFLOAD=1\n__VK_LAYER_NV_optimus=NVIDIA_only' >> /etc/environment
+
+# 3. НАСТРОЙКА INITRAMFS (mkinitcpio)
+# -----------------------------------
+# А. Модули: Обычно не требуется вручную добавлять модули NVIDIA.
+# mkinitcpio сам находит их, если установлены драйверы и хуки настроены правильно.
+# Добавляйте в MODULES= ТОЛЬКО если возникают специфические ошибки загрузки.
+# Пример (использовать с осторожностью):
+# sed -i '/^MODULES=/ s/)/ nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
+
+# Б. Хуки: Убедитесь, что в HOOKS присутствует kms (удаление вредно!).
+# Правильный порядок для гибернации был рассмотрен ранее.
+# Пример: HOOKS=(base udev plymouth autodetect modconf kms keyboard keymap block resume grub-btrfs-overlayfs btrfs filesystems fsck)
+
+# 4. НАСТРОЙКА ГИБЕРНАЦИИ (ВАЖНО!)
+# --------------------------------
+# НЕ добавляйте nvidia.NVreg_PreserveVideoMemoryAllocations=1 в GRUB!
+# Этот параметр ЛОМАЕТ стандартную гибернацию Linux.
+
+# Если драйвер требует временный файл (редко необходимо без PreserveVideoMemoryAllocations):
+# mkdir -p /tmp/nvidia
+# chmod 1777 /tmp/nvidia
+# Добавьте ТОЛЬКО путь, БЕЗ PreserveVideoMemoryAllocations:
+# sed -i '/^GRUB_CMDLINE_LINUX_DEFAULT=/ s/"$/ nvidia.NVreg_TemporaryFilePath=\/tmp\/nvidia"/' /etc/default/grub
+
+# 5. ДОПОЛНИТЕЛЬНАЯ ФУНКЦИЯ ДЛЯ GNOME (ОПЦИОНАЛЬНО)
+# * Если ставите Gnome на компьютер с гибридной графикой
+# Вы можете запускать приложения с использованием графического процессора,
+# щёлкнув правой кнопкой мыши по значку и выбрав
+# пункт« Запустить с использованием дискретной видеокарты» .
+# pacman -S --noconfirm switcheroo-control
+# systemctl enable witcheroo-control.service
+
+# 6. ФИНАЛЬНАЯ СБОРКА
+# --------------------
+grub-mkconfig -o /boot/grub/grub.cfg
+mkinitcpio -P
+
+##############################################################
+### ЧАСТЬ 4: ОПЦИОНАЛЬНЫЕ НАСТРОЙКИ ДЛЯ НОУТБУКОВ
+##############################################################
+# А. Управление питанием (TLP - популярный выбор):
+# pacman -S --noconfirm tlp tlp-rdw
+# systemctl enable tlp.service
+# systemctl mask systemd-rfkill.service systemd-rfkill.socket
+
+# Б. Оптимизация энергопотребления:
+# echo 'vm.swappiness=10' > /etc/sysctl.d/99-swappiness.conf
+# systemctl enable fstrim.timer # Для SSD
+
+##############################################################
+### ЧАСТЬ 5: ПРОВЕРКА ПОСЛЕ УСТАНОВКИ И ПЕРЕЗАГРУЗКИ
+##############################################################
+# Выполните эти команды ТОЛЬКО ПОСЛЕ полной перезагрузки в новую систему!
+
+# ДЛЯ NVIDIA:
+echo "Проверка драйвера NVIDIA:"
+nvidia-smi
+
+# ДЛЯ ВСЕХ СИСТЕМ:
+echo "Проверка Vulkan:"
+vulkaninfo --summary 2>/dev/null || echo "Vulkan не настроен или недоступен"
+
+echo "Проверка VA-API:"
+vainfo 2>/dev/null || echo "VA-API не настроен или недоступен"
+
+# ДЛЯ ГИБРИДНЫХ СИСТЕМ (проверка переключения):
+# glxinfo | grep "OpenGL renderer string" # Должно показать "NVIDIA" или "AMD"/"Intel"
+# __NV_PRIME_RENDER_OFFLOAD=1 glxinfo | grep "OpenGL renderer string" # Принудительно через NVIDIA
+
+
