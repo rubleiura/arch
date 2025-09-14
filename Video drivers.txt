@@ -117,7 +117,7 @@ echo -e '__NV_PRIME_RENDER_OFFLOAD=1\n__VK_LAYER_NV_optimus=NVIDIA_only' >> /etc
 # щёлкнув правой кнопкой мыши по значку и выбрав
 # пункт« Запустить с использованием дискретной видеокарты» .
 # pacman -S --noconfirm switcheroo-control
-# systemctl enable witcheroo-control.service
+# systemctl enable switcheroo-control.service
 
 # 6. ФИНАЛЬНАЯ СБОРКА
 # --------------------
