@@ -74,7 +74,8 @@ pacman -Syy
 timedatectl set-ntp true
 pacman -Syy
 sudo pacman -S --noconfirm pacman-contrib curl
-pacman -S --noconfirm  haveged archlinux-keyring inxi util-linux lshw
+pacman -S --noconfirm haveged archlinux-keyring inxi util-linux lshw
+pacman -S --noconfirm lshw
 systemctl enable haveged.service --now
 clear
 echo ""
