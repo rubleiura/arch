@@ -522,7 +522,7 @@ pacman -S --noconfirm wireplumber pipewire-alsa pipewire-pulse pipewire-jack pip
 systemctl --global enable pipewire pipewire-pulse wireplumber
 pacman -S --noconfirm gstreamer gst-plugins-{base,good,bad,ugly} gst-libav ffmpeg a52dec faac faad2 flac lame libdca libdv libmad libmpeg2 libtheora libvorbis wavpack x264 x265 xvidcore libdvdcss vlc taglib
 pacman -S --noconfirm man-db man-pages man-pages-YYYY
-pacman -S --noconfirm ttf-dejavu noto-fonts noto-fonts-emoji
+pacman -S --noconfirm ttf-dejavu noto-fonts noto-fonts-emoji noto-fonts-cjk ttf-dejavu
 pacman -S --noconfirm iproute2 inetutils dnsutils
 pacman -S --noconfirm fastfetch hyfetch inxi
 clear
