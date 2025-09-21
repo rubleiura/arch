@@ -21,7 +21,7 @@ systemctl --user enable wireplumber.service
 clear
 sudo pacman -Syy
 sudo pacman -S --noconfirm git wget curl
-git clone https://aur.archlinux.org/yay-bin.git
+git clone --branch yay-bin --single-branch https://github.com/archlinux/aur.git yay-bin
 cd yay-bin
 makepkg -si --noconfirm
 cd ..
