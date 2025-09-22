@@ -55,7 +55,6 @@ sudo pacman -S --noconfirm chromium
 sudo pacman -S --noconfirm htop
 sudo pacman -S --noconfirm qbittorrent
 sudo pacman -S --noconfirm libreoffice-fresh-ru
-sudo pacman -S --noconfirm thunderbird-i18n-ru
 sudo pacman -S --noconfirm doublecmd-qt6
 sudo pacman -S --noconfirm smplayer
 sudo pacman -S --noconfirm system-config-printer simple-scan
@@ -66,6 +65,7 @@ yay -S --noconfirm stacer-bin
 yay -S --noconfirm ocs-url
 yay -S --noconfirm radiotray-ng
 yay -S --noconfirm portproton
+yay -S --noconfirm steam-session-git
 yay -S --noconfirm google-chrome
 clear
 
