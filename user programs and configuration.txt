@@ -102,6 +102,7 @@ clear
 # clear
 # yay -Syy
 # yay -S --noconfirm gnome-browser-connector-git
+# yay -S --noconfirm gdm-settings
 # clear
 
 ###########
