@@ -65,7 +65,6 @@ yay -S --noconfirm stacer-bin
 yay -S --noconfirm ocs-url
 yay -S --noconfirm radiotray-ng
 yay -S --noconfirm portproton
-yay -S --noconfirm steam-session-git
 yay -S --noconfirm google-chrome
 clear
 
