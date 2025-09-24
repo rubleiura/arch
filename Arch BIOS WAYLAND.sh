@@ -674,6 +674,7 @@ pacman -S --noconfirm file-roller
 pacman -S --noconfirm gnome-tweaks
 #
 pacman -S --noconfirm gnome-themes-extra
+pacman -S --noconfirm gnome-browser-connector
 pacman -S --noconfirm gnome-shell-extensions
 pacman -S --noconfirm ffmpegthumbnailer poppler-glib
 systemctl enable gdm
