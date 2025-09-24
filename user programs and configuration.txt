@@ -101,6 +101,7 @@ clear
 # clear
 # yay -Syy
 # yay -S --noconfirm gdm-settings
+# gsettings set org.gnome.desktop.input-sources xkb-options "['grp:alt_shift_toggle']"
 # clear
 
 ###########
