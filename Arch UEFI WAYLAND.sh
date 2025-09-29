@@ -992,8 +992,11 @@ echo "Server = https://mirror.ppa.trinitydesktop.org/trinity/archlinux/\$arch" >
 pacman-key --recv-key D6D6FAA25E9A3E4ECD9FBDBEC93AF1698685AD8B
 pacman-key --lsign-key D6D6FAA25E9A3E4ECD9FBDBEC93AF1698685AD8B
 pacman -Syy
-pacman -S --noconfirm tde-meta gdb xdg-desktop-portal-gtk
-pacman -S --noconfirm network-manager-applet blueman
+pacman -S --noconfirm tde-meta
+pacman -S --noconfirm gdb
+pacman -S --noconfirm xdg-desktop-portal-gtk
+pacman -S --noconfirm network-manager-applet
+pacman -S --noconfirm blueman
 pacman -S --noconfirm ffmpegthumbnailer poppler-glib
 systemctl enable tdm.service
 grub-mkconfig -o /boot/grub/grub.cfg
