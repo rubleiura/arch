@@ -91,13 +91,13 @@ echo ""
 lsblk
 echo ""
 echo "Производитель процессора:"
-sudo lshw -C cpu 2>/dev/null | grep 'vendor:' | uniq
+lshw -C cpu 2>/dev/null | grep 'vendor:' | uniq
 echo ""
 echo "Материнская плата:"
-sudo inxi -M
+inxi -M
 echo ""
 echo "Общая информация о системе:"
-sudo inxi -I
+inxi -I
 echo ""
 echo "#################################################"
 echo "## <<< ТЕСТИРОВАНИЕ КОМПЬЮТЕРА ЗАКОНЧИЛОСЬ >>> ##"
@@ -219,6 +219,12 @@ echo ""
 # Используется: sgdisk для точной разметки.
 
 clear
+loadkeys YYYY
+setfont ZZZZ
+sed -i "s/#XXXX/XXXX/" /etc/locale.gen
+sed -i "s/#en_US/en_US/" /etc/locale.gen
+locale-gen
+export LANG=XXXX.UTF-8
 wipefs --all --force /dev/sdx
 sgdisk -Z /dev/sdx
 sgdisk -a 2048 -o /dev/sdx
