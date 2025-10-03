@@ -176,6 +176,7 @@ echo ""
 # USA     #  en_US      #  en              #  lat9w-16              #
 # Türkiye #  tr_TR      #  trq             #  latarcyrheb-sun16     #
 # Israel  #  he_IL      #  il              #  latarcyrheb-sun16     #
+# Japan   #  ja_JP      #  jp106           #  jiskp16               #
 # China   #  zh_CN      #  cn              #  ter-v16n              #
 #####################################################################
 
