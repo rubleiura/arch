@@ -65,6 +65,7 @@ yay -S --noconfirm stacer-bin
 yay -S --noconfirm ocs-url
 yay -S --noconfirm radiotray-ng
 yay -S --noconfirm portproton
+sudo pacman -S --noconfirm curl gamemode lib32-gamemode icoutils libcurl-gnutls lib32-libcurl-gnutls wget zenity bubblewrap zstd cabextract tar goverlay openssl lib32-openssl
 yay -S --noconfirm google-chrome
 clear
 
