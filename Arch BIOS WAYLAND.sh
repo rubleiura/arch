@@ -898,7 +898,7 @@ pacman -Syy
 pacman -S --noconfirm lxde openbox leafpad lightdm lightdm-slick-greeter blueman thunar-archive-plugin ffmpegthumbnailer udiskie xfce4-notifyd dunst picom
 pacman -S --noconfirm network-manager-applet blueman
 pacman -S --noconfirm gvfs gvfs-afc gvfs-dnssd gvfs-goa gvfs-google gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-onedrive gvfs-smb gvfs-wsdd gnome-keyring
-pacman -S --noconfirm ffmpegthumbnailer poppler-glib
+pacman -S --noconfirm ffmpegthumbnailer poppler-glib gnome-themes-extra
 sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=lightdm-slick-greeter/' /etc/lightdm/lightdm.conf
 # sed -i 's/#display-setup-script=/display-setup-script=xrandr --output Virtual-1 --mode 1920x1080/' /etc/lightdm/lightdm.conf # Опционально, закомментировано
 systemctl enable lightdm.service
