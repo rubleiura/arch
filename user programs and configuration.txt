@@ -161,7 +161,8 @@ clear
 ## LXDE ##
 ###########
 ## Автозагрузка Octopi
-echo "@octopi-notifier" >> ~/.config/lxsession/LXDE/autostart
+# echo "@octopi-notifier" >> ~/.config/lxsession/LXDE/autostart
+# clear
 
 ######################################
 ## Обновление загрузчика и модулей  ##
