@@ -157,6 +157,12 @@ clear
 # yay -S --noconfirm iso-flag-png mintlocale adg-gtk-theme adwaita-colors-icon-theme adwaita-dark-darose
 # clear
 
+###########
+## LXDE ##
+###########
+## Автозагрузка Octopi
+echo "@octopi-notifier" >> ~/.config/lxsession/LXDE/autostart
+
 ######################################
 ## Обновление загрузчика и модулей  ##
 ######################################
