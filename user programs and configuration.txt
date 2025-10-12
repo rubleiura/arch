@@ -57,16 +57,11 @@ sudo pacman -S --noconfirm qbittorrent
 sudo pacman -S --noconfirm libreoffice-fresh-ru
 sudo pacman -S --noconfirm doublecmd-qt6
 sudo pacman -S --noconfirm smplayer
-sudo pacman -S --noconfirm system-config-printer simple-scan
 yay -S --noconfirm octopi
 yay -S --noconfirm gparted ventoy-bin
 yay -S --noconfirm grub-customizer user-admin grub2-theme-arch-leap update-grub
 yay -S --noconfirm stacer-bin
 yay -S --noconfirm ocs-url
-yay -S --noconfirm radiotray-ng
-yay -S --noconfirm portproton
-sudo pacman -S --noconfirm curl gamemode lib32-gamemode icoutils libcurl-gnutls lib32-libcurl-gnutls wget zenity bubblewrap zstd cabextract tar goverlay openssl lib32-openssl
-yay -S --noconfirm google-chrome
 clear
 
 #####################
