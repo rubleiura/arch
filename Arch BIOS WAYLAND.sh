@@ -852,7 +852,7 @@ poweroff
 
 clear
 pacman -Syy
-pacman -S --noconfirm lxqt sddm breeze breeze-icons kvantum-qt5 xdg-desktop-portal-kde blueman featherpad picom libstatgrab libsysstat kwin
+pacman -S --noconfirm lxqt sddm breeze breeze-icons blueman featherpad libstatgrab libsysstat
 pacman -S --noconfirm network-manager-applet blueman
 pacman -S --noconfirm gvfs gvfs-afc gvfs-dnssd gvfs-goa gvfs-google gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-onedrive gvfs-smb gvfs-wsdd gnome-keyring
 pacman -S --noconfirm ffmpegthumbnailer poppler-glib
