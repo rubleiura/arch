@@ -64,29 +64,7 @@ echo ""
 # Важно: Сравните с переменными в следующем блоке.
 # Показывает: Процессор, материнка, диски, разделы.
 
-clear && { \
-echo "Таблица дисков и разделов:"; \
-echo; \
-for DEVICE in $(lsblk -dno NAME 2>/dev/null | grep -v -e '^loop' -e '^sr'); do \
-    DEVICE_PATH="/dev/$DEVICE"; \
-    [[ ! -b "$DEVICE_PATH" ]] && continue; \
-    ROTA=$(lsblk -d -o ROTA --noheadings "$DEVICE_PATH" 2>/dev/null | awk '{print $1}'); \
-    if [[ "$ROTA" == "1" ]]; then \
-        DISK_TYPE="HDD Замените переменную defaults на"; \
-        MOUNT_OPTIONS="noatime,space_cache=v2,compress=zstd:2,autodefrag"; \
-    else \
-        DISK_TYPE="SSD Замените переменную defaults на"; \
-        MOUNT_OPTIONS="ssd,noatime,space_cache=v2,compress=zstd:2,discard=async"; \
-    fi; \
-    echo "╔═══════════════════════════════════════════════════════════════════════════════════════════════════╗"; \
-    printf "║  Диск: %-60s\n" "/dev/$DEVICE"; \
-    echo "╠═══════════════════════════════════════════════════════════════════════════════════════════════════╣"; \
-    printf "║  Тип: %-60s\n" "$DISK_TYPE"; \
-    printf "║  параметры монтирования: %-60s\n" "$MOUNT_OPTIONS"; \
-    echo "╚═══════════════════════════════════════════════════════════════════════════════════════════════════╝"; \
-    echo; \
-done; \
-}
+clear
 echo ""
 echo "Замените переменную sdx на ваш жесткий диск для разметки диска"
 echo ""
@@ -109,6 +87,31 @@ echo "Замените переменную 4G на необходимый ра�
 echo ""
 echo "Общая информация о системе:"
 inxi -I
+echo ""
+echo ""
+{ \
+echo "Параметры монтирования FSTAB:"; \
+echo; \
+for DEVICE in $(lsblk -dno NAME 2>/dev/null | grep -v -e '^loop' -e '^sr'); do \
+    DEVICE_PATH="/dev/$DEVICE"; \
+    [[ ! -b "$DEVICE_PATH" ]] && continue; \
+    ROTA=$(lsblk -d -o ROTA --noheadings "$DEVICE_PATH" 2>/dev/null | awk '{print $1}'); \
+    if [[ "$ROTA" == "1" ]]; then \
+        DISK_TYPE="HDD Замените переменную defaults на"; \
+        MOUNT_OPTIONS="noatime,space_cache=v2,compress=zstd:2,autodefrag"; \
+    else \
+        DISK_TYPE="SSD Замените переменную defaults на"; \
+        MOUNT_OPTIONS="ssd,noatime,space_cache=v2,compress=zstd:2,discard=async"; \
+    fi; \
+    echo "╔═══════════════════════════════════════════════════════════════════════════════════════════════════╗"; \
+    printf "║  Диск: %-60s\n" "/dev/$DEVICE"; \
+    echo "╠═══════════════════════════════════════════════════════════════════════════════════════════════════╣"; \
+    printf "║  Тип: %-60s\n" "$DISK_TYPE"; \
+    printf "║  параметры монтирования: %-60s\n" "$MOUNT_OPTIONS"; \
+    echo "╚═══════════════════════════════════════════════════════════════════════════════════════════════════╝"; \
+    echo; \
+done; \
+}
 echo ""
 echo "#################################################"
 echo "## <<< ТЕСТИРОВАНИЕ КОМПЬЮТЕРА ЗАКОНЧИЛОСЬ >>> ##"
