@@ -72,29 +72,40 @@ for DEVICE in $(lsblk -dno NAME 2>/dev/null | grep -v -e '^loop' -e '^sr'); do \
     [[ ! -b "$DEVICE_PATH" ]] && continue; \
     ROTA=$(lsblk -d -o ROTA --noheadings "$DEVICE_PATH" 2>/dev/null | awk '{print $1}'); \
     if [[ "$ROTA" == "1" ]]; then \
-        DISK_TYPE="HDD"; \
+        DISK_TYPE="HDD Замените переменную defaults на"; \
         MOUNT_OPTIONS="noatime,space_cache=v2,compress=zstd:2,autodefrag"; \
     else \
-        DISK_TYPE="SSD"; \
+        DISK_TYPE="SSD Замените переменную defaults на"; \
         MOUNT_OPTIONS="ssd,noatime,space_cache=v2,compress=zstd:2,discard=async"; \
     fi; \
     echo "╔═══════════════════════════════════════════════════════════════════════════════════════════════════╗"; \
     printf "║  Диск: %-60s\n" "/dev/$DEVICE"; \
     echo "╠═══════════════════════════════════════════════════════════════════════════════════════════════════╣"; \
     printf "║  Тип: %-60s\n" "$DISK_TYPE"; \
-    printf "║  Параметры: %-60s\n" "$MOUNT_OPTIONS"; \
+    printf "║  параметры монтирования: %-60s\n" "$MOUNT_OPTIONS"; \
     echo "╚═══════════════════════════════════════════════════════════════════════════════════════════════════╝"; \
     echo; \
 done; \
 }
 echo ""
+echo "Замените переменную sdx на ваш жесткий диск для разметки диска"
+echo ""
 lsblk
+echo ""
+echo ""
+echo "Замените или оставьте переменную amd-ucode от типа вашего процессора"
 echo ""
 echo "Производитель процессора:"
 lshw -C cpu 2>/dev/null | grep 'vendor:' | uniq
 echo ""
+echo ""
+echo "Замените переменную Sony на имя вашего компьютера "
+echo ""
 echo "Материнская плата:"
 inxi -M
+echo ""
+echo ""
+echo "Замените переменную 4G на необходимый размер SWAP"
 echo ""
 echo "Общая информация о системе:"
 inxi -I
