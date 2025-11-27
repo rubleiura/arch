@@ -458,7 +458,7 @@ pacman -Syy
 # Установка ядра и прошивки
 pacman -S --noconfirm linux-lts linux-lts-headers linux-firmware
 # Установка загрузчика и утилит
-pacman -S --noconfirm grub grub-btrfs efibootmgr # os-prober убран по умолчанию
+pacman -S --noconfirm grub grub-btrfs efibootmgr
 # Установка сетевых и других сервисов
 pacman -S --noconfirm networkmanager wpa_supplicant wireless_tools
 pacman -S --noconfirm openssh
