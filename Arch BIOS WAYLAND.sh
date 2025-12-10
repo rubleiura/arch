@@ -857,7 +857,7 @@ exit
 
 clear
 pacman -Syy
-pacman -S --noconfirm lxde openbox leafpad lightdm lightdm-slick-greeter blueman thunar-archive-plugin ffmpegthumbnailer udiskie xfce4-notifyd dunst picom
+pacman -S --noconfirm lxde openbox mousepad lightdm lightdm-slick-greeter blueman thunar-archive-plugin ffmpegthumbnailer udiskie xfce4-notifyd dunst picom
 pacman -S --noconfirm network-manager-applet blueman
 pacman -S --noconfirm gvfs gvfs-afc gvfs-dnssd gvfs-goa gvfs-google gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-onedrive gvfs-smb gvfs-wsdd gnome-keyring
 # Добавлены недостающие пакеты для эскизов
