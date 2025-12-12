@@ -333,7 +333,7 @@ clear
 pacstrap /mnt base base-devel
 pacstrap /mnt archlinux-keyring
 pacstrap /mnt btrfs-progs
-pacstrap /mnt amd-ucode
+pacstrap /mnt amd-ucode iucode-tool
 pacstrap /mnt memtest86+
 pacstrap /mnt nano
 pacstrap /mnt reflector pacman-contrib curl
