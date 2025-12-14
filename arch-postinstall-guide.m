@@ -99,7 +99,6 @@ clear
 sudo pacman -S --noconfirm \
     chromium htop qbittorrent libreoffice-fresh-ru \
     doublecmd-qt6 smplayer
-
 ### 4.2 Из AUR
 yay -S --noconfirm \
     octopi gparted ventoy-bin grub-customizer user-admin \
