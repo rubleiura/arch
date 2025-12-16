@@ -497,7 +497,7 @@ echo ""
 
 clear
 pacman -Syy
-pacman -S --noconfirm haveged # Удалено дублирование установки
+pacman -S --noconfirm haveged
 systemctl enable haveged.service
 pacman -S --noconfirm wget usbutils lsof dmidecode dialog zip unzip unrar p7zip lzop lrzip sudo mlocate less bash-completion
 pacman -S --noconfirm dosfstools ntfs-3g exfatprogs gptfdisk fuse2 fuse3 fuseiso nfs-utils cifs-utils
