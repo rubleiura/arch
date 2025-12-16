@@ -102,7 +102,8 @@ sudo pacman -S --noconfirm \
 ### 4.2 Из AUR
 yay -S --noconfirm \
     octopi gparted ventoy-bin grub-customizer user-admin \
-    grub2-theme-arch-leap update-grub stacer-bin ocs-url
+    grub2-theme-arch-leap update-grub stacer-bin ocs-url \
+    reflector-simple  reflector-mirrorlist-update
 clear
 
 
