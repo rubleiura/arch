@@ -211,9 +211,11 @@ echo ""
 #############################################################
 #             Microcode	         #  amd-ucode               #
 #############################################################
-#               Ядро	         #  linux-lts               #
+#             Ядро	             #  linux-lts               #
 #############################################################
-#            размер SWAP         #  4G                      #
+#             bootloader-id      #  Grub Arch Linux         #
+#############################################################
+#             размер SWAP        #  4G                      #
 #############################################################
 #         Диск для разметки      #  sdx                     #
 #############################################################
@@ -467,7 +469,7 @@ pacman -S --noconfirm networkmanager wpa_supplicant wireless_tools
 pacman -S --noconfirm openssh
 pacman -S --noconfirm plymouth
 systemctl enable NetworkManager.service grub-btrfsd.service sshd.service
-grub-install --efi-directory=/boot --boot-directory=/boot --bootloader-id="Arch Linux"
+grub-install --efi-directory=/boot --boot-directory=/boot --bootloader-id="Grub Arch Linux"
 sed -i "s|GRUB_CMDLINE_LINUX_DEFAULT=\".*\"|GRUB_CMDLINE_LINUX_DEFAULT=\"quiet splash plymouth udev.log_priority=3 rootflags=subvol=@\"|" /etc/default/grub
 sed -i "s/#GRUB_BTRFS_SUBMENUNAME=\"Arch Linux snapshots\"/GRUB_BTRFS_SUBMENUNAME=\"Arch Linux snapshots\"/" /etc/default/grub-btrfs/config
 sed -i "s/#GRUB_BTRFS_TITLE_FORMAT=(\"date\" \"snapshot\" \"type\" \"description\")/GRUB_BTRFS_TITLE_FORMAT=(\"description\" \"date\")/" /etc/default/grub-btrfs/config
