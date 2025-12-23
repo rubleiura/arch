@@ -101,7 +101,7 @@ sudo pacman -S --noconfirm doublecmd-qt6 smplayer
 ### 4.2 Из AUR
 yay -Sy --noconfirm
 yay -S --noconfirm \
-    octopi gparted ventoy-bin grub-customizer user-admin \
+    octopi ventoy-bin grub-customizer user-admin \
     grub2-theme-arch-leap update-grub stacer-bin
 clear
 
