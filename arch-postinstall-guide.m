@@ -102,8 +102,7 @@ sudo pacman -S --noconfirm doublecmd-qt6 smplayer
 yay -Sy --noconfirm
 yay -S --noconfirm \
     octopi gparted ventoy-bin grub-customizer user-admin \
-    grub2-theme-arch-leap update-grub stacer-bin ocs-url \
-    reflector-simple  reflector-mirrorlist-update
+    grub2-theme-arch-leap update-grub stacer-bin
 clear
 
 
