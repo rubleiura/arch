@@ -564,7 +564,7 @@ pacman -S --noconfirm man-db man-pages man-pages-YYYY
 pacman -S --noconfirm noto-fonts noto-fonts-emoji noto-fonts-cjk ttf-dejavu
 pacman -S --noconfirm iproute2 inetutils dnsutils
 pacman -S --noconfirm fastfetch hyfetch inxi
-pacman -S --noconfirm htop cpu-x chromium qbittorrent libreoffice-fresh-ru archlinux-wallpaper gparted
+pacman -S --noconfirm chromium htop cpu-x gparted qbittorrent libreoffice-fresh-ru archlinux-wallpaper
 clear
 echo ""
 echo "######################################################################"
