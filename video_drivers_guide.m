@@ -135,9 +135,17 @@ inxi -G
 
 ##############################################################
 
-# ШАГ 4: НАСТРОЙКА INITRAMFS (mkinitcpio) (в chroot):
+# 3. НАСТРОЙКА INITRAMFS (mkinitcpio)
+# -----------------------------------
+# А. Модули: Обычно не требуется вручную добавлять модули NVIDIA.
+# mkinitcpio сам находит их, если установлены драйверы и хуки настроены правильно.
+# Добавляйте в MODULES= ТОЛЬКО если возникают специфические ошибки загрузки.
+# Пример (использовать с осторожностью):
+# sed -i '/^MODULES=/ s/)/ nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
 
-# sed -i 's/MODULES=()/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
+# Б. Хуки: Убедитесь, что в HOOKS присутствует kms (удаление вредно!).
+# Правильный порядок для гибернации был рассмотрен ранее.
+# Пример: HOOKS=(base udev plymouth autodetect modconf kms keyboard keymap block resume grub-btrfs-overlayfs btrfs filesystems fsck)
 
 
 ##############################################################
