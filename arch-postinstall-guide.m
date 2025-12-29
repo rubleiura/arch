@@ -78,7 +78,7 @@ clear
 
 ### 4.1 Из официальных репозиториев
 clear
-sudo pacman -S --noconfirm doublecmd-qt6 smplayer
+sudo pacman -S --noconfirm doublecmd-qt6
 ### 4.2 Из AUR
 yay -Sy --noconfirm
 yay -S --noconfirm \
