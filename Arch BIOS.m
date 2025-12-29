@@ -551,7 +551,7 @@ pacman -S --noconfirm udisks2 udiskie polkit
 pacman -S --noconfirm pipewire-alsa pipewire-pulse pipewire-jack pipewire-v4l2 pipewire-zeroconf alsa-utils
 pacman -S --noconfirm wireplumber
 systemctl --global enable pipewire pipewire-pulse wireplumber
-pacman -S --noconfirm gstreamer gst-plugins-{base,good,bad,ugly} gst-libav ffmpeg a52dec faac faad2 flac lame libdca libdv libmad libmpeg2 libtheora libvorbis wavpack x264 x265 xvidcore libdvdcss vlc taglib
+pacman -S --noconfirm gstreamer gst-plugins-{base,good,bad,ugly} gst-libav ffmpeg a52dec faac faad2 flac lame libdca libdv libmad libmpeg2 libtheora libvorbis wavpack x264 x265 xvidcore libdvdcss vlc vlc-plugins-all taglib
 pacman -S --noconfirm man-db man-pages man-pages-YYYY
 pacman -S --noconfirm noto-fonts noto-fonts-emoji noto-fonts-cjk ttf-dejavu
 pacman -S --noconfirm iproute2 inetutils dnsutils
