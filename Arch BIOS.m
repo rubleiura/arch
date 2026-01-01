@@ -289,6 +289,7 @@ clear
 echo ""
 fdisk -l /dev/sdx
 echo ""
+lsblk -f /dev/sdx
 echo ""
 echo "#####################################################"
 echo "## ✅ РАЗМЕТКА ДИСКА ЗАВЕРШЕНА                     ##"
