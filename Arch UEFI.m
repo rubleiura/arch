@@ -292,13 +292,14 @@ sgdisk -n 2::-4G --typecode=2:8300 --change-name=2:'Root Arch Linux' /dev/sdx
 sgdisk -n 3::-0 --typecode=3:8200 --change-name=3:'Swap Arch Linux' /dev/sdx
 clear
 echo ""
-gdisk -l /dev/sdx
 fdisk -l /dev/sdx
 echo ""
+lsblk -f /dev/sdx
 echo ""
 echo "#####################################################"
 echo "## ✅ РАЗМЕТКА ДИСКА ЗАВЕРШЕНА                     ##"
 echo "#####################################################"
+echo ""
 echo ""
 
 
