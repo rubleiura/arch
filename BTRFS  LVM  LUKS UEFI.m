@@ -552,7 +552,6 @@ systemctl enable dbus-broker.service
 pacman -S --noconfirm cronie
 systemctl enable cronie.service systemd-timesyncd.service
 echo 'vm.swappiness=10' > /etc/sysctl.d/99-swappiness.conf
-systemctl enable fstrim.timer # Для SSD
 pacman -S --noconfirm bluez bluez-utils
 systemctl enable bluetooth.service
 sed -i 's/#AutoEnable=true/AutoEnable=true/g' /etc/bluetooth/main.conf
