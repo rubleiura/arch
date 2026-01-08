@@ -49,7 +49,7 @@ sed -i '/^Color$/a VerbosePkgLists' /etc/pacman.conf
 sed -i '/^Color$/a DisableDownloadTimeout' /etc/pacman.conf
 sed -i '/^Color$/a ILoveCandy' /etc/pacman.conf
 timedatectl set-ntp true
-reflector --country Country1,Country2 --age 48 --protocol https --latest 10 --save /etc/pacman.d/mirrorlist
+reflector --age 48 --protocol https --latest 10 --save /etc/pacman.d/mirrorlist
 pacman -Syy
 pacman -S --noconfirm pacman-contrib curl
 pacman -S --noconfirm haveged archlinux-keyring inxi util-linux lshw
@@ -346,11 +346,11 @@ ln -sf /usr/share/zoneinfo/$time_zone /etc/localtime
 hwclock --systohc
 # --- Конец настройки времени ---
 # --- НАСТРОЙКА REFLCTOR (зеркала) ---
-reflector --country Country1,Country2 --age 48 --protocol https --latest 10 --save /etc/pacman.d/mirrorlist
+reflector --age 48 --protocol https --latest 10 --save /etc/pacman.d/mirrorlist
 # Создание скрипта обновления зеркал
 echo '#!/bin/bash' > /usr/local/bin/update-mirrors.sh
 echo "" >> /usr/local/bin/update-mirrors.sh
-echo "reflector --country Country1,Country2 --age 48 --protocol https --latest 10 --save /etc/pacman.d/mirrorlist" >> /usr/local/bin/update-mirrors.sh
+echo "reflector --age 48 --protocol https --latest 10 --save /etc/pacman.d/mirrorlist" >> /usr/local/bin/update-mirrors.sh
 chmod +x /usr/local/bin/update-mirrors.sh
 # Создание юнита сервиса systemd
 echo "[Unit]" > /etc/systemd/system/reflector.service
