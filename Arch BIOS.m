@@ -78,7 +78,7 @@ sed -i '/^Color$/a VerbosePkgLists' /etc/pacman.conf
 sed -i '/^Color$/a DisableDownloadTimeout' /etc/pacman.conf
 sed -i '/^Color$/a ILoveCandy' /etc/pacman.conf
 timedatectl set-ntp true
-reflector --protocol https --latest 20 --sort rate --save /etc/pacman.d/mirrorlist
+reflector --protocol https --latest 5 --sort rate --save /etc/pacman.d/mirrorlist
 pacman -Sy
 pacman -S --noconfirm pacman-contrib curl
 pacman -S --noconfirm haveged archlinux-keyring inxi util-linux lshw
