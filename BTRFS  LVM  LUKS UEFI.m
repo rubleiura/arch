@@ -70,7 +70,7 @@ pacman -Sy
 # ℹ️ Зачем: Настройка системных часов, обновление зеркал, установка
 #          вспомогательных утилит.
 # ℹ️ Важно: Выполняется в загрузочной среде (до chroot).
-# 💡 Включает: `reflector`, `haveged`, `inxi`, `lshw`, `lvm2`, `cryptsetup`.
+# 💡 Включает: `haveged`, `inxi`, `lshw`, `lvm2`, `cryptsetup`.
 clear
 loadkeys ru
 setfont cyr-sun16
@@ -85,8 +85,9 @@ sed -i '/^Color$/a VerbosePkgLists' /etc/pacman.conf
 sed -i '/^Color$/a DisableDownloadTimeout' /etc/pacman.conf
 sed -i '/^Color$/a ILoveCandy' /etc/pacman.conf
 timedatectl set-ntp true
-pacman -Sy
-pacman -S --noconfirm haveged inxi util-linux lshw lvm2 cryptsetup
+pacman -Sy lshw
+pacman -S --noconfirm haveged inxi util-linux lvm2 cryptsetup
+pacman -S --noconfirm
 systemctl enable haveged.service --now
 clear
 echo ""
@@ -123,7 +124,7 @@ echo "Замените или оставьте переменную amd-ucode в
 echo "Для Intel: замените 'amd-ucode' на 'intel-ucode'"
 echo ""
 echo "Производитель процессора:"
-sudo lshw -C cpu 2>/dev/null | grep 'vendor:' | uniq
+lshw -C cpu 2>/dev/null | grep 'vendor:' | uniq
 echo ""
 echo ""
 echo "Замените переменную Sony на имя вашего компьютера "
@@ -341,7 +342,7 @@ echo ""
 #
 # ℹ️ Зачем: Установка минимальной системы и переход в chroot.
 # ℹ️ Важно: После этого — вход в chroot.
-# 💡 Включает: `base`, `btrfs`, `lvm2`, `nano`, `reflector`, `pacman-contrib`.
+# 💡 Включает: `base`, `btrfs`, `lvm2`, `nano`, `pacman-contrib`.
 # 💡 Правильный fstab критически важен для загрузки.
 
 clear
@@ -352,7 +353,7 @@ pacstrap /mnt lvm2 cryptsetup
 pacstrap /mnt amd-ucode iucode-tool
 pacstrap /mnt memtest86+-efi
 pacstrap /mnt nano reflector
-pacstrap /mnt reflector pacman-contrib curl
+pacstrap /mnt pacman-contrib curl
 # --- ГЕНЕРАЦИЯ FSTAB ---
 genfstab -U /mnt >> /mnt/etc/fstab
 clear
