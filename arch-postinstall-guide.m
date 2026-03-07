@@ -68,7 +68,7 @@ fastfetch hyfetch inxi \
 htop cpu-x gparted qbittorrent libreoffice-still-ru
 # 4.2 Из AUR (с помощью yay)
 # 📦 Установка yay (если не установлен) и обновление списка пакетов.
-yay -Sy --noconfirm
+yay -Syy
 # 📦 Установка приложений из AUR.
 yay -S --noconfirm \
     octopi ventoy-bin grub-customizer \
