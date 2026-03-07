@@ -1149,6 +1149,7 @@ rm -r .ssh/
 # 👤 Выполняется: От имени обычного пользователя с sudo правами.
 
 # Установка snapper, btrfsmaintenance и snap-pac (для снапшотов)
+sudo pacman -Syy
 sudo pacman -S --noconfirm snapper snap-pac btrfsmaintenance
 # 1. Установка AUR-хелпера (yay):
 clear
