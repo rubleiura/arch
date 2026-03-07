@@ -69,7 +69,7 @@ pacman -Sy
 # ℹ️ Зачем: Настройка системных часов, обновление зеркал, установка
 #          вспомогательных утилит.
 # ℹ️ Важно: Выполняется в загрузочной среде (до chroot).
-# 💡 Включает: `reflector`, `haveged`, `inxi`, `lshw`.
+# 💡 Включает: `haveged`, `inxi`, `lshw`.
 
 clear
 loadkeys ru
@@ -86,7 +86,8 @@ sed -i '/^Color$/a DisableDownloadTimeout' /etc/pacman.conf
 sed -i '/^Color$/a ILoveCandy' /etc/pacman.conf
 timedatectl set-ntp true
 pacman -Sy
-pacman -S --noconfirm haveged inxi util-linux lshw
+pacman -S --noconfirm haveged inxi util-linux
+pacman -S --noconfirm lshw
 systemctl enable haveged.service --now
 clear
 echo ""
@@ -124,7 +125,7 @@ echo "Замените или оставьте переменную amd-ucode в
 echo "Для Intel: замените 'amd-ucode' на 'intel-ucode'"
 echo ""
 echo "Производитель процессора:"
-sudo lshw -C cpu 2>/dev/null | grep 'vendor:' | uniq
+lshw -C cpu 2>/dev/null | grep 'vendor:' | uniq
 echo ""
 echo ""
 echo "Замените переменную Sony на имя вашего компьютера "
