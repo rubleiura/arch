@@ -314,7 +314,7 @@ echo ""
 #
 # ℹ️ Зачем: Установка минимальной системы и переход в chroot.
 # ℹ️ Важно: После этого — вход в chroot.
-# 💡 Включает: `base`, `btrfs`, `nano`, `reflector`, `pacman-contrib`.
+# 💡 Включает: `base`, `btrfs`, `nano`, `pacman-contrib`.
 
 clear
 pacstrap /mnt base base-devel
