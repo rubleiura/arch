@@ -70,7 +70,7 @@ pacman -Sy
 # ℹ️ Зачем: Настройка системных часов, обновление зеркал, установка
 #          вспомогательных утилит.
 # ℹ️ Важно: Выполняется в загрузочной среде (до chroot).
-# 💡 Включает: `reflector`, `haveged`, `inxi`, `lshw`.
+# 💡 Включает: `haveged`, `inxi`, `lshw`.
 
 clear
 loadkeys ru
@@ -321,7 +321,7 @@ pacstrap /mnt btrfs-progs
 pacstrap /mnt amd-ucode iucode-tool
 pacstrap /mnt memtest86+
 pacstrap /mnt nano
-pacstrap /mnt reflector pacman-contrib curl
+pacstrap /mnt pacman-contrib curl
 genfstab -pU /mnt >> /mnt/etc/fstab
 clear
 echo ""
