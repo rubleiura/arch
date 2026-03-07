@@ -62,6 +62,7 @@ pactl info | grep "Server Name" # вывод должен содержать "Pi
 clear
 # 4.1 Из официальных репозиториев
 # 📦 Установка файлового менеджера Double Commander.
+sudo pacman -Syy
 sudo pacman -S --noconfirm doublecmd-qt6 \
 fastfetch hyfetch inxi \
 htop cpu-x gparted qbittorrent libreoffice-still-ru
@@ -85,8 +86,8 @@ clear
 clear
 # 3.1 Установка zsh
 # 🐚 Устанавливаем Zsh как оболочку.
-sudo pacman -Sy --noconfirm
-sudo pacman -S --noconfirm zsh# 3.2 Установка Oh My Zsh
+sudo pacman -Sy
+sudo pacman -S --noconfirm zsh
 # 🎨 Oh My Zsh — фреймворк для настройки Zsh.
 #    Отключаем автоматическое изменение оболочки и выполнение скрипта.
 export CHSH=no
