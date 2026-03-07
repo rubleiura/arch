@@ -313,7 +313,7 @@ echo ""
 #
 # ℹ️ Зачем: Установка минимальной системы и переход в chroot.
 # ℹ️ Важно: После этого — вход в chroot.
-# 💡 Включает: `base`, `btrfs`, `nano`, `reflector`, `pacman-contrib`.
+# 💡 Включает: `base`, `btrfs`, `nano`, `pacman-contrib`.
 
 clear
 pacstrap /mnt base base-devel
@@ -321,7 +321,7 @@ pacstrap /mnt btrfs-progs
 pacstrap /mnt amd-ucode iucode-tool
 pacstrap /mnt memtest86+-efi
 pacstrap /mnt nano
-pacstrap /mnt reflector pacman-contrib curl
+pacstrap /mnt pacman-contrib curl
 genfstab -pU /mnt >> /mnt/etc/fstab
 clear
 echo ""
