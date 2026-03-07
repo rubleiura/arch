@@ -55,14 +55,6 @@
 #   • Выполнив вышеуказанные шаги перейдите к БЛОКУ 1.
 #
 
-# Создать скрипт автообновления с определением страны
-echo "--country "$(curl -sSL https://ifconfig.co/country-iso)"
-      --save /etc/pacman.d/mirrorlist
-      --protocol https
-      --latest 25
-      --sort age" | tee /etc/xdg/reflector/reflector.conf
-# Включить
-systemctl enable --now reflector.service
 clear
 echo ""
 pacman -Sy
@@ -131,7 +123,7 @@ echo "Замените или оставьте переменную amd-ucode в
 echo "Для Intel: замените 'amd-ucode' на 'intel-ucode'"
 echo ""
 echo "Производитель процессора:"
-lshw -C cpu 2>/dev/null | grep 'vendor:' | uniq
+sudo lshw -C cpu 2>/dev/null | grep 'vendor:' | uniq
 echo ""
 echo ""
 echo "Замените переменную Sony на имя вашего компьютера "
@@ -413,16 +405,6 @@ time_zone=$(curl -s https://ipinfo.io/timezone                    )
 ln -sf /usr/share/zoneinfo/$time_zone /etc/localtime
 hwclock --systohc
 # --- Конец настройки времени ---
-# --- НАСТРОЙКА REFLCTOR (зеркала) ---
-# Создать скрипт автообновления с определением страны
-echo "--country "$(curl -sSL https://ifconfig.co/country-iso)"
-      --save /etc/pacman.d/mirrorlist
-      --protocol https
-      --latest 25
-      --sort age" | tee /etc/xdg/reflector/reflector.conf
-# Включить стандартный таймер
-systemctl enable reflector.timer
-# --- Конец настройки reflector ---
 clear
 echo ""
 timedatectl status
