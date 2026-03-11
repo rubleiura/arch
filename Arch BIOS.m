@@ -817,6 +817,7 @@ clear
 pacman -Syy
 pacman -Sy --noconfirm plasma kde-system-meta dolphin-plugins kate konsole skanpage skanlite gwenview elisa okular ark
 pacman -Sy --noconfirm ffmpegthumbs poppler-glib
+pacman -Sy --noconfirm packagekit packagekit-qt6
 # Установка GVFS для KDE Plasma (рекомендуется для полной совместимости)
 pacman -Sy --noconfirm gvfs gvfs-afc gvfs-dnssd gvfs-goa gvfs-google gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-onedrive gvfs-smb gvfs-wsdd
 pacman -Sy --noconfirm sddm
