@@ -916,7 +916,7 @@ exit
 #                и внешним устройствам.
 
 clear
-pacman -Syyy
+pacman -Syy
 pacman -Sy --noconfirm xfce4 xfce4-goodies lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
 pacman -Sy --noconfirm network-manager-applet blueman
 pacman -Sy --noconfirm mugshot pavucontrol xdg-user-dirs xdg-desktop-portal-gtk ristretto thunar-archive-plugin ffmpegthumbnailer
@@ -948,7 +948,7 @@ exit
 #                GVFS необходима для доступа к онлайн-аккаунтам и сетевым ресурсам.
 
 clear
-pacman -Syyy
+pacman -Syy
 pacman -Sy --noconfirm mate mate-extra lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
 pacman -Sy --noconfirm network-manager-applet blueman
 # Установка GVFS и адаптеров для полной функциональности MATE
@@ -978,7 +978,7 @@ exit
 #                для аналогичных функций, как XFCE4 и MATE.
 
 clear
-pacman -Syyy
+pacman -Syy
 pacman -Sy --noconfirm cinnamon cinnamon-translations blueman lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings gnome-terminal evince
 # Установка GVFS и адаптеров для полной функциональности Cinnamon
 pacman -Sy --noconfirm gvfs gvfs-afc gvfs-dnssd gvfs-goa gvfs-google gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-onedrive gvfs-smb gvfs-wsdd
@@ -1009,7 +1009,7 @@ exit
 #                рекомендуется установка GVFS.
 
 clear
-pacman -Syyy
+pacman -Syy
 pacman -Sy --noconfirm lxqt sddm breeze breeze-icons blueman featherpad libstatgrab libsysstat
 pacman -Sy --noconfirm network-manager-applet blueman
 # Установка GVFS и адаптеров для расширенной совместимости и функциональности LXQt
@@ -1042,7 +1042,7 @@ exit
 # 💡 Рекомендация: Устанавливать GVFS в LXDE только при крайней необходимости.
 
 clear
-pacman -Syyy
+pacman -Syy
 pacman -Sy --noconfirm lxde openbox mousepad lightdm lightdm-slick-greeter blueman thunar-archive-plugin ffmpegthumbnailer udiskie xfce4-notifyd dunst picom
 pacman -Sy --noconfirm network-manager-applet blueman
 # GVFS НЕ устанавливается для LXDE по умолчанию в соответствии с философией легковесности.
@@ -1074,7 +1074,7 @@ exit
 #                на GVFS для доступа к различным типам хранилищ.
 
 clear
-pacman -Syyy
+pacman -Syy
 pacman -Sy --noconfirm budgie-desktop budgie-screensaver budgie-control-center dconf-editor budgie-desktop-view budgie-backgrounds
 pacman -Sy --noconfirm lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
 pacman -Sy --noconfirm materia-gtk-theme papirus-icon-theme
