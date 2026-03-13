@@ -10,7 +10,7 @@
 # 💡 Примечание: Данная установка предназначена для компьютеров
 # с прошивкой BIOS (Legacy Boot), но с использованием таблицы разделов GPT.
 # Требуется специальный BIOS Boot Partition (тип EF02).
-
+#
 # Структура:
 #   1. Подготовка Live-среды
 #   2. Диагностика оборудования
@@ -218,7 +218,7 @@ echo ""
 # ❗ ВАЖНО: Все данные на /dev/sdx будут УДАЛЕНЫ!
 # 💡 Используется: `sgdisk` для создания таблицы разделов GPT.
 # ℹ️ ПЕРЕД ВЫПОЛНЕНИЕМ: Убедитесь, что 'sdx' заменен на ваш диск!
-
+#
 clear
 wipefs --all --force /dev/sdx
 sgdisk -Z /dev/sdx
@@ -237,7 +237,7 @@ echo "## ✅ РАЗМЕТКА ДИСКА (GPT + BIOS) ЗАВЕРШЕНА        
 echo "#####################################################"
 echo ""
 echo ""
-
+#
 # 💡 ОБЯЗАТЕЛЬНО:
 #   После разметки проверьте, что разделы "sda1", "sda2", "sda3"
 #   Соответствуют имени своего диска "sdx".
@@ -254,7 +254,7 @@ echo ""
 # ℹ️ Важно: Выполняется до chroot.
 # 💡 Подтомы: `@`, `@home`, `@log`, `@pkg`.
 # ❗ ПЕРЕД ВЫПОЛНЕНИЕМ: Убедитесь, что 'sda1', 'sda2', 'sda3' заменены на правильные разделы.
-
+#
 clear
 # 💡 Раздел sda1 (BIOS Boot, EF02) НЕ форматируется и НЕ монтируется!
 mkswap /dev/sda3
@@ -296,7 +296,7 @@ echo ""
 # ℹ️ Зачем: Установка минимальной системы и переход в chroot.
 # ℹ️ Важно: После этого — вход в chroot.
 # 💡 Включает: `base`, `btrfs`, `nano`, `pacman-contrib`.
-
+#
 clear
 pacstrap /mnt base base-devel
 pacstrap /mnt btrfs-progs
@@ -326,7 +326,7 @@ echo ""
 # ℹ️ Важно: Выполняется внутри chroot.
 # 💡 Автоматизация: Временная зона по IP, зеркала по стране.
 # 💡 Шрифты: Установлены (Noto, DejaVu, Liberation, Terminus).
-
+#
 clear
 # ... (остальные команды sed для pacman.conf остаются без изменений) ...
 sed -i 's/\S*subvol=\(\S*\)/subvol=\1,defaults/g'  /etc/fstab
@@ -388,7 +388,7 @@ echo ""
 #
 # ℹ️ Зачем: Настройка имени системы и пароля root.
 # ❗ Важно: Без этого система не загрузится корректно.
-
+#
 clear
 echo "Sony" > /etc/hostname
 echo "127.0.0.1   localhost" > /etc/hosts
@@ -418,7 +418,7 @@ echo ""
 #
 # ℹ️ Зачем: Создание пользователя и настройка sudo.
 # ❗ Важно: Без wheel — sudo не будет работать.
-
+#
 clear
 useradd forename -m -c "User Name" -s /bin/bash
 usermod -aG wheel,users forename
@@ -447,7 +447,7 @@ echo ""
 #
 # ℹ️ Зачем: Настройка загрузчика и initramfs для BIOS+GPT.
 # 💡 Включает: `GRUB`, `grub-btrfs`, `plymouth`.
-
+#
 clear
 pacman -Syy
 pacman -Sy --noconfirm linux-lts linux-lts-headers linux-firmware
@@ -482,7 +482,7 @@ echo ""
 # ℹ️ Зачем: Установка системных утилит, PipeWire, шрифтов.
 # 💡 Включает: `Bluetooth`, `CUPS`, `xdg`, `PipeWire`, `Chromium`.
 # 💡 Расширено: Добавлены утилиты для администрирования, просмотра файлов, сжатия, мониторинга и обслуживания.
-
+#
 clear
 pacman -Syy
 pacman -Sy --noconfirm haveged
@@ -562,39 +562,39 @@ lsmod | grep -iE 'nvidia|amdgpu|i915|nouveau'
 clear
 #### === Intel Integrated Graphics ===
 # pacman -Sy --noconfirm mesa vulkan-intel lib32-mesa lib32-vulkan-intel
-
+#
 #### === AMD Radeon Graphics или Open-Source NVIDIA (nouveau) ===
 # pacman -Sy --noconfirm mesa vulkan-radeon lib32-mesa lib32-vulkan-radeon
-
-
+#
+#
 #### === NVIDIA (Проприетарные драйверы) ===
 # 📌 ВАЖНО: Этот раздел делится на два подраздела: современные и устаревшие драйверы.
 #          Определите архитектуру вашей карты (например, GM204 = Maxwell, TU104 = Turing) через lspci.
-
+#
 # --- C1. Современные GPU (Pascal, Turing, Ampere, Ada Lovelace и новее): ---
 # 💡 ОФИЦИАЛЬНАЯ РЕКОМЕНДАЦИЯ NVIDIA:
 # «Многие дистрибутивы Linux предоставляют собственные пакеты драйвера NVIDIA...»
-
+#
 # 📌 ВЕТКИ ДРАЙВЕРОВ:
 # 1. **Production Branch (рекомендовано для большинства):**
-
+#
 # A. Для стандартного ядра (linux):
 # pacman -Sy --noconfirm nvidia-open nvidia-utils lib32-nvidia-utils
-
+#
 # B. Для LTS-ядра (linux-lts):
 # pacman -Sy --noconfirm nvidia-open-lts nvidia-utils lib32-nvidia-utils
-
+#
 # C. Универсальный DKMS-драйвер (для кастомных ядер):
 # pacman -Sy --noconfirm nvidia-open-dkms nvidia-utils lib32-nvidia-utils
-
+#
 # 📌 ГИБРИДНАЯ ГРАФИКА (Intel/AMD + NVIDIA):
 # pacman -Sy --noconfirm switcheroo-control
 # systemctl enable switcheroo-control.service
-
+#
 # 📌 ТОЛЬКО ДЛЯ СИСТЕМ С ОДНОЙ СОВРЕМЕННОЙ NVIDIA-КАРТОЙ:
 # pacman -Sy --noconfirm libva-nvidia-driver
-
-
+#
+#
 # ###################################################
 # ## 🧰 ШАГ 2: УСТАНОВКА ДОПОЛНИТЕЛЬНЫХ БИБЛИОТЕК  ##
 # ###################################################
@@ -602,8 +602,8 @@ clear
 # ℹ️ Зачем: Обеспечить совместимость с Vulkan и VA-API.
 # 💡 Обязательно для всех типов GPU.
 # pacman -Sy --noconfirm vulkan-icd-loader lib32-vulkan-icd-loader
-
-
+#
+#
 # ########################################################
 # ## 🔧 ШАГ 3: КОНФИГУРАЦИЯ МОДУЛЕЙ И INITRAMFS  #########
 # ########################################################
@@ -611,17 +611,17 @@ clear
 # ℹ️ Зачем: Включить режим модсета для NVIDIA (требуется для Wayland).
 # ❗ ВАЖНО: Выполняется ТОЛЬКО при установке NVIDIA драйверов (любой ветки, включая устаревшие).
 # 💡 Этот шаг применяется ТОЛЬКО если вы выбрали ВАРИАНТ C (NVIDIA Proprietary).
-
+#
 # === ТОЛЬКО ДЛЯ NVIDIA (ПРОПРИЕТАРНЫЕ): Настройка модулей и initramfs ===
 # 📌 РАСКОММЕНТИРУЙТЕ СЛЕДУЮЩИЕ СТРОКИ, ЕСЛИ ВЫ УСТАНАВЛИВАЕТЕ NVIDIA-ДРАЙВЕР:
 # echo 'options nvidia-drm modeset=1' > /etc/modprobe.d/nvidia.conf
 # Для ноутбуков (опционально)
 # echo 'options nvidia NVreg_DynamicPowerManagement=0x02' >> /etc/modprobe.d/nvidia.conf
 # echo 'nvidia-drm' > /etc/modules-load.d/nvidia-drm.conf
-
+#
 # 🔄 Пересобираем initramfs — ОБЯЗАТЕЛЬНО!
 mkinitcpio -P
-
+#
 # ########################################################
 # ## 🔋 ШАГ 4: ОПЦИОНАЛЬНО — НАСТРОЙКИ ДЛЯ НОУТБУКОВ  ####
 # ########################################################
@@ -629,12 +629,12 @@ mkinitcpio -P
 # ℹ️ Зачем: Улучшить энергоэффективность на ноутбуках.
 # 💡 Используется TLP — современный инструмент управления питанием.
 # ❗ ВАЖНО: Если у вас гибридная графика с NVIDIA, прочитайте инструкции по настройке TLP.
-
+#
 #### === ТОЛЬКО ДЛЯ НОУТБУКОВ (БЕЗ ГИБРИДНОЙ ГРАФИКИ NVIDIA) ===
 # pacman -Sy --noconfirm tlp tlp-rdw
 # systemctl enable tlp.service
 # systemctl mask systemd-rfkill.service systemd-rfkill.socket
-
+#
 #### === ТОЛЬКО ДЛЯ НОУТБУКОВ (С ГИБРИДНОЙ ГРАФИКОЙ NVIDIA) ===
 # pacman -Sy --noconfirm tlp tlp-rdw
 # --- Настройка TLP для совместимости с NVIDIA ---
@@ -650,7 +650,7 @@ mkinitcpio -P
 # 3. Включите службу TLP:
 # systemctl enable tlp.service
 # systemctl mask systemd-rfkill.service systemd-rfkill.socket
-
+#
 clear
 echo ""
 echo "# ################################################################"
@@ -676,7 +676,7 @@ echo ""
 #
 # ℹ️ Зачем: Настройка интеграции с VirtualBox.
 # ❗ Важно: Только если установка в VirtualBox.
-
+#
 clear
 pacman -Sy --needed --noconfirm virtualbox-guest-utils
 modprobe -a vboxguest vboxsf vboxvideo
@@ -704,7 +704,7 @@ echo ""
 # 💡 Включает: Подблоки для KDE Plasma, GNOME, XFCE4 и других.
 # 💡 Расширено: Добавлены подблоки для тайлинговых оконных менеджеров Sway и Hyprland.
 # ❗ Важно: Убедитесь, что видеодрайверы установлены (см. БЛОК 12).
-
+#
 #### "=== УСТАНОВКА ГРАФИЧЕСКОЙ СРЕДЫ ==="
 #### "Выберите и выполните один из следующих подблоков:"
 ####   - KDE PLASMA
@@ -730,7 +730,7 @@ echo ""
 #                совместимость с GTK+ приложениями и расширенную интеграцию
 #                с GNOME Online Accounts и другими сервисами.
 # 💡 Рекомендация: Установка GVFS рекомендуется для лучшей совместимости.
-
+#
 clear
 #### Plasma ####
 pacman -Syy
@@ -763,7 +763,7 @@ exit
 # 💡 Включает: `GDM`, `portal`, `apps`, `extensions`.
 # 💡 Комментарий: GVFS является неотъемлемой частью GNOME.
 #                Установка адаптеров обеспечивает полную функциональность.
-
+#
 clear
 ###  GNOME  ##
 pacman -Syy
@@ -784,7 +784,7 @@ echo "[User]" > /var/lib/AccountsService/users/root
 echo "SystemAccount=true" >> /var/lib/AccountsService/users/root
 ## Питание ноутбука (раскоменируйте в случае необходимости)
 ## Настройки действий кнопок питания и крышки ноутбука, а также режимов сна и гибернации
-
+#
 ## Вариант 1
 ## Кнопка питания выключает компьютер, а закрытие крышки переводит его в сон:
 # mkdir -p /etc/systemd/logind.conf.d
@@ -792,7 +792,7 @@ echo "SystemAccount=true" >> /var/lib/AccountsService/users/root
 # echo "HandlePowerKey=poweroff" >> /etc/systemd/logind.conf.d/50-power-options.conf
 # echo "HandleLidSwitch=suspend" >> /etc/systemd/logind.conf.d/50-power-options.conf
 # echo "HandleLidSwitchDocked=ignore" >> /etc/systemd/logind.conf.d/50-power-options.conf
-
+#
 ## Вариант 2
 ## Кнопка питания выключает компьютер, а закрытие крышки переводит в гибернацию:
 # mkdir -p /etc/systemd/logind.conf.d
@@ -801,7 +801,7 @@ echo "SystemAccount=true" >> /var/lib/AccountsService/users/root
 # echo "HandleLidSwitch=hibernate" >> /etc/systemd/logind.conf.d/50-power-options.conf
 # echo "HandleLidSwitchExternalPower=hibernate" >> /etc/systemd/logind.conf.d/50-power-options.conf
 # echo "HandleLidSwitchDocked=hibernate" >> /etc/systemd/logind.conf.d/50-power-options.conf
-
+#
 ## Вариант 3
 ## Кнопка питания выключает компьютер, а закрытие крышки ничего не происходит:
 # mkdir -p /etc/systemd/logind.conf.d
@@ -833,7 +833,7 @@ exit
 # 💡 Комментарий: XFCE4 основан на GTK+, поэтому GVFS критически важна
 #                для доступа к сетевым ресурсам, облачным хранилищам
 #                и внешним устройствам.
-
+#
 clear
 pacman -Syy
 pacman -Sy --noconfirm xfce4 xfce4-goodies lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
@@ -865,7 +865,7 @@ exit
 # 💡 Включает: `LightDM`.
 # 💡 Комментарий: MATE, как наследник GNOME 2, тесно интегрирован с GNOME-технологиями.
 #                GVFS необходима для доступа к онлайн-аккаунтам и сетевым ресурсам.
-
+#
 clear
 pacman -Syy
 pacman -Sy --noconfirm mate mate-extra lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
@@ -895,7 +895,7 @@ exit
 # 💡 Включает: `LightDM`, `greeter`, `themes`.
 # 💡 Комментарий: Cinnamon также использует GTK+ и зависит от GVFS
 #                для аналогичных функций, как XFCE4 и MATE.
-
+#
 clear
 pacman -Syy
 pacman -Sy --noconfirm cinnamon cinnamon-translations blueman lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings gnome-terminal evince
@@ -926,7 +926,7 @@ exit
 # 💡 Комментарий: LXQt основан на Qt, но для совместимости с GTK+ приложениями
 #                и обеспечения полного функционала подключения устройств
 #                рекомендуется установка GVFS.
-
+#
 clear
 pacman -Syy
 pacman -Sy --noconfirm lxqt sddm breeze breeze-icons blueman featherpad libstatgrab libsysstat
@@ -959,7 +959,7 @@ exit
 #                противоречит его философии. Она не включена здесь,
 #                так как может увеличить нагрузку на систему.
 # 💡 Рекомендация: Устанавливать GVFS в LXDE только при крайней необходимости.
-
+#
 clear
 pacman -Syy
 pacman -Sy --noconfirm lxde openbox mousepad lightdm lightdm-slick-greeter blueman thunar-archive-plugin ffmpegthumbnailer udiskie xfce4-notifyd dunst picom
@@ -991,7 +991,7 @@ exit
 # 💡 Включает: `LightDM`, `audacious`, `evince`.
 # 💡 Комментарий: Budgie, как и другие среды на основе GTK+, полагается
 #                на GVFS для доступа к различным типам хранилищ.
-
+#
 clear
 pacman -Syy
 pacman -Sy --noconfirm budgie-desktop budgie-screensaver budgie-control-center dconf-editor budgie-desktop-view budgie-backgrounds
@@ -1025,13 +1025,13 @@ exit
 # 🎯 Зачем: Корректное размонтирование разделов и выключение системы.
 # ⚠️ Важно: Выполняется ПОСЛЕ выхода из chroot (после установки DE/WM).
 # 🔒 Безопасность: Гарантирует целостность файловой системы.
-
+#
 umount -R /mnt
 swapoff -a
 poweroff
-
-
-
+#
+#
+#
 # 🧹 Очистка конфигурации ssh соединения (При необходимости)
 rm -r .ssh/
 
@@ -1046,7 +1046,7 @@ rm -r .ssh/
 # 🎯 Зачем: Завершение настройки системы после первой загрузки.
 # ⚠️ Важно: Выполняется ПОСЛЕ первой загрузки в установленную систему.
 # 👤 Выполняется: От имени обычного пользователя с sudo правами.
-
+#
 # Установка snapper, btrfsmaintenance и snap-pac (для снапшотов)
 sudo pacman -Syyy
 sudo pacman -Sy --noconfirm snapper snap-pac btrfsmaintenance btrfs-assistant
@@ -1064,17 +1064,16 @@ yay -S --noconfirm snapper-support snapper-tools
 clear
 # Включаем службу snapper для автоматического создания снапшотов по расписанию
 sudo systemctl enable snapper-timeline.timer
-# НАСТРОЙКА ШРИФТОВ ДЛЯ CHROOT ARCH LINUX
-
-# 4. Настройка Btrfs Assistant:
+#
+# 3. Настройка Btrfs Assistant:
 #    - Запустите Btrfs Assistant из меню приложений.
 #    - Он может запросить права администратора для выполнения действий.
 #    - Используйте его для управления снапшотами, балансировки и т.д.
-
-# 5. Проверка работы grub-btrfs и snapper-tools:
+#
+# 4. Проверка работы grub-btrfs и snapper-tools:
 #    - После перезагрузки и создания снапшота, в меню GRUB
 #      должны появиться пункты для старых снапшотов.
 #    - При выборе снапшота в GRUB может быть предложено
 #      восстановить систему до этого снапшота (функция rollback из snapper-tools).
-
+#
 # ################################################################
